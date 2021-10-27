@@ -1,13 +1,14 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { AppContext, AppProps } from "next/app";
 import { RecoilRoot } from "recoil";
+import { useCookies } from "react-cookie";
 import { ThemeProvider } from "@emotion/react";
+import cookieParser from "@src/lib/cookieParser";
+import AppLayout from "@frames/AppLayout";
 import DarkModeButton from "@molecules/DarkModeButton";
 
-import GlobalStyle from "@theme/GlobalStyle";
 import { darkTheme, lightTheme } from "@theme/.";
-import { useCookies } from "react-cookie";
-import cookieParser from "@src/lib/cookieParser";
+import GlobalStyle from "@theme/GlobalStyle";
 
 interface Props extends AppProps {
   mode: string;
@@ -30,8 +31,10 @@ const SEOKO = ({ Component, pageProps, mode: modeInCookie }: Props) => {
       <ThemeProvider theme={mode === "light" ? lightTheme : darkTheme}>
         <RecoilRoot>
           <GlobalStyle theme={mode === "light" ? lightTheme : darkTheme} />
-          <Component {...pageProps} />
-          <DarkModeButton mode={mode} onClick={onClickDarkMode} />
+          <AppLayout>
+            <Component {...pageProps} />
+            <DarkModeButton mode={mode} onClick={onClickDarkMode} />
+          </AppLayout>
         </RecoilRoot>
       </ThemeProvider>
     </>
