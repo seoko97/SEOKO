@@ -1,5 +1,7 @@
 const path = require('path');
 
+const resolvePath = (_path) => path.join(process.cwd(), _path);
+
 module.exports = {
   stories: ["../src/**/*.stories.@(js|jsx|ts|tsx)"],
   addons: [
@@ -18,6 +20,10 @@ module.exports = {
       "@organisms": path.resolve(__dirname, "../src/components/UI/organisms"),
       "@frames": path.resolve(__dirname, "../src/components/UI/frames"),
       "@theme": path.resolve(__dirname, "../src/theme"),
+      "@icons": path.resolve(__dirname, "../src/components/icons"),
+      "@hooks": path.resolve(__dirname, "../src/hooks"),
+      "@emotion/react": resolvePath("node_modules/@emotion/react"),
+      "@emotion/styled": resolvePath("node_modules/@emotion/styled"),
     };
     return config;
   }
