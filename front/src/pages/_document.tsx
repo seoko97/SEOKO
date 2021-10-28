@@ -1,11 +1,5 @@
 import React from "react";
-import Document, {
-  DocumentContext,
-  Head,
-  Html,
-  Main,
-  NextScript,
-} from "next/document";
+import Document, { DocumentContext, Head, Html, Main, NextScript } from "next/document";
 import { extractCritical } from "@emotion/server";
 
 interface Props {
@@ -33,7 +27,12 @@ class MyDocument extends Document<Props> {
   render() {
     return (
       <Html lang="ko">
-        <Head></Head>
+        <Head>
+          <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Quicksand:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+          ></link>
+        </Head>
         <body>
           <Main />
           <NextScript />

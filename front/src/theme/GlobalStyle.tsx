@@ -41,7 +41,7 @@ const GlobalStyle = ({ theme }: GlobalProps) => (
         outline: none;
       }
       & * {
-        font-family: "Noto Sans KR", sans-serif !important;
+        font-family: "Quicksand", "Noto Sans KR", sans-serif !important;
       }
     `}
   />
