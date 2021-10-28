@@ -45,6 +45,9 @@
       ],
       "@icons/*": [
         "src/components/icons/*"
+      ],
+      "@hooks/*": [
+        "src/hooks/*"
       ]
     },
     "incremental": true

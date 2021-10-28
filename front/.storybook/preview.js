@@ -1,7 +1,6 @@
 import React from 'react'
-import { css, Global, ThemeProvider }  from '@emotion/react'
 import reset from 'emotion-reset'
-import { lightTheme } from "@theme/.";
+import { css, Global, ThemeProvider }  from '@emotion/react'
 
 const GlobalStyle = () => (
   <Global
@@ -47,12 +46,15 @@ const GlobalStyle = () => (
 // storybook 실행시 적용되는 스타일
 export const decorater = [
   (Story) => (
-    <ThemeProvider theme={lightTheme}>
+    // <ThemeProvider theme={lightTheme}>
+    <>
       <Story />
       <GlobalStyle />
-    </ThemeProvider>
-  )
-]
+    </>
+    // </ThemeProvider>
+  ),
+];
+
 
 export const parameters = {
   backgrounds: {
