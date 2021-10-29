@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
+import Logo from "@atoms/Logo";
 import GitHubIcon from "@icons/GItHubIcon/GitHubIcon";
-import Logo from "../../atoms/Logo";
 
 const StyledFooterContent = styled.div`
   width: 100%;
@@ -14,7 +14,11 @@ const StyledFooterContent = styled.div`
   & svg {
     width: 42px;
     height: 42px;
+    transition: all 0.15s ease-in-out 0s;
     fill: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
+    &:hover {
+      fill: ${({ theme }) => theme.SELECTION_EFFECT_COLOR.PRIMARY_COLOR};
+    }
   }
 
   & > div {
@@ -34,11 +38,7 @@ const FooterContent = () => {
         <div>
           <Logo />
           <span>
-            <a
-              href="https://www.instagram.com/sukho1007/"
-              about="instagram"
-              target="_blank"
-            >
+            <a href="https://github.com/seoko97" about="instagram" target="_blank">
               <GitHubIcon />
             </a>
           </span>
