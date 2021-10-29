@@ -21,6 +21,8 @@ const StyledDarkModeButton = styled.div`
 
   border: 1px solid #ccc;
   border-radius: 50%;
+
+  color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
 `;
 
 const DarkModeButton = ({ mode, onClick }: Props) => {
