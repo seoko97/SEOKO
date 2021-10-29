@@ -1,44 +1,59 @@
-import React, { useLayoutEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 
 import Logo from "@atoms/Logo";
 import RowFrame from "@frames/RowFrame";
+import { css } from "@emotion/react";
 
-const StyledHeader = styled.header`
+interface Props {
+  scrollPosition: number;
+}
+
+const StyledHeader = styled.header<Props>`
+  width: 100%;
   position: sticky;
   top: -32px;
   padding-top: 32px;
+  transition: all 0.25s ease-in-out 0s;
+
+  ${({ scrollPosition, theme }) =>
+    scrollPosition >= 400 &&
+    css`
+      box-shadow: rgb(0 0 0 / 8%) 0px 0px 15px;
+      background: ${theme.BAKCGROUND_COLOR.PRIMARY_COLOR_RGBA};
+    `};
 
   & > div {
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 72px;
-
-    &::before {
-      width: 100%;
-      height: 100%;
-      content: "";
-      opacity: 0.7;
-      background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.PRIMARY_COLOR};
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: -1;
+    & div:first-of-type {
+      & a {
+        ${({ scrollPosition }) =>
+          scrollPosition <= 400 &&
+          css`
+            color: #f8f9fa;
+          `}
+      }
     }
   }
 `;
 
 const Header = () => {
-  useLayoutEffect(() => {
+  const [scrollPosition, setScrollPosition] = useState(0);
+  console.log(scrollPosition);
+
+  useEffect(() => {
     const layoutRef = document.body;
 
     function handleScroll() {
-      console.log(
-        layoutRef.scrollHeight,
-        layoutRef.scrollTop + layoutRef.clientHeight,
-        layoutRef.scrollHeight - 300,
-      );
+      // console.log(
+      //   layoutRef.scrollHeight,
+      //   layoutRef.scrollTop + layoutRef.clientHeight,
+      //   layoutRef.scrollHeight - 300,
+      // );
+      setScrollPosition(layoutRef.scrollTop);
     }
     layoutRef?.addEventListener("scroll", handleScroll);
     return () => layoutRef?.removeEventListener("scroll", handleScroll);
@@ -46,7 +61,7 @@ const Header = () => {
 
   return (
     <>
-      <StyledHeader>
+      <StyledHeader scrollPosition={scrollPosition}>
         <RowFrame>
           {/* 로고 */}
           <Logo />
@@ -58,4 +73,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default React.memo(Header);
