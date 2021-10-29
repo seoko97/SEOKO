@@ -37,6 +37,7 @@ const GlobalStyle = ({ theme }: GlobalProps) => (
         margin-bottom: 0.5em;
       }
       a {
+        color: inherit;
         text-decoration: none;
         outline: none;
       }
