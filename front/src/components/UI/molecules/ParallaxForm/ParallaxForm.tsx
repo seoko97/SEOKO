@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { AppProps } from "next/app";
 
 interface Props {
   imgSrc: string;
@@ -8,13 +7,16 @@ interface Props {
 }
 
 const StyledParallaxForm = styled.div<Props>`
-  width: 100%;
+  position: relative;
+  top: -104px;
 
-  background: no-repeat center center;
   background-image: url(${({ imgSrc }) => imgSrc});
 
   background-size: cover;
   background-attachment: fixed;
+  background-position: center;
+
+  width: 100%;
 
   z-index: -1;
 
@@ -22,9 +24,6 @@ const StyledParallaxForm = styled.div<Props>`
   padding: 160px 0;
   text-align: center;
   color: #fff;
-
-  position: relative;
-  top: -104px;
 
   & > h2 {
     font-size: 70px;
@@ -49,6 +48,14 @@ const StyledParallaxForm = styled.div<Props>`
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     background-attachment: scroll;
+
+    & > h2 {
+      font-size: 55px;
+    }
+
+    & > p {
+      font-size: 16px;
+    }
   }
 `;
 
