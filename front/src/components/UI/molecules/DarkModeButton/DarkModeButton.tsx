@@ -11,7 +11,7 @@ const StyledDarkModeButton = styled.div`
   position: fixed;
   right: 30px;
   bottom: 30px;
-  z-index: 1000;
+  z-index: 50;
   cursor: pointer;
   display: flex;
   justify-content: center;

@@ -10,6 +10,7 @@ const StyledAppLayout = styled.div`
   padding-bottom: 140px;
   background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.PRIMARY_COLOR};
   transition: background 0.3s;
+  z-index: 0;
 `;
 
 interface Props {
