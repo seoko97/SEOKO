@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import Logo from "@atoms/Logo";
-import GitHubIcon from "@icons/GItHubIcon/GitHubIcon";
+import GitHubIcon from "@icons/GItHubIcon";
 
 const StyledFooterContent = styled.div`
   width: 100%;
