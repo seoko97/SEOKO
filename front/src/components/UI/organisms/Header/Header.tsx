@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
 import Logo from "@atoms/Logo";
 import RowFrame from "@frames/RowFrame";
-import { css } from "@emotion/react";
+import Nav from "@molecules/Nav/Nav";
+import MobileNav from "@organisms/MobileNav";
+import MenuIcon from "@icons/MenuIcon";
 
 interface Props {
   scrollPosition: number;
@@ -15,60 +19,82 @@ const StyledHeader = styled.header<Props>`
   top: -32px;
   padding-top: 32px;
   transition: all 0.25s ease-in-out 0s;
-
-  ${({ scrollPosition, theme }) =>
-    scrollPosition >= 400 &&
-    css`
-      box-shadow: rgb(0 0 0 / 8%) 0px 0px 15px;
-      background: ${theme.BAKCGROUND_COLOR.PRIMARY_COLOR_RGBA};
-    `};
+  z-index: 1;
 
   & > div {
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 72px;
-    & div:first-of-type {
+  }
+
+  & a {
+    color: #f8f9fa;
+  }
+  & svg {
+    fill: #f8f9fa;
+  }
+
+  ${({ scrollPosition, theme }) =>
+    scrollPosition >= 400 &&
+    css`
+      box-shadow: rgb(0 0 0 / 8%) 0px 0px 15px;
+      background: ${theme.BAKCGROUND_COLOR.PRIMARY_COLOR_RGBA};
       & a {
-        ${({ scrollPosition }) =>
-          scrollPosition <= 400 &&
-          css`
-            color: #f8f9fa;
-          `}
+        color: ${theme.FONT_COLOR.PRIMARY_COLOR};
       }
+      & svg {
+        fill: ${theme.FONT_COLOR.PRIMARY_COLOR};
+      }
+    `}
+
+  @media (min-width: ${({ theme }) => theme.BP.TABLET}) {
+    & #menu_button {
+      display: none;
     }
   }
 `;
 
 const Header = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
-  console.log(scrollPosition);
+  const [navState, setNavState] = useState(false);
+  const [pathName, setPathName] = useState("");
+  const router = useRouter();
+
+  const openMenu = useCallback(() => {
+    setNavState(!navState);
+  }, [navState]);
 
   useEffect(() => {
+    setPathName(router.pathname);
     const layoutRef = document.body;
 
     function handleScroll() {
-      // console.log(
-      //   layoutRef.scrollHeight,
-      //   layoutRef.scrollTop + layoutRef.clientHeight,
-      //   layoutRef.scrollHeight - 300,
-      // );
       setScrollPosition(layoutRef.scrollTop);
     }
     layoutRef?.addEventListener("scroll", handleScroll);
     return () => layoutRef?.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (router.pathname !== pathName) {
+      setPathName(router.pathname);
+      setNavState(false);
+    }
+  }, [router.pathname, pathName]);
+
   return (
     <>
       <StyledHeader scrollPosition={scrollPosition}>
         <RowFrame>
-          {/* 로고 */}
           <Logo />
-          {/* 네비게이션 */}
-          <div>asdasd</div>
+          <Nav />
+          <div onClick={openMenu} id="menu_button">
+            <MenuIcon />
+          </div>
         </RowFrame>
       </StyledHeader>
+      <MobileNav openMenu={openMenu} navState={navState} />
     </>
   );
 };

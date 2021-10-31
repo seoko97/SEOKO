@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from "react";
+import Head from "next/head";
 import { AppContext, AppProps } from "next/app";
 import { RecoilRoot } from "recoil";
 import { useCookies } from "react-cookie";
@@ -28,6 +29,9 @@ const SEOKO = ({ Component, pageProps, mode: modeInCookie }: Props) => {
 
   return (
     <>
+      <Head>
+        <title>SEOKO</title>
+      </Head>
       <ThemeProvider theme={mode === "light" ? lightTheme : darkTheme}>
         <RecoilRoot>
           <GlobalStyle theme={mode === "light" ? lightTheme : darkTheme} />
