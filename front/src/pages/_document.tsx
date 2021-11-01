@@ -3,7 +3,7 @@ import Document, { DocumentContext, Head, Html, Main, NextScript } from "next/do
 import { extractCritical } from "@emotion/server";
 
 interface Props {
-  styleTag: Array<React.ReactElement<{}>>;
+  styleTag: Array<React.ReactElement<null>>;
 }
 
 class MyDocument extends Document<Props> {
@@ -24,6 +24,7 @@ class MyDocument extends Document<Props> {
       ),
     };
   }
+
   render() {
     return (
       <Html lang="ko">

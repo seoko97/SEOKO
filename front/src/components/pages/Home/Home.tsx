@@ -14,7 +14,7 @@ const Home = () => {
     <>
       <ParallaxForm imgSrc="/main.jpg">
         <h2>Main</h2>
-        <p>SEOKO's blog</p>
+        <p>SEOKO&apos;s blog</p>
       </ParallaxForm>
       <PageContent>
         <StyledDiv>asd</StyledDiv>

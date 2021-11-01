@@ -1,5 +1,4 @@
-import React, { useCallback } from "react";
-import { useCookies } from "react-cookie";
+import React from "react";
 import styled from "@emotion/styled";
 
 interface Props {
