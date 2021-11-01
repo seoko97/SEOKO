@@ -23,7 +23,12 @@ const StyledNavFooter = styled.div`
 
 const NavFooter = () => (
   <StyledNavFooter>
-    <a href="https://github.com/seoko97" about="instagram" target="_blank">
+    <a
+      href="https://github.com/seoko97"
+      about="instagram"
+      target="_blank"
+      rel="noreferrer"
+    >
       <GitHubIcon />
     </a>
   </StyledNavFooter>

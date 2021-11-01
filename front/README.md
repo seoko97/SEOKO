@@ -1,6 +1,6 @@
 # SEOKO's Front
 
-### Page
+### **Page**
 
 - Main [ ]
 
@@ -16,7 +16,7 @@
 
 <br />
 
-### 적용 Skills
+### **적용 Skills**
 
 - React
 - NextJs
@@ -28,6 +28,10 @@
 
 <br />
 
-### 향후 진행 사항
+### **향후 진행 사항**
 
-- Header, Footer 선 적용후 메인 페이지 레이아웃 작성 [ ]
+- Header, Footer 디자인 [ ✅ ]
+
+- 서버와 연결 후 User Avata 디자인 [ ]
+
+- 메인 페이지 디자인 [ ]
