@@ -64,4 +64,4 @@ const MobileNav = ({ openMenu, navState }: MenuProps) => {
   );
 };
 
-export default MobileNav;
+export default React.memo(MobileNav);

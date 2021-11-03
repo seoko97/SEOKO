@@ -10,4 +10,4 @@ const NavList = () => (
   </ul>
 );
 
-export default NavList;
+export default React.memo(NavList);

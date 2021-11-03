@@ -52,4 +52,4 @@ const NavItem: React.FC<Props> = ({ emoji, href, name }) => (
   </>
 );
 
-export default NavItem;
+export default React.memo(NavItem);
