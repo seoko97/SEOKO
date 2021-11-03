@@ -1,23 +1,31 @@
 import styled from "@emotion/styled";
 import React from "react";
 import GitHubIcon from "@icons/GItHubIcon";
+import UserAvatar from "../../molecules/UserAvatar";
 
 const StyledNavFooter = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
   padding: 10px;
+  & > a {
+    max-height: 35px;
+    & svg {
+      width: 35px;
+      height: 35px;
+      cursor: pointer;
+      fill: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
 
-  & svg {
+      transition: fill 0.1s ease-in-out 0s;
+      &:hover {
+        fill: ${({ theme }) => theme.SELECTION_EFFECT_COLOR.PRIMARY_COLOR};
+      }
+    }
+  }
+
+  & > div {
     width: 35px;
     height: 35px;
-    cursor: pointer;
-    fill: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
-
-    transition: fill 0.1s ease-in-out 0s;
-    &:hover {
-      fill: ${({ theme }) => theme.SELECTION_EFFECT_COLOR.PRIMARY_COLOR};
-    }
   }
 `;
 
@@ -31,7 +39,8 @@ const NavFooter = () => (
     >
       <GitHubIcon />
     </a>
+    <UserAvatar />
   </StyledNavFooter>
 );
 
-export default NavFooter;
+export default React.memo(NavFooter);
