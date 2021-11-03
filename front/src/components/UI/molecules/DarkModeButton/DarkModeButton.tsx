@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
+import SunIcon from "@icons/SunIcon";
+import MoonIcon from "@icons/MoonIcon";
 
 interface Props {
   mode: string;
@@ -12,26 +14,49 @@ const StyledDarkModeButton = styled.div`
   bottom: 30px;
   z-index: 50;
   cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
 
-  border: 1px solid #ccc;
-  border-radius: 50%;
+  background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.THIRDARY_COLOR};
+  border-radius: 40px;
+  box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.4);
 
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
+  transition: all 0.3s;
+  & > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    transition: all 0.3s;
+
+    & svg {
+      width: 24px;
+      height: 24px;
+      fill: #ccc;
+      transition: fill 0.3s;
+    }
+  }
+
+  &:hover {
+    transform: scale(1.1);
+
+    & > div {
+      transform: rotate(270deg);
+      & svg {
+        fill: #ffd500;
+      }
+    }
+  }
 `;
 
 const DarkModeButton = ({ mode, onClick }: Props) => {
   return (
     <>
       <StyledDarkModeButton onClick={onClick}>
-        {mode && <div>{mode}</div>}
+        <div>{mode && mode === "light" ? <SunIcon /> : <MoonIcon />}</div>
       </StyledDarkModeButton>
     </>
   );
 };
 
-export default DarkModeButton;
+export default React.memo(DarkModeButton);
