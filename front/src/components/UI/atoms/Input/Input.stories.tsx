@@ -27,4 +27,4 @@ export default {
   ],
 } as Props;
 
-export const Default = () => <Input onChange={() => console.log("x")} value="asd" />;
+export const Default = () => <Input onChange={() => "x"} value="asd" />;
