@@ -52,6 +52,7 @@ const FooterContent = () => {
             <GitHubIcon />
           </a>
           <UserAvatar />
+
         </div>
         <p>Copyright © SEOKO 2021</p>
       </StyledFooterContent>
