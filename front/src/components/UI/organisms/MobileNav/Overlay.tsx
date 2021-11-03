@@ -17,4 +17,4 @@ const Overlay = ({ navState, openMenu }: MenuProps) => (
   <StyledOverlay onClick={openMenu} navState={navState} />
 );
 
-export default Overlay;
+export default React.memo(Overlay);

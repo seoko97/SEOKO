@@ -2,6 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import Logo from "@atoms/Logo";
 import GitHubIcon from "@icons/GItHubIcon";
+import UserAvatar from "@molecules/UserAvatar";
 
 const StyledFooterContent = styled.div`
   width: 100%;
@@ -24,10 +25,15 @@ const StyledFooterContent = styled.div`
   & > div {
     margin-bottom: 20px;
     display: flex;
-    gap: 50px;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
   }
   & > p {
     color: #6c757d !important;
+  }
+  & a {
+    max-height: 42px;
   }
 `;
 
@@ -37,16 +43,15 @@ const FooterContent = () => {
       <StyledFooterContent>
         <div>
           <Logo />
-          <span>
-            <a
-              href="https://github.com/seoko97"
-              about="instagram"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <GitHubIcon />
-            </a>
-          </span>
+          <a
+            href="https://github.com/seoko97"
+            about="instagram"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <GitHubIcon />
+          </a>
+          <UserAvatar />
         </div>
         <p>Copyright © SEOKO 2021</p>
       </StyledFooterContent>
@@ -54,4 +59,4 @@ const FooterContent = () => {
   );
 };
 
-export default FooterContent;
+export default React.memo(FooterContent);

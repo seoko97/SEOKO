@@ -1,3 +1,4 @@
+import React from "react";
 import { Global, css } from "@emotion/react";
 import reset from "emotion-reset";
 import { ThemeType } from ".";
@@ -34,7 +35,6 @@ const GlobalStyle = ({ theme }: GlobalProps) => (
       h5,
       h6 {
         margin-top: 0;
-        margin-bottom: 0.5em;
       }
       a {
         color: inherit;

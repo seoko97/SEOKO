@@ -5,12 +5,13 @@ import styled from "@emotion/styled";
 
 import Logo from "@atoms/Logo";
 import RowFrame from "@frames/RowFrame";
-import Nav from "@molecules/Nav/Nav";
+import Nav from "@molecules/Nav";
 import MobileNav from "@organisms/MobileNav";
 import MenuIcon from "@icons/MenuIcon";
 
 interface Props {
   scrollPosition: number;
+  pathname: string;
 }
 
 const StyledHeader = styled.header<Props>`
@@ -28,25 +29,38 @@ const StyledHeader = styled.header<Props>`
     height: 72px;
   }
 
-  & a {
-    color: #f8f9fa;
-  }
-  & svg {
-    fill: #f8f9fa;
-  }
+  ${({ pathname, scrollPosition, theme }) =>
+    pathname !== "/signin"
+      ? css`
+          & a {
+            color: #f8f9fa;
+          }
+          & svg {
+            fill: #f8f9fa;
+          }
+          ${scrollPosition >= 400 &&
+          css`
+            box-shadow: rgb(0 0 0 / 8%) 0px 0px 15px;
+            background: ${theme.BAKCGROUND_COLOR.PRIMARY_COLOR_RGBA};
+            & a {
+              color: ${theme.FONT_COLOR.PRIMARY_COLOR};
+            }
+            & svg {
+              fill: ${theme.FONT_COLOR.PRIMARY_COLOR};
+            }
+          `}
+        `
+      : css`
+          box-shadow: rgb(0 0 0 / 8%) 0px 0px 15px;
 
-  ${({ scrollPosition, theme }) =>
-    scrollPosition >= 400 &&
-    css`
-      box-shadow: rgb(0 0 0 / 8%) 0px 0px 15px;
-      background: ${theme.BAKCGROUND_COLOR.PRIMARY_COLOR_RGBA};
-      & a {
-        color: ${theme.FONT_COLOR.PRIMARY_COLOR};
-      }
-      & svg {
-        fill: ${theme.FONT_COLOR.PRIMARY_COLOR};
-      }
-    `}
+          background: ${theme.BAKCGROUND_COLOR.PRIMARY_COLOR_RGBA};
+          & a {
+            color: ${theme.FONT_COLOR.PRIMARY_COLOR};
+          }
+          & svg {
+            fill: ${theme.FONT_COLOR.PRIMARY_COLOR};
+          }
+        `}
 
   @media (min-width: ${({ theme }) => theme.BP.TABLET}) {
     & #menu_button {
@@ -85,7 +99,7 @@ const Header = () => {
 
   return (
     <>
-      <StyledHeader scrollPosition={scrollPosition}>
+      <StyledHeader scrollPosition={scrollPosition} pathname={router.pathname}>
         <RowFrame>
           <Logo />
           <Nav />
