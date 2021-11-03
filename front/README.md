@@ -32,6 +32,8 @@
 
 - Header, Footer 디자인 [ ✅ ]
 
+- SignIn Page 디자인 [ ✅ ]
+
 - 서버와 연결 후 User Avata 디자인 [ ]
 
 - 메인 페이지 디자인 [ ]
