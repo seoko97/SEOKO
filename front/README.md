@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -32,3 +33,42 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+=======
+# SEOKO's Front
+
+### **Page**
+
+- Main [ ]
+
+- Post [ ]
+
+- About [ ]
+
+- SignIn [ ]
+
+- Project [ ]
+
+- Profile [ ]
+
+<br />
+
+### **적용 Skills**
+
+- React
+- NextJs
+- Emotion
+- Typescript
+- Recoil
+- Storybook
+- ... (적용시 추가)
+
+<br />
+
+### **향후 진행 사항**
+
+- Header, Footer 디자인 [ ✅ ]
+
+- 서버와 연결 후 User Avata 디자인 [ ]
+
+- 메인 페이지 디자인 [ ]
+>>>>>>> 548f760a51706bbb587470c950b22564048e6f70
