@@ -46,13 +46,6 @@
     "@typescript-eslint/explicit-module-boundary-types": 0,
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true}]
   },
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
-      }
-    }
-  },
   "parserOptions": {
     "ecmaFeatures": {
       "path": ["src"],
@@ -60,5 +53,17 @@
     },
     "ecmaVersion": 2020,
     "sourceType": "module"
-  }
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
+      }
+    }
+  },
 }
