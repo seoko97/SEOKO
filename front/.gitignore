@@ -11,11 +11,8 @@
 # next.js
 /.next/
 /out/
-<<<<<<< HEAD
-=======
 next-env.d.ts
 
->>>>>>> 548f760a51706bbb587470c950b22564048e6f70
 
 # production
 /build
