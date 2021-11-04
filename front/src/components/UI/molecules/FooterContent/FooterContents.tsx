@@ -15,7 +15,7 @@ const StyledFooterContent = styled.div`
   & svg {
     width: 42px;
     height: 42px;
-    transition: all 0.15s ease-in-out 0s;
+    transition: all 0.2s ease-in-out 0s;
     fill: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
     &:hover {
       fill: ${({ theme }) => theme.SELECTION_EFFECT_COLOR.PRIMARY_COLOR};
@@ -52,7 +52,6 @@ const FooterContent = () => {
             <GitHubIcon />
           </a>
           <UserAvatar />
-
         </div>
         <p>Copyright © SEOKO 2021</p>
       </StyledFooterContent>

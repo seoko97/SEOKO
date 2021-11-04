@@ -1,7 +1,4 @@
 {
-<<<<<<< HEAD
-  "extends": "next/core-web-vitals"
-=======
   "parser": "@typescript-eslint/parser",
   "plugins": [
     "@typescript-eslint",
@@ -49,13 +46,6 @@
     "@typescript-eslint/explicit-module-boundary-types": 0,
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true}]
   },
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
-      }
-    }
-  },
   "parserOptions": {
     "ecmaFeatures": {
       "path": ["src"],
@@ -63,6 +53,17 @@
     },
     "ecmaVersion": 2020,
     "sourceType": "module"
-  }
->>>>>>> 548f760a51706bbb587470c950b22564048e6f70
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
+      }
+    }
+  },
 }
