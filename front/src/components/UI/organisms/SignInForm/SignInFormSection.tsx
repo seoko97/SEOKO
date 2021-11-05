@@ -1,8 +1,9 @@
 import React, { useCallback } from "react";
+import Link from "next/link";
 import styled from "@emotion/styled";
-import Input from "@atoms/Input/Input";
-import useInput from "@src/hooks/useInput";
-import Button from "../../atoms/Button/Button";
+import Input from "@atoms/Input";
+import useInput from "@hooks/useInput";
+import Button from "@atoms/Button/Button";
 
 const StyledFormSection = styled.form`
   display: flex;
@@ -22,9 +23,6 @@ const StyledFormSection = styled.form`
       font-weight: 600;
       text-align: center;
     }
-    /* &:last-of-type {
-      padding: 0 10px;
-    } */
     &:first-of-type {
       border-bottom: 1px solid #ccc;
       margin-bottom: 10px;
@@ -41,6 +39,12 @@ const StyledFormSection = styled.form`
       padding: 12px 0;
       font-size: 15px;
       font-weight: 500;
+    }
+    &:last-of-type {
+      font-size: 16px;
+      font-weight: 600;
+      text-align: center;
+      padding: 0;
     }
   }
 
@@ -79,6 +83,9 @@ const SignInFormSection = () => {
         </div>
         <div>
           <Button content="Sign In" />
+        </div>
+        <div>
+          <Link href="/signup">회원가입</Link>
         </div>
       </StyledFormSection>
     </>

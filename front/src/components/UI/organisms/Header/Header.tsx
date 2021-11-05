@@ -30,7 +30,7 @@ const StyledHeader = styled.header<Props>`
   }
 
   ${({ pathname, scrollPosition, theme }) =>
-    pathname !== "/signin"
+    pathname !== "/signin" && pathname !== "/signup"
       ? css`
           & a {
             color: #f8f9fa;
@@ -42,6 +42,7 @@ const StyledHeader = styled.header<Props>`
           css`
             box-shadow: rgb(0 0 0 / 8%) 0px 0px 15px;
             background: ${theme.BAKCGROUND_COLOR.PRIMARY_COLOR_RGBA};
+            backdrop-filter: blur(2px);
             & a {
               color: ${theme.FONT_COLOR.PRIMARY_COLOR};
             }
@@ -52,7 +53,7 @@ const StyledHeader = styled.header<Props>`
         `
       : css`
           box-shadow: rgb(0 0 0 / 8%) 0px 0px 15px;
-
+          backdrop-filter: blur(2px);
           background: ${theme.BAKCGROUND_COLOR.PRIMARY_COLOR_RGBA};
           & a {
             color: ${theme.FONT_COLOR.PRIMARY_COLOR};
@@ -83,9 +84,8 @@ const Header = () => {
     setPathName(router.pathname);
     const layoutRef = document.body;
 
-    function handleScroll() {
-      setScrollPosition(layoutRef.scrollTop);
-    }
+    const handleScroll = () => setScrollPosition(layoutRef.scrollTop);
+
     layoutRef?.addEventListener("scroll", handleScroll);
     return () => layoutRef?.removeEventListener("scroll", handleScroll);
   }, []);
