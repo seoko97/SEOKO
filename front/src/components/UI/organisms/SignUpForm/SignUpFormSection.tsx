@@ -1,12 +1,12 @@
 import React, { useCallback } from "react";
 import styled from "@emotion/styled";
+import { useRouter } from "next/router";
 
 import useInput from "@hooks/useInput";
 
 import Input from "@atoms/Input";
-import Button from "@atoms/Button/Button";
-import { useRecoilState } from "recoil";
-import { createUser } from "@src/states/users/selectors";
+import Button from "@atoms/Button";
+import { onSignup } from "@apis/users";
 
 const StyledFormSection = styled.form`
   display: flex;
@@ -55,10 +55,10 @@ const SignUpFormSection = () => {
   const { value: userId, handler: onChangeId } = useInput("");
   const { value: password, handler: onChangePassword } = useInput("");
   const { value: username, handler: onChangeUsername } = useInput("");
-  const [user, addUser] = useRecoilState(createUser);
+  const router = useRouter();
 
-  const onSignup = useCallback(
-    async (e) => {
+  const onSubmit = useCallback(
+    (e) => {
       e.preventDefault();
       if (!userId.length) return alert("아이디를 입력하세요");
       else if (!password.length) return alert("비밀번호를 입력하세요");
@@ -69,16 +69,19 @@ const SignUpFormSection = () => {
         password,
         username,
       };
-
-      console.log(userInfo);
-      addUser(userInfo);
+      onSignup(userInfo).then((res) => {
+        if (res.pass) {
+          alert(res.message);
+          router.push("/");
+        } else alert(res.err);
+      });
     },
     [userId, password, username],
   );
 
   return (
     <>
-      <StyledFormSection onSubmit={onSignup}>
+      <StyledFormSection onSubmit={onSubmit}>
         <div>
           <h1>회원가입</h1>
         </div>
