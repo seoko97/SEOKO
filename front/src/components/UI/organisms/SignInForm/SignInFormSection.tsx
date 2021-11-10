@@ -1,9 +1,14 @@
 import React, { useCallback } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useSetRecoilState } from "recoil";
 import styled from "@emotion/styled";
+
 import Input from "@atoms/Input";
+import Button from "@atoms/Button";
 import useInput from "@hooks/useInput";
-import Button from "@atoms/Button/Button";
+import { onSignin } from "@apis/users";
+import { userState } from "@states/users/atoms";
 
 const StyledFormSection = styled.form`
   display: flex;
@@ -54,26 +59,44 @@ const StyledFormSection = styled.form`
 `;
 
 const SignInFormSection = () => {
-  const { value: id, handler: onChangeId } = useInput("");
+  const { value: userId, handler: onChangeId } = useInput("");
   const { value: password, handler: onChangePassword } = useInput("");
+  const setUserInfo = useSetRecoilState(userState);
+  const router = useRouter();
 
-  const onSignIn = useCallback(
+  const onClickSignInBtn = useCallback(
     (e) => {
       e.preventDefault();
-      if (id.length === 0) return alert("아이디를 입력하세요");
+      if (userId.length === 0) return alert("아이디를 입력하세요");
       if (password.length === 0) return alert("비밀번호를 입력하세요");
+      const info = {
+        userId,
+        password,
+      };
+
+      onSignin(info)
+        .then((res) => {
+          if (res.pass) {
+            alert("로그인 성공");
+            setUserInfo(res.username);
+            router.push("/");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     },
-    [id, password],
+    [userId, password],
   );
 
   return (
     <>
-      <StyledFormSection onSubmit={onSignIn}>
+      <StyledFormSection onSubmit={onClickSignInBtn}>
         <div>
           <h1>로그인</h1>
         </div>
         <div>
-          <Input value={id} onChange={onChangeId} placeholder="아이디" />
+          <Input value={userId} onChange={onChangeId} placeholder="아이디" />
           <Input
             value={password}
             onChange={onChangePassword}

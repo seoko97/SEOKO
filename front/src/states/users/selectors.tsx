@@ -1,16 +1,15 @@
-import { onSignup } from "@src/apis/users";
-import { selector } from "recoil";
+import { DefaultValue, selector, selectorFamily } from "recoil";
+import { SignUpUser } from "@src/types/users";
 import { userState } from "./atoms";
 
-export const createUser = selector({
-  key: "createUser",
-  get: ({ get }) => get(userState),
-  set: ({ set }, value) => {
-    const data = {
-      username: "asd",
-      password: "1007",
-      userId: "wltjrgh",
-    };
-    const result = onSignup(data);
+interface Param extends SignUpUser {
+  [key: string]: any;
+}
+
+export const setUserState = selector<string | null>({
+  key: "setUserState",
+  get: async ({ get }) => get(userState),
+  set: ({ set }, userData) => {
+    if (userData instanceof DefaultValue) set(userState, userData);
   },
 });
