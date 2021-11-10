@@ -10,6 +10,7 @@ import DarkModeButton from "@molecules/DarkModeButton";
 
 import { darkTheme, lightTheme } from "@theme/.";
 import GlobalStyle from "@theme/GlobalStyle";
+import { initatialSigninCheck } from "@src/apis/users";
 
 interface Props extends AppProps {
   mode: string;
@@ -21,6 +22,11 @@ const SEOKO = ({ Component, pageProps, mode: modeInCookie }: Props) => {
 
   useEffect(() => {
     if (!cookies.mode) setCookies("mode", "light");
+    initatialSigninCheck()
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => console.log(e));
   }, []);
 
   const onClickDarkMode = useCallback(() => {
