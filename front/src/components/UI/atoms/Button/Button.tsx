@@ -10,6 +10,11 @@ const StyledButton = styled.button`
   border: 0;
   border-radius: 3px;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
+  cursor: pointer;
+  transition: filter 0.3s;
+  &:hover {
+    filter: brightness(80%);
+  }
 `;
 
 const Button = ({ content }: Props) => {
