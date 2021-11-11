@@ -13,6 +13,7 @@ const StyledSigninUserHeader = styled.div`
   align-items: center;
   justify-content: center;
   color: #fff;
+  z-index: 2;
 
   & > div {
     padding-top: 10px;
@@ -20,6 +21,12 @@ const StyledSigninUserHeader = styled.div`
 
     & span:first-of-type {
       margin-right: 5px;
+    }
+    & span:last-of-type {
+      cursor: pointer;
+      &:hover {
+        color: ${({ theme }) => theme.SELECTION_EFFECT_COLOR.PRIMARY_COLOR};
+      }
     }
   }
 `;
