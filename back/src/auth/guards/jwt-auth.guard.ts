@@ -7,7 +7,8 @@ const setAuth = (context: ExecutionContext) => {
   const req = context.switchToHttp().getRequest();
   const authCookie = req.cookies[jwtContents.header];
 
-  if (authCookie) req.header.authorization = `Bearer ${decryptValue(authCookie)}`;
+  if (authCookie) req.headers.authorization = `Bearer ${decryptValue(authCookie)}`;
+
   return req;
 };
 
@@ -18,9 +19,8 @@ export class JwtAuthGuard extends AuthGuard("jwt") {
   }
 
   handleRequest(err: unknown, user: any, info: any) {
-    if (err || !user) {
-      throw err || new UnauthorizedException(info.message);
-    }
+    if (err || !user) throw err || new UnauthorizedException(info.message);
+
     return user;
   }
 
