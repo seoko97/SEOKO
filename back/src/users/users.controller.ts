@@ -11,12 +11,10 @@ import { UserResDto } from "./dto/userResDto.dto";
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
-  // Promise<UserResDto>
   @Post("/signup")
-  async createUser(@Body() data: CreateUserDto): Promise<any> {
-    // const result = await this.userService.createUser(data);
-    // return result;
-    return { pass: true };
+  async createUser(@Body() data: CreateUserDto): Promise<UserResDto> {
+    const result = await this.userService.createUser(data);
+    return result;
   }
 
   @UseGuards(JwtAuthGuard)

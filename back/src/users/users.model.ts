@@ -21,7 +21,7 @@ export class User extends Model<User> {
   @Column({ type: DataType.STRING(15), unique: true })
   userId!: string;
 
-  @Column({ type: DataType.STRING(20) })
+  @Column({ type: DataType.STRING(200) })
   password!: string;
 
   @Column({ type: DataType.STRING(20) })

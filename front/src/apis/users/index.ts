@@ -1,4 +1,5 @@
 import { SignInUser, SignUpUser } from "@src/types/users";
+import { AxiosError } from "axios";
 import axios from "../.";
 
 export const onSignup = async (data: SignUpUser) => {
@@ -20,7 +21,12 @@ export const onSignin = async (data: SignInUser) => {
 };
 
 export const initatialSigninCheck = async () => {
-  const result = await axios.get("users/info").then((res) => res.data);
+  const result = await axios
+    .get("users/info")
+    .then((res) => {
+      return res.data;
+    })
+    .catch((e: AxiosError) => console.log(e.response));
 
   return result;
 };

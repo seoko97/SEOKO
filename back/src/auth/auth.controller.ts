@@ -21,11 +21,11 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post("/signin")
   @HttpCode(200)
-  async sign(
+  async signin(
     @User() _user: TokenUser,
     @Res({ passthrough: true }) res: Response,
   ): Promise<SignInDto> {
-    const accessToken = await this.authService.signIn(_user);
+    const accessToken = await this.authService.signin({ id: _user.id });
     const { username } = (await this.userService.getById(_user.id)) as UserModel;
 
     res.cookie(jwtContents.header, accessToken, {
@@ -45,7 +45,7 @@ export class AuthController {
 
     if (!isVerifiedToken) return { pass: false, err: "expried refresh token" };
 
-    const accessToken = await this.authService.signIn(_user);
+    const accessToken = await this.authService.signin(_user);
 
     res.cookie(jwtContents.header, accessToken, {
       httpOnly: true,
@@ -62,11 +62,11 @@ export class AuthController {
     @User() _user: TokenUser,
     @Res({ passthrough: true }) res: Response,
   ) {
-    if (_user) {
-      await this.userService.updateRefreshToken(_user.id, null);
-      req.logout();
-      res.clearCookie(jwtContents.header);
-      res.send("logout");
-    }
+    if (!_user) return { pass: false };
+    await this.userService.updateRefreshToken(_user.id, null);
+    req.logout();
+    res.clearCookie(jwtContents.header);
+
+    return { pass: true };
   }
 }
