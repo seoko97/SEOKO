@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 
 import ParallaxForm from "@molecules/ParallaxForm";
 import PageContent from "@molecules/PageContent";
+import PostList from "@src/components/UI/organisms/PostList";
 
 const StyledDiv = styled.div`
   width: 100%;
@@ -17,11 +18,7 @@ const Home = () => {
         <p>SEOKO&apos;s blog</p>
       </ParallaxForm>
       <PageContent>
-        <StyledDiv>asd</StyledDiv>
-        <StyledDiv>asd</StyledDiv>
-        <StyledDiv>asd</StyledDiv>
-        <StyledDiv>asd</StyledDiv>
-        <StyledDiv>asd</StyledDiv>
+        <PostList />
       </PageContent>
     </>
   );
