@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 
-interface Props {
+export interface Props {
   id: number;
   category: string;
   title: string;
