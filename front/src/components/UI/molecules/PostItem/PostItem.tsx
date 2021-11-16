@@ -1,6 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { Props as PostProps } from "@states/posts/atoms";
 
-const PostItem = () => {
+interface Props {
+  post: PostProps;
+}
+
+const PostItem = ({ post }: Props) => {
   return (
     <>
       <div>asd</div>
