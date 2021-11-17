@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
 
 import { JwtAuthGuard } from "@auth/guards/jwt-auth.guard";
 import { TokenUser, User } from "@decorators/user.decorator";
@@ -27,5 +27,11 @@ export class UsersController {
     if (!user) return { pass: false, err: "존재하지 않습니다." };
 
     return { pass: true, username: user.username };
+  }
+
+  @Get("/:id")
+  async getUser(@Param() param) {
+    console.log(param.id);
+    return { pass: true };
   }
 }
