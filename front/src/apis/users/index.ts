@@ -1,6 +1,6 @@
 import { SignInUser, SignUpUser } from "@src/types/users";
 import { AxiosError } from "axios";
-import axios from "../.";
+import axios from "../";
 
 export const onSignup = async (data: SignUpUser) => {
   const result = await axios.post("users/signup", data).then((res) => res.data);
@@ -21,12 +21,17 @@ export const onSignin = async (data: SignInUser) => {
 };
 
 export const initatialSigninCheck = async () => {
+  console.log("실행");
   const result = await axios
     .get("users/info")
-    .then((res) => {
-      return res.data;
-    })
-    .catch((e: AxiosError) => console.log(e.response));
+    .then((res) => res.data)
+    .catch((e: AxiosError) => e);
+
+  return result;
+};
+
+export const asd = async () => {
+  const result = await axios.get("users/1").then((res) => res.data);
 
   return result;
 };
