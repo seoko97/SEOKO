@@ -7,8 +7,8 @@ interface Props {
 }
 
 const StyledParallaxForm = styled.div<Props>`
-  position: relative;
-  top: -104px;
+  position: absolute;
+  top: 0;
 
   background-image: url(${({ imgSrc }) => imgSrc});
 
@@ -20,7 +20,6 @@ const StyledParallaxForm = styled.div<Props>`
 
   z-index: -1;
 
-  margin-bottom: 20px;
   padding: 160px 0;
   text-align: center;
   color: #fff;

@@ -1,16 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
 interface Props {
   href: string;
   name: string;
-  emoji: string;
 }
 
-const StyledNavItem = styled.li`
+const StyledNavItem = styled.li<{ path: string; name: string }>`
   box-sizing: border-box;
-  padding: 5px 10px;
+  padding: 15px 10px;
   width: 100%;
 
   & a {
@@ -18,15 +18,11 @@ const StyledNavItem = styled.li`
     width: 100%;
     font-weight: 700;
   }
-  & span {
-    display: none;
-  }
 
   &:hover {
     & a {
-      transition: color 0.25s ease-in-out 0s;
-
-      color: ${({ theme }) => theme.SELECTION_EFFECT_COLOR.SECONDARY_COLOR};
+      transition: all 0.25s ease-in-out 0s;
+      filter: brightness(50%);
     }
     cursor: pointer;
   }
@@ -34,22 +30,29 @@ const StyledNavItem = styled.li`
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     margin-bottom: 15px;
     padding-left: 15px;
-    & span {
-      display: inline-block;
-    }
+    color: ${({ theme, path, name }) =>
+      name === path ? "inherit" : theme.SELECTION_EFFECT_COLOR.SECONDARY_COLOR};
   }
 `;
 
-const NavItem: React.FC<Props> = ({ emoji, href, name }) => (
-  <>
-    <StyledNavItem>
-      <Link href={href.toLowerCase()} prefetch={false}>
-        <a>
-          <span>{emoji}</span> {name}
-        </a>
-      </Link>
-    </StyledNavItem>
-  </>
-);
+const NavItem: React.FC<Props> = ({ href, name }) => {
+  const router = useRouter();
+  const [path, setPath] = useState<string>("");
+
+  useEffect(() => {
+    const p = router.asPath.split("/")[1].toUpperCase();
+    setPath(p === "" ? "HOME" : p);
+  }, [router.asPath]);
+
+  return (
+    <>
+      <StyledNavItem path={path} name={name}>
+        <Link href={href.toLowerCase()} prefetch={false}>
+          <a>{name}</a>
+        </Link>
+      </StyledNavItem>
+    </>
+  );
+};
 
 export default React.memo(NavItem);
