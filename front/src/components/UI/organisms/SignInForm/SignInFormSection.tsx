@@ -13,11 +13,10 @@ import { userState } from "@states/users/atoms";
 const StyledFormSection = styled.form`
   display: flex;
   flex-direction: column;
+  width: 400px;
   padding: 30px 10px;
   box-sizing: border-box;
-  max-width: 400px;
   border-top: 4px solid ${({ theme }) => theme.BUTTON_COLOR.PRIMARY_COLOR};
-  width: 400px;
 
   & div {
     width: 100%;

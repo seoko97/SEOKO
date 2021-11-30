@@ -19,17 +19,13 @@ const StyedPostItem = styled.div`
   box-shadow: 0 1px 6px 0 hsla(0, 0%, 0%, 0.1);
   position: relative;
 
-  @media (max-width: ${({ theme }) => theme.BP.PC}) {
-    width: 100%;
-  }
-
   @media (max-width: ${({ theme }) => theme.BP.TABLET_Y}) {
+    width: 100%;
     flex-direction: column;
   }
 `;
 
 const PostItem = ({ post }: Props) => {
-  console.log(post);
   return (
     <>
       <StyedPostItem>

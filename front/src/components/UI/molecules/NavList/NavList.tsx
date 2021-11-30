@@ -3,10 +3,10 @@ import NavItem from "@atoms/NavItem";
 
 const NavList = () => (
   <ul>
-    <NavItem emoji="🏠" name="HOME" href="/" />
-    <NavItem emoji="✍🏻" name="POST" href="/post" />
-    <NavItem emoji="📚" name="PORTFOLIO" href="/portfolio" />
-    <NavItem emoji="🚶‍♂️" name="ABOUT" href="/about" />
+    <NavItem name="HOME" href="/" />
+    <NavItem name="POST" href="/post" />
+    <NavItem name="PORTFOLIO" href="/portfolio" />
+    <NavItem name="ABOUT" href="/about" />
   </ul>
 );
 

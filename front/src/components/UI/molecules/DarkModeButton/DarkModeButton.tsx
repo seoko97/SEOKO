@@ -41,7 +41,6 @@ const StyledDarkModeButton = styled.div`
     transform: scale(1.1);
 
     & > div {
-      transform: rotate(270deg);
       & svg {
         fill: #ffd500;
       }

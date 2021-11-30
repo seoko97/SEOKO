@@ -13,7 +13,6 @@ const StyledFormSection = styled.form`
   flex-direction: column;
   padding: 30px 10px;
   box-sizing: border-box;
-  max-width: 400px;
   border-top: 4px solid ${({ theme }) => theme.BUTTON_COLOR.PRIMARY_COLOR};
   width: 400px;
 
