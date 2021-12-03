@@ -1,5 +1,5 @@
-import { Controller, HttpCode, Post, Req, Res, UseGuards } from "@nestjs/common";
-import { Request, Response } from "express";
+import { Controller, HttpCode, Post, Res, UseGuards } from "@nestjs/common";
+import { Response } from "express";
 
 import { User as UserModel } from "@users/users.model";
 import { UsersService } from "@users/users.service";
@@ -57,14 +57,9 @@ export class AuthController {
 
   @UseGuards(ExpriedJwtAuthGuard)
   @Post("/signout")
-  async signout(
-    @Req() req: Request,
-    @User() _user: TokenUser,
-    @Res({ passthrough: true }) res: Response,
-  ) {
+  async signout(@User() _user: TokenUser, @Res({ passthrough: true }) res: Response) {
     if (!_user) return { pass: false };
     await this.userService.updateRefreshToken(_user.id, null);
-    req.logout();
     res.clearCookie(jwtContents.header);
 
     return { pass: true };
