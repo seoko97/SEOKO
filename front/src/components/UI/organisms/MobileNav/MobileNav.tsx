@@ -30,15 +30,13 @@ const StyledNav = styled.div<{ navState: boolean }>`
 
     color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
 
-    box-shadow: 1px 0 6px #000;
-
     & #close_box {
       cursor: pointer;
-      padding: 10px;
+      padding: 15px 10px 10px 10px;
       margin-bottom: 10px;
       & svg {
-        width: 20px;
-        height: 20px;
+        width: 15px;
+        height: 15px;
         transition: all 0.3s ease-in-out 0s;
         fill: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
         &:hover {

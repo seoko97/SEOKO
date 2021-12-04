@@ -25,4 +25,3 @@ const PageContent = ({ children }: Props) => {
 };
 
 export default PageContent;
-3;

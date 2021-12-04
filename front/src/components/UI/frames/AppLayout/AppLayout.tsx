@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "@emotion/styled";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 
 import Footer from "@organisms/Footer";
 import Header from "@organisms/Header";
 import SigninUserHeader from "@molecules/SigninUserHeader";
+
 import { userState } from "@states/users/atoms";
-import { initatialSigninCheck } from "@src/apis/users";
 
 const StyledAppLayout = styled.div`
   width: 100%;
@@ -23,19 +23,12 @@ interface Props {
 }
 
 const AppLayout = ({ children }: Props) => {
-  const [userInfo, setUserInfo] = useRecoilState(userState);
-
-  useEffect(() => {
-    initatialSigninCheck().then((res) => {
-      // console.log(res);
-      // if (res.pass) setUserInfo(res.username);
-    });
-  }, []);
+  const user = useRecoilValue(userState);
 
   return (
     <>
       <StyledAppLayout>
-        {userInfo && <SigninUserHeader />}
+        {user && <SigninUserHeader />}
         <Header />
         {children}
         <Footer />
