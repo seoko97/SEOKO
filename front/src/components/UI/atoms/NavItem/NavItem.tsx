@@ -16,7 +16,6 @@ const StyledNavItem = styled.li<{ path: string; name: string }>`
   & a {
     display: block;
     width: 100%;
-    font-weight: 700;
   }
 
   &:hover {
@@ -28,7 +27,6 @@ const StyledNavItem = styled.li<{ path: string; name: string }>`
   }
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
-    margin-bottom: 15px;
     padding-left: 15px;
     color: ${({ theme, path, name }) =>
       name === path ? "inherit" : theme.SELECTION_EFFECT_COLOR.SECONDARY_COLOR};

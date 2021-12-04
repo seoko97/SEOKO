@@ -9,7 +9,7 @@ const StyledOverlay = styled.div<{ navState: boolean }>`
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.PRIMARY_COLOR_RGBA};
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 2;
 `;
 

@@ -1,37 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 
 import ParallaxForm from "@molecules/ParallaxForm";
 import PageContent from "@molecules/PageContent";
-import PostList from "@src/components/UI/organisms/PostList";
-import RowFrame from "@src/components/UI/frames/RowFrame";
+import PostList from "@organisms/PostList";
+import RowFrame from "@frames/RowFrame";
+import Category from "@molecules/Category";
 
+import { postState, Props as PostProps } from "@states/posts/atoms";
+import { categoryState, Props as CategoryProps } from "@states/categories/atoms";
+import { useSetRecoilState } from "recoil";
+
+interface Props {
+  posts: PostProps[];
+  categories: CategoryProps[];
+}
 const StyledDiv = styled.div`
+  position: relative;
   width: 100%;
   display: flex;
-  position: relative;
-  & #asdasd {
-    flex: 1;
-    height: 200px;
-    position: sticky;
-    top: 100px;
-    background-color: #ccc;
-  }
 
   @media (max-width: ${({ theme }) => theme.BP.HDPC}) {
-    flex-direction: column;
-    & #asdasd {
-      position: relative;
-      top: 0;
-      width: 100%;
-      flex-grow: 0;
-      order: 1;
-      margin-bottom: 30px;
-    }
+    flex-direction: column-reverse;
   }
 `;
 
-const Home = () => {
+const Home = ({ posts, categories }: Props) => {
+  const setPosts = useSetRecoilState(postState);
+  const setCategories = useSetRecoilState(categoryState);
+
+  useEffect(() => {
+    setPosts(posts);
+    setCategories(categories);
+  }, []);
+
   return (
     <>
       <ParallaxForm imgSrc="/main.jpg">
@@ -42,7 +44,7 @@ const Home = () => {
         <RowFrame>
           <StyledDiv>
             <PostList />
-            <div id="asdasd">asdasd</div>
+            <Category />
           </StyledDiv>
         </RowFrame>
       </PageContent>
