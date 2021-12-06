@@ -1,21 +1,30 @@
 import React, { useCallback, useEffect, useMemo } from "react";
+import axios from "axios";
 import Head from "next/head";
 import { AppContext, AppProps } from "next/app";
 import { RecoilRoot } from "recoil";
 import { useCookies } from "react-cookie";
 import { ThemeProvider } from "@emotion/react";
-import cookieParser from "@src/lib/cookieParser";
+
+import cookieParser from "@lib/cookieParser";
 import AppLayout from "@frames/AppLayout";
 import DarkModeButton from "@molecules/DarkModeButton";
+import CheckSinginUser from "@lib/checkSinginUser";
 
 import { darkTheme, lightTheme } from "@theme/.";
 import GlobalStyle from "@theme/GlobalStyle";
+import { initatialSigninCheck } from "@apis/users";
 
 interface Props extends AppProps {
   mode: string;
+  user: null | {
+    pass: boolean;
+    username: string;
+    err?: string;
+  };
 }
 
-const SEOKO = ({ Component, pageProps, mode: modeInCookie }: Props) => {
+const SEOKO = ({ Component, pageProps, mode: modeInCookie, user }: Props) => {
   const [cookies, setCookies] = useCookies(["mode"]);
   const mode = useMemo(() => cookies.mode || modeInCookie, [cookies.mode, modeInCookie]);
 
@@ -34,6 +43,7 @@ const SEOKO = ({ Component, pageProps, mode: modeInCookie }: Props) => {
       </Head>
       <ThemeProvider theme={mode === "light" ? lightTheme : darkTheme}>
         <RecoilRoot>
+          <CheckSinginUser username={user?.username || ""} pass={user?.pass || false} />
           <GlobalStyle theme={mode === "light" ? lightTheme : darkTheme} />
           <AppLayout>
             <Component {...pageProps} />
@@ -46,9 +56,13 @@ const SEOKO = ({ Component, pageProps, mode: modeInCookie }: Props) => {
 };
 
 SEOKO.getInitialProps = async ({ ctx }: AppContext) => {
-  const cookies = cookieParser(ctx.req?.headers?.cookie);
+  const cookies = ctx.req?.headers?.cookie;
+  const { mode } = cookieParser(cookies);
 
-  return { mode: cookies.mode || "light" };
+  if (ctx.req && cookies) axios.defaults.headers.common.cookie = cookies;
+  const user = await initatialSigninCheck();
+
+  return { mode: mode || "light", user };
 };
 
 export default SEOKO;
