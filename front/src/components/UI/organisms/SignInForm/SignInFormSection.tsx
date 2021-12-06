@@ -1,7 +1,7 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useSetRecoilState } from "recoil";
 import styled from "@emotion/styled";
 
 import Input from "@atoms/Input";
@@ -60,30 +60,25 @@ const StyledFormSection = styled.form`
 const SignInFormSection = () => {
   const { value: userId, handler: onChangeId } = useInput("");
   const { value: password, handler: onChangePassword } = useInput("");
-  const setUserInfo = useSetRecoilState(userState);
+  const [user, setUserInfo] = useRecoilState(userState);
   const router = useRouter();
 
+  useEffect(() => {
+    if (user) router.back();
+  }, []);
+
   const onClickSignInBtn = useCallback(
-    (e) => {
+    async (e) => {
       e.preventDefault();
       if (userId.length === 0) return alert("아이디를 입력하세요");
       if (password.length === 0) return alert("비밀번호를 입력하세요");
-      const info = {
-        userId,
-        password,
-      };
 
-      onSignin(info)
-        .then((res) => {
-          if (res.pass) {
-            alert("로그인 성공");
-            setUserInfo(res.username);
-            router.push("/");
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      const userInfo = await onSignin({ userId, password });
+
+      if (userInfo?.pass) {
+        router.push("/");
+        setUserInfo(userInfo.username);
+      } else console.log(e);
     },
     [userId, password],
   );

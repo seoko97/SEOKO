@@ -17,7 +17,7 @@ const StyledPostImg = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    border-radius: 5px 0 0 5px;
+    border-radius: 5px;
     object-fit: cover;
     object-position: center center;
   }
@@ -28,10 +28,6 @@ const StyledPostImg = styled.div`
     width: 100%;
     height: auto;
     padding-bottom: 70%;
-
-    & img {
-      border-radius: 5px 5px 0 0;
-    }
   }
 `;
 
@@ -39,7 +35,7 @@ const PostImg = ({ titleImage }: Props) => {
   return (
     <>
       <StyledPostImg>
-        <img src={titleImage} />
+        <img src={titleImage} alt="titleImg" />
       </StyledPostImg>
     </>
   );

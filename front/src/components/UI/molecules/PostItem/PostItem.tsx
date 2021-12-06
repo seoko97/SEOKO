@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import styled from "@emotion/styled";
 import { Props as PostProps } from "@states/posts/atoms";
 import PostImg from "./PostImg";
@@ -11,13 +12,17 @@ interface Props {
 const StyedPostItem = styled.div`
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 30px;
-  background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.SECONDARY_COLOR};
-  border-radius: 5px;
-  box-shadow: 0 1px 6px 0 hsla(0, 0%, 0%, 0.1);
+  margin-bottom: 60px;
   position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 5px;
+
+  &:hover {
+    transform: scale(1.01);
+  }
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET_Y}) {
     width: 100%;
@@ -28,10 +33,12 @@ const StyedPostItem = styled.div`
 const PostItem = ({ post }: Props) => {
   return (
     <>
-      <StyedPostItem>
-        <PostImg titleImage={post.titleImage} />
-        <PostContent content={post.content} tags={post.tags} title={post.title} />
-      </StyedPostItem>
+      <Link href={`/post/${post.id}`}>
+        <StyedPostItem>
+          <PostImg titleImage={post.titleImage} />
+          <PostContent content={post.content} tags={post.tags} title={post.title} />
+        </StyedPostItem>
+      </Link>
     </>
   );
 };
