@@ -60,8 +60,8 @@ const SignUpFormSection = () => {
     (e) => {
       e.preventDefault();
       if (!userId.length) return alert("아이디를 입력하세요");
-      else if (!password.length) return alert("비밀번호를 입력하세요");
-      else if (!username.length) return alert("이름을 입력하세요");
+      if (!password.length) return alert("비밀번호를 입력하세요");
+      if (!username.length) return alert("이름을 입력하세요");
 
       const userInfo = {
         userId,
