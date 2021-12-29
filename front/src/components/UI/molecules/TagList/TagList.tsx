@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import React from "react";
-import Tag from "../../atoms/Tag";
+import Tag from "@atoms/Tag";
 
 interface Props {
   tags: string[];
@@ -12,10 +12,8 @@ const StyledTagList = styled.div`
   flex-direction: row;
   color: ${({ theme }) => theme.FONT_COLOR.LOGO_COLOR};
   font-weight: 500;
-
-  & > div {
-    margin-right: 5px;
-  }
+  margin-top: 10px;
+  flex-wrap: wrap;
 `;
 
 const TagList = ({ tags }: Props) => {

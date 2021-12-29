@@ -12,10 +12,6 @@ const StyledDiv = styled.div`
 const PortFolio = () => {
   return (
     <>
-      <ParallaxForm imgSrc="/portfolio.jpg">
-        <h2>Portfolio</h2>
-        <p>제작한 게시물입니다.</p>
-      </ParallaxForm>
       <PageContent>
         <StyledDiv>asd</StyledDiv>
         <StyledDiv>asd</StyledDiv>

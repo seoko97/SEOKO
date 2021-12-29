@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 
-import ParallaxForm from "@molecules/ParallaxForm";
 import PageContent from "@molecules/PageContent";
 import PostList from "@organisms/PostList";
 import RowFrame from "@frames/RowFrame";
@@ -36,10 +35,6 @@ const Home = ({ posts, categories }: Props) => {
 
   return (
     <>
-      <ParallaxForm imgSrc="/main.jpg">
-        <h2>Main</h2>
-        <p>SEOKO&apos;s blog</p>
-      </ParallaxForm>
       <PageContent>
         <RowFrame>
           <StyledDiv>

@@ -12,20 +12,23 @@ interface Props {
 const StyedPostItem = styled.div`
   width: 100%;
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+
   margin-bottom: 60px;
   position: relative;
   cursor: pointer;
   transition: all 0.3s ease;
-  padding: 5px;
+  border-radius: 10px;
+  padding: 10px;
+  box-sizing: border-box;
 
   &:hover {
-    transform: scale(1.01);
+    transform: translateY(-10px);
+    box-shadow: 0px 1px 10px -4px rgba(196, 196, 196, 0.7);
   }
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET_Y}) {
-    width: 100%;
     flex-direction: column;
   }
 `;
