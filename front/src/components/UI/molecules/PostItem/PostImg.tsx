@@ -7,27 +7,29 @@ interface Props {
 
 const StyledPostImg = styled.div`
   width: 250px;
-  height: 200px;
-  overflow: hidden;
-  position: relative;
+  height: 100%;
 
-  & img {
-    position: absolute;
-    top: 0;
-    left: 0;
+  & > div {
     width: 100%;
-    height: 100%;
-    border-radius: 5px;
-    object-fit: cover;
-    object-position: center center;
+    position: relative;
+    padding-bottom: 200px;
+    & img {
+      border-radius: 10px;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET_Y}) {
-    flex-direction: column;
-
     width: 100%;
-    height: auto;
-    padding-bottom: 70%;
+    max-height: 400px;
+    & > div {
+      padding-bottom: 70%;
+    }
+
+    flex-direction: column;
   }
 `;
 
@@ -35,7 +37,9 @@ const PostImg = ({ titleImage }: Props) => {
   return (
     <>
       <StyledPostImg>
-        <img src={titleImage} alt="titleImg" />
+        <div>
+          <img src={titleImage} alt="titleImg" />
+        </div>
       </StyledPostImg>
     </>
   );

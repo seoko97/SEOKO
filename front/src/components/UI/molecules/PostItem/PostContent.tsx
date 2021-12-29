@@ -4,33 +4,34 @@ import TagList from "@molecules/TagList";
 
 const StyledPostConetent = styled.div`
   width: calc(100% - 250px);
+  padding: 10px 20px;
+  box-sizing: border-box;
 
   display: flex;
   flex-direction: column;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
+  word-break: break-all;
 
-  & > div {
-    padding: 0 20px;
-    height: 100%;
-    h2 {
-      width: 100%;
-      font-weight: 600;
-      font-size: 22px;
+  h1 {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+  p {
+    &:first-of-type {
+      font-size: 11px;
+      margin-bottom: 5px;
+      color: #ccc;
+      font-weight: 300;
     }
-    & > * {
+    &:last-of-type {
+      flex-grow: 2;
       margin-bottom: 5px;
     }
   }
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET_Y}) {
     width: 100%;
-    height: auto;
-    & > div {
-      padding: 10px 0;
-      h2 {
-        font-size: 19px;
-      }
-    }
   }
 `;
 
@@ -44,12 +45,10 @@ const PostContent = ({ title, content, tags }: Props) => {
   return (
     <>
       <StyledPostConetent>
-        <div>
-          <h2>{title}</h2>
-          <p>asd</p>
-          <div>{content}</div>
-          <TagList tags={tags} />
-        </div>
+        <h1>{title}</h1>
+        <p>날짜</p>
+        <p>{content}</p>
+        <TagList tags={tags} />
       </StyledPostConetent>
     </>
   );
