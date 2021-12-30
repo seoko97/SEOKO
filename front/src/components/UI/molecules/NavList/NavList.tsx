@@ -3,9 +3,9 @@ import NavItem from "@atoms/NavItem";
 
 const NavList = () => (
   <ul>
-    <NavItem name="HOME" href="/" />
-    <NavItem name="POST" href="/post" />
-    <NavItem name="PORTFOLIO" href="/portfolio" />
+    <NavItem name="홈" href="/" />
+    <NavItem name="카테고리" href="/post" />
+    <NavItem name="태그" href="/portfolio" />
     <NavItem name="ABOUT" href="/about" />
   </ul>
 );

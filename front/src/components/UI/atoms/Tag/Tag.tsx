@@ -11,6 +11,8 @@ const StyledTag = styled.div`
   background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.SECONDARY_COLOR};
   font-size: 12px;
   border-radius: 10px;
+  margin: 0 5px 5px 0;
+
   &:hover {
     text-decoration: underline;
   }

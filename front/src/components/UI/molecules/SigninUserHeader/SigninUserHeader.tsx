@@ -7,6 +7,7 @@ import { onSignout } from "@apis/users";
 
 const StyledSigninUserHeader = styled.div`
   width: 100vw;
+  height: 32px;
   position: absolute;
   top: 0;
   display: flex;
@@ -16,8 +17,8 @@ const StyledSigninUserHeader = styled.div`
   z-index: 2;
 
   & > div {
-    padding-top: 10px;
     text-align: right;
+    padding: 10px 10px 0 0;
 
     & span:first-of-type {
       margin-right: 5px;
