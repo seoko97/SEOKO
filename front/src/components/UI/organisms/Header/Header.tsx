@@ -5,8 +5,7 @@ import styled from "@emotion/styled";
 
 import Logo from "@atoms/Logo";
 import RowFrame from "@frames/RowFrame";
-import Nav from "@molecules/Nav";
-import MobileNav from "@organisms/MobileNav";
+import Nav from "@organisms/Nav";
 import MenuIcon from "@icons/MenuIcon";
 
 interface Props {
@@ -29,45 +28,18 @@ const StyledHeader = styled.header<Props>`
     height: 72px;
   }
 
-  ${({ pathname, scrollPosition, theme }) =>
-    pathname !== "/signin" && pathname !== "/signup"
-      ? css`
-          & a {
-            color: #f8f9fa;
-          }
-          & svg {
-            fill: #f8f9fa;
-          }
-          ${scrollPosition >= 400 &&
-          css`
-            box-shadow: rgb(0 0 0 / 8%) 0px 0px 15px;
-            background: ${theme.BAKCGROUND_COLOR.PRIMARY_COLOR_RGBA};
-            backdrop-filter: blur(2px);
-            & a {
-              color: ${theme.FONT_COLOR.PRIMARY_COLOR};
-            }
-            & svg {
-              fill: ${theme.FONT_COLOR.PRIMARY_COLOR};
-            }
-          `}
-        `
-      : css`
-          box-shadow: rgb(0 0 0 / 8%) 0px 0px 15px;
-          backdrop-filter: blur(2px);
-          background: ${theme.BAKCGROUND_COLOR.PRIMARY_COLOR_RGBA};
-          & a {
-            color: ${theme.FONT_COLOR.PRIMARY_COLOR};
-          }
-          & svg {
-            fill: ${theme.FONT_COLOR.PRIMARY_COLOR};
-          }
-        `}
+  /* box-shadow: rgb(0 0 0 / 8%) 0px 0px 15px; */
 
-  @media (min-width: ${({ theme }) => theme.BP.TABLET}) {
-    & #menu_button {
-      display: none;
+  ${({ theme }) => css`
+    background: ${theme.BAKCGROUND_COLOR.PRIMARY_COLOR_RGBA};
+    backdrop-filter: blur(2px);
+    & a {
+      color: ${theme.FONT_COLOR.PRIMARY_COLOR};
     }
-  }
+    & svg {
+      fill: ${theme.FONT_COLOR.PRIMARY_COLOR};
+    }
+  `}
 `;
 
 const Header = () => {
@@ -102,13 +74,12 @@ const Header = () => {
       <StyledHeader scrollPosition={scrollPosition} pathname={router.pathname}>
         <RowFrame>
           <Logo />
-          <Nav />
           <div onClick={openMenu} id="menu_button">
             <MenuIcon />
           </div>
         </RowFrame>
       </StyledHeader>
-      <MobileNav openMenu={openMenu} navState={navState} />
+      <Nav menuController={openMenu} navState={navState} />
     </>
   );
 };
