@@ -13,7 +13,7 @@ const StyledSigninUserHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   z-index: 2;
 
   & > div {

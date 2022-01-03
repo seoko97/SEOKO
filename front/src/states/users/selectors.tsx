@@ -1,4 +1,4 @@
-import { DefaultValue, selector, selectorFamily } from "recoil";
+import { DefaultValue, selector } from "recoil";
 import { SignUpUser } from "@src/types/users";
 import { userState } from "./atoms";
 

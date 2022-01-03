@@ -9,22 +9,18 @@ import { ThemeProvider } from "@emotion/react";
 import cookieParser from "@lib/cookieParser";
 import AppLayout from "@frames/AppLayout";
 import DarkModeButton from "@molecules/DarkModeButton";
-import CheckSinginUser from "@lib/checkSinginUser";
 
 import { darkTheme, lightTheme } from "@theme/.";
 import GlobalStyle from "@theme/GlobalStyle";
 import { initatialSigninCheck } from "@apis/users";
+import { allAtoms, initializeRecoilState } from "@states/.";
 
 interface Props extends AppProps {
   mode: string;
-  user: null | {
-    pass: boolean;
-    username: string;
-    err?: string;
-  };
+  initialRecoilState: typeof allAtoms;
 }
 
-const SEOKO = ({ Component, pageProps, mode: modeInCookie, user }: Props) => {
+const SEOKO = ({ Component, pageProps, mode: modeInCookie, initialRecoilState = {} }: Props) => {
   const [cookies, setCookies] = useCookies(["mode"]);
   const mode = useMemo(() => cookies.mode || modeInCookie, [cookies.mode, modeInCookie]);
 
@@ -42,8 +38,7 @@ const SEOKO = ({ Component, pageProps, mode: modeInCookie, user }: Props) => {
         <title>SEOKO</title>
       </Head>
       <ThemeProvider theme={mode === "light" ? lightTheme : darkTheme}>
-        <RecoilRoot>
-          <CheckSinginUser username={user?.username || ""} pass={user?.pass || false} />
+        <RecoilRoot initializeState={initializeRecoilState(initialRecoilState)}>
           <GlobalStyle theme={mode === "light" ? lightTheme : darkTheme} />
           <AppLayout>
             <Component {...pageProps} />
@@ -61,8 +56,12 @@ SEOKO.getInitialProps = async ({ ctx }: AppContext) => {
 
   if (ctx.req && cookies) axios.defaults.headers.common.cookie = cookies;
   const user = await initatialSigninCheck();
+  const initialRecoilState = {
+    user,
+  };
+  console.log("@@@@", user);
 
-  return { mode: mode || "light", user };
+  return { mode: mode || "light", initialRecoilState };
 };
 
 export default SEOKO;
