@@ -7,12 +7,11 @@ import RowFrame from "@frames/RowFrame";
 import Category from "@molecules/Category";
 
 import { postState, Props as PostProps } from "@states/posts/atoms";
-import { categoryState, Props as CategoryProps } from "@states/categories/atoms";
 import { useSetRecoilState } from "recoil";
 
 interface Props {
   posts: PostProps[];
-  categories: CategoryProps[];
+  // categories: CategoryProps[];
 }
 const StyledDiv = styled.div`
   position: relative;
@@ -24,13 +23,11 @@ const StyledDiv = styled.div`
   }
 `;
 
-const Home = ({ posts, categories }: Props) => {
+const Home = ({ posts }: Props) => {
   const setPosts = useSetRecoilState(postState);
-  const setCategories = useSetRecoilState(categoryState);
 
   useEffect(() => {
     setPosts(posts);
-    setCategories(categories);
   }, []);
 
   return (

@@ -1,12 +1,8 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { useRecoilValue } from "recoil";
 
 import Footer from "@organisms/Footer";
 import Header from "@organisms/Header";
-import SigninUserHeader from "@molecules/SigninUserHeader";
-
-import { userState } from "@states/users/atoms";
 
 const StyledAppLayout = styled.div`
   width: 100%;
@@ -23,12 +19,9 @@ interface Props {
 }
 
 const AppLayout = ({ children }: Props) => {
-  const user = useRecoilValue(userState);
-
   return (
     <>
       <StyledAppLayout>
-        {user && <SigninUserHeader />}
         <Header />
         {children}
         <Footer />
