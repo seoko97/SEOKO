@@ -37,6 +37,9 @@ const StyledHeader = styled.header<Props>`
       color: ${theme.FONT_COLOR.PRIMARY_COLOR};
     }
     & svg {
+      &:hover {
+        cursor: pointer;
+      }
       fill: ${theme.FONT_COLOR.PRIMARY_COLOR};
     }
   `}

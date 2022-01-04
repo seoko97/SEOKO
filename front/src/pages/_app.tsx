@@ -13,14 +13,15 @@ import DarkModeButton from "@molecules/DarkModeButton";
 import { darkTheme, lightTheme } from "@theme/.";
 import GlobalStyle from "@theme/GlobalStyle";
 import { initatialSigninCheck } from "@apis/users";
-import { allAtoms, initializeRecoilState } from "@states/.";
+import { initializeRecoilState } from "@states/.";
+import SigninUserHeader from "@src/components/UI/molecules/SigninUserHeader";
 
 interface Props extends AppProps {
   mode: string;
-  initialRecoilState: typeof allAtoms;
+  user: string | null;
 }
 
-const SEOKO = ({ Component, pageProps, mode: modeInCookie, initialRecoilState = {} }: Props) => {
+const SEOKO = ({ Component, pageProps, mode: modeInCookie, user }: Props) => {
   const [cookies, setCookies] = useCookies(["mode"]);
   const mode = useMemo(() => cookies.mode || modeInCookie, [cookies.mode, modeInCookie]);
 
@@ -37,15 +38,16 @@ const SEOKO = ({ Component, pageProps, mode: modeInCookie, initialRecoilState = 
       <Head>
         <title>SEOKO</title>
       </Head>
-      <ThemeProvider theme={mode === "light" ? lightTheme : darkTheme}>
-        <RecoilRoot initializeState={initializeRecoilState(initialRecoilState)}>
+      <RecoilRoot initializeState={initializeRecoilState(user)}>
+        <ThemeProvider theme={mode === "light" ? lightTheme : darkTheme}>
           <GlobalStyle theme={mode === "light" ? lightTheme : darkTheme} />
+          <SigninUserHeader user={user} />
           <AppLayout>
             <Component {...pageProps} />
             <DarkModeButton mode={mode} onClick={onClickDarkMode} />
           </AppLayout>
-        </RecoilRoot>
-      </ThemeProvider>
+        </ThemeProvider>
+      </RecoilRoot>
     </>
   );
 };
@@ -56,12 +58,8 @@ SEOKO.getInitialProps = async ({ ctx }: AppContext) => {
 
   if (ctx.req && cookies) axios.defaults.headers.common.cookie = cookies;
   const user = await initatialSigninCheck();
-  const initialRecoilState = {
-    user,
-  };
-  console.log("@@@@", user);
 
-  return { mode: mode || "light", initialRecoilState };
+  return { mode: mode || "light", user };
 };
 
 export default SEOKO;
