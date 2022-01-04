@@ -1,5 +1,5 @@
-import React, { useCallback } from "react";
-import { useRecoilState } from "recoil";
+import React, { useEffect } from "react";
+import { useRecoilCallback, useRecoilState } from "recoil";
 import styled from "@emotion/styled";
 import RowFrame from "@frames/RowFrame";
 import { userState } from "@states/users/atoms";
@@ -32,23 +32,32 @@ const StyledSigninUserHeader = styled.div`
   }
 `;
 
-const SigninUserHeader = () => {
+interface Props {
+  user: string | null;
+}
+const SigninUserHeader = ({ user }: Props) => {
   const [userinfo, setUserinfo] = useRecoilState(userState);
 
-  const onClickSignout = useCallback(() => {
-    onSignout().then((res) => {
-      if (res.pass) setUserinfo(null);
-    });
-  }, []);
+  useEffect(() => {
+    setUserinfo(user);
+  }, [user]);
+
+  const signout = useRecoilCallback(({ reset }) => async () => {
+    const result: any = await onSignout();
+
+    if (result.pass) reset(userState);
+  });
 
   return (
     <>
-      <StyledSigninUserHeader>
-        <RowFrame>
-          <span>{userinfo}</span>
-          <span onClick={onClickSignout}>로그아웃</span>
-        </RowFrame>
-      </StyledSigninUserHeader>
+      {userinfo && (
+        <StyledSigninUserHeader>
+          <RowFrame>
+            <span>{userinfo}</span>
+            <span onClick={signout}>로그아웃</span>
+          </RowFrame>
+        </StyledSigninUserHeader>
+      )}
     </>
   );
 };
