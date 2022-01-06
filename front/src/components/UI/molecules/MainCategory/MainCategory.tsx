@@ -12,13 +12,11 @@ const StyledCategory = styled.div`
     position: relative;
     top: 0;
     width: 100%;
-    flex-grow: 0;
-    order: 1;
     margin-bottom: 30px;
   }
 `;
 
-const Category = () => {
+const MainCategory = () => {
   return (
     <>
       <StyledCategory>
@@ -28,4 +26,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default MainCategory;
