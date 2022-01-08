@@ -13,6 +13,7 @@ const StyledNavItem = styled.li`
   width: 100%;
   cursor: pointer;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
+  transition: background-color 0.2s ease-in-out;
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
