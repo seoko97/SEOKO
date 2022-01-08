@@ -1,17 +1,18 @@
 import React, { useEffect } from "react";
+import { useSetRecoilState } from "recoil";
 import styled from "@emotion/styled";
 
 import PageContent from "@molecules/PageContent";
 import PostList from "@organisms/PostList";
 import RowFrame from "@frames/RowFrame";
-import Category from "@molecules/Category";
+import MainCategory from "@src/components/UI/molecules/MainCategory";
 
+import { categoryState } from "@states/categories/atoms";
 import { postState, Props as PostProps } from "@states/posts/atoms";
-import { useSetRecoilState } from "recoil";
 
 interface Props {
   posts: PostProps[];
-  // categories: CategoryProps[];
+  categories: any[];
 }
 const StyledDiv = styled.div`
   position: relative;
@@ -23,11 +24,13 @@ const StyledDiv = styled.div`
   }
 `;
 
-const Home = ({ posts }: Props) => {
+const Home = ({ posts, categories }: Props) => {
   const setPosts = useSetRecoilState(postState);
+  const setCategories = useSetRecoilState(categoryState);
 
   useEffect(() => {
     setPosts(posts);
+    setCategories(categories);
   }, []);
 
   return (
@@ -36,7 +39,7 @@ const Home = ({ posts }: Props) => {
         <RowFrame>
           <StyledDiv>
             <PostList />
-            <Category />
+            <MainCategory />
           </StyledDiv>
         </RowFrame>
       </PageContent>
