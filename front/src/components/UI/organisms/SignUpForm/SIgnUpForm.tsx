@@ -16,14 +16,6 @@ const StyledSignUpForm = styled.div`
 
     color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   }
-
-  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
-    & > div {
-      & div {
-        width: 100%;
-      }
-    }
-  }
 `;
 
 const SignUpForm = () => {

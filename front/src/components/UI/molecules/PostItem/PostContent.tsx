@@ -32,6 +32,7 @@ const StyledPostConetent = styled.div`
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET_Y}) {
     width: 100%;
+    padding: 15px 0;
   }
 `;
 

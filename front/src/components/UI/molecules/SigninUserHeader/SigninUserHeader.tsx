@@ -14,7 +14,7 @@ const StyledSigninUserHeader = styled.div`
   align-items: center;
   justify-content: center;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
-  z-index: 2;
+  z-index: 1;
 
   & > div {
     text-align: right;
