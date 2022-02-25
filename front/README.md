@@ -22,7 +22,7 @@
 - NextJs
 - Emotion
 - Typescript
-- Recoil
+- GraphQL
 - Storybook
 - ... (적용시 추가)
 
