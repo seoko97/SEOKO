@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": ["src/*"],
+      "@users/*": ["src/users/*"],
+      "@auth/*": ["src/auth/*"],
+      "@utils/*": ["src/utils/*"],
+      "@decorators/*": ["src/decorators/*"],
+      "@common/*": ["src/common/*"]
+    }
+  }
+}
