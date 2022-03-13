@@ -14,8 +14,16 @@ export class UserResolver {
     return user;
   }
 
-  @Mutation(() => User)
+  @Mutation(() => String)
   async create(@Args('input') input: CreateUserInput) {
-    return await this.userService.create(input);
+    const user = await this.userService.create(input);
+    console.log(input, user);
+    return 'success';
+  }
+
+  @Mutation(() => String)
+  async a(@Args('input') input: CreateUserInput) {
+    console.log(input);
+    return 'asd';
   }
 }
