@@ -1,17 +1,17 @@
-import mongoose, { Document } from 'mongoose';
-import { Field, ObjectType } from '@nestjs/graphql';
+import { ObjectType, Field, InputType } from '@nestjs/graphql';
+import { Schema as MongooseSchema } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-export type IUser = User & Document;
-
-export const UserSchema = new mongoose.Schema({
-  name: String,
-});
-
+@Schema()
+@InputType('UserModel', { isAbstract: true })
 @ObjectType()
-export class User extends Document {
-  @Field()
-  _id: string;
+export class User {
+  @Field(() => String)
+  _id: MongooseSchema.Types.ObjectId;
 
-  @Field()
+  @Prop()
+  @Field(() => String, { description: 'User Name' })
   name: string;
 }
+
+export const UserSchema = SchemaFactory.createForClass(User);
