@@ -2,12 +2,13 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-input CreateUserInput {
+input InputUser {
+  """User Name"""
   name: String!
 }
 
 type Mutation {
-  create(input: CreateUserInput!): User!
+  create(input: InputUser!): String!
 }
 
 type Query {
@@ -16,5 +17,7 @@ type Query {
 
 type User {
   _id: String!
+
+  """User Name"""
   name: String!
 }
