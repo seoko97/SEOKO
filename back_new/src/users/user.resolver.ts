@@ -7,23 +7,10 @@ import { UserService } from './user.service';
 export class UserResolver {
   constructor(private userService: UserService) {}
 
-  @Query(() => [User])
-  async test(): Promise<User[]> {
-    const user = await this.userService.test();
-
-    return user;
-  }
-
   @Mutation(() => String)
   async create(@Args('input') input: CreateUserInput) {
-    const user = await this.userService.create(input);
-    console.log(input, user);
-    return 'success';
-  }
+    await this.userService.create(input);
 
-  @Mutation(() => String)
-  async a(@Args('input') input: CreateUserInput) {
-    console.log(input);
-    return 'asd';
+    return { ok: true };
   }
 }
