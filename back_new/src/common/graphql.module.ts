@@ -1,7 +1,6 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { join } from 'path';
 
 const prod = process.env.NODE_ENV === 'production';
@@ -20,13 +19,6 @@ const prod = process.env.NODE_ENV === 'production';
       },
       context: (ctx) => ({ ...ctx }),
       typePaths: ['./**/*.graphql'],
-      formatError: (error: GraphQLError) => {
-        console.log(error);
-        const graphQLFormattedError: GraphQLFormattedError = {
-          message: error?.extensions?.exception.code || error?.message,
-        };
-        return graphQLFormattedError;
-      },
     }),
   ],
 })
