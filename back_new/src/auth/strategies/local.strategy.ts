@@ -13,8 +13,8 @@ export class LocalStrategy extends PassportStrategy(LStrategy) {
   }
 
   async validate(userId: string, password: string): Promise<any> {
-    const user = await this.authService.validateuser(userId, password);
-    if (!user) throw new UnauthorizedException();
+    const user = await this.authService.validateUser(userId, password);
+    if (!user) throw new UnauthorizedException('유효하지 않은 사용자입니다.');
     return user;
   }
 }
