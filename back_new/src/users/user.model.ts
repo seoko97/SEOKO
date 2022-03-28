@@ -1,22 +1,27 @@
 import { ObjectType, Field, InputType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Schema as MongooseSchema, Document } from 'mongoose';
+import { Schema as MongooseSchema, Document, Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { verify } from 'jsonwebtoken';
-import { jwtContents } from '@auth/contents';
+import { jwtConstants } from '@src/auth/contants';
+import { CreateUserInput } from './dto/createUser.dto';
 
-const BCRYPT_SALT = 10 as const;
+const BCRYPT_SALT = 10;
 export type UserDocument = User & Document;
-@Schema()
+export interface UserModel extends Model<UserDocument> {
+  hashPassword: (userData: CreateUserInput) => void;
+}
+
+@Schema({ timestamps: true })
 @InputType('UserModel', { isAbstract: true })
 @ObjectType()
-export class User extends Document {
+export class User {
   @Field(() => String)
   _id: MongooseSchema.Types.ObjectId;
 
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true })
   @Field(() => String, { description: 'User Name' })
-  name: string;
+  username: string;
 
   @Prop({ required: true, unique: true })
   @Field(() => String, { description: 'User ID' })
@@ -30,38 +35,26 @@ export class User extends Document {
   @Field(() => String, { description: 'User Refresh Roken' })
   refreshToken?: string;
 
-  @Prop({
-    methods: Function,
-  })
   verifyRefresh: () => boolean;
-
-  @Prop({
-    methods: Function,
-  })
-  comparePassword: (aPassword: string) => boolean;
-
-  @Prop({
-    statics: Function,
-  })
-  hashPassword: (userData: User) => void;
+  comparePassword: (aPassword: string) => Promise<boolean>;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
 
 UserSchema.methods.verifyRefresh = function () {
   if (!this.refreshToken) return false;
-  const result = verify(this.refreshToken, jwtContents.secret);
+  const result = verify(this.refreshToken, jwtConstants.secret);
 
   return Boolean(result);
 };
 
-UserSchema.methods.comparePassword = async function (aPassword) {
+UserSchema.methods.comparePassword = async function (aPassword: string) {
   const isCompare = await bcrypt.compare(aPassword, this.password);
 
   return isCompare;
 };
 
-UserSchema.statics.hashPassword = async function (userData: User) {
+UserSchema.statics.hashPassword = async function (userData: CreateUserInput) {
   if (userData.password)
     userData.password = await bcrypt.hash(userData.password, BCRYPT_SALT);
 };
