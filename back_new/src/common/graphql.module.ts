@@ -18,7 +18,12 @@ const prod = process.env.NODE_ENV === 'production';
         origin: true,
       },
       context: (ctx) => ({ ...ctx }),
-      typePaths: ['./**/*.graphql'],
+
+      formatResponse: (res) => {
+        if (res.errors?.[0])
+          res.data = { ok: false, error: res.errors?.[0]?.message };
+        return res;
+      },
     }),
   ],
 })
