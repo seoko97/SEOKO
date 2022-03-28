@@ -3,7 +3,7 @@ import { User } from '../user.model';
 
 @InputType('InputUser')
 export class CreateUserInput extends PickType(User, [
-  'name',
+  'username',
   'password',
   'userId',
-] as const) {}
+]) {}
