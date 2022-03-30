@@ -3,9 +3,8 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { JwtAuthGuard } from '@src/auth/guards/jwt-auth.guard';
 import { CoreRes } from '@src/decorators/coreRes.decorator';
 import { ITokenUser, User } from '@src/decorators/user.decorator';
-import { ApolloError } from 'apollo-server-express';
 import { CreateUserInput } from './dto/createUser.dto';
-import { User as UserModel } from './user.model';
+import { GetUserInfoDTO } from './dto/getUserInfo.dto';
 import { UserService } from './user.service';
 
 @Resolver('User')
@@ -17,16 +16,17 @@ export class UserResolver {
     const user = await this.userService.getByUserId(input.userId);
 
     if (user) throw new Error('이미 존재하는 사용자입니다.');
-    console.log(input);
 
     return await this.userService.create(input);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Query(() => [UserModel])
+  @Query(() => GetUserInfoDTO)
   async getUserInfo(@User() _user: ITokenUser) {
-    const { username } = await this.userService.getById(_user._id);
+    const user = await this.userService.getById(_user._id);
 
-    return { ok: true, username };
+    if (!user) throw new Error('사용자가 존재하지 않습니다.');
+
+    return { ok: true, username: user.username };
   }
 }
