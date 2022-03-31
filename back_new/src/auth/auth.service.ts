@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ITokenUser } from '@decorators/user.decorator';
 import { UserService } from '@users/user.service';
 import { encryptValue } from '@utils/crypto';
+import { User } from '@src/users/user.model';
 
 @Injectable()
 export class AuthService {
@@ -11,11 +12,10 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(userId: string, password: string): Promise<any> {
+  async validateUser(userId: string, password: string): Promise<User | null> {
     const user = await this.userService.getByUserId(userId);
 
     const isCompare = await user?.comparePassword(password);
-    console.log(user, isCompare);
 
     if (!user || (user && !isCompare)) return null;
 

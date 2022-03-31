@@ -43,7 +43,7 @@ export class AuthResolver {
     @User() _user: ITokenUser,
     @Context() { res }: { res: Response },
   ) {
-    if (!_user) return { pk: false, error: '로그인이 필요합니다.' };
+    if (!_user) throw new Error('로그인이 필요합니다.');
 
     const isVerified = await this.authService.verifyRefresh(_user);
 
@@ -64,8 +64,7 @@ export class AuthResolver {
     @User() _user: ITokenUser,
     @Context() { res }: { res: Response },
   ) {
-    console.log(_user);
-    if (!_user) return { ok: false, error: '로그인이 필요합니다.' };
+    if (!_user) throw new Error('로그인이 필요합니다.');
     await this.userService.updateRefreshToken(_user._id, null);
     res.clearCookie(jwtConstants.header);
 
