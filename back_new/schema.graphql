@@ -2,22 +2,85 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type CoreRes {
+  error: String
+  ok: Boolean!
+}
+
+input CreatePostInput {
+  category: String!
+  content: String!
+  coverImg: String!
+  tags: [TagModel!]!
+  title: String!
+}
+
+type CreateTagDTO {
+  error: String
+  ok: Boolean!
+  tag: Tag!
+}
+
+type GetUserInfoDTO {
+  error: String
+  ok: Boolean!
+  username: String!
+}
+
 input InputUser {
+  """User Password"""
+  password: String!
+
+  """User ID"""
+  userId: String!
+
   """User Name"""
-  name: String!
+  username: String!
 }
 
 type Mutation {
-  create(input: InputUser!): String!
+  create(input: InputUser!): CoreRes!
+  createPost(input: CreatePostInput!): CoreRes!
+  createTag(input: String!): CreateTagDTO!
+  refresh: CoreRes!
+  signin(input: SigninReq!): SigninRes!
+  signout: CoreRes!
 }
 
 type Query {
-  test: [User!]!
+  getUserInfo: GetUserInfoDTO!
 }
 
-type User {
+input SigninReq {
+  """User Password"""
+  password: String!
+
+  """User ID"""
+  userId: String!
+}
+
+type SigninRes {
+  error: String
+  ok: Boolean!
+  username: String!
+}
+
+type Tag {
   _id: String!
 
-  """User Name"""
-  name: String!
+  """Tag Name"""
+  content: String!
+
+  """Tag PostCount"""
+  postCount: Float!
+}
+
+input TagModel {
+  _id: String!
+
+  """Tag Name"""
+  content: String!
+
+  """Tag PostCount"""
+  postCount: Float!
 }
