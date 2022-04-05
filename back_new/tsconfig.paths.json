@@ -5,6 +5,8 @@
       "@src/*": ["src/*"],
       "@users/*": ["src/users/*"],
       "@auth/*": ["src/auth/*"],
+      "@posts/*": ["src/posts/*"],
+      "@tags/*": ["src/tags/*"],
       "@utils/*": ["src/utils/*"],
       "@decorators/*": ["src/decorators/*"],
       "@common/*": ["src/common/*"]
