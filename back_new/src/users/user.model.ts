@@ -21,15 +21,15 @@ export class User {
 
   @Prop({ required: true })
   @Field(() => String, { description: 'User Name' })
-  username: string;
+  username!: string;
 
   @Prop({ required: true, unique: true })
   @Field(() => String, { description: 'User ID' })
-  userId: string;
+  userId!: string;
 
   @Prop({ required: true })
   @Field(() => String, { description: 'User Password' })
-  password: string;
+  password!: string;
 
   @Prop({ default: null })
   @Field(() => String, { description: 'User Refresh Roken' })
@@ -37,6 +37,9 @@ export class User {
 
   verifyRefresh: () => boolean;
   comparePassword: (aPassword: string) => Promise<boolean>;
+
+  @Field(() => Date)
+  createdAt?: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
