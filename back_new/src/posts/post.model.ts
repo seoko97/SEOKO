@@ -1,5 +1,6 @@
 import { ObjectType, Field, InputType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Category } from '@src/categories/category.model';
 import { Tag } from '@src/tags/tag.model';
 import { Schema as MongooseSchema, Document, Model } from 'mongoose';
 
@@ -21,9 +22,13 @@ export class Post {
   @Field(() => String)
   content!: string;
 
-  @Prop({ required: true })
-  @Field(() => String)
-  category!: string;
+  @Prop({
+    type: MongooseSchema.Types.ObjectId,
+    ref: 'Category',
+    required: true,
+  })
+  @Field(() => Category)
+  category!: Category;
 
   @Prop({ required: true })
   @Field(() => String)
