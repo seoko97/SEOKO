@@ -1,5 +1,6 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { PostModule } from '@posts/post.module';
 import { Tag, TagSchema } from './tag.model';
 import { TagService } from './tag.service';
 import { TagResolver } from './tag.resolver';
@@ -12,6 +13,7 @@ import { TagResolver } from './tag.resolver';
         schema: TagSchema,
       },
     ]),
+    forwardRef(() => PostModule),
   ],
   exports: [TagService],
   providers: [TagResolver, TagService],
