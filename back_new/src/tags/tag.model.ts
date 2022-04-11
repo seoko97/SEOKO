@@ -24,8 +24,8 @@ export class Tag {
     ref: 'Post',
     required: false,
   })
-  @Field(() => [Post])
-  posts?: Post[];
+  @Field(() => [String])
+  posts?: MongooseSchema.Types.ObjectId[];
 }
 
 export const TagSchema = SchemaFactory.createForClass(Tag);

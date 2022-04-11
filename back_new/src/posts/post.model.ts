@@ -2,7 +2,7 @@ import { ObjectType, Field, InputType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Category } from '@src/categories/category.model';
 import { Tag } from '@src/tags/tag.model';
-import { Schema as MongooseSchema, Document, Model } from 'mongoose';
+import { Schema as MongooseSchema, Document, Model, Types } from 'mongoose';
 
 export type PostDocument = Post & Document;
 export type PostModel = Model<PostDocument>;
@@ -28,15 +28,19 @@ export class Post {
     required: true,
   })
   @Field(() => Category)
-  category!: Category;
+  category!: Types.ObjectId;
 
   @Prop({ required: true })
   @Field(() => String)
   coverImg!: string;
 
-  @Prop({ type: [{ type: MongooseSchema.Types.ObjectId }], ref: 'Tag' })
+  @Prop({
+    type: [{ type: MongooseSchema.Types.ObjectId }],
+    ref: 'Tag',
+    required: false,
+  })
   @Field(() => [Tag])
-  tags?: Tag[];
+  tags?: Types.ObjectId[];
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);

@@ -4,7 +4,9 @@ import { Post } from '@src/posts/post.model';
 import { Schema as MongooseSchema, Document, Model } from 'mongoose';
 
 export type CategoryDocument = Category & Document;
-export type CategoryModel = Model<CategoryDocument>;
+export interface CategoryModel extends Model<CategoryDocument> {
+  findOrCreate: (name: string) => CategoryDocument;
+}
 
 @Schema({ timestamps: true })
 @InputType('CategoryModel', { isAbstract: true })
@@ -20,10 +22,18 @@ export class Category {
   @Prop({
     type: [MongooseSchema.Types.ObjectId],
     ref: 'Post',
-    required: false,
   })
   @Field(() => [Post])
-  posts?: Post[];
+  posts?: MongooseSchema.Types.ObjectId[];
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);
+
+CategorySchema.statics.findOrCreate = async function (name: string) {
+  console.log('@@@', name);
+  const category = await this.findOne({ name });
+
+  if (category) return category;
+
+  return await this.create({ name });
+};
