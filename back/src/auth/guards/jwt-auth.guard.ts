@@ -1,19 +1,26 @@
-import { ExecutionContext, Injectable, UnauthorizedException } from "@nestjs/common";
-import { AuthGuard } from "@nestjs/passport";
-import { decryptValue } from "@utils/crypto";
-import { jwtContents } from "../contents";
+import {
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { GqlExecutionContext } from '@nestjs/graphql';
+import { AuthGuard } from '@nestjs/passport';
+import { decryptValue } from '@utils/crypto';
+import { jwtConstants } from '../contants';
 
 const setAuth = (context: ExecutionContext) => {
-  const req = context.switchToHttp().getRequest();
-  const authCookie = req.cookies[jwtContents.header];
+  const gqlContext = GqlExecutionContext.create(context);
+  const ctx = gqlContext.getContext();
+  const authCookie = ctx.req.cookies[jwtConstants.header];
 
-  if (authCookie) req.headers.authorization = `Bearer ${decryptValue(authCookie)}`;
+  if (authCookie)
+    ctx.req.headers.authorization = `Bearer ${decryptValue(authCookie)}`;
 
-  return req;
+  return ctx.req;
 };
 
 @Injectable()
-export class JwtAuthGuard extends AuthGuard("jwt") {
+export class JwtAuthGuard extends AuthGuard('jwt') {
   constructor() {
     super();
   }
@@ -30,7 +37,7 @@ export class JwtAuthGuard extends AuthGuard("jwt") {
 }
 
 @Injectable()
-export class ExpriedJwtAuthGuard extends AuthGuard("jwt-expried") {
+export class ExpriedJwtAuthGuard extends AuthGuard('jwt-expried') {
   constructor() {
     super();
   }

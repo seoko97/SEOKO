@@ -1,7 +1,7 @@
 import { ObjectType, Field, InputType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Post } from '@src/posts/post.model';
-import { Schema as MongooseSchema, Document, Model } from 'mongoose';
+import { Document, Model, Types, PopulatedDoc } from 'mongoose';
 
 export type CategoryDocument = Category & Document;
 export interface CategoryModel extends Model<CategoryDocument> {
@@ -13,18 +13,18 @@ export interface CategoryModel extends Model<CategoryDocument> {
 @ObjectType()
 export class Category {
   @Field(() => String)
-  _id: MongooseSchema.Types.ObjectId;
+  _id: Types.ObjectId;
 
   @Prop({ required: true, index: true, unique: true })
   @Field(() => String)
   name!: string;
 
   @Prop({
-    type: [MongooseSchema.Types.ObjectId],
+    type: [Types.ObjectId],
     ref: 'Post',
   })
-  @Field(() => [Post])
-  posts?: MongooseSchema.Types.ObjectId[];
+  @Field(() => [Post || Types.ObjectId])
+  posts?: PopulatedDoc<Post>;
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);

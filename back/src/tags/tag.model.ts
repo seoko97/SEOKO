@@ -1,7 +1,7 @@
 import { ObjectType, Field, InputType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document, Model, Types, PopulatedDoc } from 'mongoose';
 import { Post } from '@src/posts/post.model';
-import { Schema as MongooseSchema, Document, Model } from 'mongoose';
 
 export type TagDocument = Tag & Document;
 export interface TagModel extends Model<TagDocument> {
@@ -13,19 +13,19 @@ export interface TagModel extends Model<TagDocument> {
 @ObjectType()
 export class Tag {
   @Field(() => String)
-  _id: MongooseSchema.Types.ObjectId;
+  _id: Types.ObjectId;
 
   @Prop({ required: true, index: true, unique: true })
   @Field(() => String)
   name!: string;
 
   @Prop({
-    type: [MongooseSchema.Types.ObjectId],
+    type: [{ type: Types.ObjectId }],
     ref: 'Post',
     required: false,
   })
-  @Field(() => [String])
-  posts?: MongooseSchema.Types.ObjectId[];
+  @Field(() => [Post || Types.ObjectId])
+  posts?: Types.ObjectId[] | Post[];
 }
 
 export const TagSchema = SchemaFactory.createForClass(Tag);

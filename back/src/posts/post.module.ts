@@ -15,7 +15,7 @@ import { PostService } from './post.service';
       },
     ]),
     forwardRef(() => TagModule),
-    CategoryModule,
+    forwardRef(() => CategoryModule),
   ],
   exports: [PostService],
   providers: [PostResolver, PostService],

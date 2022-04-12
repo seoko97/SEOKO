@@ -15,7 +15,7 @@ export class TagService {
     return await this.tagModel.find();
   }
 
-  async searchTags(input: string) {
+  async search(input: string) {
     const tags = await this.tagModel
       .find({
         name: {
@@ -38,7 +38,7 @@ export class TagService {
     return await this.tagModel.findOneAndUpdate({ _id }, query);
   }
 
-  async deleteTag(_id: string) {
+  async delete(_id: string) {
     const tag = await this.tagModel.findOneAndDelete({ _id });
 
     if (!tag) throw new Error('태그가 존재하지 않습니다.');
