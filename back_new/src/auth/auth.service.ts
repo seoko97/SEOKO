@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   async signin(payload: ITokenUser) {
-    const accessToken = this.jwtService.sign(payload, { expiresIn: '10s' });
+    const accessToken = this.jwtService.sign(payload, { expiresIn: '10m' });
     const refreshToken = this.jwtService.sign(payload, { expiresIn: '14d' });
 
     await this.userService.updateRefreshToken(payload._id, refreshToken);
