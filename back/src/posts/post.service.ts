@@ -49,7 +49,6 @@ export class PostService {
       if (createdTag.length) post.tags = createdTag;
     }
 
-    console.log(post.category);
     await post.save();
 
     return post;
