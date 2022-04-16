@@ -3,7 +3,7 @@ import { Args, Mutation, Resolver, Context } from '@nestjs/graphql';
 import { ITokenUser, User } from '@decorators/user.decorator';
 import { UserService } from '@users/user.service';
 import { Response } from 'express';
-import { SigninReq, SigninRes } from './dto/signin.dto';
+import { SigninInput, SigninRes } from './dto/signin.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { jwtConstants } from './contants';
 import { AuthService } from './auth.service';
@@ -22,7 +22,7 @@ export class AuthResolver {
   @UseGuards(LocalAuthGuard)
   @Mutation(() => SigninRes)
   async signin(
-    @Args('input') _: SigninReq,
+    @Args('input') _: SigninInput,
     @User() _user: ITokenUser,
     @Context() { res }: { res: Response },
   ): Promise<SigninRes> {
