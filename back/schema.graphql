@@ -1,0 +1,98 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Category {
+  _id: String!
+  name: String!
+  posts: [Post!]!
+}
+
+type CoreRes {
+  error: String
+  ok: Boolean!
+}
+
+input CreatePostInput {
+  category: String!
+  content: String!
+  coverImg: String!
+  tags: [String!]!
+  title: String!
+}
+
+type CreateTagDTO {
+  error: String
+  ok: Boolean!
+  tag: Tag!
+}
+
+type GetTagsRes {
+  error: String
+  ok: Boolean!
+  tags: [Tag!]!
+}
+
+type GetUserInfoDTO {
+  error: String
+  ok: Boolean!
+  username: String!
+}
+
+input InputUser {
+  """User Password"""
+  password: String!
+
+  """User ID"""
+  userId: String!
+
+  """User Name"""
+  username: String!
+}
+
+type Mutation {
+  create(input: InputUser!): CoreRes!
+  createPost(input: CreatePostInput!): CoreRes!
+  createTag(input: String!): CreateTagDTO!
+  deleteTag(_id: String!): CoreRes!
+  refresh: CoreRes!
+  signin(input: SigninInput!): SigninRes!
+  signout: CoreRes!
+}
+
+type Post {
+  _id: String!
+  category: Category!
+  content: String!
+  coverImg: String!
+  tags: [Tag!]!
+  title: String!
+}
+
+type Query {
+  getTag(input: String!): CoreRes!
+  getTags: GetTagsRes!
+  getUserInfo: GetUserInfoDTO!
+  searchTags(input: String!): CoreRes!
+  test: CoreRes!
+}
+
+input SigninInput {
+  """User Password"""
+  password: String!
+
+  """User ID"""
+  userId: String!
+}
+
+type SigninRes {
+  error: String
+  ok: Boolean!
+  username: String!
+}
+
+type Tag {
+  _id: String!
+  name: String!
+  posts: [Post!]!
+}

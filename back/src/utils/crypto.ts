@@ -1,5 +1,5 @@
-import { AES, enc } from "crypto-js";
-import { secretContents } from "@auth/contents";
+import { AES, enc } from 'crypto-js';
+import { secretContents } from '@src/auth/contants';
 
 export const encryptValue = (value: string) =>
   AES.encrypt(value, secretContents.signin).toString();

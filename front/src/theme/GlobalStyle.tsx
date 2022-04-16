@@ -15,19 +15,16 @@ const GlobalStyle = ({ theme }: GlobalProps) => (
       html, body, #__next {
         height: 100%;
       }
-      html,
-      body {
-        overflow-x: hidden;
-        width: 100%;
-        height: 100%;
-      }
+
       body {
         overflow-y: overlay;
         margin: 0;
         font-size: 14px;
         line-height: 1.5715;
         user-select: none;
+        background-color: ${theme.BAKCGROUND_COLOR.PRIMARY_COLOR};
       }
+
       h1,
       h2,
       h3,
@@ -43,6 +40,7 @@ const GlobalStyle = ({ theme }: GlobalProps) => (
       }
       & * {
         font-family: "Quicksand", "Noto Sans KR", sans-serif !important;
+        box-sizing: border-box;
       }
     `}
   />

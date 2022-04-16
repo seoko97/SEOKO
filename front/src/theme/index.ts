@@ -1,5 +1,4 @@
-const bp = {
-  HDPC: "1200px",
+export const bp = {
   PC: "980px",
   TABLET: "768px",
   MOBILE: "480px",

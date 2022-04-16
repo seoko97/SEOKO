@@ -1,11 +1,11 @@
-import { createParamDecorator, ExecutionContext } from "@nestjs/common";
+import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
-export interface TokenUser {
-  id: number;
+export interface ITokenUser {
+  _id: string;
 }
 
-export const User = createParamDecorator((_: unknown, context: ExecutionContext) => {
-  const req = context.switchToHttp().getRequest();
-
-  return req.user;
+export const User = createParamDecorator((_, context: ExecutionContext) => {
+  const ctx = GqlExecutionContext.create(context);
+  return ctx.getContext().req.user;
 });
