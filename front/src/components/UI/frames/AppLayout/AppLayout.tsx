@@ -6,7 +6,8 @@ import Header from "@organisms/Header";
 
 const StyledAppLayout = styled.div`
   width: 100%;
-  min-height: calc(100% - 140px);
+  min-height: 100vh;
+
   position: relative;
   padding-bottom: 140px;
   background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.PRIMARY_COLOR};
