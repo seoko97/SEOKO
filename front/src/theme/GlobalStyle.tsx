@@ -19,7 +19,7 @@ const GlobalStyle = ({ theme }: GlobalProps) => (
       body {
         overflow-y: overlay;
         margin: 0;
-        font-size: 14px;
+        font-size: 16px;
         line-height: 1.5715;
         user-select: none;
         background-color: ${theme.BAKCGROUND_COLOR.PRIMARY_COLOR};
