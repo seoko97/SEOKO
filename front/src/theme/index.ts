@@ -8,7 +8,7 @@ export const lightTheme = {
   BP: bp,
   BAKCGROUND_COLOR: {
     PRIMARY_COLOR: "#F2F5F7",
-    SECONDARY_COLOR: "hsl(0, 0%, 97%)",
+    SECONDARY_COLOR: "rgb(250, 250, 250);",
     PRIMARY_COLOR_RGBA: "rgba(242, 245, 247, 0.5)",
     THIRDARY_COLOR: "#23374D",
   },
@@ -19,8 +19,8 @@ export const lightTheme = {
     BUTTON_COLOR: "#f8f9fa",
   },
   SELECTION_EFFECT_COLOR: {
-    PRIMARY_COLOR: "#426cb4",
-    SECONDARY_COLOR: "#cccccc",
+    PRIMARY_COLOR: "#569aff",
+    SECONDARY_COLOR: "rgb(222, 226, 230);",
   },
   BORDER_COLOR: {
     PRIMARY_COLOR: "#cccccc",
@@ -34,7 +34,7 @@ export const darkTheme = {
   BP: bp,
   BAKCGROUND_COLOR: {
     PRIMARY_COLOR: "#212529",
-    SECONDARY_COLOR: "#2b3035",
+    SECONDARY_COLOR: "rgb(52, 58, 64)",
     PRIMARY_COLOR_RGBA: "rgba(33, 37, 41, 0.5)",
     THIRDARY_COLOR: "#444444",
   },
@@ -46,10 +46,10 @@ export const darkTheme = {
   },
   SELECTION_EFFECT_COLOR: {
     PRIMARY_COLOR: "#569aff",
-    SECONDARY_COLOR: "#cccccc",
+    SECONDARY_COLOR: "rgb(73, 80, 87)",
   },
   BORDER_COLOR: {
-    PRIMARY_COLOR: "#ccc",
+    PRIMARY_COLOR: "#cccccc",
   },
   BUTTON_COLOR: {
     PRIMARY_COLOR: "#A076F1",
