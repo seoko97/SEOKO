@@ -70,6 +70,7 @@ type Post {
 }
 
 type Query {
+  getPost: CoreRes!
   getTag(input: String!): CoreRes!
   getTags: GetTagsRes!
   getUserInfo: GetUserInfoDTO!
