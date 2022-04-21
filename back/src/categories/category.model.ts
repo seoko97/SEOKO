@@ -30,7 +30,6 @@ export class Category {
 export const CategorySchema = SchemaFactory.createForClass(Category);
 
 CategorySchema.statics.findOrCreate = async function (name: string) {
-  console.log('@@@', name);
   const category = await this.findOne({ name });
 
   if (category) return category;

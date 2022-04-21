@@ -21,7 +21,6 @@ export class TagResolver {
   @Mutation(() => CoreRes)
   async deleteTag(@Args('_id') _id: string): Promise<CoreRes> {
     const result = await this.tagService.delete(_id);
-    console.log(result);
 
     return { ok: true };
   }
