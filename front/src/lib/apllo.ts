@@ -8,14 +8,14 @@ import {
   NormalizedCacheObject,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
-import { GetServerSidePropsContext, NextPageContext } from "next";
-import { REFRESH } from "../queries/users";
+import { GetServerSidePropsContext } from "next";
+import { REFRESH } from "@queries/users";
 
 type InitialState = NormalizedCacheObject | undefined;
 
 export interface IInitializeApollo {
   initialState?: InitialState;
-  ctx?: NextPageContext | GetServerSidePropsContext | null;
+  ctx?: GetServerSidePropsContext | null;
 }
 
 export const prod = process.env.NODE_ENV === "production";
@@ -23,7 +23,7 @@ const TOKEN_EXPIRED = "jwt expired";
 
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
-export const createApolloClient = (ctx: NextPageContext | GetServerSidePropsContext | null) => {
+export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {
   const cookie = ctx?.req?.headers.cookie || "";
   const enhancedFetch = (url: RequestInfo, init: RequestInit) => {
     const nHeader = ctx?.res?.getHeaders();
