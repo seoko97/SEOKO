@@ -4,18 +4,15 @@ import { IGetUserInfo } from "@src/types/users";
 import { intializeClinet } from "./apllo";
 
 const initializeSigninCheck = async () => {
-  try {
-    const apolloClient = intializeClinet();
+  const apolloClient = intializeClinet();
 
-    const { data } = await apolloClient.query<IGetUserInfo>({
-      query: GET_USER_INFO,
-    });
+  const { data } = await apolloClient.query<IGetUserInfo>({
+    query: GET_USER_INFO,
+    errorPolicy: "all",
+  });
 
-    if (data?.getUserInfo?.ok) setUserInfo(data.getUserInfo.username);
-    else setUserInfo(null);
-  } catch (error) {
-    setUserInfo(null);
-  }
+  if (data?.getUserInfo?.ok) setUserInfo(data.getUserInfo.username);
+  else setUserInfo(null);
 };
 
 export default initializeSigninCheck;
