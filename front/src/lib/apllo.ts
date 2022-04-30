@@ -10,6 +10,8 @@ import {
 import { onError } from "@apollo/client/link/error";
 import { GetServerSidePropsContext } from "next";
 import { REFRESH } from "@queries/users";
+import { AppProps } from "next/app";
+import { APOLLO_STATE_PROP_NAME } from "./addApolloState";
 
 type InitialState = NormalizedCacheObject | undefined;
 
@@ -89,7 +91,8 @@ export const intializeClinet = ({ initialState, ctx = null }: IInitializeApollo 
   return _apolloClient;
 };
 
-export const useApollo = (initialStateProps: IInitializeApollo = {}) => {
-  const store = useMemo(() => intializeClinet(initialStateProps), [initialStateProps]);
+export const useApollo = (pageProps: AppProps["pageProps"]) => {
+  const state = pageProps?.[APOLLO_STATE_PROP_NAME];
+  const store = useMemo(() => intializeClinet({ initialState: state }), [state]);
   return store;
 };
