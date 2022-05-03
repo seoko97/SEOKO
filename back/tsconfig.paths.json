@@ -2,7 +2,6 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@src/*": ["src/*"],
       "@users/*": ["src/users/*"],
       "@auth/*": ["src/auth/*"],
       "@posts/*": ["src/posts/*"],
@@ -10,7 +9,8 @@
       "@utils/*": ["src/utils/*"],
       "@decorators/*": ["src/decorators/*"],
       "@common/*": ["src/common/*"],
-      "@categories/*": ["src/categories/*"]
+      "@categories/*": ["src/categories/*"],
+      "@src/*": ["src/*"]
     }
   }
 }
