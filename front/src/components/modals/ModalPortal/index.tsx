@@ -3,10 +3,9 @@ import { createPortal } from "react-dom";
 
 interface Props {
   children: React.ReactChild;
-  state: boolean;
 }
 
-const ModalPortal: FC<Props> = ({ children, state }) => {
+const ModalPortal: FC<Props> = ({ children }) => {
   const modalRef = useRef<HTMLElement | null>(null);
   const bodyRef = useRef<HTMLElement | null>(null);
   const [mounted, setMounted] = useState(false);
@@ -16,13 +15,13 @@ const ModalPortal: FC<Props> = ({ children, state }) => {
     modalRef.current = document.getElementById("modal");
     bodyRef.current = document.body;
 
-    if (state) bodyRef.current.style.overflow = "hidden";
+    bodyRef.current.style.overflow = "hidden";
     return () => {
       (bodyRef.current as HTMLElement).style.overflow = "auto";
     };
-  }, [state]);
+  }, []);
 
-  return state && mounted ? createPortal(children, modalRef.current as HTMLElement) : null;
+  return mounted ? createPortal(children, modalRef.current as HTMLElement) : null;
 };
 
 export default ModalPortal;
