@@ -1,27 +1,28 @@
 import styled from "@emotion/styled";
 import React from "react";
 import Tag from "@atoms/Tag";
+import { ITag } from "@queries-types/tags";
 
 interface Props {
-  tags: string[];
+  tags: ITag[];
 }
 
 const StyledTagList = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
-  color: ${({ theme }) => theme.FONT_COLOR.LOGO_COLOR};
   font-weight: 500;
-  margin-top: 10px;
   flex-wrap: wrap;
+  margin-bottom: 10px;
+  gap: 5px 8px;
 `;
 
 const TagList = ({ tags }: Props) => {
   return (
     <>
       <StyledTagList>
-        {tags.map((tag, i) => (
-          <Tag key={i + tag} tagName={tag} />
+        {tags.map((tag) => (
+          <Tag key={tag._id} tagName={tag.name} />
         ))}
       </StyledTagList>
     </>
