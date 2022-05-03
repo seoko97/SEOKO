@@ -6,7 +6,6 @@ import { ThemeProvider } from "@emotion/react";
 
 import cookieParser from "@lib/cookieParser";
 import { useApollo } from "@lib/apllo";
-import signinCheck from "@lib/signinCheck";
 
 import AppLayout from "@frames/AppLayout";
 import DarkModeButton from "@molecules/DarkModeButton";
@@ -14,19 +13,20 @@ import { ApolloProvider } from "@apollo/client";
 
 import { darkTheme, lightTheme } from "@theme/.";
 import GlobalStyle from "@theme/GlobalStyle";
+import initializeSigninCheck from "@lib/initializeSigninCheck";
 
-interface Props extends AppProps {
+interface IPageProps extends AppProps {
   mode: string;
-  user: string | null;
 }
 
-const SEOKO = ({ Component, pageProps, mode: modeInCookie }: Props) => {
+const SEOKO = ({ Component, pageProps, mode: modeInCookie }: IPageProps) => {
   const [cookies, setCookies] = useCookies(["mode"]);
   const mode = useMemo(() => cookies.mode || modeInCookie, [cookies.mode, modeInCookie]);
-  const client = useApollo();
+  const client = useApollo(pageProps);
+
   useEffect(() => {
     if (!cookies.mode) setCookies("mode", "light");
-    signinCheck();
+    initializeSigninCheck();
   }, []);
 
   const onClickDarkMode = useCallback(() => {
@@ -56,7 +56,6 @@ const SEOKO = ({ Component, pageProps, mode: modeInCookie }: Props) => {
 SEOKO.getInitialProps = async ({ ctx }: AppContext) => {
   const cookies = ctx.req?.headers?.cookie;
   const { mode } = cookieParser(cookies);
-
   return { mode: mode || "light" };
 };
 
