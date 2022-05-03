@@ -8,6 +8,15 @@ export interface IPost {
   coverImg: string;
   tags: ITag[];
   title: string;
+  createdAt: string;
+}
+
+export interface IGetPost {
+  getPost: {
+    ok: boolean;
+    error: any;
+    post: IPost;
+  };
 }
 
 export interface IGetPosts {
@@ -15,5 +24,12 @@ export interface IGetPosts {
     ok: boolean;
     error: any;
     posts: IPost[];
+  };
+}
+
+export interface IAddPost {
+  addPost: {
+    ok: boolean;
+    error: any;
   };
 }
