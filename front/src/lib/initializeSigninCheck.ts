@@ -1,6 +1,6 @@
-import { GET_USER_INFO } from "@src/queries/users";
-import { setUserInfo } from "@src/store/userInfo";
-import { IGetUserInfo } from "@src/types/users";
+import { GET_USER_INFO } from "@queries/users";
+import { setUserInfo } from "@store/userInfo";
+import { IGetUserInfo } from "@queries-types/users";
 import { intializeClinet } from "./apllo";
 
 const initializeSigninCheck = async () => {
