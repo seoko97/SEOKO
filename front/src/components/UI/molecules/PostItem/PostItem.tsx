@@ -1,13 +1,9 @@
 import React from "react";
 import Link from "next/link";
 import styled from "@emotion/styled";
-import { Props as PostProps } from "@states/posts/atoms";
+import { IPost } from "@queries-types/posts";
 import PostImg from "./PostImg";
 import PostContent from "./PostContent";
-
-interface Props {
-  post: PostProps;
-}
 
 const StyedPostItem = styled.div`
   width: 100%;
@@ -15,34 +11,49 @@ const StyedPostItem = styled.div`
   align-items: center;
   justify-content: center;
 
-  margin-bottom: 60px;
+  margin-bottom: 30px;
   position: relative;
   cursor: pointer;
-  transition: all 0.3s ease;
   border-radius: 10px;
   padding: 10px;
   box-sizing: border-box;
+  gap: 30px;
 
   &:hover {
-    transform: translateY(-10px);
-    box-shadow: 0px 1px 10px -4px rgba(196, 196, 196, 0.7);
+    & > div:first-of-type {
+      transform: translate3D(0, -3%, 0);
+      box-shadow: 0px 9px 15px -3px #030202;
+    }
+
+    & h1 {
+      color: ${({ theme }) => theme.SELECTION_EFFECT_COLOR.PRIMARY_COLOR};
+    }
   }
 
-  @media (max-width: ${({ theme }) => theme.BP.TABLET_Y}) {
+  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     flex-direction: column;
+    gap: 0;
   }
 `;
 
+interface Props {
+  post: IPost;
+}
+
 const PostItem = ({ post }: Props) => {
   return (
-    <>
-      <Link href={`/post/${post.id}`}>
-        <StyedPostItem>
-          <PostImg titleImage={post.titleImage} />
-          <PostContent content={post.content} tags={post.tags} title={post.title} />
-        </StyedPostItem>
-      </Link>
-    </>
+    <Link href={`/post/${post._id}`}>
+      <StyedPostItem>
+        <PostImg titleImage={post.coverImg} />
+        <PostContent
+          content={post.content}
+          tags={post.tags}
+          title={post.title}
+          category={post.category}
+          createdAt={post.createdAt}
+        />
+      </StyedPostItem>
+    </Link>
   );
 };
 
