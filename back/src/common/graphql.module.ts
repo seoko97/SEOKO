@@ -14,16 +14,10 @@ const prod = process.env.NODE_ENV === 'production';
       autoSchemaFile: join(process.cwd(), 'schema.graphql'),
       sortSchema: true,
       cors: {
+        origin: 'http://localhost:3000',
         credentials: true,
-        origin: true,
       },
       context: (ctx) => ({ ...ctx }),
-
-      formatResponse: (res) => {
-        if (res.errors?.[0])
-          res.data = { ok: false, error: res.errors?.[0]?.message };
-        return res;
-      },
     }),
   ],
 })

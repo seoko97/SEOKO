@@ -7,6 +7,7 @@ const StyledLogo = styled.div`
 
   & > span {
     & a {
+      transition: color 0.3s;
       font-weight: 700;
       & span {
         color: ${({ theme }) => theme.FONT_COLOR.LOGO_COLOR};
@@ -20,7 +21,7 @@ const Logo = () => {
     <>
       <StyledLogo>
         <span>
-          <Link href="/" prefetch={false}>
+          <Link href="/">
             <a>
               SE<span>O</span>KO
             </a>

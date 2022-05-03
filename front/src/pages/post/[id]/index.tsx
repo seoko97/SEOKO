@@ -1,18 +1,25 @@
+import { addApolloState } from "@lib/addApolloState";
+import { intializeClinet } from "@lib/apllo";
+import { IGetPost } from "@queries-types/posts";
+import { GET_POST } from "@queries/post/getPost.queries";
 import { GetServerSideProps } from "next";
-import React from "react";
 
-const Post = () => {
-  return (
-    <>
-      <div>asdasd</div>
-    </>
-  );
-};
-
-export default Post;
+export { default } from "@pages/Post";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  console.log(ctx.query);
+  const { query } = ctx;
 
-  return { props: {} };
+  const apolloClient = intializeClinet({ ctx });
+
+  await apolloClient.query<IGetPost>({
+    query: GET_POST,
+    variables: { input: { id: query.id } },
+    errorPolicy: "all",
+  });
+
+  return addApolloState(apolloClient, {
+    props: {
+      _id: query.id,
+    },
+  });
 };

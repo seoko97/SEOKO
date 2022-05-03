@@ -16,18 +16,20 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@src/*": ["src/*"],
       "@pages/*": ["src/components/pages/*"],
       "@theme/*": ["src/theme/*"],
-      "@states/*": ["src/states/*"],
       "@atoms/*": ["src/components/UI/atoms/*"],
       "@frames/*": ["src/components/UI/frames/*"],
       "@molecules/*": ["src/components/UI/molecules/*"],
       "@organisms/*": ["src/components/UI/organisms/*"],
       "@icons/*": ["src/components/icons/*"],
+      "@modals/*": ["src/components/modals/*"],
       "@hooks/*": ["src/hooks/*"],
-      "@apis/*": ["src/apis/*"],
-      "@types/*": ["src/types/*"]
+      "@store/*": ["src/store/*"],
+      "@queries/*": ["src/queries/*"],
+      "@queries-types/*": ["src/types/*"],
+      "@lib/*": ["src/lib/*"],
+      "@src/*": ["src/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

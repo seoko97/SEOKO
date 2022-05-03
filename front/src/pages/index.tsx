@@ -1,17 +1,17 @@
 import { GetServerSideProps } from "next";
-import { post as dummyPost } from "@src/dummy/posts";
-import { dummyCategory } from "@src/dummy/categories";
+import { intializeClinet } from "@lib/apllo";
+import { addApolloState } from "@lib/addApolloState";
+import { IGetPosts } from "@queries-types/posts";
+import { GET_POSTS } from "@queries/post/getPosts.queries";
 
 export { default } from "@pages/Home";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const posts = await dummyPost;
-  const categories = await dummyCategory;
+  const apolloClient = intializeClinet({ ctx });
 
-  return {
-    props: {
-      posts,
-      categories,
-    },
-  };
+  await apolloClient.query<IGetPosts>({ query: GET_POSTS });
+
+  return addApolloState(apolloClient, {
+    props: {},
+  });
 };

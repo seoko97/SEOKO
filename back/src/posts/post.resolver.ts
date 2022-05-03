@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { JwtAuthGuard } from '@src/auth/guards/jwt-auth.guard';
 import { CoreRes } from '@src/decorators/coreRes.decorator';
 import { CreatePostInput } from './dto/createPostInput.dto';
@@ -15,6 +15,11 @@ export class PostResolver {
   async createPost(@Args('input') input: CreatePostInput): Promise<CoreRes> {
     const post = await this.postService.create(input);
 
+    return { ok: true };
+  }
+
+  @Query(() => CoreRes)
+  async getPost(): Promise<CoreRes> {
     return { ok: true };
   }
 }

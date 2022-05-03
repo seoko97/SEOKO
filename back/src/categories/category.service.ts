@@ -13,7 +13,6 @@ export class CategoryService {
 
   async update(_id: string, query: any) {
     const a = await this.categoryModel.findOneAndUpdate({ _id }, query);
-    console.log('@', a);
     return a;
   }
 

@@ -1,16 +1,17 @@
 import React from "react";
-import Link from "next/link";
 
 import styled from "@emotion/styled";
 
-const StyledUserAvatar = styled.div`
-  width: 42px;
-  height: 42px;
-
+interface IProps {
+  width: number;
+  height: number;
+  onClick?: () => void;
+}
+const StyledUserAvatar = styled.div<IProps>`
+  width: ${({ width }) => `${width}px`};
+  height: ${({ height }) => `${height}px`};
   border-radius: 50%;
   background-color: #ccc;
-
-  cursor: pointer;
 
   & > img {
     border-radius: 50%;
@@ -19,13 +20,11 @@ const StyledUserAvatar = styled.div`
   }
 `;
 
-const UserAvatar = () => {
+const UserAvatar = ({ height, width, onClick }: IProps) => {
   return (
     <>
-      <StyledUserAvatar>
-        <Link href="/signin">
-          <img src="/main.jpg" alt="me" />
-        </Link>
+      <StyledUserAvatar onClick={onClick && onClick} width={width} height={height}>
+        <img src="/main.jpg" alt="me" loading="lazy" />
       </StyledUserAvatar>
     </>
   );
