@@ -3,6 +3,7 @@ import React from "react";
 
 interface Props {
   content: string;
+  loading: boolean;
 }
 
 const StyledButton = styled.button`
@@ -17,10 +18,10 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ content }: Props) => {
+const Button = ({ content, loading }: Props) => {
   return (
     <>
-      <StyledButton>{content}</StyledButton>
+      <StyledButton disabled={loading}>{content}</StyledButton>
     </>
   );
 };
