@@ -8,5 +8,5 @@ export class SigninInput extends PickType(User, ['userId', 'password']) {}
 @ObjectType()
 export class SigninRes extends CoreRes {
   @Field(() => String)
-  username: string;
+  username!: string;
 }

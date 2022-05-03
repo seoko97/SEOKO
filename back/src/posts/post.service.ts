@@ -34,7 +34,7 @@ export class PostService {
       },
     });
 
-    if (tags) {
+    if (tags.length) {
       const createdTag = await Promise.all(
         tags.map(async (tagName) => {
           const tag = await this.tagService.findOrCreate(tagName);
@@ -80,8 +80,17 @@ export class PostService {
     return { ok: true };
   }
 
+  async getPost(_id: string) {
+    const post = await this.postModel.findOne({ _id });
+
+    await post.populate('category');
+    await post.populate('tags');
+
+    return post;
+  }
+
   // 복수 포스트
   async getPosts() {
-    return await this.postModel.find();
+    return await this.postModel.find().populate('category').populate('tags');
   }
 }

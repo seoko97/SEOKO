@@ -27,6 +27,33 @@ type CreateTagDTO {
   tag: Tag!
 }
 
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type GetCategoriesRes {
+  categories: [Category!]!
+  error: String
+  ok: Boolean!
+}
+
+type GetPostDTO {
+  error: String
+  ok: Boolean!
+  post: Post!
+}
+
+input GetPostInput {
+  id: String!
+}
+
+type GetPostsDTO {
+  error: String
+  ok: Boolean!
+  posts: [Post!]!
+}
+
 type GetTagsRes {
   error: String
   ok: Boolean!
@@ -51,8 +78,9 @@ input InputUser {
 }
 
 type Mutation {
+  addCategory: CoreRes!
+  addPost(input: CreatePostInput!): CoreRes!
   create(input: InputUser!): CoreRes!
-  createPost(input: CreatePostInput!): CoreRes!
   createTag(input: String!): CreateTagDTO!
   deleteTag(_id: String!): CoreRes!
   refresh: CoreRes!
@@ -65,12 +93,16 @@ type Post {
   category: Category!
   content: String!
   coverImg: String!
+  createdAt: DateTime!
   tags: [Tag!]!
   title: String!
+  updatedAt: DateTime!
 }
 
 type Query {
-  getPost: CoreRes!
+  getCategories: GetCategoriesRes!
+  getPost(input: GetPostInput!): GetPostDTO!
+  getPosts: GetPostsDTO!
   getTag(input: String!): CoreRes!
   getTags: GetTagsRes!
   getUserInfo: GetUserInfoDTO!

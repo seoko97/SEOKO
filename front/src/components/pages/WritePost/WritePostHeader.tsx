@@ -96,7 +96,7 @@ interface Props {
   onChangeTagName: (e: ChangeEvent) => void;
   onChangeCategory: (e: ChangeEvent) => void;
   setCategory: (category: string) => void;
-  coverImageHandler: (e: SVGSVGElement) => void;
+  coverImageHandler: (e: MouseEvent<SVGSVGElement>) => void;
   onChangeImage: (e: ChangeEvent<HTMLInputElement>) => void;
   clearCoverImage: () => void;
   photoInputRef: MutableRefObject<HTMLInputElement | null>;
