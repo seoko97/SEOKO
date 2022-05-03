@@ -21,4 +21,10 @@ export class CategoryService {
 
     return { ok: true };
   }
+
+  async getCategories() {
+    const categories = await this.categoryModel.find();
+
+    return categories;
+  }
 }
