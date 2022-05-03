@@ -28,20 +28,17 @@ let apolloClient: ApolloClient<NormalizedCacheObject>;
 export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {
   const cookie = ctx?.req?.headers.cookie || "";
   const enhancedFetch = (url: RequestInfo, init: RequestInit) => {
-    const nHeader = ctx?.res?.getHeaders();
-    const c = nHeader?.["set-cookie"]?.toString().split(";");
+    const token = ctx?.res?.getHeader("set-cookie") as string | undefined;
 
     return fetch(url, {
       ...init,
       headers: {
         ...init.headers,
-        cookie: c?.[0] ?? cookie,
-        "Access-Control-Allow-Origin": "*",
+        cookie: token ?? cookie,
       },
     }).then((response) => {
-      const setCookies = response.headers.get("set-cookie") || null;
-      if (setCookies && ctx) ctx?.res?.setHeader("set-Cookie", setCookies);
-
+      const setCookies = response.headers.get("set-cookie");
+      if (ctx && setCookies) ctx.res?.setHeader("set-Cookie", setCookies);
       return response;
     });
   };
