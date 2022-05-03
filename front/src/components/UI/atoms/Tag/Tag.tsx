@@ -6,15 +6,18 @@ interface Props {
   tagName: string;
 }
 
-const StyledTag = styled.div`
+export const StyledTag = styled.div`
   padding: 5px 8px;
   background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.SECONDARY_COLOR};
-  font-size: 12px;
-  border-radius: 10px;
-  margin: 0 5px 5px 0;
+  color: ${({ theme }) => theme.FONT_COLOR.LOGO_COLOR};
+  font-size: 14px;
+  font-weight: 400;
+  border-radius: 50px;
+  transition: background-color 0.3s;
+  cursor: pointer;
 
   &:hover {
-    text-decoration: underline;
+    background-color: ${({ theme }) => theme.SELECTION_EFFECT_COLOR.SECONDARY_COLOR};
   }
 `;
 
