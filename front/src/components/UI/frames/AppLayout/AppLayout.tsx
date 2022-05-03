@@ -11,7 +11,7 @@ const StyledAppLayout = styled.div`
   position: relative;
   padding-bottom: 140px;
   background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.PRIMARY_COLOR};
-  transition: background 0.3s;
+  transition: background-color 0.3s;
   z-index: 0;
 `;
 
