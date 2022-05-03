@@ -40,6 +40,12 @@ export class Post {
   })
   @Field(() => [Tag || Types.ObjectId])
   tags?: Types.ObjectId[] | Tag[];
+
+  @Field(() => Date)
+  createdAt: Date;
+
+  @Field(() => Date)
+  updatedAt: Date;
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);
