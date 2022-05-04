@@ -28,6 +28,10 @@ export const lightTheme = {
   BUTTON_COLOR: {
     PRIMARY_COLOR: "#86caf4",
   },
+  MARK_DOWN: {
+    CODE_COLOR: "rgb(33 37 41)",
+    BACK_COLOR: "rgb(233 236 239)",
+  },
 };
 
 export const darkTheme = {
@@ -53,6 +57,10 @@ export const darkTheme = {
   },
   BUTTON_COLOR: {
     PRIMARY_COLOR: "#A076F1",
+  },
+  MARK_DOWN: {
+    CODE_COLOR: "rgb(248 249 250)",
+    BACK_COLOR: "rgb(73 80 87)",
   },
 };
 
