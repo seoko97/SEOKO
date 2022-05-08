@@ -17,7 +17,6 @@ const GlobalStyle = ({ theme }: GlobalProps) => (
       }
 
       body {
-        overflow-y: overlay;
         margin: 0;
         font-size: 16px;
         line-height: 1.5715;
@@ -39,7 +38,8 @@ const GlobalStyle = ({ theme }: GlobalProps) => (
         outline: none;
       }
       & * {
-        font-family: "Quicksand", "Noto Sans KR", sans-serif !important;
+        font-family: "Noto Sans KR", "Quicksand", sans-serif !important;
+
         box-sizing: border-box;
       }
     `}
