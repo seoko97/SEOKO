@@ -1,0 +1,20 @@
+import styled from "@emotion/styled";
+import React from "react";
+import { CodeComponent } from "react-markdown/lib/ast-to-react";
+
+const BlockQuote = styled.blockquote`
+  border-left: 4px solid #495057;
+  padding: 18px 24px;
+  background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.SECONDARY_COLOR};
+
+  & > p {
+    font-size: 18px;
+    margin: 0;
+  }
+`;
+
+const blockquote: CodeComponent = ({ children }) => {
+  return <BlockQuote>{children}</BlockQuote>;
+};
+
+export default blockquote;
