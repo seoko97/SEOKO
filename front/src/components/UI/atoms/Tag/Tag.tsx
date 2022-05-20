@@ -7,27 +7,26 @@ interface Props {
 }
 
 export const StyledTag = styled.div`
-  padding: 5px 8px;
-  background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.SECONDARY_COLOR};
+  padding: 6px 8px;
   color: ${({ theme }) => theme.FONT_COLOR.LOGO_COLOR};
-  font-size: 14px;
+  border: 1px solid ${({ theme }) => theme.FONT_COLOR.LOGO_COLOR};
   font-weight: 400;
-  border-radius: 50px;
-  transition: background-color 0.3s;
+  border-radius: 10px;
+  transition: opacity 0.3s;
   cursor: pointer;
+  font-size: 14.4px;
+  line-height: 100%;
 
   &:hover {
-    background-color: ${({ theme }) => theme.SELECTION_EFFECT_COLOR.SECONDARY_COLOR};
+    opacity: 0.8;
   }
 `;
 
 const Tag = ({ tagName }: Props) => {
   return (
-    <>
-      <Link href={`/tag/${tagName}`}>
-        <StyledTag>{tagName}</StyledTag>
-      </Link>
-    </>
+    <Link href={`/tag/${tagName}`}>
+      <StyledTag>{tagName}</StyledTag>
+    </Link>
   );
 };
 
