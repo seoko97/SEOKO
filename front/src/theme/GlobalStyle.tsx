@@ -12,11 +12,12 @@ const GlobalStyle = ({ theme }: GlobalProps) => (
     styles={css`
       ${reset}
 
-      html, body, #__next {
+      body, #__next {
         height: 100%;
       }
 
       body {
+        height: 100%;
         margin: 0;
         font-size: 16px;
         line-height: 1.5715;

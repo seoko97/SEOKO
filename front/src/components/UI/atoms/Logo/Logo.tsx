@@ -4,6 +4,9 @@ import styled from "@emotion/styled";
 
 const StyledLogo = styled.div`
   font-size: 30px;
+  & * {
+    font-family: "Quicksand" !important;
+  }
 
   & > span {
     & a {
