@@ -1,6 +1,10 @@
 // useIntersectionObserver custom hook
 import { useEffect, useRef } from "react";
 
+interface IHeadingElement {
+  [key: string]: IntersectionObserverEntry;
+}
+
 export const useIntersectionObserver = (
   // 넘겨받은 setActiveId 를 통해 화면 상단의 제목 element를 set해준다.
   setActiveId: React.Dispatch<React.SetStateAction<string>>,
@@ -8,7 +12,7 @@ export const useIntersectionObserver = (
   content: string,
 ) => {
   // heading element를 담아서 사용하기 위한 ref
-  const headingElementsRef = useRef<any>({});
+  const headingElementsRef = useRef<IHeadingElement>({});
 
   useEffect(() => {
     // 새로고침 없이 다른 게시물로 이동할 경우를 대비한 초기화
@@ -17,7 +21,7 @@ export const useIntersectionObserver = (
     // callback은 intersectionObserver로 관찰할 대상 비교 로직
     const callback: IntersectionObserverCallback = (headings) => {
       // 모든 제목을 reduce로 순회해서 headingElementsRef.current에 키 밸류 형태로 할당.
-      headingElementsRef.current = headings.reduce((map: any, headingElement) => {
+      headingElementsRef.current = headings.reduce<IHeadingElement>((map, headingElement) => {
         map[headingElement.target.id] = headingElement;
         return map;
       }, headingElementsRef.current);
@@ -26,7 +30,6 @@ export const useIntersectionObserver = (
       const visibleHeadings: IntersectionObserverEntry[] = [];
       Object.keys(headingElementsRef.current).forEach((key) => {
         const headingElement = headingElementsRef.current[key];
-
         // isIntersecting이 true라면 visibleHeadings에 push한다.
         if (headingElement.isIntersecting) visibleHeadings.push(headingElement);
       });
@@ -50,11 +53,11 @@ export const useIntersectionObserver = (
     // IntersectionObserver에 callback과 옵션을 생성자로 넘겨 주고 새로 생성한다.
     const observer = new IntersectionObserver(callback, {
       // rootMargin 옵션을 통해 화면 상단에서 네비바 영역(-64px)을 빼고, 위에서부터 -40%정도 영역만 관찰한다.
-      rootMargin: "-64px 0px -40% 0px",
+      rootMargin: "-72px 0px -90% 0px",
     });
 
     // 제목 태그들을 다 찾아낸다.
-    const headingElements = Array.from(document.querySelectorAll("h1, h2, h3"));
+    const headingElements = Array.from(document.querySelectorAll("h1, h2, h3, h4, h5, h6"));
 
     // 이 요소들을 observer로 관찰한다.
     headingElements.forEach((element) => observer.observe(element));
