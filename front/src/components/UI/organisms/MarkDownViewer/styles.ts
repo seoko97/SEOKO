@@ -5,7 +5,7 @@ export const MarkdownWrapper = styled.div`
   overflow-wrap: break-word;
   user-select: text;
 
-  &:first-of-type {
+  & > :first-of-type {
     margin-top: 0;
   }
 
@@ -14,12 +14,12 @@ export const MarkdownWrapper = styled.div`
   }
 
   & * {
-    font-size: 17px;
+    line-height: 2;
   }
 
   & pre {
     color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
-    border-radius: 10px;
+    border-radius: 1.7;
     overflow-wrap: break-word;
 
     & .token {
@@ -110,5 +110,16 @@ export const MarkdownWrapper = styled.div`
     display: block;
     margin: 0 auto;
     max-width: 100%;
+  }
+
+  & a {
+    text-decoration: underline;
+    &:hover {
+      color: ${({ theme }) => theme.SELECTION_EFFECT_COLOR.PRIMARY_COLOR};
+    }
+  }
+
+  & img {
+    border-radius: 10px;
   }
 `;

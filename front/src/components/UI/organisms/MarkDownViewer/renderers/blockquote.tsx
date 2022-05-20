@@ -8,7 +8,6 @@ const BlockQuote = styled.blockquote`
   background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.SECONDARY_COLOR};
 
   & > p {
-    font-size: 18px;
     margin: 0;
   }
 `;
