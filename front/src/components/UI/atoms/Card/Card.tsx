@@ -6,11 +6,7 @@ export const StyledCard = styled.div`
   box-shadow: 0 1px 6px 0 hsla(0, 0%, 0%, 0.1);
 `;
 
-interface Props {
-  children: React.ReactNode;
-}
-
-const Card = ({ children }: Props) => (
+const Card: React.FC = ({ children }) => (
   <>
     <StyledCard>{children}</StyledCard>
   </>
