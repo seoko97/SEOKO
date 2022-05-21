@@ -173,4 +173,4 @@ const WritePostHeader = (props: Props) => {
   );
 };
 
-export default memo(WritePostHeader);
+export default WritePostHeader;

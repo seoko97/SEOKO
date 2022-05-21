@@ -5,12 +5,13 @@ import { useMutation } from "@apollo/client";
 import useInput from "@hooks/useInput";
 
 import { ADD_POST } from "@queries/post/addPost.queries";
-import { IAddPost, IPost } from "@queries-types/posts";
+import { IAddPost, IEditPost, IPost } from "@queries-types/posts";
 
 import RowFrame from "@frames/RowFrame";
 import TuiEditor from "@organisms/TuiEditor";
 
 import { useRouter } from "next/router";
+import { EDIT_POST } from "@queries/post/editPost.queries";
 import WritePostHeader from "./WritePostHeader";
 import WritePostFooter from "./WritePosFooter";
 
@@ -33,6 +34,8 @@ const WritePost = ({ post }: IProps) => {
   const [title, onChangeTitle] = useInput(post?.title || "");
   const [category, onChangeCategory, setCategory] = useInput(post?.category.name || "");
   const [tagName, onChangeTagName, setTagName] = useInput("");
+  const [deleteTags, setDeleteTags] = useState<string[]>([]);
+  const [addTags, setAddTags] = useState<string[]>([]);
 
   const [addPostMutation] = useMutation<IAddPost>(ADD_POST, {
     onCompleted({ addPost }) {
@@ -40,19 +43,44 @@ const WritePost = ({ post }: IProps) => {
     },
   });
 
+  const [editPostMutation] = useMutation<IEditPost>(EDIT_POST, {
+    onCompleted({ editPost }) {
+      if (editPost.ok) router.push("/");
+    },
+  });
   const addPost = useCallback(async () => {
+    const comfirmPost = confirm("저장하시겠습니까?");
+
+    if (!comfirmPost) return;
+
     if (title.length && content.length && category.length && coverImg) {
-      await addPostMutation({
-        variables: {
-          input: {
-            title,
-            content,
-            coverImg,
-            category,
-            tags,
+      if (post) {
+        await editPostMutation({
+          variables: {
+            input: {
+              _id: post._id,
+              title,
+              content,
+              coverImg,
+              category,
+              addTags,
+              deleteTags,
+            },
           },
-        },
-      });
+        });
+      } else {
+        await addPostMutation({
+          variables: {
+            input: {
+              title,
+              content,
+              coverImg,
+              category,
+              tags,
+            },
+          },
+        });
+      }
     } else alert("필드를 모두 채워주세요");
   }, [title, content, coverImg, category, tags]);
 
@@ -60,30 +88,48 @@ const WritePost = ({ post }: IProps) => {
     (e) => {
       if (!e.nativeEvent.isComposing) {
         if (e.key === "Enter") {
-          const newTag = tagName.trim().toLowerCase();
+          const newTag = tagName.trim();
           if (!tags.includes(tagName) && newTag.length) {
+            const existencedTag = post?.tags.find((tag) => tag.name === newTag);
+
+            if (!existencedTag) setAddTags([...addTags, newTag]);
+
+            if (deleteTags.includes(newTag))
+              setDeleteTags(deleteTags.filter((tag) => tag !== newTag));
+
             setTags([...tags, newTag]);
             setTagName("");
           }
-        } else if (e.key === "Backspace" && tags.length) {
+        } else if (e.key === "Backspace" && tags.length && !tagName.length) {
           const newTags = [...tags];
-          newTags.pop();
+
+          const $tag = newTags.pop();
+
+          const deletedTag = post?.tags.find((tag) => tag.name === $tag);
+
+          if ($tag && deletedTag) setDeleteTags([...deleteTags, $tag]);
+
           setTags(newTags);
         }
       }
     },
-    [tags, tagName],
+    [tags, tagName, deleteTags, addTags],
   );
 
   const deleteTag = useCallback(
     (e) => {
+      const $tag = e.target.innerText;
       const newTags = [...tags];
-      const idx = tags.indexOf(e.target.innerText);
+      const idx = tags.indexOf($tag);
       newTags.splice(idx, 1);
+
+      const deletedTag = post?.tags.find((tag) => tag.name === $tag);
+
+      if (deletedTag) setDeleteTags([...deleteTags, $tag]);
 
       setTags(newTags);
     },
-    [tags],
+    [tags, deleteTags],
   );
 
   const clearCoverImage = useCallback(() => {
@@ -99,11 +145,7 @@ const WritePost = ({ post }: IProps) => {
   );
 
   const onChangeImage = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setCoverImg(
-        "https://velog.velcdn.com/post-images/godori/496c0830-3dc1-11e9-bc03-611ba17bddf2/banner-maker.png",
-      );
-    }
+    if (e.target.files) setCoverImg("/main.jpg");
   }, []);
 
   return (
@@ -125,7 +167,7 @@ const WritePost = ({ post }: IProps) => {
         onChangeImage={onChangeImage}
         clearCoverImage={clearCoverImage}
       />
-      <TuiEditor onChange={setContent} />
+      <TuiEditor initialValue={content} onChange={setContent} />
       <WritePostFooter addPost={addPost} />
     </Container>
   );
