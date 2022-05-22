@@ -33,3 +33,17 @@ export interface IAddPost {
     error: any;
   };
 }
+
+export interface IDeletePost {
+  deletePost: {
+    ok: boolean;
+    error: any;
+  };
+}
+
+export interface IEditPost {
+  editPost: {
+    ok: boolean;
+    error: any;
+  };
+}
