@@ -9,6 +9,7 @@ const initializeSigninCheck = async () => {
   const { data } = await apolloClient.query<IGetUserInfo>({
     query: GET_USER_INFO,
     errorPolicy: "all",
+    fetchPolicy: "no-cache",
   });
 
   if (data?.getUserInfo?.ok) setUserInfo(data.getUserInfo.username);
