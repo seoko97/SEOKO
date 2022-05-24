@@ -1,58 +1,54 @@
-import React from "react";
-import { useQuery } from "@apollo/client";
-import { GET_POST } from "@queries/post/getPost.queries";
-import { IGetPost } from "@queries-types/posts";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import RowFrame from "@frames/RowFrame";
 
+import { IPost, ISiblingPost } from "@queries-types/posts";
+
 import Markdown from "@organisms/MarkDownViewer";
+import PostHeader from "@organisms/PostHeader";
+import PostFooter from "@organisms/PostFooter";
 import Toc from "@organisms/Toc";
-import PostHeader from "@organisms/PostHeader/PostHeader";
+import { resetToc } from "@store/toc";
 
 interface Props {
-  _id: string;
+  post: IPost;
+  siblingPost: ISiblingPost;
 }
 
-const Container = styled(RowFrame)`
+const PostContent = styled.div`
+  width: 100%;
   display: flex;
-  gap: 30px;
-  & > :first-of-type {
-    width: calc(100% - 200px);
-  }
-  & > :last-of-type {
-    flex: 1;
+  justify-content: space-between;
+
+  & > div:first-of-type {
+    width: 75%;
   }
 
   @media (max-width: ${({ theme }) => theme.BP.PC}) {
-    & > :first-of-type {
+    & > div:first-of-type {
       width: 100%;
     }
   }
 `;
 
-const Post = ({ _id }: Props) => {
-  const { data } = useQuery<IGetPost>(GET_POST, { variables: { input: { id: _id } } });
+const Post = ({ post, siblingPost }: Props) => {
+  const { content } = post;
 
-  if (!data) return <></>;
-
-  const { category, content, coverImg, createdAt, tags, title } = data.getPost.post;
+  useEffect(() => {
+    return () => {
+      resetToc();
+    };
+  }, [content]);
 
   return (
-    <Container>
-      <div>
-        <PostHeader
-          category={category}
-          coverImg={coverImg}
-          createdAt={createdAt}
-          tags={tags}
-          title={title}
-        />
+    <RowFrame>
+      <PostHeader post={post} />
+      <PostContent>
         <Markdown content={content} />
-      </div>
-      <div>
         <Toc content={content} />
-      </div>
-    </Container>
+      </PostContent>
+      <PostFooter siblingPost={siblingPost} />
+    </RowFrame>
   );
 };
 
