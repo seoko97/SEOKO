@@ -12,13 +12,13 @@ export const StyledTag = styled.div`
   border: 1px solid ${({ theme }) => theme.FONT_COLOR.LOGO_COLOR};
   font-weight: 400;
   border-radius: 10px;
-  transition: opacity 0.3s;
+  transition: background-color 0.3s;
   cursor: pointer;
   font-size: 14.4px;
   line-height: 100%;
 
   &:hover {
-    opacity: 0.8;
+    background: ${({ theme }) => theme.SELECTION_EFFECT_COLOR.SECONDARY_COLOR};
   }
 `;
 
