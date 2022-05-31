@@ -34,11 +34,14 @@ const Container = styled.header`
 `;
 
 const Header = () => {
-  const [scrollPosition, setScrollPosition] = useState(0);
+  const [isFixed, setIsFixed] = useState(false);
 
   useEffect(() => {
     const updateScroll = () => {
-      setScrollPosition(window.scrollY || document.documentElement.scrollTop);
+      const scrollHeight = window.scrollY || document.documentElement.scrollTop;
+
+      if (scrollHeight >= 32) setIsFixed(true);
+      else setIsFixed(false);
     };
 
     window.addEventListener("scroll", updateScroll);
@@ -47,14 +50,12 @@ const Header = () => {
   }, []);
 
   return (
-    <>
-      <Container className={`header ${scrollPosition >= 32 ? "fixed" : ""}`}>
-        <RowFrame>
-          <Logo />
-          <MenuBox />
-        </RowFrame>
-      </Container>
-    </>
+    <Container className={isFixed ? "fixed" : ""}>
+      <RowFrame>
+        <Logo />
+        <MenuBox />
+      </RowFrame>
+    </Container>
   );
 };
 
