@@ -10,10 +10,6 @@ export const GET_POSTS = gql`
         content
         title
         coverImg
-        category {
-          _id
-          name
-        }
         tags {
           _id
           name

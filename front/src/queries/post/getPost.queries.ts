@@ -10,15 +10,23 @@ export const GET_POST = gql`
         content
         title
         coverImg
-        category {
-          _id
-          name
-        }
+
         tags {
           _id
           name
         }
         createdAt
+      }
+
+      siblingPost {
+        next {
+          _id
+          title
+        }
+        prev {
+          _id
+          title
+        }
       }
     }
   }
