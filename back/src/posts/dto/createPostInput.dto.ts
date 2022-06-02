@@ -7,9 +7,6 @@ export class CreatePostInput extends PickType(Post, [
   'title',
   'content',
 ]) {
-  @Field(() => String)
-  category!: string;
-
   @Field(() => [String])
   tags!: string[];
 }
