@@ -1,6 +1,5 @@
 import { ObjectType, Field, InputType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Category } from '@src/categories/category.model';
 import { Tag } from '@src/tags/tag.model';
 import { Document, Model, Types, PopulatedDoc } from 'mongoose';
 
@@ -21,14 +20,6 @@ export class Post {
   @Field(() => String)
   content!: string;
 
-  @Prop({
-    type: Types.ObjectId,
-    ref: 'Category',
-    required: true,
-  })
-  @Field(() => Category || Types.ObjectId)
-  category!: PopulatedDoc<Category>;
-
   @Prop({ required: true })
   @Field(() => String)
   coverImg!: string;
@@ -39,7 +30,7 @@ export class Post {
     required: false,
   })
   @Field(() => [Tag || Types.ObjectId])
-  tags?: Types.ObjectId[] | Tag[];
+  tags?: (Types.ObjectId | Tag)[];
 
   @Field(() => Date)
   createdAt: Date;
