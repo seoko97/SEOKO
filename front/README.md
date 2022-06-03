@@ -2,13 +2,13 @@
 
 ### **Page**
 
-- Main [ ]
+- Main [ ✅ ]
 
-- Post [ ]
+- Post [ ✅ ]
 
 - About [ ]
 
-- SignIn [ ]
+- SignIn [ ✅ ]
 
 - Project [ ]
 
