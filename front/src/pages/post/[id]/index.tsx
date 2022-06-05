@@ -11,15 +11,27 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   const apolloClient = intializeClinet({ ctx });
 
-  await apolloClient.query<IGetPost>({
+  const result = await apolloClient.query<IGetPost>({
     query: GET_POST,
     variables: { input: { id: query.id } },
     errorPolicy: "all",
   });
 
+  if (!result.data && result.errors?.[0]) {
+    return {
+      props: {},
+      redirect: {
+        destination: "/404",
+      },
+    };
+  }
+
+  const { post, siblingPost } = result.data.getPost;
+
   return addApolloState(apolloClient, {
     props: {
-      _id: query.id,
+      post,
+      siblingPost,
     },
   });
 };
