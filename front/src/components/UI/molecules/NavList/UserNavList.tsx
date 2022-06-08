@@ -14,7 +14,7 @@ export const Container = styled.ul`
     cursor: pointer;
     color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
     transition: background-color 0.3s;
-    font-size: 14px;
+    font-size: 0.9em;
     display: flex;
     align-items: center;
     justify-content: flex-start;

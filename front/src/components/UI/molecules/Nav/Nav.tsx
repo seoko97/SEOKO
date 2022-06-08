@@ -32,14 +32,6 @@ const Container = styled.nav`
   @media (max-width: ${({ theme }) => theme.BP.PC}) {
     right: 16px;
   }
-
-  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
-    width: 100%;
-    top: 72px;
-    right: 0;
-    border-radius: 0;
-    padding: 10px;
-  }
 `;
 
 const UserNav = forwardRef<HTMLDivElement, Props>(({ isActive, children }, ref) => {
