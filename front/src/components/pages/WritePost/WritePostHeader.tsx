@@ -4,7 +4,6 @@ import styled from "@emotion/styled";
 import useModal from "@hooks/useModal";
 import { StyledTag } from "@atoms/Tag";
 import ImageIcon from "@icons/ImageIcon/ImageIcon";
-import SelectCategories from "@modals/SelectCategories/SelectCategories";
 
 const Header = styled.header`
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
@@ -88,14 +87,11 @@ interface Props {
   title: string;
   tagName: string;
   tags: string[];
-  category: string;
   coverImg: string;
   deleteTag: (e: MouseEvent) => void;
   addTag: (e: KeyboardEvent) => void;
   onChangeTitle: (e: ChangeEvent) => void;
   onChangeTagName: (e: ChangeEvent) => void;
-  onChangeCategory: (e: ChangeEvent) => void;
-  setCategory: (category: string) => void;
   coverImageHandler: (e: MouseEvent<SVGSVGElement>) => void;
   onChangeImage: (e: ChangeEvent<HTMLInputElement>) => void;
   clearCoverImage: () => void;
@@ -106,7 +102,6 @@ const WritePostHeader = (props: Props) => {
   const {
     title,
     tagName,
-    category,
     tags,
     photoInputRef,
     coverImg,
@@ -114,8 +109,6 @@ const WritePostHeader = (props: Props) => {
     deleteTag,
     onChangeTagName,
     onChangeTitle,
-    onChangeCategory,
-    setCategory,
     coverImageHandler,
     onChangeImage,
     clearCoverImage,
@@ -145,16 +138,7 @@ const WritePostHeader = (props: Props) => {
           />
         </TagList>
       </div>
-      <div>
-        <input
-          type="text"
-          value={category}
-          onChange={onChangeCategory}
-          placeholder="카테고리를 입력하세요"
-        />
-        <button onClick={openModal}>카테고리 목록 보기</button>
-        {state && <SelectCategories closeModal={closeModal} setCategory={setCategory} />}
-      </div>
+
       <div>
         <span>커버 이미지</span>
         <div>

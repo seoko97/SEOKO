@@ -32,7 +32,6 @@ const WritePost = ({ post }: IProps) => {
   const [tags, setTags] = useState<string[]>(post?.tags.map((tag) => tag.name) || []);
 
   const [title, onChangeTitle] = useInput(post?.title || "");
-  const [category, onChangeCategory, setCategory] = useInput(post?.category.name || "");
   const [tagName, onChangeTagName, setTagName] = useInput("");
   const [deleteTags, setDeleteTags] = useState<string[]>([]);
   const [addTags, setAddTags] = useState<string[]>([]);
@@ -53,7 +52,7 @@ const WritePost = ({ post }: IProps) => {
 
     if (!comfirmPost) return;
 
-    if (title.length && content.length && category.length && coverImg) {
+    if (title.length && content.length && coverImg) {
       if (post) {
         await editPostMutation({
           variables: {
@@ -62,7 +61,6 @@ const WritePost = ({ post }: IProps) => {
               title,
               content,
               coverImg,
-              category,
               addTags,
               deleteTags,
             },
@@ -75,14 +73,13 @@ const WritePost = ({ post }: IProps) => {
               title,
               content,
               coverImg,
-              category,
               tags,
             },
           },
         });
       }
     } else alert("필드를 모두 채워주세요");
-  }, [title, content, coverImg, category, tags]);
+  }, [title, content, coverImg, tags]);
 
   const addTag = useCallback(
     (e) => {
@@ -153,7 +150,6 @@ const WritePost = ({ post }: IProps) => {
       <WritePostHeader
         title={title}
         tagName={tagName}
-        category={category}
         tags={tags}
         coverImg={coverImg}
         photoInputRef={photoInputRef}
@@ -161,8 +157,6 @@ const WritePost = ({ post }: IProps) => {
         deleteTag={deleteTag}
         onChangeTagName={onChangeTagName}
         onChangeTitle={onChangeTitle}
-        onChangeCategory={onChangeCategory}
-        setCategory={setCategory}
         coverImageHandler={coverImageHandler}
         onChangeImage={onChangeImage}
         clearCoverImage={clearCoverImage}
