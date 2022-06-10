@@ -1,21 +1,18 @@
 import React from "react";
-import Link from "next/link";
+import NextLink, { LinkProps } from "next/link";
 
-interface Props {
-  href: string;
+interface Props extends LinkProps {
   name: string;
 }
 
 const NavItem: React.FC<Props> = ({ href, name }) => {
   return (
-    <>
-      <Link href={href.toLowerCase()}>
-        <a>
-          <li>{name}</li>
-        </a>
-      </Link>
-    </>
+    <NextLink href={href}>
+      <a>
+        <li>{name}</li>
+      </a>
+    </NextLink>
   );
 };
 
-export default React.memo(NavItem);
+export default NavItem;

@@ -7,25 +7,24 @@ interface Props {
   tags: ITag[];
 }
 
-const StyledTagList = styled.div`
+const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
   font-weight: 500;
   flex-wrap: wrap;
-  margin-bottom: 10px;
   gap: 5px 8px;
+  box-sizing: border-box;
+  z-index: 2;
 `;
 
 const TagList = ({ tags }: Props) => {
   return (
-    <>
-      <StyledTagList>
-        {tags.map((tag) => (
-          <Tag key={tag._id} tagName={tag.name} />
-        ))}
-      </StyledTagList>
-    </>
+    <Container>
+      {tags.map((tag) => (
+        <Tag key={tag._id} tagName={tag.name} />
+      ))}
+    </Container>
   );
 };
 
