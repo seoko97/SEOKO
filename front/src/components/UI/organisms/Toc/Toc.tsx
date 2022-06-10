@@ -9,7 +9,8 @@ interface Props {
 }
 
 const Container = styled.div`
-  min-width: 210px;
+  width: 210px;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -17,7 +18,7 @@ const Container = styled.div`
   top: 85px;
   overflow-wrap: break-word;
 
-  font-size: 14px;
+  font-size: 0.9em;
 
   @media (max-width: ${({ theme }) => theme.BP.PC}) {
     display: none;
@@ -58,21 +59,19 @@ const Toc = ({ content }: Props) => {
   }, []);
 
   return (
-    <div>
-      <Container>
-        {headings.length > 0 &&
-          headings.map((heading, i) => (
-            <TocItem
-              key={heading.text + i}
-              level={heading.level}
-              onClick={() => onClickToc(heading.text + heading.level)}
-              className={activeId === heading.text + heading.level ? "active" : ""}
-            >
-              {heading.text}
-            </TocItem>
-          ))}
-      </Container>
-    </div>
+    <Container>
+      {headings.length > 0 &&
+        headings.map((heading, i) => (
+          <TocItem
+            key={heading.text + i}
+            level={heading.level}
+            onClick={() => onClickToc(heading.text + heading.level)}
+            className={activeId === heading.text + heading.level ? "active" : ""}
+          >
+            {heading.text}
+          </TocItem>
+        ))}
+    </Container>
   );
 };
 
