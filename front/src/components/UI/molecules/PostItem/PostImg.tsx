@@ -19,7 +19,6 @@ const StyledPostImg = styled.div`
   }
 
   transition: transform 0.3s, box-shadow 0.3s;
-  position: relative;
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     width: 100%;
@@ -30,7 +29,7 @@ const StyledPostImg = styled.div`
 
 const PostImg = ({ titleImage }: Props) => (
   <StyledPostImg>
-    <Image src={titleImage} layout="fill" loading="lazy" />
+    <Image src={titleImage} layout="fill" />
   </StyledPostImg>
 );
 

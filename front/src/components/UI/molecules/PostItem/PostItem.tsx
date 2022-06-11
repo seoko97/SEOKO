@@ -49,7 +49,6 @@ const PostItem = ({ post }: Props) => {
           content={post.content}
           tags={post.tags}
           title={post.title}
-          category={post.category}
           createdAt={post.createdAt}
         />
       </StyedPostItem>
