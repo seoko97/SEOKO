@@ -5,12 +5,13 @@ import {
   fromPromise,
   HttpLink,
   InMemoryCache,
+  InMemoryCacheConfig,
   NormalizedCacheObject,
 } from "@apollo/client";
-import { onError } from "@apollo/client/link/error";
-import { GetServerSidePropsContext } from "next";
-import { REFRESH } from "@queries/users";
 import { AppProps } from "next/app";
+import { GetServerSidePropsContext } from "next";
+import { onError } from "@apollo/client/link/error";
+import { REFRESH } from "@queries/users";
 import { APOLLO_STATE_PROP_NAME } from "./addApolloState";
 
 type InitialState = NormalizedCacheObject | undefined;
@@ -24,6 +25,27 @@ export const prod = process.env.NODE_ENV === "production";
 const TOKEN_EXPIRED = "jwt expired";
 
 let apolloClient: ApolloClient<NormalizedCacheObject>;
+
+const cachePolicy: InMemoryCacheConfig = {
+  typePolicies: {
+    Query: {
+      fields: {
+        getPosts: {
+          keyArgs: ["lastId"],
+          merge(existing, incoming) {
+            if (!existing) return incoming;
+
+            const newPosts = [...existing.posts, ...incoming.posts];
+            return {
+              ...incoming,
+              posts: newPosts,
+            };
+          },
+        },
+      },
+    },
+  },
+};
 
 export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {
   const cookie = ctx?.req?.headers.cookie || "";
@@ -50,6 +72,7 @@ export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {
   });
 
   const linkOnError = onError(({ graphQLErrors, operation, forward }) => {
+    console.log(graphQLErrors);
     if (graphQLErrors?.[0].message === TOKEN_EXPIRED) {
       const client = apolloClient ?? intializeClinet({ ctx });
       const refresh = fromPromise(
@@ -62,7 +85,7 @@ export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {
 
   return new ApolloClient({
     ssrMode: typeof window === undefined,
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache(cachePolicy),
     link: from([linkOnError, httpLink]),
   });
 };

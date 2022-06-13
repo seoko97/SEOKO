@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_POSTS = gql`
-  query {
-    getPosts {
+  query GetPosts($input: GetPostsInput) {
+    getPosts(input: $input) {
       ok
       error
       posts {
