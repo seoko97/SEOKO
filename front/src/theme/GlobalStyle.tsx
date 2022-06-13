@@ -38,6 +38,18 @@ const GlobalStyle = ({ theme }: GlobalProps) => (
         text-decoration: none;
         outline: none;
       }
+
+      input,
+      textarea,
+      button {
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        border-radius: 0;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+      }
+
       & * {
         font-family: "Noto Sans KR", "Quicksand", sans-serif !important;
 
