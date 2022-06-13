@@ -1,30 +1,16 @@
 import React from "react";
-import styled from "@emotion/styled";
 
 import RowFrame from "@frames/RowFrame";
 import Intro from "@molecules/Intro";
 
-import HomeContainer from "./HomeContainer";
-
-export interface PostProps {
-  id: number;
-  category: string;
-  title: string;
-  content: string;
-  titleImage: string;
-  tags: string[];
-}
-
-const StyledHome = styled(RowFrame)`
-  padding-top: 30px;
-`;
+import PostList from "@organisms/PostList";
 
 const Home = () => {
   return (
-    <StyledHome>
+    <RowFrame>
       <Intro />
-      <HomeContainer />
-    </StyledHome>
+      <PostList />
+    </RowFrame>
   );
 };
 
