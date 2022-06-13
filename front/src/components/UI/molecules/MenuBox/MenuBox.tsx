@@ -1,25 +1,29 @@
-import React, { useCallback, useEffect, useRef } from "react";
-import { useRouter } from "next/router";
+import React from "react";
 import { useReactiveVar } from "@apollo/client";
 import styled from "@emotion/styled";
-import MenuIcon from "@icons/MenuIcon";
-import useDetectOutsideClick from "@hooks/useDetectOutsideClick";
 import { userInfoVar } from "@store/userInfo";
-import UserAvatar from "@molecules/UserAvatar";
-import Nav from "@molecules/Nav";
-import NavList from "@molecules/NavList";
-import UserNavList from "@molecules/NavList/UserNavList";
+import SearchIcon from "@icons/SearchIcon/SearchIcon";
+import useModal from "@hooks/useModal";
+import SearchModal from "@modals/SearchModal";
+import UserMenu from "./UserMenu";
+import Menu from "./BaseMenu";
 
 const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   gap: 20px;
-  & div {
+  & > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
   }
 
   & svg {
+    width: 24px;
+    height: 24px;
     fill: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
     cursor: pointer;
     transition: fill 0.3s;
@@ -30,40 +34,17 @@ const Container = styled.div`
 `;
 
 const MenuBox = () => {
-  const router = useRouter();
-  const userNavRef = useRef(null);
-  const navRef = useRef(null);
-  const [isActiveUserMenu, setIsActiveUserMenu] = useDetectOutsideClick(userNavRef, false);
-  const [isActiveMenu, setIsActiveMenu] = useDetectOutsideClick(navRef, false);
   const { username } = useReactiveVar(userInfoVar);
-
-  const userMenuHandler = useCallback(() => {
-    setIsActiveUserMenu(!isActiveUserMenu);
-  }, [isActiveUserMenu]);
-
-  const menuHandler = useCallback(() => {
-    setIsActiveMenu(!isActiveMenu);
-  }, [isActiveMenu]);
-
-  useEffect(() => {
-    setIsActiveMenu(false);
-    setIsActiveUserMenu(false);
-  }, [router.pathname]);
+  const [isOpen, openSearchForm, closeSearchForm] = useModal();
 
   return (
     <Container>
-      {username && (
-        <>
-          <UserAvatar width={30} height={30} onClick={userMenuHandler} />
-          <Nav ref={userNavRef} isActive={isActiveUserMenu}>
-            <UserNavList />
-          </Nav>
-        </>
-      )}
-      <MenuIcon menuHandler={menuHandler} />
-      <Nav ref={navRef} isActive={isActiveMenu}>
-        <NavList username={username} />
-      </Nav>
+      {username && <UserMenu />}
+      <div onClick={openSearchForm}>
+        <SearchIcon />
+      </div>
+      {isOpen && <SearchModal isOpen={isOpen} onClose={closeSearchForm} />}
+      <Menu username={username} />
     </Container>
   );
 };
