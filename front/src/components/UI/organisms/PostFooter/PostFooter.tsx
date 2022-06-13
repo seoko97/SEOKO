@@ -14,7 +14,6 @@ const Container = styled.div`
   flex-direction: column;
   gap: 30px;
   padding: 40px 0;
-  border-top: 1px solid #ccc;
   margin-top: 20px;
 `;
 
@@ -22,7 +21,7 @@ const PostFooter = ({ siblingPost }: IProps) => {
   return (
     <Container>
       <SiblingPost siblingPost={siblingPost} />
-      <Untterances siblingPost={siblingPost} repo="seoko97/SEOKO_utterances" />
+      <Untterances repo="seoko97/SEOKO_utterances" />
     </Container>
   );
 };

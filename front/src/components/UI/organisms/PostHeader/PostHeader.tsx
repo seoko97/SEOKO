@@ -18,17 +18,18 @@ const Container = styled.div`
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   overflow-wrap: break-word;
 
-  border-bottom: 1px solid #ccc;
-  margin: 32px 0 48px 0;
+  margin: 32px 0 20px 0;
 
   & > h1 {
     font-weight: 700;
-    font-size: 2em;
+    font-size: 28px;
     line-height: 1.2;
   }
 
   & > * {
-    margin-bottom: 20px;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 40px;
   }
 
   & > div:first-of-type {
@@ -39,6 +40,7 @@ const Container = styled.div`
     & img {
       border-radius: 10px;
       position: absolute;
+      justify-content: center;
     }
   }
 
@@ -88,8 +90,8 @@ const PostHeader = ({ post }: IProps) => {
         <Image priority={true} layout="fill" src={coverImg} objectFit="cover" />
       </div>
       <h1>{title}</h1>
+      {tags[0] && <TagList tags={tags} />}
       <Detail createdAt={createdAt} />
-      <TagList tags={tags} />
       {username && <PostNavigation deletePost={deletePost} routeEditPost={routeEditPost} />}
     </Container>
   );
