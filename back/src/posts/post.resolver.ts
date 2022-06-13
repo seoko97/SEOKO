@@ -1,12 +1,14 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { JwtAuthGuard } from '@src/auth/guards/jwt-auth.guard';
-import { CoreRes } from '@src/decorators/coreRes.decorator';
+
+import { JwtAuthGuard } from '@auth/guards/jwt-auth.guard';
+import { CoreRes } from '@decorators/coreRes.decorator';
 import { CreatePostInput } from './dto/createPostInput.dto';
 import { EditPostInput } from './dto/editPostInput.dto';
 import { GetPostDTO, GetPostInput } from './dto/getPost.dto';
-import { GetPostsDTO } from './dto/getPosts.dto';
+import { GetPostsDTO, GetPostsInput } from './dto/getPosts.dto';
 import { PostService } from './post.service';
+import { ObjectIdGuard } from '@decorators/guards/ObjectId.guard';
 
 @Resolver('Post')
 export class PostResolver {
@@ -36,6 +38,7 @@ export class PostResolver {
     return { ok: true };
   }
 
+  @UseGuards(ObjectIdGuard)
   @Query(() => GetPostDTO)
   async getPost(@Args('input') input: GetPostInput): Promise<GetPostDTO> {
     const { post, siblingPost } = await this.postService.getPost(input.id);
@@ -43,9 +46,13 @@ export class PostResolver {
     return { ok: true, post, siblingPost };
   }
 
+  @UseGuards(ObjectIdGuard)
   @Query(() => GetPostsDTO)
-  async getPosts(): Promise<GetPostsDTO> {
-    const posts = await this.postService.getPosts();
+  async getPosts(
+    @Args('input', { nullable: true }) input: GetPostsInput,
+  ): Promise<GetPostsDTO> {
+    const posts = await this.postService.getPosts(input?.lastId);
+
     return { ok: true, posts };
   }
 }
