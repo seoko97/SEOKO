@@ -51,6 +51,10 @@ type GetPostsDTO {
   posts: [Post!]!
 }
 
+input GetPostsInput {
+  lastId: String
+}
+
 type GetTagsRes {
   error: String
   ok: Boolean!
@@ -98,7 +102,7 @@ type Post {
 
 type Query {
   getPost(input: GetPostInput!): GetPostDTO!
-  getPosts: GetPostsDTO!
+  getPosts(input: GetPostsInput): GetPostsDTO!
   getTag(input: String!): CoreRes!
   getTags: GetTagsRes!
   getUserInfo: GetUserInfoDTO!

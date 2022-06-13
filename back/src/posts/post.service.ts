@@ -142,7 +142,13 @@ export class PostService {
   }
 
   // 복수 포스트
-  async getPosts() {
-    return await this.postModel.find().sort({ _id: -1 }).populate('tags');
+  async getPosts(lastId: string | undefined) {
+    const where = lastId ? { _id: { $lt: lastId } } : {};
+
+    return await this.postModel
+      .find(where)
+      .limit(10)
+      .sort({ _id: -1 })
+      .populate('tags');
   }
 }
