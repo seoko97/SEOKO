@@ -13,7 +13,7 @@ export const MarkdownWrapper = styled.div`
     border: 1px solid #ccc;
   }
 
-  & * {
+  & > * {
     line-height: 2;
   }
 
@@ -113,9 +113,9 @@ export const MarkdownWrapper = styled.div`
   }
 
   & a {
-    text-decoration: underline;
+    color: #00bfa5;
     &:hover {
-      color: ${({ theme }) => theme.SELECTION_EFFECT_COLOR.PRIMARY_COLOR};
+      text-decoration: underline;
     }
   }
 

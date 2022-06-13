@@ -10,7 +10,6 @@ const SyntaxWrapper = styled(SyntaxHighlighter)`
   background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.SECONDARY_COLOR} !important;
 
   font-size: 0.9em;
-  transition: background-color 0.3s;
 
   & code {
     color: ${({ theme }) => theme.MARK_DOWN.CODE_COLOR} !important;

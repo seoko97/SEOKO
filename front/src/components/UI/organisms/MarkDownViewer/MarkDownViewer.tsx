@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 
-import { resetToc } from "@store/toc";
 import { MarkdownWrapper } from "./styles";
 
 import renderers from "./renderers";
@@ -13,12 +12,6 @@ interface Props {
 }
 
 const MarkDownViewer = ({ content }: Props) => {
-  useEffect(() => {
-    return () => {
-      resetToc();
-    };
-  }, []);
-
   return (
     <MarkdownWrapper>
       <Markdown rehypePlugins={[rehypeRaw]} remarkPlugins={[remarkGfm]} components={renderers}>
