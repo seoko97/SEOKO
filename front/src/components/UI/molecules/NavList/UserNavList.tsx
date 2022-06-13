@@ -8,6 +8,9 @@ import { ISignOut } from "@queries-types/users";
 import { useRouter } from "next/router";
 
 export const Container = styled.ul`
+  width: 150px;
+  padding: 10px 8px;
+
   & li {
     box-sizing: border-box;
     width: 100%;

@@ -8,8 +8,8 @@ interface IProps {
 
 const NavList = ({ username }: IProps) => (
   <Container>
-    <NavItem name="홈" href="/" />
-    <NavItem name="태그" href="/tag" />
+    <NavItem name="HOME" href="/" />
+    <NavItem name="TAG" href="/tag" />
     <NavItem name="ABOUT" href="/about" />
     {!username && <NavItem name="로그인" href="/signin" />}
   </Container>
