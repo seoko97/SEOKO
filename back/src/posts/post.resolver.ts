@@ -9,6 +9,8 @@ import { GetPostDTO, GetPostInput } from './dto/getPost.dto';
 import { GetPostsDTO, GetPostsInput } from './dto/getPosts.dto';
 import { PostService } from './post.service';
 import { ObjectIdGuard } from '@decorators/guards/ObjectId.guard';
+import { SearchPostsDTO } from './dto/searchPosts.dto';
+import { SearchTagsInput } from '@tags/dto/searchTags.dto';
 
 @Resolver('Post')
 export class PostResolver {
@@ -52,6 +54,15 @@ export class PostResolver {
     @Args('input', { nullable: true }) input: GetPostsInput,
   ): Promise<GetPostsDTO> {
     const posts = await this.postService.getPosts(input?.lastId);
+
+    return { ok: true, posts };
+  }
+
+  @Query(() => SearchPostsDTO)
+  async searchPosts(
+    @Args('input') input: SearchTagsInput,
+  ): Promise<SearchPostsDTO> {
+    const posts = await this.postService.searchPosts(input.text);
 
     return { ok: true, posts };
   }

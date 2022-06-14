@@ -151,4 +151,12 @@ export class PostService {
       .sort({ _id: -1 })
       .populate('tags');
   }
+
+  async searchPosts(text: string) {
+    const posts = await this.postModel.find({
+      $or: [{ title: { $regex: text } }, { content: { $regex: text } }],
+    });
+
+    return posts;
+  }
 }
