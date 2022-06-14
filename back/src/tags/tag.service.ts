@@ -1,6 +1,6 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { PostService } from '@src/posts/post.service';
+import { PostService } from '@posts/post.service';
 import { Tag, TagModel } from './tag.model';
 
 @Injectable()
@@ -15,14 +15,12 @@ export class TagService {
     return await this.tagModel.find();
   }
 
-  async search(input: string) {
-    const tags = await this.tagModel
-      .find({
-        name: {
-          $regex: input,
-        },
-      })
-      .limit(5);
+  async searchTags(text: string) {
+    const tags = await this.tagModel.find({
+      name: {
+        $regex: text,
+      },
+    });
 
     return tags;
   }

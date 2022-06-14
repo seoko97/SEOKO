@@ -1,8 +1,9 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { CoreRes } from '@src/decorators/coreRes.decorator';
+import { CoreRes } from '@decorators/coreRes.decorator';
 import { CreateTagDTO } from './dto/createTag.dto';
 import { GetTagsRes } from './dto/getTagsRes.dto';
 import { TagService } from './tag.service';
+import { SearchTagsDTO, SearchTagsInput } from './dto/searchTags.dto';
 
 @Resolver('Tag')
 export class TagResolver {
@@ -38,9 +39,11 @@ export class TagResolver {
     return { ok: true, tags };
   }
 
-  @Query(() => CoreRes)
-  async searchTags(@Args('input') input: string) {
-    const tags = await this.tagService.search(input);
-    return { ok: true };
+  @Query(() => SearchTagsDTO)
+  async searchTags(
+    @Args('input') input: SearchTagsInput,
+  ): Promise<SearchTagsDTO> {
+    const tags = await this.tagService.searchTags(input.text);
+    return { ok: true, tags };
   }
 }
