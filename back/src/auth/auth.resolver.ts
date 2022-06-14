@@ -8,7 +8,7 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { jwtConstants } from './contants';
 import { AuthService } from './auth.service';
 import { ExpriedJwtAuthGuard } from './guards/jwt-auth.guard';
-import { CoreRes } from '@src/decorators/coreRes.decorator';
+import { CoreRes } from '@decorators/coreRes.decorator';
 
 const EXPIRED = 1000 * 60 * 60 * 24 * 7;
 

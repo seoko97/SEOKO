@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { CoreRes } from '@src/decorators/coreRes.decorator';
+import { CoreRes } from '@decorators/coreRes.decorator';
 import { CreateUserInput } from './dto/createUser.dto';
 import { User, UserModel } from './user.model';
 

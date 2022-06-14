@@ -1,6 +1,6 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { TagModule } from '@src/tags/tag.module';
+import { TagModule } from '@tags/tag.module';
 import { Post, PostSchema } from './post.model';
 import { PostResolver } from './post.resolver';
 import { PostService } from './post.service';

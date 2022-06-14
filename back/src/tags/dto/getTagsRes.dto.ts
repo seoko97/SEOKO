@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { CoreRes } from '@src/decorators/coreRes.decorator';
+import { CoreRes } from '@decorators/coreRes.decorator';
 import { Tag } from '../tag.model';
 
 @ObjectType()

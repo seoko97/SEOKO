@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ITokenUser } from '@decorators/user.decorator';
 import { UserService } from '@users/user.service';
 import { encryptValue } from '@utils/crypto';
-import { User } from '@src/users/user.model';
+import { User } from '@users/user.model';
 
 @Injectable()
 export class AuthService {
