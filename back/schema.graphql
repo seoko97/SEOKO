@@ -106,7 +106,24 @@ type Query {
   getTag(input: String!): CoreRes!
   getTags: GetTagsRes!
   getUserInfo: GetUserInfoDTO!
-  searchTags(input: String!): CoreRes!
+  searchPosts(input: SearchTagsInput!): SearchPostsDTO!
+  searchTags(input: SearchTagsInput!): SearchTagsDTO!
+}
+
+type SearchPostsDTO {
+  error: String
+  ok: Boolean!
+  posts: [Post!]!
+}
+
+type SearchTagsDTO {
+  error: String
+  ok: Boolean!
+  tags: [Tag!]!
+}
+
+input SearchTagsInput {
+  text: String!
 }
 
 type SiblingPost {
