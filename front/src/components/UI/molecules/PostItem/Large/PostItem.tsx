@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import Link from "next/link";
 import styled from "@emotion/styled";
 import { IPost } from "@queries-types/posts";
@@ -56,4 +56,4 @@ const PostItem = ({ post }: Props) => {
   );
 };
 
-export default PostItem;
+export default memo(PostItem);
