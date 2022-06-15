@@ -3,14 +3,13 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { JwtAuthGuard } from '@auth/guards/jwt-auth.guard';
 import { CoreRes } from '@decorators/coreRes.decorator';
+import { ObjectIdGuard } from '@decorators/guards/ObjectId.guard';
 import { CreatePostInput } from './dto/createPostInput.dto';
 import { EditPostInput } from './dto/editPostInput.dto';
 import { GetPostDTO, GetPostInput } from './dto/getPost.dto';
 import { GetPostsDTO, GetPostsInput } from './dto/getPosts.dto';
 import { PostService } from './post.service';
-import { ObjectIdGuard } from '@decorators/guards/ObjectId.guard';
-import { SearchPostsDTO } from './dto/searchPosts.dto';
-import { SearchTagsInput } from '@tags/dto/searchTags.dto';
+import { SearchPostsDTO, SearchPostsInput } from './dto/searchPosts.dto';
 
 @Resolver('Post')
 export class PostResolver {
@@ -60,7 +59,7 @@ export class PostResolver {
 
   @Query(() => SearchPostsDTO)
   async searchPosts(
-    @Args('input') input: SearchTagsInput,
+    @Args('input') input: SearchPostsInput,
   ): Promise<SearchPostsDTO> {
     const posts = await this.postService.searchPosts(input.text);
 

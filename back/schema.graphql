@@ -106,7 +106,7 @@ type Query {
   getTag(input: String!): CoreRes!
   getTags: GetTagsRes!
   getUserInfo: GetUserInfoDTO!
-  searchPosts(input: SearchTagsInput!): SearchPostsDTO!
+  searchPosts(input: SearchPostsInput!): SearchPostsDTO!
   searchTags(input: SearchTagsInput!): SearchTagsDTO!
 }
 
@@ -114,6 +114,10 @@ type SearchPostsDTO {
   error: String
   ok: Boolean!
   posts: [Post!]!
+}
+
+input SearchPostsInput {
+  text: String!
 }
 
 type SearchTagsDTO {
