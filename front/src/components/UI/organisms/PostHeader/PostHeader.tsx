@@ -35,7 +35,7 @@ const Container = styled.div`
   & > div:first-of-type {
     position: relative;
     width: 100%;
-    padding-bottom: 40%;
+    padding-bottom: 50%;
 
     & img {
       border-radius: 10px;
