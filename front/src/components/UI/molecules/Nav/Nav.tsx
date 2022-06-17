@@ -1,4 +1,4 @@
-import React, { forwardRef, ReactNode } from "react";
+import React, { forwardRef, memo, ReactNode } from "react";
 import styled from "@emotion/styled";
 
 interface Props {
@@ -11,12 +11,10 @@ const Container = styled.nav`
   top: 60px;
   right: 0px;
 
-  width: 150px;
   background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.SECONDARY_COLOR};
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   box-shadow: 0px 9px 15px -15px #454545;
   border-radius: 10px;
-  padding: 10px 8px;
 
   opacity: 0;
   visibility: hidden;
@@ -42,4 +40,4 @@ const UserNav = forwardRef<HTMLDivElement, Props>(({ isActive, children }, ref) 
   );
 });
 
-export default UserNav;
+export default memo(UserNav);
