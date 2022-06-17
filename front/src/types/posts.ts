@@ -1,9 +1,7 @@
 import { ITag } from "@queries-types/tags";
-import { ICategory } from "./categories";
 
 export interface IPost {
   _id: string;
-  category: ICategory;
   content: string;
   coverImg: string;
   tags: ITag[];
@@ -11,11 +9,19 @@ export interface IPost {
   createdAt: string;
 }
 
+export type ISiblingItem = Pick<IPost, "_id" | "title">;
+export interface ISiblingPost {
+  next: ISiblingItem;
+  prev: ISiblingItem;
+}
+
 export interface IGetPost {
   getPost: {
     ok: boolean;
     error: any;
     post: IPost;
+
+    siblingPost: ISiblingPost;
   };
 }
 
