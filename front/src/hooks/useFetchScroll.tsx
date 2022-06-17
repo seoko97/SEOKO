@@ -18,7 +18,6 @@ const useFetchScroll: IProps = (targetEl, fetchCallback) => {
   }, [fetchCallback]);
 
   useEffect(() => {
-    console.log("실행");
     if (!targetEl.current?.lastElementChild) return;
 
     getObserber();
