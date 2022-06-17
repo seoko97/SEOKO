@@ -1,5 +1,5 @@
+import React, { memo } from "react";
 import styled from "@emotion/styled";
-import React from "react";
 import Tag from "@atoms/Tag";
 import { ITag } from "@queries-types/tags";
 
@@ -28,4 +28,4 @@ const TagList = ({ tags }: Props) => {
   );
 };
 
-export default TagList;
+export default memo(TagList);

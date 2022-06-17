@@ -56,4 +56,4 @@ const PostItem = ({ post }: Props) => {
   );
 };
 
-export default memo(PostItem);
+export default memo(PostItem, (prev, next) => prev.post._id === next.post._id);

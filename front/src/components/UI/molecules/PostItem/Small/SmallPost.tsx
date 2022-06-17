@@ -79,4 +79,4 @@ const SmallPost = ({ post }: IProps) => {
   );
 };
 
-export default memo(SmallPost);
+export default memo(SmallPost, (prev, next) => prev.post._id === next.post._id);
