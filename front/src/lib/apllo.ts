@@ -13,6 +13,7 @@ import { GetServerSidePropsContext } from "next";
 import { onError } from "@apollo/client/link/error";
 import { REFRESH } from "@queries/users";
 import { APOLLO_STATE_PROP_NAME } from "./addApolloState";
+import { cachePolicyByPost } from "./cachePolicyByPost";
 
 type InitialState = NormalizedCacheObject | undefined;
 
@@ -30,18 +31,8 @@ const cachePolicy: InMemoryCacheConfig = {
   typePolicies: {
     Query: {
       fields: {
-        getPosts: {
-          keyArgs: ["lastId"],
-          merge(existing, incoming) {
-            if (!existing) return incoming;
-
-            const newPosts = [...existing.posts, ...incoming.posts];
-            return {
-              ...incoming,
-              posts: newPosts,
-            };
-          },
-        },
+        getPosts: cachePolicyByPost,
+        searchPosts: cachePolicyByPost,
       },
     },
   },
@@ -66,7 +57,8 @@ export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {
   };
 
   const httpLink = new HttpLink({
-    uri: prod ? process.env.API_URL : "http://localhost:3065/graphql",
+    // uri: prod ? process.env.API_URL : "http://localhost:3065/graphql",
+    uri: "http://localhost:3065/graphql",
     credentials: "include",
     fetch: enhancedFetch,
   });
