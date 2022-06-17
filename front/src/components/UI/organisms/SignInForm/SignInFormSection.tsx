@@ -66,7 +66,7 @@ const SignInFormSection = () => {
       if (ok) setUserInfo(username);
     },
     onError(error) {
-      console.log(error.message);
+      alert(error.message);
     },
   });
 
