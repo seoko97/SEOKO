@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import MenuIcon from "@icons/MenuIcon";
 import Nav from "@molecules/Nav";
 import NavList from "@molecules/NavList";

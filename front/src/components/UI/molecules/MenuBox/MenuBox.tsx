@@ -13,7 +13,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
-  gap: 20px;
+  gap: 15px;
   & > div {
     display: flex;
     align-items: center;

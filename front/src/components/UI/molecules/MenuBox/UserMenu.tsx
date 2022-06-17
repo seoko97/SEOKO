@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import Nav from "@molecules/Nav";
 import NavList from "@molecules/NavList/UserNavList";
-import UserInfo from "@molecules/UserInfo/UserInfo";
+import UserInfo from "@molecules/UserInfo";
 import useDetectOutsideClick from "@hooks/useDetectOutsideClick";
 
 const UserMenu = () => {
