@@ -14,7 +14,7 @@ export const lightTheme = {
   },
   FONT_COLOR: {
     PRIMARY_COLOR: "#212529",
-    SECONDARY_COLOR: "#1b2e46",
+    SECONDARY_COLOR: "#374151",
     LOGO_COLOR: "#86caf4",
     BUTTON_COLOR: "#f8f9fa",
   },
@@ -44,7 +44,7 @@ export const darkTheme = {
   },
   FONT_COLOR: {
     PRIMARY_COLOR: "#f8f9fa",
-    SECONDARY_COLOR: "#151516",
+    SECONDARY_COLOR: "#9ca3af",
     LOGO_COLOR: "#c58ff7",
     BUTTON_COLOR: "#212529",
   },

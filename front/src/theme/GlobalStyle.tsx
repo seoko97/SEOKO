@@ -50,6 +50,20 @@ const GlobalStyle = ({ theme }: GlobalProps) => (
         -moz-border-radius: 0;
       }
 
+      input:focus-visible {
+        outline: 0;
+      }
+
+      ::-webkit-scrollbar {
+        width: 5px;
+        background-color: inherit;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background-color: ${theme.FONT_COLOR.SECONDARY_COLOR};
+        border-radius: 5px;
+      }
+
       & * {
         font-family: "Noto Sans KR", "Quicksand", sans-serif !important;
 
