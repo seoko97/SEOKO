@@ -1,7 +1,6 @@
-import React, { ChangeEvent, KeyboardEvent, MouseEvent, MutableRefObject, memo } from "react";
+import React, { ChangeEvent, KeyboardEvent, MouseEvent, MutableRefObject } from "react";
 import styled from "@emotion/styled";
 
-import useModal from "@hooks/useModal";
 import { StyledTag } from "@atoms/Tag";
 import ImageIcon from "@icons/ImageIcon/ImageIcon";
 
@@ -113,8 +112,6 @@ const WritePostHeader = (props: Props) => {
     onChangeImage,
     clearCoverImage,
   } = props;
-
-  const [state, openModal, closeModal] = useModal();
 
   return (
     <Header>
