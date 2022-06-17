@@ -30,7 +30,8 @@ export const Default = () => (
     post={{
       _id: "626e913492c10269f24156aa",
       title: "tt",
-      coverImg: "/main.jpg",
+      coverImg:
+        "https://velog.velcdn.com/post-images/godori/496c0830-3dc1-11e9-bc03-611ba17bddf2/banner-maker.png",
       createdAt: "2022-05-01T13:55:00.504Z",
     }}
   />
