@@ -14,12 +14,10 @@ const StyledListTitle = styled.div`
 
 const ListTitle = () => {
   return (
-    <>
-      <StyledListTitle>
-        <h2>Posts</h2>
-        <hr />
-      </StyledListTitle>
-    </>
+    <StyledListTitle>
+      <h2>Posts</h2>
+      <hr />
+    </StyledListTitle>
   );
 };
 
