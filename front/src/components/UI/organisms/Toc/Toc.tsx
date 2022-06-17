@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useReactiveVar } from "@apollo/client";
 import styled from "@emotion/styled";
 import { useIntersectionObserver } from "@hooks/useIntersectionObserver";
-import { tocVar } from "@store/toc";
+import { resetToc, tocVar } from "@store/toc";
 
 interface Props {
   content: string;
@@ -44,7 +44,6 @@ const TocItem = styled.div<{ level: number }>`
 const Toc = ({ content }: Props) => {
   const headings = useReactiveVar(tocVar);
   const [activeId, setActiveId] = useState("");
-  useIntersectionObserver(setActiveId, content);
 
   const onClickToc = useCallback((id: string) => {
     const targetToc = document.getElementById(id);
@@ -57,6 +56,14 @@ const Toc = ({ content }: Props) => {
       left: 0,
     });
   }, []);
+
+  useEffect(() => {
+    return () => {
+      resetToc();
+    };
+  }, [content]);
+
+  useIntersectionObserver(setActiveId, content);
 
   return (
     <Container>
