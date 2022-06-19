@@ -1,7 +1,7 @@
 import React, { ChangeEvent, KeyboardEvent, MouseEvent, MutableRefObject } from "react";
 import styled from "@emotion/styled";
 
-import { StyledTag } from "@atoms/Tag";
+import Tag from "@atoms/Tag";
 import ImageIcon from "@icons/ImageIcon/ImageIcon";
 
 const Header = styled.header`
@@ -122,9 +122,9 @@ const WritePostHeader = (props: Props) => {
         <TagList>
           {tags[0] &&
             tags.map((tag: string) => (
-              <StyledTag key={tag} onClick={deleteTag}>
+              <Tag key={tag} onClick={deleteTag}>
                 {tag}
-              </StyledTag>
+              </Tag>
             ))}
           <input
             type="text"

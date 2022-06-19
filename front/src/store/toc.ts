@@ -1,6 +1,6 @@
 import { makeVar } from "@apollo/client";
 
-interface IToc {
+export interface IToc {
   level: number;
   text: string;
 }

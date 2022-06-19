@@ -1,10 +1,10 @@
 import React, { ForwardedRef, forwardRef, memo } from "react";
 import styled from "@emotion/styled";
 import SmallPost from "@molecules/PostItem/Small";
-import { ISearchPost } from "@queries-types/search";
+import { ISearchPostItem } from "@queries-types/posts";
 
 interface IProps {
-  posts: ISearchPost[];
+  posts: ISearchPostItem[];
 }
 
 const Container = styled.div`

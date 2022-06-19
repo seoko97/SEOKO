@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import RowFrame from "@frames/RowFrame";
 
@@ -8,7 +8,6 @@ import Markdown from "@organisms/MarkDownViewer";
 import PostHeader from "@organisms/PostHeader";
 import PostFooter from "@organisms/PostFooter";
 import Toc from "@organisms/Toc";
-import { resetToc } from "@store/toc";
 
 interface Props {
   post: IPost;
@@ -33,12 +32,6 @@ const PostContent = styled.div`
 
 const Post = ({ post, siblingPost }: Props) => {
   const { content } = post;
-
-  useEffect(() => {
-    return () => {
-      resetToc();
-    };
-  }, [content]);
 
   return (
     <RowFrame>

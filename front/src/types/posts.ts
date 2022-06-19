@@ -53,3 +53,13 @@ export interface IEditPost {
     error: any;
   };
 }
+
+export type ISearchPostItem = Pick<IPost, "_id" | "title" | "coverImg" | "createdAt">;
+
+export interface ISearchPosts {
+  searchPosts: {
+    ok: boolean;
+    error: any;
+    posts: ISearchPostItem[];
+  };
+}

@@ -1,4 +1,4 @@
-import { DependencyList, useCallback, useEffect } from "react";
+import { useEffect } from "react";
 
 type IDe = (func: () => void, delay: number) => void;
 

@@ -1,10 +1,12 @@
-import React, { memo } from "react";
+import React, { memo, MouseEvent, useCallback } from "react";
 import styled from "@emotion/styled";
 import Tag from "@atoms/Tag";
 import { ITag } from "@queries-types/tags";
+import { useRouter } from "next/router";
 
 interface Props {
   tags: ITag[];
+  onClick: (e: MouseEvent<HTMLDivElement>) => void;
 }
 
 const Container = styled.div`
@@ -18,11 +20,13 @@ const Container = styled.div`
   z-index: 2;
 `;
 
-const TagList = ({ tags }: Props) => {
+const TagList = ({ tags, onClick }: Props) => {
   return (
     <Container>
       {tags.map((tag) => (
-        <Tag key={tag._id} tagName={tag.name} />
+        <Tag key={tag._id} onClick={onClick}>
+          {tag.name}
+        </Tag>
       ))}
     </Container>
   );

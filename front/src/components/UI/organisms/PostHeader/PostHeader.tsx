@@ -84,13 +84,17 @@ const PostHeader = ({ post }: IProps) => {
     router.push(`/write/${_id}`);
   }, []);
 
+  const onClickTag = useCallback((e) => {
+    router.push(`/tag?name=${e.target.innerText}`);
+  }, []);
+
   return (
     <Container>
       <div>
         <Image priority={true} layout="fill" src={coverImg} objectFit="cover" />
       </div>
       <h1>{title}</h1>
-      {tags[0] && <TagList tags={tags} />}
+      {tags[0] && <TagList onClick={onClickTag} tags={tags} />}
       <Detail createdAt={createdAt} />
       {username && <PostNavigation deletePost={deletePost} routeEditPost={routeEditPost} />}
     </Container>
