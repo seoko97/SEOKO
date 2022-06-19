@@ -27,15 +27,13 @@ const StyledSignInForm = styled.div`
 
 const SignInForm = () => {
   return (
-    <>
-      <StyledSignInForm>
-        <RowFrame>
-          <Card>
-            <SignInFormSection />
-          </Card>
-        </RowFrame>
-      </StyledSignInForm>
-    </>
+    <StyledSignInForm>
+      <RowFrame>
+        <Card>
+          <SignInFormSection />
+        </Card>
+      </RowFrame>
+    </StyledSignInForm>
   );
 };
 
