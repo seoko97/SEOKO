@@ -2,9 +2,8 @@ import React from "react";
 import styled from "@emotion/styled";
 import Logo from "@atoms/Logo";
 import GitHubIcon from "@icons/GItHubIcon";
-import UserAvatar from "@molecules/UserAvatar";
 
-const StyledFooterContent = styled.div`
+const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -39,23 +38,15 @@ const StyledFooterContent = styled.div`
 
 const FooterContent = () => {
   return (
-    <>
-      <StyledFooterContent>
-        <div>
-          <Logo />
-          <a
-            href="https://github.com/seoko97"
-            about="instagram"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <GitHubIcon />
-          </a>
-          <UserAvatar />
-        </div>
-        <p>Copyright © SEOKO 2021</p>
-      </StyledFooterContent>
-    </>
+    <Container>
+      <div>
+        <Logo />
+        <a href="https://github.com/seoko97" about="instagram" target="_blank" rel="noreferrer">
+          <GitHubIcon />
+        </a>
+      </div>
+      <p>Copyright © SEOKO 2021</p>
+    </Container>
   );
 };
 
