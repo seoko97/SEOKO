@@ -1,12 +1,12 @@
 import React, { memo } from "react";
 import styled from "@emotion/styled";
 import Image from "next/image";
-import { ISearchPost } from "@queries-types/search";
-import { dateTimeParser } from "@lib/dateTimeParser";
 import Link from "next/link";
+import { ISearchPostItem } from "@queries-types/posts";
+import { dateTimeParser } from "@lib/dateTimeParser";
 
 interface IProps {
-  post: ISearchPost;
+  post: ISearchPostItem;
 }
 
 const Container = styled.div`

@@ -8,7 +8,7 @@ import useDebounceEffect from "@hooks/useDebounceEffect";
 import Input from "@atoms/Input";
 
 import { SEARCH_POSTS } from "@queries/post/searchPosts.queries";
-import { ISearchPost, ISearchPosts } from "@queries-types/search";
+import { ISearchPostItem, ISearchPosts } from "@queries-types/posts";
 
 import SearchPost from "./SearchPost";
 
@@ -56,7 +56,7 @@ const Container = styled.div`
 const SearchByPosts = () => {
   const ref = useRef<HTMLDivElement>(null);
   const [text, onChangeText] = useInput("");
-  const [posts, setPosts] = useState<ISearchPost[]>([]);
+  const [posts, setPosts] = useState<ISearchPostItem[]>([]);
 
   const [getSearchPostsQuery, { fetchMore, variables }] = useLazyQuery<ISearchPosts>(SEARCH_POSTS, {
     onCompleted({ searchPosts }) {
