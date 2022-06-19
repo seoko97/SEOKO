@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "@emotion/styled";
 import removeMd from "remove-markdown";
 
@@ -6,6 +6,7 @@ import { ITag } from "@queries-types/tags";
 
 import TagList from "@molecules/TagList";
 import { dateTimeParser } from "@lib/dateTimeParser";
+import { useRouter } from "next/router";
 
 const StyledPostConetent = styled.div`
   width: calc(100% - 250px);
@@ -53,13 +54,18 @@ interface Props {
 }
 
 const PostContent = ({ title, content, tags, createdAt }: Props) => {
+  const router = useRouter();
   const parsedContent = removeMd(content, { listUnicodeChar: "" }).substring(0, 150);
+  const onClickTag = useCallback((e) => {
+    e.stopPropagation();
+    router.push(`/tag?name=${e.target.innerText}`);
+  }, []);
 
   return (
     <StyledPostConetent>
       <h1>{title}</h1>
       <p>{parsedContent.length >= 150 ? `${parsedContent}...` : parsedContent}</p>
-      <TagList tags={tags} />
+      <TagList onClick={onClickTag} tags={tags} />
       <span className="date">{dateTimeParser(createdAt)}</span>
     </StyledPostConetent>
   );

@@ -142,7 +142,10 @@ const WritePost = ({ post }: IProps) => {
   );
 
   const onChangeImage = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) setCoverImg("/main.jpg");
+    if (e.target.files)
+      setCoverImg(
+        "https://velog.velcdn.com/post-images/godori/496c0830-3dc1-11e9-bc03-611ba17bddf2/banner-maker.png",
+      );
   }, []);
 
   return (

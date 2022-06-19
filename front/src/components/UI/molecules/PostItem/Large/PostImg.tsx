@@ -12,6 +12,7 @@ const StyledPostImg = styled.div`
   height: 100%;
   padding-bottom: 200px;
   border-radius: 10px;
+  background-color: #ccc;
   & img {
     border-radius: 10px;
     position: absolute;
@@ -29,7 +30,7 @@ const StyledPostImg = styled.div`
 
 const PostImg = ({ titleImage }: Props) => (
   <StyledPostImg>
-    <Image src={titleImage} layout="fill" />
+    <Image src={titleImage} property="true" layout="fill" />
   </StyledPostImg>
 );
 
