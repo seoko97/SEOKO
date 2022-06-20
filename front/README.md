@@ -12,7 +12,7 @@
 
 - Project [ ]
 
-- Profile [ ]
+- Tag [ ]
 
 <br />
 
@@ -21,8 +21,9 @@
 - React
 - NextJs
 - Emotion
-- Typescript
+- TypeScript
 - GraphQL
+- ApolloClient
 - Storybook
 - ... (적용시 추가)
 
