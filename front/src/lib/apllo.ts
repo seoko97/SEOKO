@@ -32,10 +32,24 @@ const cachePolicy: InMemoryCacheConfig = {
     Query: {
       fields: {
         getPosts: cachePolicyByPost,
-        searchPosts: cachePolicyByPost,
+        searchPosts: {
+          keyArgs: ["input", ["text"]],
+
+          merge(existing: any, incoming: any) {
+            console.log(existing, incoming);
+            if (!existing) return incoming;
+
+            const newPosts = [...existing.posts, ...incoming.posts];
+            return {
+              ...incoming,
+              posts: newPosts,
+            };
+          },
+        },
       },
     },
   },
+  resultCaching: true,
 };
 
 export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {

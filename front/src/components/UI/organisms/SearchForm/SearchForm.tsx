@@ -59,10 +59,10 @@ const SearchByPosts = () => {
   const [posts, setPosts] = useState<ISearchPostItem[]>([]);
 
   const [getSearchPostsQuery, { fetchMore, variables }] = useLazyQuery<ISearchPosts>(SEARCH_POSTS, {
+    notifyOnNetworkStatusChange: true,
     onCompleted({ searchPosts }) {
       if (searchPosts.ok) setPosts(searchPosts.posts);
     },
-    notifyOnNetworkStatusChange: true,
   });
 
   useEffect(() => {
@@ -98,7 +98,7 @@ const SearchByPosts = () => {
   return (
     <Container>
       <Input value={text} onChange={onChangeText} placeholder="검색어를 입력하세요" />
-      <SearchPost ref={ref} posts={posts} />
+      {posts[0] && <SearchPost ref={ref} posts={posts} />}
     </Container>
   );
 };
