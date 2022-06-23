@@ -56,20 +56,15 @@ const Container = styled.div`
 const SearchByPosts = () => {
   const ref = useRef<HTMLDivElement>(null);
   const [text, onChangeText] = useInput("");
-  const [posts, setPosts] = useState<ISearchPostItem[]>([]);
 
-  const [getSearchPostsQuery, { fetchMore, variables }] = useLazyQuery<ISearchPosts>(SEARCH_POSTS, {
-    notifyOnNetworkStatusChange: true,
-    onCompleted({ searchPosts }) {
-      if (searchPosts.ok) setPosts(searchPosts.posts);
-    },
-  });
-
-  useEffect(() => {
-    if (text.length === 0) setPosts([]);
-  }, [text]);
+  const [getSearchPostsQuery, { fetchMore, variables, data, loading }] =
+    useLazyQuery<ISearchPosts>(SEARCH_POSTS);
 
   const fetchMorePosts = useCallback(() => {
+    if (!data) return;
+
+    const { posts } = data.searchPosts;
+
     if (posts.length < 10) return;
 
     const newVariables = { ...variables };
@@ -78,11 +73,9 @@ const SearchByPosts = () => {
     fetchMore({
       variables: newVariables,
     });
-  }, [variables, posts]);
+  }, [variables, data, fetchMore]);
 
   const getSearchPosts = useCallback(() => {
-    if (text.length === 0) return;
-
     getSearchPostsQuery({
       variables: {
         input: {
@@ -90,15 +83,15 @@ const SearchByPosts = () => {
         },
       },
     });
-  }, [text]);
+  }, [text, getSearchPostsQuery]);
 
-  useFetchScroll(ref, fetchMorePosts);
   useDebounceEffect(getSearchPosts, 300);
+  useFetchScroll(ref, fetchMorePosts);
 
   return (
     <Container>
       <Input value={text} onChange={onChangeText} placeholder="검색어를 입력하세요" />
-      {posts[0] && <SearchPost ref={ref} posts={posts} />}
+      {data?.searchPosts?.posts[0] && <SearchPost ref={ref} posts={data?.searchPosts?.posts} />}
     </Container>
   );
 };
