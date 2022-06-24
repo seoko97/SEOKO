@@ -1,15 +1,16 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+
 import styled from "@emotion/styled";
 import { useLazyQuery } from "@apollo/client";
 import useInput from "@hooks/useInput";
-import useFetchScroll from "@hooks/useFetchScroll";
 import useDebounceEffect from "@hooks/useDebounceEffect";
 
 import Input from "@atoms/Input";
 
 import { SEARCH_POSTS } from "@queries/post/searchPosts.queries";
-import { ISearchPostItem, ISearchPosts } from "@queries-types/posts";
+import { ISearchPosts } from "@queries-types/posts";
 
+import Sipnner from "@molecules/Spinner";
 import SearchPost from "./SearchPost";
 
 const Container = styled.div`
@@ -54,11 +55,15 @@ const Container = styled.div`
 `;
 
 const SearchByPosts = () => {
-  const ref = useRef<HTMLDivElement>(null);
   const [text, onChangeText] = useInput("");
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const [getSearchPostsQuery, { fetchMore, variables, data, loading }] =
+  const [getSearchPostsQuery, { fetchMore, variables, data }] =
     useLazyQuery<ISearchPosts>(SEARCH_POSTS);
+
+  useEffect(() => {
+    if (!loading && text.length) setLoading(true);
+  }, [text]);
 
   const fetchMorePosts = useCallback(() => {
     if (!data) return;
@@ -75,23 +80,29 @@ const SearchByPosts = () => {
     });
   }, [variables, data, fetchMore]);
 
-  const getSearchPosts = useCallback(() => {
-    getSearchPostsQuery({
+  const getSearchPosts = useCallback(async () => {
+    await getSearchPostsQuery({
       variables: {
         input: {
           text,
         },
       },
     });
+    setLoading(false);
   }, [text, getSearchPostsQuery]);
 
   useDebounceEffect(getSearchPosts, 300);
-  useFetchScroll(ref, fetchMorePosts);
 
   return (
     <Container>
       <Input value={text} onChange={onChangeText} placeholder="검색어를 입력하세요" />
-      {data?.searchPosts?.posts[0] && <SearchPost ref={ref} posts={data?.searchPosts?.posts} />}
+      {loading ? (
+        <Sipnner />
+      ) : (
+        data?.searchPosts?.posts[0] && (
+          <SearchPost posts={data?.searchPosts?.posts} func={fetchMorePosts} />
+        )
+      )}
     </Container>
   );
 };

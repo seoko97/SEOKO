@@ -1,10 +1,12 @@
-import React, { ForwardedRef, forwardRef, memo } from "react";
+import React, { ForwardedRef, forwardRef, memo, useRef } from "react";
 import styled from "@emotion/styled";
 import SmallPost from "@molecules/PostItem/Small";
 import { ISearchPostItem } from "@queries-types/posts";
+import useFetchScroll from "@hooks/useFetchScroll";
 
 interface IProps {
   posts: ISearchPostItem[];
+  func: () => void;
 }
 
 const Container = styled.div`
@@ -18,7 +20,11 @@ const Container = styled.div`
   gap: 24px;
 `;
 
-const SearchPost = forwardRef(({ posts }: IProps, ref: ForwardedRef<HTMLDivElement>) => {
+const SearchPost = ({ posts, func }: IProps) => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useFetchScroll(ref, func);
+
   return (
     <Container ref={ref}>
       {posts.map((post) => (
@@ -26,6 +32,6 @@ const SearchPost = forwardRef(({ posts }: IProps, ref: ForwardedRef<HTMLDivEleme
       ))}
     </Container>
   );
-});
+};
 
-export default memo(SearchPost);
+export default SearchPost;
