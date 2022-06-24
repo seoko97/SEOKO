@@ -32,7 +32,7 @@ const Container = styled.nav`
   }
 `;
 
-const UserNav = forwardRef<HTMLDivElement, Props>(({ isActive, children }, ref) => {
+const Nav = forwardRef<HTMLDivElement, Props>(({ isActive, children }, ref) => {
   return (
     <Container ref={ref} className={`menu ${isActive ? "active" : "inactive"}`}>
       {children}
@@ -40,4 +40,4 @@ const UserNav = forwardRef<HTMLDivElement, Props>(({ isActive, children }, ref) 
   );
 });
 
-export default memo(UserNav);
+export default memo(Nav, (prev, next) => prev.isActive === next.isActive);
