@@ -10,6 +10,7 @@ const NavList = ({ username }: IProps) => (
   <Container>
     <NavItem name="HOME" href="/" />
     <NavItem name="TAG" href="/tag" />
+    <NavItem name="PORTFOLIO" href="/portfolio" />
     <NavItem name="ABOUT" href="/about" />
     {!username && <NavItem name="로그인" href="/signin" />}
   </Container>
