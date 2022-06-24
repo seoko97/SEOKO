@@ -12,6 +12,8 @@ import { AppProps } from "next/app";
 import { GetServerSidePropsContext } from "next";
 import { onError } from "@apollo/client/link/error";
 import { REFRESH } from "@queries/users";
+import isEqual from "lodash/isEqual";
+import merge from "deepmerge";
 import { APOLLO_STATE_PROP_NAME } from "./addApolloState";
 import { cachePolicyByPost } from "./cachePolicyByPost";
 
@@ -35,8 +37,19 @@ const cachePolicy: InMemoryCacheConfig = {
         searchPosts: {
           keyArgs: ["input", ["text"]],
 
-          merge(existing: any, incoming: any) {
-            console.log(existing, incoming);
+          merge(existing, incoming) {
+            if (!existing) return incoming;
+
+            const newPosts = [...existing.posts, ...incoming.posts];
+            return {
+              ...incoming,
+              posts: newPosts,
+            };
+          },
+        },
+        getPostsByTag: {
+          keyArgs: ["input", ["tagName"]],
+          merge(existing, incoming) {
             if (!existing) return incoming;
 
             const newPosts = [...existing.posts, ...incoming.posts];
@@ -49,7 +62,6 @@ const cachePolicy: InMemoryCacheConfig = {
       },
     },
   },
-  resultCaching: true,
 };
 
 export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {
@@ -71,16 +83,14 @@ export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {
   };
 
   const httpLink = new HttpLink({
-    // uri: prod ? process.env.API_URL : "http://localhost:3065/graphql",
-    uri: "http://localhost:3065/graphql",
+    uri: prod ? process.env.API_URL : "http://localhost:3065/graphql",
     credentials: "include",
     fetch: enhancedFetch,
   });
 
   const linkOnError = onError(({ graphQLErrors, operation, forward }) => {
-    console.log(graphQLErrors);
     if (graphQLErrors?.[0].message === TOKEN_EXPIRED) {
-      const client = apolloClient ?? intializeClinet({ ctx });
+      const client = apolloClient ?? createClient;
       const refresh = fromPromise(
         client.mutate({ mutation: REFRESH }).then(({ data }) => data.refresh.ok),
       );
@@ -89,14 +99,16 @@ export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {
     }
   });
 
-  return new ApolloClient({
+  const createClient = new ApolloClient({
     ssrMode: typeof window === undefined,
     cache: new InMemoryCache(cachePolicy),
     link: from([linkOnError, httpLink]),
   });
+
+  return createClient;
 };
 
-export const intializeClinet = ({ initialState, ctx = null }: IInitializeApollo = {}) => {
+export const intializeClient = ({ initialState, ctx = null }: IInitializeApollo = {}) => {
   const _apolloClient = apolloClient ?? createApolloClient(ctx);
 
   // Next.js 에서 Apollo Client를 이용해 데이터를 가져오는 함수가 있다면 초기 상태값이 여기에 합쳐진다.
@@ -105,7 +117,13 @@ export const intializeClinet = ({ initialState, ctx = null }: IInitializeApollo 
     const existingCache = _apolloClient.extract();
 
     // 현재 캐시와 SSR 메소드인 getStaticProps/getServerSideProps 로 부터 받은 데이터를 합친다.
-    const data = Object.assign(initialState, existingCache);
+    const data = merge(initialState, existingCache, {
+      // combine arrays using object equality (like in sets)
+      arrayMerge: (destinationArray, sourceArray) => [
+        ...sourceArray,
+        ...destinationArray.filter((d) => sourceArray.every((s) => !isEqual(d, s))),
+      ],
+    });
 
     // 합쳐진 데이터를 저장한다.
     _apolloClient.cache.restore(data);
@@ -119,6 +137,6 @@ export const intializeClinet = ({ initialState, ctx = null }: IInitializeApollo 
 
 export const useApollo = (pageProps: AppProps["pageProps"]) => {
   const state = pageProps?.[APOLLO_STATE_PROP_NAME];
-  const store = useMemo(() => intializeClinet({ initialState: state }), [state]);
+  const store = useMemo(() => intializeClient({ initialState: state }), [state]);
   return store;
 };
