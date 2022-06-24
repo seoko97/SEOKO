@@ -1,10 +1,8 @@
-import React, { useRef, useCallback } from "react";
+import React, { forwardRef } from "react";
 import styled from "@emotion/styled";
 
 import PostItem from "@molecules/PostItem/Large";
-import { useQuery } from "@apollo/client";
-import { GET_POSTS } from "@queries/post/getPosts.queries";
-import { IGetPosts } from "@queries-types/posts";
+import { IPost } from "@queries-types/posts";
 import useFetchScroll from "@hooks/useFetchScroll";
 
 const Container = styled.div`
@@ -17,31 +15,21 @@ const Container = styled.div`
   }
 `;
 
-const PostList = () => {
-  const viewport = useRef<HTMLDivElement>(null);
-  const { data, fetchMore } = useQuery<IGetPosts>(GET_POSTS, {
-    errorPolicy: "all",
-  });
+interface IProps {
+  posts: IPost[];
+  func: () => void;
+}
 
-  const fetchMorePosts = useCallback(() => {
-    fetchMore({
-      variables: {
-        input: {
-          lastId: data?.getPosts.posts[data?.getPosts.posts.length - 1]._id,
-        },
-      },
-    });
-  }, [viewport, data]);
-
-  useFetchScroll(viewport, fetchMorePosts);
+export const PostList = forwardRef<HTMLDivElement, IProps>(({ posts, func }, ref) => {
+  useFetchScroll(ref, func);
 
   return (
-    <Container ref={viewport}>
-      {data?.getPosts.posts.map((post, idx) => (
+    <Container ref={ref}>
+      {posts.map((post, idx) => (
         <PostItem key={post._id + post.title + idx} post={post} />
       ))}
     </Container>
   );
-};
+});
 
 export default PostList;
