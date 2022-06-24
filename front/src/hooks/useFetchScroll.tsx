@@ -1,6 +1,6 @@
 import { useRef, useEffect, useCallback } from "react";
 
-type IProps = (targetEl: React.RefObject<HTMLDivElement>, fetchCallback: () => void) => void;
+type IProps = (targetEl: any, fetchCallback: () => void) => void;
 
 const useFetchScroll: IProps = (targetEl, fetchCallback) => {
   const observerRef = useRef<IntersectionObserver>();
@@ -18,7 +18,8 @@ const useFetchScroll: IProps = (targetEl, fetchCallback) => {
   }, [fetchCallback]);
 
   useEffect(() => {
-    if (!targetEl.current?.lastElementChild) return;
+    if (!targetEl.current?.lastElementChild || targetEl.current?.childNodes.length % 10 !== 0)
+      return;
 
     getObserber();
     observerRef.current?.observe(targetEl.current.lastElementChild);
