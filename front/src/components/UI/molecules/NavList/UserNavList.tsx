@@ -32,9 +32,13 @@ export const Container = styled.ul`
 const NavList = () => {
   const { username } = useReactiveVar(userInfoVar);
   const router = useRouter();
-  const [singout] = useMutation<ISignOut>(SIGN_OUT, {
+  const [singout, { client }] = useMutation<ISignOut>(SIGN_OUT, {
     onCompleted({ signout }) {
       if (signout.ok) {
+        client.cache.evict({
+          id: "ROOT_QUERY",
+          fieldName: "getUserInfo",
+        });
         setUserInfo(null);
         router.push("/");
       }
