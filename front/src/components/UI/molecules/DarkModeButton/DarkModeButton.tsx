@@ -57,4 +57,4 @@ const DarkModeButton = ({ mode, onClick }: Props) => {
   );
 };
 
-export default React.memo(DarkModeButton);
+export default DarkModeButton;

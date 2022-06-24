@@ -50,4 +50,4 @@ const FooterContent = () => {
   );
 };
 
-export default React.memo(FooterContent);
+export default FooterContent;
