@@ -1,8 +1,7 @@
-import React, { memo, MouseEvent, useCallback } from "react";
+import React, { memo, MouseEvent } from "react";
 import styled from "@emotion/styled";
 import Tag from "@atoms/Tag";
 import { ITag } from "@queries-types/tags";
-import { useRouter } from "next/router";
 
 interface Props {
   tags: ITag[];
@@ -23,8 +22,8 @@ const Container = styled.div`
 const TagList = ({ tags, onClick }: Props) => {
   return (
     <Container>
-      {tags.map((tag) => (
-        <Tag key={tag._id} onClick={onClick}>
+      {tags.map((tag, i) => (
+        <Tag key={tag._id + i} onClick={onClick}>
           {tag.name}
         </Tag>
       ))}
@@ -32,4 +31,4 @@ const TagList = ({ tags, onClick }: Props) => {
   );
 };
 
-export default memo(TagList);
+export default memo(TagList, (prev, next) => prev.tags.length === next.tags.length);
