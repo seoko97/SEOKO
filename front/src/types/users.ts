@@ -1,29 +1,21 @@
+import { CoreResponse } from "./core";
+
 export interface ISignIn {
   signin: {
-    ok: boolean;
-    error?: any;
     username: string;
-  };
+  } & CoreResponse;
 }
 
 export interface ISignOut {
-  signout: {
-    ok: boolean;
-    error?: any;
-  };
+  signout: CoreResponse;
 }
 
 export interface IRefresh {
-  refresh: {
-    ok: boolean;
-    error?: any;
-  };
+  refresh: CoreResponse;
 }
 
 export interface IGetUserInfo {
   getUserInfo: {
-    ok: boolean;
-    error?: any;
     username: string;
-  };
+  } & CoreResponse;
 }

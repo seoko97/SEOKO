@@ -1,4 +1,5 @@
 import { ITag } from "@queries-types/tags";
+import { CoreResponse } from "./core";
 
 export interface IPost {
   _id: string;
@@ -17,49 +18,39 @@ export interface ISiblingPost {
 
 export interface IGetPost {
   getPost: {
-    ok: boolean;
-    error: any;
     post: IPost;
-
     siblingPost: ISiblingPost;
-  };
+  } & CoreResponse;
 }
 
 export interface IGetPosts {
   getPosts: {
-    ok: boolean;
-    error: any;
     posts: IPost[];
-  };
+  } & CoreResponse;
 }
 
 export interface IAddPost {
-  addPost: {
-    ok: boolean;
-    error: any;
-  };
+  addPost: CoreResponse;
 }
 
 export interface IDeletePost {
-  deletePost: {
-    ok: boolean;
-    error: any;
-  };
+  deletePost: CoreResponse;
 }
 
 export interface IEditPost {
-  editPost: {
-    ok: boolean;
-    error: any;
-  };
+  editPost: CoreResponse;
 }
 
 export type ISearchPostItem = Pick<IPost, "_id" | "title" | "coverImg" | "createdAt">;
 
 export interface ISearchPosts {
   searchPosts: {
-    ok: boolean;
-    error: any;
     posts: ISearchPostItem[];
-  };
+  } & CoreResponse;
+}
+
+export interface IGetPostsByTag {
+  getPostsByTag: {
+    posts: IPost[];
+  } & CoreResponse;
 }
