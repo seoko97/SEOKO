@@ -85,7 +85,7 @@ const PostHeader = ({ post }: IProps) => {
   }, []);
 
   const onClickTag = useCallback((e) => {
-    router.push(`/tag?name=${e.target.innerText}`);
+    router.push(`/tag/${e.target.innerText}`);
   }, []);
 
   return (

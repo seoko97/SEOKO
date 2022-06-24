@@ -58,7 +58,7 @@ const PostContent = ({ title, content, tags, createdAt }: Props) => {
   const parsedContent = removeMd(content, { listUnicodeChar: "" }).substring(0, 150);
   const onClickTag = useCallback((e) => {
     e.stopPropagation();
-    router.push(`/tag?name=${e.target.innerText}`);
+    router.push(`/tag/${e.target.innerText}`);
   }, []);
 
   return (
