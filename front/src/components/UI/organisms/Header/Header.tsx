@@ -10,7 +10,7 @@ const Container = styled.header`
   position: sticky;
   top: -32px;
   padding-top: 32px;
-  z-index: 1;
+  z-index: 100;
   transition: box-shadow 0.15s, backdrop-filter 0.3s, background-color 0.3s;
 
   & > div {
