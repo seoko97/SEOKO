@@ -80,7 +80,7 @@ const PostHeader = ({ post }: IProps) => {
       });
   }, [username, _id]);
 
-  const routeEditPost = useCallback(() => {
+  const editPost = useCallback(() => {
     router.push(`/write/post/${_id}`);
   }, []);
 
@@ -96,7 +96,7 @@ const PostHeader = ({ post }: IProps) => {
       <h1>{title}</h1>
       {tags[0] && <TagList onClick={onClickTag} tags={tags} />}
       <Detail createdAt={createdAt} />
-      {username && <PostNavigation deletePost={deletePost} routeEditPost={routeEditPost} />}
+      {username && <PostNavigation onDelete={deletePost} onEdit={editPost} />}
     </Container>
   );
 };
