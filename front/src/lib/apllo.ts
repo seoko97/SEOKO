@@ -15,7 +15,7 @@ import { REFRESH } from "@queries/users";
 import isEqual from "lodash/isEqual";
 import merge from "deepmerge";
 import { APOLLO_STATE_PROP_NAME } from "./addApolloState";
-import { cachePolicyByPost } from "./cachePolicyByPost";
+import { mergeItem } from "./mergeItem";
 
 type InitialState = NormalizedCacheObject | undefined;
 
@@ -33,31 +33,18 @@ const cachePolicy: InMemoryCacheConfig = {
   typePolicies: {
     Query: {
       fields: {
-        getPosts: cachePolicyByPost,
+        getPosts: {
+          keyArgs: false,
+          merge: mergeItem,
+        },
         searchPosts: {
           keyArgs: ["input", ["text"]],
 
-          merge(existing, incoming) {
-            if (!existing) return incoming;
-
-            const newPosts = [...existing.posts, ...incoming.posts];
-            return {
-              ...incoming,
-              posts: newPosts,
-            };
-          },
+          merge: mergeItem,
         },
         getPostsByTag: {
           keyArgs: ["input", ["tagName"]],
-          merge(existing, incoming) {
-            if (!existing) return incoming;
-
-            const newPosts = [...existing.posts, ...incoming.posts];
-            return {
-              ...incoming,
-              posts: newPosts,
-            };
-          },
+          merge: mergeItem,
         },
       },
     },
@@ -89,6 +76,7 @@ export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {
   });
 
   const linkOnError = onError(({ graphQLErrors, operation, forward }) => {
+    console.log(graphQLErrors);
     if (graphQLErrors?.[0].message === TOKEN_EXPIRED) {
       const client = apolloClient ?? createClient;
       const refresh = fromPromise(
