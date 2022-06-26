@@ -29,8 +29,8 @@ export class Post {
     ref: 'Tag',
     required: false,
   })
-  @Field(() => [Tag || Types.ObjectId])
-  tags?: (Types.ObjectId | Tag)[];
+  @Field(() => [Tag])
+  tags?: Tag[];
 
   @Field(() => Date)
   createdAt: Date;

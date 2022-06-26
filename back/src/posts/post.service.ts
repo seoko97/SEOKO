@@ -1,10 +1,13 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { FilterQuery, Types } from 'mongoose';
+import { Tag } from '@tags/tag.model';
 import { TagService } from '@tags/tag.service';
 import { CreatePostInput } from './dto/createPostInput.dto';
-import { Post, PostModel } from './post.model';
+import { Post, PostDocument, PostModel } from './post.model';
 import { EditPostInput } from './dto/editPostInput.dto';
-import { Tag } from '@tags/tag.model';
+import { SearchPostsInput } from './dto/searchPosts.dto';
+import { GetPostsByTagInput } from './dto/getPosts.dto';
 
 @Injectable()
 export class PostService {
@@ -14,12 +17,18 @@ export class PostService {
     private tagService: TagService,
   ) {}
 
+  getWhere(lastId: string | undefined) {
+    const where = lastId ? { _id: { $lt: lastId } } : {};
+
+    return where;
+  }
+
   // 단일 포스트
   async getById(_id: string) {
     return await this.postModel.findById(_id);
   }
 
-  async create({ tags, ...info }: CreatePostInput) {
+  async createPost({ tags, ...info }: CreatePostInput) {
     const post = await this.postModel.create({
       ...info,
     });
@@ -45,11 +54,11 @@ export class PostService {
     return post;
   }
 
-  async update(_id: string, query: any) {
+  async updatePost(_id: string | Types.ObjectId, query: any) {
     return await this.postModel.updateOne({ _id }, query);
   }
 
-  async edit({ _id, addTags, deleteTags, ...info }: EditPostInput) {
+  async editPost({ _id, addTags, deleteTags, ...info }: EditPostInput) {
     const post = await this.postModel.findOne({ _id }).populate('tags');
 
     if (!post) throw new Error('포스트가 존재하지 않습니다.');
@@ -57,7 +66,7 @@ export class PostService {
     if (deleteTags.length) {
       await Promise.all(
         post.tags.map((tag) =>
-          this.tagService.updateTag(tag._id.toString(), {
+          this.tagService.updateTag(tag._id, {
             $pull: {
               posts: post._id,
             },
@@ -94,17 +103,23 @@ export class PostService {
     return { ok: true };
   }
 
-  async delete(_id: string) {
+  async deletePost(_id: string) {
     const post = await this.postModel.findOneAndDelete({ _id });
 
-    await Promise.all(
+    const tags = await Promise.all(
       post.tags.map((tag) =>
-        this.tagService.updateTag(tag.toString(), {
+        this.tagService.updateTag(tag._id, {
           $pull: {
             posts: post._id,
           },
         }),
       ),
+    );
+
+    await Promise.all(
+      tags.map((tag) => {
+        if (tag.posts?.length) this.tagService.delete(tag._id);
+      }),
     );
 
     return { ok: true };
@@ -143,20 +158,52 @@ export class PostService {
 
   // 복수 포스트
   async getPosts(lastId: string | undefined) {
-    const where = lastId ? { _id: { $lt: lastId } } : {};
+    const where = this.getWhere(lastId);
 
     return await this.postModel
       .find(where)
-      .limit(10)
       .sort({ _id: -1 })
+      .limit(10)
       .populate('tags');
   }
 
-  async searchPosts(text: string) {
-    const posts = await this.postModel.find({
-      $or: [{ title: { $regex: text } }, { content: { $regex: text } }],
-    });
+  async getPostsByTag(input: GetPostsByTagInput) {
+    const { lastId, tagName } = input;
+
+    const $tag = tagName ? await this.tagService.getTag(tagName) : null;
+
+    const where: FilterQuery<PostDocument> = {
+      ...this.getWhere(lastId),
+    };
+
+    if ($tag)
+      where.tags = {
+        $in: $tag._id,
+      };
+
+    const posts = await this.postModel
+      .find(where)
+      .sort({ _id: -1 })
+      .limit(10)
+      .populate('tags');
 
     return posts;
+  }
+
+  async searchPosts(input: SearchPostsInput) {
+    const { text, lastId } = input;
+
+    if (!text.length) return [];
+
+    const where: FilterQuery<PostDocument> = {
+      $and: [
+        {
+          $or: [{ title: { $regex: text } }, { content: { $regex: text } }],
+        },
+        this.getWhere(lastId),
+      ],
+    };
+
+    return await this.postModel.find(where).sort({ _id: -1 }).limit(10);
   }
 }
