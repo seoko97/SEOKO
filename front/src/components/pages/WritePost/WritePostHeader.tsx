@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import Tag from "@atoms/Tag";
 import ImageIcon from "@icons/ImageIcon/ImageIcon";
 
-const Header = styled.header`
+export const Header = styled.header`
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   display: flex;
   flex-direction: column;
@@ -91,7 +91,7 @@ interface Props {
   addTag: (e: KeyboardEvent) => void;
   onChangeTitle: (e: ChangeEvent) => void;
   onChangeTagName: (e: ChangeEvent) => void;
-  coverImageHandler: (e: MouseEvent<SVGSVGElement>) => void;
+  coverImageHandler: (e: MouseEvent) => void;
   onChangeImage: (e: ChangeEvent<HTMLInputElement>) => void;
   clearCoverImage: () => void;
   photoInputRef: MutableRefObject<HTMLInputElement | null>;
@@ -140,7 +140,9 @@ const WritePostHeader = (props: Props) => {
         <span>커버 이미지</span>
         <div>
           {coverImg && <img src={coverImg} alt="coverImage" onClick={clearCoverImage} />}
-          <ImageIcon onClick={coverImageHandler} />
+          <span onClick={coverImageHandler}>
+            <ImageIcon />
+          </span>
           <input
             type="file"
             accept="image/jpg, image/jpeg, image/png"
