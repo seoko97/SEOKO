@@ -8,6 +8,12 @@ export class GetPostsInput {
   lastId?: string;
 }
 
+@InputType()
+export class GetPostsByTagInput extends GetPostsInput {
+  @Field(() => String, { nullable: true })
+  tagName?: string;
+}
+
 @ObjectType()
 export class GetPostsDTO extends CoreRes {
   @Field(() => [Post])
