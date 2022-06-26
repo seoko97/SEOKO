@@ -10,6 +10,7 @@
       "@decorators/*": ["src/decorators/*"],
       "@common/*": ["src/common/*"],
       "@categories/*": ["src/categories/*"],
+      "@projects/*": ["src/projects/*"],
       "@src/*": ["src/*"]
     }
   }
