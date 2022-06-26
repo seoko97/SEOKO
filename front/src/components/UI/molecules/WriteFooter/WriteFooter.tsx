@@ -1,6 +1,6 @@
+import React, { useCallback } from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
-import React, { useCallback } from "react";
 
 const Footer = styled.footer`
   width: 100%;
@@ -31,16 +31,16 @@ const Footer = styled.footer`
 `;
 
 interface Props {
-  addPost: () => void;
+  save: () => void;
 }
 
-const WritePostFooter = ({ addPost }: Props) => {
+const WriteFooter = ({ save }: Props) => {
   const router = useRouter();
 
   const onMovePage = useCallback(() => router.back(), []);
   return (
     <Footer>
-      <button onClick={addPost}>저장</button>
+      <button onClick={save}>저장</button>
       <button className="close" onClick={onMovePage}>
         나가기
       </button>
@@ -48,4 +48,4 @@ const WritePostFooter = ({ addPost }: Props) => {
   );
 };
 
-export default WritePostFooter;
+export default WriteFooter;
