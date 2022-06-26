@@ -50,8 +50,8 @@ const NavList = () => {
   return (
     <Container>
       <li>{username} 님</li>
-      <NavItem name="새 글쓰기" href="/write" />
-      <NavItem name="관리" href="#" />
+      <NavItem name="새 글쓰기" href="/write/post" />
+      <NavItem name="프로젝트 추가" href="/write/project" />
       <li onClick={onSignOut}>로그아웃</li>
     </Container>
   );
