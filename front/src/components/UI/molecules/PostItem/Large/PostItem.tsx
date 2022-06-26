@@ -22,7 +22,7 @@ const StyedPostItem = styled.div`
   &:hover {
     & > div:first-of-type {
       transform: translate3D(0, -3%, 0);
-      box-shadow: 0px 9px 15px -3px #030202;
+      box-shadow: rgb(0 0 0 / 30%) 0px 4px 16px 0px;
     }
 
     & h1 {

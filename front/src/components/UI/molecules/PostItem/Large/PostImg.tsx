@@ -24,7 +24,6 @@ const StyledPostImg = styled.div`
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     width: 100%;
     padding-bottom: 70%;
-    flex-direction: column;
   }
 `;
 
