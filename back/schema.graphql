@@ -2,6 +2,16 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input AddProjectInput {
+  content: String!
+  coverImg: String!
+  description: String!
+  endDate: DateTime
+  githubUrl: String!
+  startDate: DateTime!
+  title: String!
+}
+
 type CoreRes {
   error: String
   ok: Boolean!
@@ -34,6 +44,17 @@ input EditPostInput {
   title: String!
 }
 
+input EditProjectInput {
+  _id: String!
+  content: String!
+  coverImg: String!
+  description: String!
+  endDate: DateTime
+  githubUrl: String!
+  startDate: DateTime!
+  title: String!
+}
+
 type GetPostDTO {
   error: String
   ok: Boolean!
@@ -45,6 +66,11 @@ input GetPostInput {
   id: String!
 }
 
+input GetPostsByTagInput {
+  lastId: String
+  tagName: String
+}
+
 type GetPostsDTO {
   error: String
   ok: Boolean!
@@ -53,6 +79,18 @@ type GetPostsDTO {
 
 input GetPostsInput {
   lastId: String
+}
+
+type GetProjectDto {
+  error: String
+  ok: Boolean!
+  project: Project!
+}
+
+type GetProjectsDto {
+  error: String
+  ok: Boolean!
+  projects: [Project!]!
 }
 
 type GetTagsRes {
@@ -80,11 +118,14 @@ input InputUser {
 
 type Mutation {
   addPost(input: CreatePostInput!): CoreRes!
+  addProject(input: AddProjectInput!): CoreRes!
   create(input: InputUser!): CoreRes!
   createTag(input: String!): CreateTagDTO!
   deletePost(input: GetPostInput!): CoreRes!
+  deleteProject(input: ProjectInput!): CoreRes!
   deleteTag(_id: String!): CoreRes!
   editPost(input: EditPostInput!): CoreRes!
+  editProject(input: EditProjectInput!): CoreRes!
   refresh: CoreRes!
   signin(input: SigninInput!): SigninRes!
   signout: CoreRes!
@@ -100,23 +141,38 @@ type Post {
   updatedAt: DateTime!
 }
 
+type Project {
+  _id: String!
+  content: String!
+  coverImg: String!
+  createdAt: DateTime!
+  description: String!
+  endDate: DateTime
+  githubUrl: String!
+  startDate: DateTime!
+  title: String!
+  updatedAt: DateTime!
+}
+
+input ProjectInput {
+  _id: String!
+}
+
 type Query {
   getPost(input: GetPostInput!): GetPostDTO!
   getPosts(input: GetPostsInput): GetPostsDTO!
+  getPostsByTag(input: GetPostsByTagInput): GetPostsDTO!
+  getProject(input: ProjectInput!): GetProjectDto!
+  getProjects: GetProjectsDto!
   getTag(input: String!): CoreRes!
   getTags: GetTagsRes!
   getUserInfo: GetUserInfoDTO!
-  searchPosts(input: SearchPostsInput!): SearchPostsDTO!
+  searchPosts(input: SearchPostsInput!): GetPostsDTO!
   searchTags(input: SearchTagsInput!): SearchTagsDTO!
 }
 
-type SearchPostsDTO {
-  error: String
-  ok: Boolean!
-  posts: [Post!]!
-}
-
 input SearchPostsInput {
+  lastId: String
   text: String!
 }
 
