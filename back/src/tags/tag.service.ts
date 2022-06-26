@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { PostService } from '@posts/post.service';
@@ -15,10 +16,10 @@ export class TagService {
     return await this.tagModel.find();
   }
 
-  async searchTags(text: string) {
+  async searchTags(name: string) {
     const tags = await this.tagModel.find({
       name: {
-        $regex: text,
+        $regex: name,
       },
     });
 
@@ -27,23 +28,26 @@ export class TagService {
   async getTag(name: string) {
     return await this.tagModel.findOne({ name });
   }
+  async getTagById(_id: Types.ObjectId) {
+    return await this.tagModel.findOne({ _id });
+  }
 
   async findOrCreate(name: string) {
     return await this.tagModel.findOrCreate(name);
   }
 
-  async updateTag(_id: string, query: any) {
+  async updateTag(_id: Types.ObjectId | string, query: any) {
     return await this.tagModel.findOneAndUpdate({ _id }, query);
   }
 
-  async delete(_id: string) {
+  async delete(_id: string | Types.ObjectId) {
     const tag = await this.tagModel.findOneAndDelete({ _id });
 
     if (!tag) throw new Error('태그가 존재하지 않습니다.');
 
     await Promise.all(
       tag.posts.map((postId) => {
-        return this.postService.update(postId._id.toString(), {
+        return this.postService.updatePost(postId._id, {
           $pull: {
             tags: tag._id,
           },
