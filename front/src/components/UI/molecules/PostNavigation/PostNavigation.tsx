@@ -1,15 +1,15 @@
 import React from "react";
 
 interface IProps {
-  deletePost: () => void;
-  routeEditPost: () => void;
+  onDelete: () => void;
+  onEdit: () => void;
 }
 
-const PostNavigation = ({ deletePost, routeEditPost }: IProps) => {
+const PostNavigation = ({ onDelete, onEdit }: IProps) => {
   return (
     <div>
-      <button onClick={routeEditPost}>수정</button>
-      <button onClick={deletePost}>삭제</button>
+      <button onClick={onEdit}>수정</button>
+      <button onClick={onDelete}>삭제</button>
     </div>
   );
 };
