@@ -81,7 +81,7 @@ const PostHeader = ({ post }: IProps) => {
   }, [username, _id]);
 
   const routeEditPost = useCallback(() => {
-    router.push(`/write/${_id}`);
+    router.push(`/write/post/${_id}`);
   }, []);
 
   const onClickTag = useCallback((e) => {
