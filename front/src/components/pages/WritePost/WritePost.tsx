@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useCallback, useRef, useState } from "react";
+import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import { useMutation } from "@apollo/client";
 
@@ -6,17 +7,16 @@ import useInput from "@hooks/useInput";
 
 import { ADD_POST } from "@queries/post/addPost.queries";
 import { IAddPost, IEditPost, IPost } from "@queries-types/posts";
+import { EDIT_POST } from "@queries/post/editPost.queries";
 
 import RowFrame from "@frames/RowFrame";
+import WriteFooter from "@molecules/WriteFooter";
 import TuiEditor from "@organisms/TuiEditor";
 
-import { useRouter } from "next/router";
-import { EDIT_POST } from "@queries/post/editPost.queries";
 import WritePostHeader from "./WritePostHeader";
-import WritePostFooter from "./WritePosFooter";
 
 interface IProps {
-  post: IPost;
+  post: IPost | undefined;
 }
 
 const Container = styled(RowFrame)`
@@ -165,7 +165,7 @@ const WritePost = ({ post }: IProps) => {
         clearCoverImage={clearCoverImage}
       />
       <TuiEditor initialValue={content} onChange={setContent} />
-      <WritePostFooter addPost={addPost} />
+      <WriteFooter save={addPost} />
     </Container>
   );
 };
