@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useRef } from "react";
+import React, { forwardRef, memo, useCallback, useRef } from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { Editor as EditorType, EditorProps } from "@toast-ui/react-editor";
@@ -47,7 +47,9 @@ const TuiEditor = (props: Props) => {
     const instance = editorRef.current.getInstance();
     const valueTypeC = valueType || "markdown";
 
-    onChange(valueTypeC === "markdown" ? instance.getMarkdown() : instance.getHTML());
+    const content = valueTypeC === "markdown" ? instance.getMarkdown() : instance.getHTML();
+
+    onChange(content);
   }, [props, editorRef]);
 
   return (
@@ -76,4 +78,4 @@ const TuiEditor = (props: Props) => {
   );
 };
 
-export default TuiEditor;
+export default memo(TuiEditor);

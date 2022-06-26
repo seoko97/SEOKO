@@ -9,13 +9,11 @@ export interface TUIEditorWithForwardedProps extends EditorProps {
 }
 
 const TUIEditor = (props: TUIEditorWithForwardedProps) => (
-  <>
-    <Editor
-      plugins={[colorSyntax, [codeSyntaxHighlight, { highlighter: Prism }]]}
-      {...props}
-      ref={props.forwardedRef}
-    />
-  </>
+  <Editor
+    plugins={[colorSyntax, [codeSyntaxHighlight, { highlighter: Prism }]]}
+    {...props}
+    ref={props.forwardedRef}
+  />
 );
 
 export default TUIEditor;
