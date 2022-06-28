@@ -5,7 +5,7 @@ import { intializeClient } from "@lib/apllo";
 import { IGetProjects } from "@queries-types/project";
 import { GET_PROJECTS } from "@queries/project/getProjects.queries";
 
-export { default } from "@pages/Project";
+export { default } from "@pages/Projects";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apolloClient = intializeClient({ ctx });
