@@ -19,14 +19,14 @@ export class TagResolver {
 
   @Mutation(() => CoreRes)
   async deleteTag(@Args('_id') _id: string): Promise<CoreRes> {
-    const result = await this.tagService.delete(_id);
+    await this.tagService.delete(_id);
 
     return { ok: true };
   }
 
   @Query(() => CoreRes)
   async getTag(@Args('input') input: string) {
-    const tag = await this.tagService.getTag(input);
+    await this.tagService.getTag(input);
 
     return { ok: true };
   }
@@ -35,7 +35,6 @@ export class TagResolver {
   @Query(() => GetTagsRes)
   async getTags(): Promise<GetTagsRes> {
     const tags = await this.tagService.getTags();
-
     return { ok: true, tags };
   }
 
