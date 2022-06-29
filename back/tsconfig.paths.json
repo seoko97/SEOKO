@@ -11,6 +11,8 @@
       "@common/*": ["src/common/*"],
       "@categories/*": ["src/categories/*"],
       "@projects/*": ["src/projects/*"],
+      "@skills/*": ["src/skills/*"],
+      "@experiences/*": ["src/experiences/*"],
       "@src/*": ["src/*"]
     }
   }

@@ -6,6 +6,8 @@ import { CommonModule } from '@common/common.module';
 import { PostModule } from '@posts/post.module';
 import { TagModule } from '@tags/tag.module';
 import { ProjectModule } from '@projects/project.module';
+import { ExperienceModule } from '@experiences/experiences.module';
+import { SkillModule } from '@skills/skills.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { ProjectModule } from '@projects/project.module';
     TagModule,
     PostModule,
     ProjectModule,
+    ExperienceModule,
+    SkillModule,
   ],
 })
 export class AppModule {}
