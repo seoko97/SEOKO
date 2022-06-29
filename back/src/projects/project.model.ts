@@ -32,11 +32,11 @@ export class Project {
   githubUrl!: string;
 
   @Prop({ required: true })
-  @Field(() => Date)
+  @Field(() => String)
   startDate!: string;
 
   @Prop({ required: false })
-  @Field(() => Date, { nullable: true })
+  @Field(() => String, { nullable: true })
   endDate!: string;
 
   @Field(() => Date)
