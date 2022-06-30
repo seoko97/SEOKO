@@ -37,7 +37,7 @@ export class Project {
 
   @Prop({ required: false })
   @Field(() => String, { nullable: true })
-  endDate!: string;
+  endDate?: string;
 
   @Field(() => Date)
   createdAt: Date;

@@ -4,8 +4,8 @@
 
 input AddExperienceInput {
   description: String!
-  endDate: String!
-  stratDate: String!
+  endDate: String
+  startDate: String!
   title: String!
 }
 
@@ -61,8 +61,8 @@ input DeleteExperienceInput {
 input EditExperienceInput {
   _id: String!
   description: String!
-  endDate: String!
-  stratDate: String!
+  endDate: String
+  startDate: String!
   title: String!
 }
 
@@ -96,8 +96,8 @@ input EditSkillInput {
 type Experience {
   _id: String!
   description: String!
-  endDate: String!
-  stratDate: String!
+  endDate: String
+  startDate: String!
   title: String!
 }
 
@@ -154,7 +154,7 @@ type GetProjectsDto {
 type GetSkillsDto {
   error: String
   ok: Boolean!
-  skills: [Skill!]!
+  skills: GroupedSkills!
 }
 
 type GetTagsRes {
@@ -167,6 +167,12 @@ type GetUserInfoDTO {
   error: String
   ok: Boolean!
   username: String!
+}
+
+type GroupedSkills {
+  back: [Skill!]!
+  devops: [Skill!]!
+  front: [Skill!]!
 }
 
 input InputUser {
