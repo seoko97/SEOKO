@@ -6,7 +6,7 @@ import { Field, InputType, ObjectType, PickType } from '@nestjs/graphql';
 export class AddExperienceInput extends PickType(Experience, [
   'description',
   'endDate',
-  'stratDate',
+  'startDate',
   'title',
 ]) {}
 

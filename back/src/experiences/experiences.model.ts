@@ -24,11 +24,11 @@ export class Experience {
 
   @Prop({ required: true })
   @Field(() => String)
-  stratDate!: string;
+  startDate!: string;
 
-  @Prop({ required: true })
-  @Field(() => String)
-  endDate!: string;
+  @Prop({ required: false, default: null })
+  @Field(() => String, { nullable: true })
+  endDate?: string;
 }
 
 export const ExperienceSchema = SchemaFactory.createForClass(Experience);
