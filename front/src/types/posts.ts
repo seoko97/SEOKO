@@ -1,7 +1,7 @@
 import { ITag } from "@queries-types/tags";
 import { CoreResponse } from "./core";
 
-export interface IPost {
+interface IPost {
   _id: string;
   content: string;
   coverImg: string;
@@ -10,47 +10,61 @@ export interface IPost {
   createdAt: string;
 }
 
-export type ISiblingItem = Pick<IPost, "_id" | "title">;
-export interface ISiblingPost {
+type ISiblingItem = Pick<IPost, "_id" | "title">;
+interface ISiblingPost {
   next: ISiblingItem;
   prev: ISiblingItem;
 }
 
-export interface IGetPost {
+interface IGetPost {
   getPost: {
     post: IPost;
     siblingPost: ISiblingPost;
   } & CoreResponse;
 }
 
-export interface IGetPosts {
+interface IGetPosts {
   getPosts: {
     posts: IPost[];
   } & CoreResponse;
 }
 
-export interface IAddPost {
+interface IAddPost {
   addPost: CoreResponse;
 }
 
-export interface IDeletePost {
+interface IDeletePost {
   deletePost: CoreResponse;
 }
 
-export interface IEditPost {
+interface IEditPost {
   editPost: CoreResponse;
 }
 
-export type ISearchPostItem = Pick<IPost, "_id" | "title" | "coverImg" | "createdAt">;
+type ISearchPostItem = Pick<IPost, "_id" | "title" | "coverImg" | "createdAt">;
 
-export interface ISearchPosts {
+interface ISearchPosts {
   searchPosts: {
     posts: ISearchPostItem[];
   } & CoreResponse;
 }
 
-export interface IGetPostsByTag {
+interface IGetPostsByTag {
   getPostsByTag: {
     posts: IPost[];
   } & CoreResponse;
 }
+
+export type {
+  IAddPost,
+  IDeletePost,
+  IEditPost,
+  IGetPost,
+  IGetPosts,
+  IGetPostsByTag,
+  IPost,
+  ISearchPostItem,
+  ISearchPosts,
+  ISiblingItem,
+  ISiblingPost,
+};

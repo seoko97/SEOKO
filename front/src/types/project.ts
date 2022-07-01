@@ -1,6 +1,6 @@
 import { CoreResponse } from "./core";
 
-export interface IProjectInput {
+interface IProjectInput {
   _id?: string;
   title: string;
   description: string;
@@ -11,31 +11,41 @@ export interface IProjectInput {
   endDate: string | null;
 }
 
-export interface IProject extends IProjectInput {
+interface IProject extends IProjectInput {
   _id: string;
   createdAt: string;
 }
 
-export interface IAddProject {
+interface IAddProject {
   addProject: CoreResponse;
 }
 
-export interface IDeleteProject {
+interface IDeleteProject {
   deleteProject: CoreResponse;
 }
 
-export interface IEditProject {
+interface IEditProject {
   editProject: CoreResponse;
 }
 
-export interface IGetProject {
+interface IGetProject {
   getProject: {
     project: IProject;
   } & CoreResponse;
 }
 
-export interface IGetProjects {
+interface IGetProjects {
   getProjects: {
     projects: IProject[];
   } & CoreResponse;
 }
+
+export type {
+  IAddProject,
+  IDeleteProject,
+  IEditProject,
+  IGetProject,
+  IGetProjects,
+  IProject,
+  IProjectInput,
+};

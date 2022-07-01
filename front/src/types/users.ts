@@ -1,21 +1,23 @@
 import { CoreResponse } from "./core";
 
-export interface ISignIn {
+interface ISignIn {
   signin: {
     username: string;
   } & CoreResponse;
 }
 
-export interface ISignOut {
+interface ISignOut {
   signout: CoreResponse;
 }
 
-export interface IRefresh {
+interface IRefresh {
   refresh: CoreResponse;
 }
 
-export interface IGetUserInfo {
+interface IGetUserInfo {
   getUserInfo: {
     username: string;
   } & CoreResponse;
 }
+
+export type { ISignIn, ISignOut, IGetUserInfo, IRefresh };
