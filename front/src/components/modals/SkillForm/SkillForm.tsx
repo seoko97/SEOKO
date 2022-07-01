@@ -2,9 +2,7 @@ import React, { memo, useCallback, useState } from "react";
 import styled from "@emotion/styled";
 import { useMutation } from "@apollo/client";
 
-import { EDIT_SKILL } from "@queries/skills/editSkill.queries";
-import { DELETE_SKILL } from "@queries/skills/deleteSkill.queries";
-import { ADD_SKILL } from "@queries/skills/addSkill.queries";
+import { ADD_SKILL, EDIT_SKILL, DELETE_SKILL } from "@queries/skills";
 import {
   IAddSkill,
   IDeleteSkill,
@@ -105,7 +103,6 @@ const SkillForm = ({ onClose, skill }: IProps) => {
         input._id = skill._id;
         editSkillMutation({ variables: { input } });
       } else {
-        console.log(input);
         addSkillMutation({ variables: { input } });
       }
     },
