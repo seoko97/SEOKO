@@ -6,7 +6,7 @@ import { addApolloState } from "@lib/addApolloState";
 import { IGetProject } from "@queries-types/project";
 import { GET_PROJECT } from "@queries/project/getProject.queries";
 
-export { default } from "@pages/WritePost";
+export { default } from "@pages/WriteProject";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { query } = ctx;
@@ -19,7 +19,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   const { data: projectData } = await apolloClient.query<IGetProject>({
     query: GET_PROJECT,
-    variables: { input: { id: query.id } },
+    variables: { input: { _id: query.id } },
     errorPolicy: "all",
   });
 
