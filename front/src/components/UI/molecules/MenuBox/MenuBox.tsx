@@ -43,7 +43,7 @@ const MenuBox = () => {
       <div onClick={openSearchForm}>
         <SearchIcon />
       </div>
-      {isOpen && <SearchModal isOpen={isOpen} onClose={closeSearchForm} />}
+      {isOpen && <SearchModal onClose={closeSearchForm} />}
       <Menu username={username} />
     </Container>
   );

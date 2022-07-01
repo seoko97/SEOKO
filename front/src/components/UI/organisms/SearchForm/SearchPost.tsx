@@ -1,4 +1,4 @@
-import React, { ForwardedRef, forwardRef, memo, useRef } from "react";
+import React, { useRef } from "react";
 import styled from "@emotion/styled";
 import SmallPost from "@molecules/PostItem/Small";
 import { ISearchPostItem } from "@queries-types/posts";
