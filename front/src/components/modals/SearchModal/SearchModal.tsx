@@ -3,11 +3,10 @@ import ModalLayout from "@modals/ModalLayout";
 import SearchForm from "@organisms/SearchForm";
 
 interface IProps {
-  isOpen: boolean;
   onClose: () => void;
 }
 
-const SearchModal = ({ isOpen, onClose }: IProps) => {
+const SearchModal = ({ onClose }: IProps) => {
   return (
     <ModalLayout onClick={onClose}>
       <SearchForm />
