@@ -14,7 +14,7 @@ export const lightTheme = {
   },
   FONT_COLOR: {
     PRIMARY_COLOR: "#212529",
-    SECONDARY_COLOR: "#374151",
+    SECONDARY_COLOR: "#2b4f76",
     LOGO_COLOR: "#86caf4",
     BUTTON_COLOR: "#f8f9fa",
   },
