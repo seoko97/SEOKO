@@ -8,7 +8,7 @@ import useDebounceEffect from "@hooks/useDebounceEffect";
 import Input from "@atoms/Input";
 
 import { SEARCH_POSTS } from "@queries/post/searchPosts.queries";
-import { ISearchPosts } from "@queries-types/posts";
+import { ISearchPostItem, ISearchPosts } from "@queries-types/posts";
 
 import Sipnner from "@molecules/Spinner";
 import SearchPost from "./SearchPost";
@@ -43,6 +43,14 @@ const Container = styled.div`
     color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   }
 
+  & > p {
+    font-weight: 700;
+    font-size: 2rem;
+    opacity: 0.7;
+    color: ${({ theme }) => theme.FONT_COLOR.SECONDARY_COLOR};
+    margin: auto;
+  }
+
   @media (max-width: ${({ theme }) => theme.BP.PC}) {
     margin: 40px 16px 0 16px;
     width: 100%;
@@ -51,7 +59,11 @@ const Container = styled.div`
     & input {
       padding: 0.6rem;
     }
-  } ;
+
+    & > p {
+      font-size: 1.3rem;
+    }
+  }
 `;
 
 const SearchByPosts = () => {
@@ -61,8 +73,10 @@ const SearchByPosts = () => {
   const [getSearchPostsQuery, { fetchMore, variables, data }] =
     useLazyQuery<ISearchPosts>(SEARCH_POSTS);
 
+  const [posts, setPosts] = useState<ISearchPostItem[]>(data?.searchPosts.posts ?? []);
+
   useEffect(() => {
-    if (!loading && text.length) setLoading(true);
+    if (!loading && text.length > 0) setLoading(true);
   }, [text]);
 
   const fetchMorePosts = useCallback(() => {
@@ -81,13 +95,14 @@ const SearchByPosts = () => {
   }, [variables, data, fetchMore]);
 
   const getSearchPosts = useCallback(async () => {
-    await getSearchPostsQuery({
+    const { data } = await getSearchPostsQuery({
       variables: {
         input: {
           text,
         },
       },
     });
+    setPosts(data?.searchPosts.posts ?? []);
     setLoading(false);
   }, [text, getSearchPostsQuery]);
 
@@ -96,12 +111,13 @@ const SearchByPosts = () => {
   return (
     <Container>
       <Input value={text} onChange={onChangeText} placeholder="검색어를 입력하세요" />
+      {!loading && text.length === 0 && posts.length === 0 && <p>검색어를 입력하세요.</p>}
+
+      {!loading && text.length > 0 && posts.length === 0 && <p>검색 결과가 없습니다.</p>}
       {loading ? (
         <Sipnner />
       ) : (
-        data?.searchPosts?.posts[0] && (
-          <SearchPost posts={data?.searchPosts?.posts} func={fetchMorePosts} />
-        )
+        data?.searchPosts?.posts[0] && <SearchPost posts={posts} func={fetchMorePosts} />
       )}
     </Container>
   );
