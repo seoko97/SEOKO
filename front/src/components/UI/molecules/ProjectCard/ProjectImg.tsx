@@ -7,26 +7,21 @@ interface IProps {
 }
 const Container = styled.div`
   position: relative;
-  padding-bottom: 180px;
+  padding-bottom: 100%;
   border-radius: 10px 10px;
   background-color: #ccc;
-  transition: transform 0.3s, box-shadow 0.3s;
 
   & img {
     position: relative;
-    border-radius: 10px 10px 0 0;
     object-fit: cover;
-  }
-
-  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
-    padding-bottom: 70%;
+    transition: transform 0.3s;
   }
 `;
 
 const ProjectImg = ({ src }: IProps) => {
   return (
     <Container>
-      <Image src={src} alt="project-image" objectFit="cover" layout="fill" />
+      <Image src={src} alt="project-image" layout="fill" />
     </Container>
   );
 };

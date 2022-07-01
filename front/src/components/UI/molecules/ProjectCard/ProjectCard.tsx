@@ -11,8 +11,7 @@ interface IProps {
 }
 
 const Container = styled.div`
-  width: 18rem;
-
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -30,15 +29,15 @@ const Container = styled.div`
   }
 
   &:hover {
-    transform: translateY(-8px);
+    & .caption {
+      display: flex;
+    }
+    & img {
+      transform: scale(1.1);
+    }
   }
 
-  @media (max-width: ${({ theme }) => theme.BP.PC}) {
-    width: calc(50% - 2rem);
-  }
-
-  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
-    width: 100%;
+  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
     font-size: 0.8rem;
     margin: 0 0 1rem 0;
   }

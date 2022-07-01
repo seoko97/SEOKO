@@ -10,6 +10,7 @@ const UserContainer = styled.div`
   opacity: 1;
   cursor: pointer;
   transition: 0.3s color;
+  color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   &:hover {
     color: ${({ theme }) => theme.SELECTION_EFFECT_COLOR.PRIMARY_COLOR};
   }

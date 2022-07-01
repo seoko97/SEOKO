@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import TagList from "@molecules/TagList";
-import { IPost } from "@queries-types/posts";
 import { ITag } from "@queries-types/tags";
 
 interface IProps {
@@ -14,13 +13,12 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
-  background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.SECONDARY_COLOR};
   border-radius: 10px;
   padding: 20px;
   margin: 30px 90px 50px 90px;
   gap: 20px;
-  box-shadow: 0px 9px 15px -15px #454545;
   transition: color 0.3s;
+  border: 2px solid ${({ theme }) => theme.FONT_COLOR.SECONDARY_COLOR};
 
   & > h3 {
     font-size: 1.35rem;

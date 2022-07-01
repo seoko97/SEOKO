@@ -13,13 +13,17 @@ const StyledPostImg = styled.div`
   padding-bottom: 200px;
   border-radius: 10px;
   background-color: #ccc;
+
   & img {
-    border-radius: 10px;
     position: absolute;
     object-fit: cover;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 10px;
   }
 
-  transition: transform 0.3s, box-shadow 0.3s;
+  & span {
+    border-radius: 10px;
+  }
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     width: 100%;

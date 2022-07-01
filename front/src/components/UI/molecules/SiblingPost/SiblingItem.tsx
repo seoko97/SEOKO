@@ -13,6 +13,7 @@ const Container = styled.div<{ type: string }>`
   flex: 1;
 
   & a {
+    border: 1px solid #ccc;
     width: 100%;
     cursor: pointer;
     display: flex;
@@ -39,10 +40,13 @@ const Container = styled.div<{ type: string }>`
       overflow: hidden;
       text-overflow: ellipsis;
       text-align: ${({ type }) => (type === "next" ? "right" : "left")};
+      transition: color 0.3s;
     }
 
     :hover {
-      background-color: ${({ theme }) => theme.SELECTION_EFFECT_COLOR.SECONDARY_COLOR};
+      & h3 {
+        color: ${({ theme }) => theme.SELECTION_EFFECT_COLOR.PRIMARY_COLOR};
+      }
     }
   }
 

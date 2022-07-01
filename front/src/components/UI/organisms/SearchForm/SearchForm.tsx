@@ -23,14 +23,14 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  width: 980px;
+  width: 700px;
   height: fit-content;
 
-  min-height: 30vh;
+  min-height: 40vh;
   max-height: 60vh;
   box-shadow: 0px 9px 15px -15px #454545;
   margin: 128px 0;
-  padding: 40px;
+  padding: 32px;
 
   background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.PRIMARY_COLOR};
 
@@ -48,10 +48,11 @@ const Container = styled.div`
     font-size: 2rem;
     opacity: 0.7;
     color: ${({ theme }) => theme.FONT_COLOR.SECONDARY_COLOR};
+    min-height: auto;
     margin: auto;
   }
 
-  @media (max-width: ${({ theme }) => theme.BP.PC}) {
+  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     margin: 40px 16px 0 16px;
     width: 100%;
     padding: 20px 16px;

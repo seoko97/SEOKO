@@ -11,9 +11,8 @@ import {
 import Input from "@atoms/Input";
 import useInput from "@hooks/useInput";
 import { useMutation } from "@apollo/client";
-import { ADD_EXPERIENCE } from "@queries/experience/addExperience.queries";
-import { EDIT_EXPERIENCE } from "@queries/experience/editExperience.queries";
-import { DELETE_EXPERIENCE } from "@queries/experience/deleteExperience.queries";
+
+import { ADD_EXPERIENCE, EDIT_EXPERIENCE, DELETE_EXPERIENCE } from "@queries/experience";
 
 interface IProps {
   onClose: () => void;
@@ -46,6 +45,7 @@ const Container = styled.form`
   }
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     width: 100%;
+    margin: 40px 16px 0 16px;
   }
 `;
 

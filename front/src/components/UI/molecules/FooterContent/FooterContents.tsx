@@ -41,11 +41,11 @@ const FooterContent = () => {
     <Container>
       <div>
         <Logo />
-        <a href="https://github.com/seoko97" about="instagram" target="_blank" rel="noreferrer">
+        <a href="https://github.com/seoko97" target="_blank" rel="noreferrer">
           <GitHubIcon />
         </a>
       </div>
-      <p>Copyright © SEOKO 2021</p>
+      <p>Copyright © SEOKO 2022</p>
     </Container>
   );
 };

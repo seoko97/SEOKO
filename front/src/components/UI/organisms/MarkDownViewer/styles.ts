@@ -4,6 +4,7 @@ export const MarkdownWrapper = styled.div`
   width: 100%;
   overflow-wrap: break-word;
   user-select: text;
+  font-size: 1rem;
 
   & > :first-of-type {
     margin-top: 0;
@@ -80,31 +81,31 @@ export const MarkdownWrapper = styled.div`
 
   h1 {
     margin-top: 64px;
-    font-size: 40px;
+    font-size: 2em;
   }
   h2 {
     margin-top: 64px;
-    font-size: 28px;
     margin-bottom: 24px;
+    font-size: 1.6em;
   }
   h3 {
     margin-top: 48px;
-    font-size: 22px;
     margin-bottom: 24px;
+    font-size: 1.35em;
   }
   h4 {
     margin-top: 36px;
-    font-size: 22px;
     margin-bottom: 24px;
+    font-size: 1.25em;
   }
   h5 {
     margin-top: 24px;
-    font-size: 20px;
     margin-bottom: 24px;
+    font-size: 1.1em;
   }
   h6 {
     margin-top: 24px;
-    font-size: 18px;
+    font-size: 1em;
   }
   & img {
     display: block;

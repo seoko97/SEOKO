@@ -53,6 +53,7 @@ const Container = styled.div`
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     width: 100%;
+    margin: 40px 16px 0 16px;
   }
 `;
 

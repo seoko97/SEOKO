@@ -21,8 +21,11 @@ const StyedPostItem = styled.div`
 
   &:hover {
     & > div:first-of-type {
-      transform: translate3D(0, -3%, 0);
       box-shadow: rgb(0 0 0 / 30%) 0px 4px 16px 0px;
+    }
+
+    & img {
+      transform: scale(1.2);
     }
 
     & h1 {
@@ -33,6 +36,7 @@ const StyedPostItem = styled.div`
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     flex-direction: column;
     gap: 0;
+    padding: 0;
   }
 `;
 
