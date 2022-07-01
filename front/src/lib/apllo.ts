@@ -76,7 +76,6 @@ export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {
   });
 
   const linkOnError = onError(({ graphQLErrors, operation, forward }) => {
-    console.log(graphQLErrors);
     if (graphQLErrors?.[0].message === TOKEN_EXPIRED) {
       const client = apolloClient ?? createClient;
       const refresh = fromPromise(
