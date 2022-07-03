@@ -15,10 +15,12 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   overflow-wrap: break-word;
 
-  margin: 32px 0 20px 0;
+  gap: 30px;
+  margin: 32px 0 60px 0;
 
   & > h1 {
     font-weight: 700;
@@ -29,13 +31,13 @@ const Container = styled.div`
   & > * {
     text-align: center;
     justify-content: center;
-    margin-bottom: 40px;
   }
 
-  & > div:first-of-type {
+  & > .image-container {
+    width: 90%;
     position: relative;
-    width: 100%;
     padding-bottom: 50%;
+    align-items: center;
 
     & img {
       border-radius: 10px;
@@ -44,7 +46,15 @@ const Container = styled.div`
     }
   }
 
+  @media (max-width: ${({ theme }) => theme.BP.PC}) {
+    & > .image-container {
+      width: 100%;
+    }
+  }
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
+    width: 100%;
+    gap: 18px;
+
     & > h1 {
       line-height: 1.6;
       font-size: 1.6em;
@@ -90,7 +100,7 @@ const PostHeader = ({ post }: IProps) => {
 
   return (
     <Container>
-      <div>
+      <div className="image-container">
         <Image priority={true} layout="fill" src={coverImg} objectFit="cover" />
       </div>
       <h1>{title}</h1>
