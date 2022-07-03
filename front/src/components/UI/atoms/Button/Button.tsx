@@ -19,11 +19,7 @@ const StyledButton = styled.button`
 `;
 
 const Button = ({ content, loading }: Props) => {
-  return (
-    <>
-      <StyledButton disabled={loading}>{content}</StyledButton>
-    </>
-  );
+  return <StyledButton disabled={loading}>{content}</StyledButton>;
 };
 
 Button.defaultProps = {
