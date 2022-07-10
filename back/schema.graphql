@@ -9,6 +9,11 @@ input AddExperienceInput {
   title: String!
 }
 
+input AddImageInput {
+  image: Upload!
+  type: String!
+}
+
 input AddProjectInput {
   content: String!
   coverImg: String!
@@ -188,6 +193,8 @@ input InputUser {
 
 type Mutation {
   addExperience(input: AddExperienceInput!): ExperienceDto!
+  addImage(input: AddImageInput!): CoreRes!
+  addImage2(file: Upload!): CoreRes!
   addPost(input: CreatePostInput!): CoreRes!
   addProject(input: AddProjectInput!): CoreRes!
   addSkill(input: AddSkillInput!): AddSkillDto!
@@ -305,3 +312,6 @@ type Tag {
   name: String!
   posts: [Post!]!
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
