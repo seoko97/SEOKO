@@ -25,7 +25,7 @@ const Container = styled.header`
   }
 
   ${({ theme }) => `
-    background-color: ${theme.BAKCGROUND_COLOR.PRIMARY_COLOR_RGBA};
+    background-color: ${theme.BACKGROUND_COLOR.PRIMARY_COLOR_RGBA};
     backdrop-filter: blur(3px);
     & a {
       color: ${theme.FONT_COLOR.PRIMARY_COLOR};

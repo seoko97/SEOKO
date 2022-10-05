@@ -20,7 +20,7 @@ const Container = styled.div<{ type: string }>`
     flex-direction: column;
     align-items: ${({ type }) => (type === "next" ? "flex-end" : "flex-start")};
     gap: 12px;
-    background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.SECONDARY_COLOR};
+    background-color: ${({ theme }) => theme.BACKGROUND_COLOR.SECONDARY_COLOR};
     padding: 16px;
     border-radius: 8px;
     transition: background-color 0.3s;

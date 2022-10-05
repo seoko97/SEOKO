@@ -7,7 +7,7 @@ import InlineCode from "./inlineCode";
 
 const SyntaxWrapper = styled(SyntaxHighlighter)`
   width: 100%;
-  background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.SECONDARY_COLOR} !important;
+  background-color: ${({ theme }) => theme.BACKGROUND_COLOR.SECONDARY_COLOR} !important;
 
   font-size: 0.9em;
 

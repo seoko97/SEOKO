@@ -19,7 +19,7 @@ const Container = styled.form`
   padding: 30px 10px;
   box-sizing: border-box;
   border-top: 4px solid ${({ theme }) => theme.BUTTON_COLOR.PRIMARY_COLOR};
-  background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.SECONDARY_COLOR};
+  background-color: ${({ theme }) => theme.BACKGROUND_COLOR.SECONDARY_COLOR};
   box-shadow: 0 1px 6px 0 hsla(0, 0%, 0%, 0.1);
 
   & > h1 {

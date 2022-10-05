@@ -12,7 +12,7 @@ export const Header = styled.header`
   margin-bottom: 30px;
 
   & input {
-    background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.PRIMARY_COLOR};
+    background-color: ${({ theme }) => theme.BACKGROUND_COLOR.PRIMARY_COLOR};
     color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
     transition: 0.3s background-color;
     border: 0;
@@ -35,7 +35,7 @@ export const Header = styled.header`
     border: 0;
     border-radius: 10px;
     padding: 5px 8px;
-    background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.SECONDARY_COLOR};
+    background-color: ${({ theme }) => theme.BACKGROUND_COLOR.SECONDARY_COLOR};
     color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
     cursor: pointer;
   }

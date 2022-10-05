@@ -5,7 +5,7 @@ import { CodeComponent } from "react-markdown/lib/ast-to-react";
 const BlockQuote = styled.blockquote`
   border-left: 4px solid #495057;
   padding: 18px 24px;
-  background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.SECONDARY_COLOR};
+  background-color: ${({ theme }) => theme.BACKGROUND_COLOR.SECONDARY_COLOR};
 
   & > p {
     margin: 0;
