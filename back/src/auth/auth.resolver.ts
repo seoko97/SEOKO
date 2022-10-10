@@ -1,4 +1,4 @@
-import { UseGuards, Res } from '@nestjs/common';
+import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver, Context } from '@nestjs/graphql';
 import { ITokenUser, User } from '@decorators/user.decorator';
 import { UserService } from '@users/user.service';
