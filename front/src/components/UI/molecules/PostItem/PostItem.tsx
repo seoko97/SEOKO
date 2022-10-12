@@ -15,17 +15,15 @@ const StyedPostItem = styled.div`
   position: relative;
   cursor: pointer;
   border-radius: 10px;
-  padding: 10px;
-  box-sizing: border-box;
   gap: 30px;
+  border-radius: 8px;
+
+  transition: box-shadow 0.3s;
 
   &:hover {
-    & > div:first-of-type {
-      box-shadow: rgb(0 0 0 / 30%) 0px 4px 16px 0px;
-    }
-
-    & img {
-      transform: scale(1.2);
+    & > .post-image {
+      transform: translateY(-4px);
+      box-shadow: rgb(0 0 0 / 10%) 0px 4px 16px 0px;
     }
 
     & h1 {

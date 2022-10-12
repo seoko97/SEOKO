@@ -9,15 +9,14 @@ interface Props {
 const StyledPostImg = styled.div`
   position: relative;
   width: 250px;
-  height: 100%;
   padding-bottom: 200px;
   border-radius: 10px;
   background-color: #ccc;
+  transition: transform 0.3s, box-shadow 0.3s;
 
   & img {
     position: absolute;
     object-fit: cover;
-    transition: transform 0.3s, box-shadow 0.3s;
     border-radius: 10px;
   }
 
@@ -32,7 +31,7 @@ const StyledPostImg = styled.div`
 `;
 
 const PostImg = ({ titleImage }: Props) => (
-  <StyledPostImg>
+  <StyledPostImg className="post-image">
     <Image src={titleImage} property="true" layout="fill" />
   </StyledPostImg>
 );

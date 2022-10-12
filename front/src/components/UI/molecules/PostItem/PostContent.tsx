@@ -1,16 +1,16 @@
 import React, { useCallback } from "react";
-import styled from "@emotion/styled";
+import { useRouter } from "next/router";
 import removeMd from "remove-markdown";
+
+import styled from "@emotion/styled";
 
 import { ITag } from "@queries-types/tags";
 
 import TagList from "@molecules/TagList";
 import { dateTimeParser } from "@lib/dateTimeParser";
-import { useRouter } from "next/router";
 
-const StyledPostConetent = styled.div`
-  width: calc(100% - 250px);
-  padding: 10px 0;
+const StyledPostContent = styled.div`
+  flex: 1;
   box-sizing: border-box;
   min-height: 200px;
   display: flex;
@@ -24,24 +24,25 @@ const StyledPostConetent = styled.div`
   h1 {
     width: 100%;
     transition: color 0.3s;
-    font-weight: bold;
-    font-size: 20px;
+    font-weight: 500;
+    font-size: 1.1em;
   }
 
   .date {
-    font-size: 0.8em;
     color: #949494;
-    font-weight: 300;
+    font-weight: 400;
+    font-size: 0.9em;
   }
 
   p {
-    font-size: 0.9em;
-    opacity: 0.9;
+    font-weight: 300;
     margin-bottom: 8px;
   }
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     width: 100%;
+    min-height: 0;
+
     padding: 15px 5px;
     gap: 10px;
   }
@@ -56,19 +57,19 @@ interface Props {
 
 const PostContent = ({ title, content, tags, createdAt }: Props) => {
   const router = useRouter();
-  const parsedContent = removeMd(content, { listUnicodeChar: "" }).substring(0, 150);
+  const parsedContent = removeMd(content, { listUnicodeChar: "" }).substring(0, 100);
   const onClickTag = useCallback((e) => {
     e.stopPropagation();
     router.push(`/tag/${e.target.innerText}`);
   }, []);
 
   return (
-    <StyledPostConetent>
+    <StyledPostContent>
       <h1>{title}</h1>
       <p>{parsedContent.length >= 150 ? `${parsedContent}...` : parsedContent}</p>
-      <TagList onClick={onClickTag} tags={tags} />
+      {tags.length !== 0 && <TagList onClick={onClickTag} tags={tags} />}
       <span className="date">{dateTimeParser(createdAt)}</span>
-    </StyledPostConetent>
+    </StyledPostContent>
   );
 };
 
