@@ -3,11 +3,11 @@ import {
   ApolloClient,
   from,
   fromPromise,
-  HttpLink,
   InMemoryCache,
   InMemoryCacheConfig,
   NormalizedCacheObject,
 } from "@apollo/client";
+import { createUploadLink } from "apollo-upload-client";
 import { AppProps } from "next/app";
 import { GetServerSidePropsContext } from "next";
 import { onError } from "@apollo/client/link/error";
@@ -34,12 +34,11 @@ const cachePolicy: InMemoryCacheConfig = {
     Query: {
       fields: {
         getPosts: {
-          keyArgs: false,
+          keyArgs: ["input", ["lastId", "category"]],
           merge: mergeItem,
         },
         searchPosts: {
           keyArgs: ["input", ["text"]],
-
           merge: mergeItem,
         },
         getPostsByTag: {
@@ -69,7 +68,7 @@ export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {
     });
   };
 
-  const httpLink = new HttpLink({
+  const httpLink = createUploadLink({
     uri: prod ? process.env.API_URL : "http://localhost:3065/graphql",
     credentials: "include",
     fetch: enhancedFetch,
@@ -90,12 +89,13 @@ export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {
     ssrMode: typeof window === undefined,
     cache: new InMemoryCache(cachePolicy),
     link: from([linkOnError, httpLink]),
+    connectToDevTools: true,
   });
 
   return createClient;
 };
 
-export const intializeClient = ({ initialState, ctx = null }: IInitializeApollo = {}) => {
+export const initializeClient = ({ initialState, ctx = null }: IInitializeApollo = {}) => {
   const _apolloClient = apolloClient ?? createApolloClient(ctx);
 
   if (initialState) {
@@ -117,6 +117,6 @@ export const intializeClient = ({ initialState, ctx = null }: IInitializeApollo 
 
 export const useApollo = (pageProps: AppProps["pageProps"]) => {
   const state = pageProps?.[APOLLO_STATE_PROP_NAME];
-  const store = useMemo(() => intializeClient({ initialState: state }), [state]);
+  const store = useMemo(() => initializeClient({ initialState: state }), [state]);
   return store;
 };
