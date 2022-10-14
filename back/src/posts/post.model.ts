@@ -3,6 +3,11 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Tag } from '@tags/tag.model';
 import { Document, Model, Types } from 'mongoose';
 
+export enum CATEGORY {
+  DEV = 'dev',
+  DAILY = 'daily',
+}
+
 export type PostDocument = Post & Document;
 export type PostModel = Model<PostDocument>;
 @Schema({ timestamps: true })
@@ -23,6 +28,10 @@ export class Post {
   @Prop({ required: true })
   @Field(() => String)
   coverImg!: string;
+
+  @Prop({ required: true, enum: CATEGORY })
+  @Field(() => String)
+  category!: CATEGORY;
 
   @Prop({
     type: [{ type: Types.ObjectId }],

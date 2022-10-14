@@ -7,7 +7,7 @@ import { CreatePostInput } from './dto/createPostInput.dto';
 import { Post, PostDocument, PostModel } from './post.model';
 import { EditPostInput } from './dto/editPostInput.dto';
 import { SearchPostsInput } from './dto/searchPosts.dto';
-import { GetPostsByTagInput } from './dto/getPosts.dto';
+import { GetPostsByTagInput, GetPostsInput } from './dto/getPosts.dto';
 
 @Injectable()
 export class PostService {
@@ -17,7 +17,7 @@ export class PostService {
     private tagService: TagService,
   ) {}
 
-  getWhere(lastId: string | undefined) {
+  getWhere(lastId: string | undefined): FilterQuery<PostDocument> {
     const where = lastId ? { _id: { $lt: lastId } } : {};
 
     return where;
@@ -157,8 +157,14 @@ export class PostService {
   }
 
   // 복수 포스트
-  async getPosts(lastId: string | undefined) {
+  async getPosts(input: GetPostsInput) {
+    const { category, lastId } = input ?? {};
+
     const where = this.getWhere(lastId);
+
+    if (category) {
+      where.category = category;
+    }
 
     return await this.postModel
       .find(where)
@@ -204,6 +210,10 @@ export class PostService {
       ],
     };
 
-    return await this.postModel.find(where).sort({ _id: -1 }).limit(10);
+    return await this.postModel
+      .find(where)
+      .sort({ _id: -1 })
+      .limit(10)
+      .populate('tags');
   }
 }
