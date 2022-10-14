@@ -13,7 +13,11 @@ export class TagService {
   ) {}
 
   async getTags() {
-    return await this.tagModel.find();
+    const tags = await this.tagModel.find();
+
+    tags.sort((a, b) => b.posts.length - a.posts.length);
+
+    return tags;
   }
 
   async searchTags(name: string) {
