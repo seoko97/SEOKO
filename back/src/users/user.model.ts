@@ -32,7 +32,7 @@ export class User {
   password!: string;
 
   @Prop({ default: null })
-  @Field(() => String, { description: 'User Refresh Roken' })
+  @Field(() => String, { description: 'User Refresh Token' })
   refreshToken?: string;
 
   verifyRefresh: () => boolean;
