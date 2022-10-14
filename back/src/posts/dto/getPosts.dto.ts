@@ -5,6 +5,9 @@ import { Post } from '../post.model';
 @InputType()
 export class GetPostsInput {
   @Field(() => String, { nullable: true })
+  category?: string;
+
+  @Field(() => String, { nullable: true })
   lastId?: string;
 }
 
