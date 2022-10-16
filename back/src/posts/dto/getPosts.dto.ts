@@ -8,6 +8,9 @@ export class GetPostsInput {
   category?: string;
 
   @Field(() => String, { nullable: true })
+  tag?: string;
+
+  @Field(() => String, { nullable: true })
   lastId?: string;
 }
 
