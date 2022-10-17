@@ -1,4 +1,9 @@
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  forwardRef,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Types } from 'mongoose';
 import { Tag } from '@tags/tag.model';
@@ -158,12 +163,22 @@ export class PostService {
 
   // 복수 포스트
   async getPosts(input: GetPostsInput) {
-    const { category, lastId } = input ?? {};
+    const { category, lastId, tag: tagName } = input ?? {};
 
     const where = this.getWhere(lastId);
 
     if (category) {
       where.category = category;
+    }
+
+    if (tagName) {
+      const tag = await this.tagService.getTag(tagName);
+
+      if (!tag) throw new BadRequestException('존재하지 않는 태그입니다.');
+
+      where.tags = {
+        $in: tag._id,
+      };
     }
 
     return await this.postModel
