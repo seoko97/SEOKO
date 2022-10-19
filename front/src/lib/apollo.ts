@@ -1,4 +1,6 @@
 import { useMemo } from "react";
+import merge from "deepmerge";
+import isEqual from "lodash/isEqual";
 import {
   ApolloClient,
   from,
@@ -12,8 +14,6 @@ import { AppProps } from "next/app";
 import { GetServerSidePropsContext } from "next";
 import { onError } from "@apollo/client/link/error";
 import { REFRESH } from "@queries/users";
-import isEqual from "lodash/isEqual";
-import merge from "deepmerge";
 import { APOLLO_STATE_PROP_NAME } from "./addApolloState";
 import { mergeItem } from "./mergeItem";
 
@@ -34,7 +34,7 @@ const cachePolicy: InMemoryCacheConfig = {
     Query: {
       fields: {
         getPosts: {
-          keyArgs: ["input", ["lastId", "category"]],
+          keyArgs: ["input", ["lastId", "category", "tag"]],
           merge: mergeItem,
         },
         searchPosts: {
@@ -44,6 +44,9 @@ const cachePolicy: InMemoryCacheConfig = {
         getPostsByTag: {
           keyArgs: ["input", ["tagName"]],
           merge: mergeItem,
+        },
+        getTag: {
+          keyArgs: ["input"],
         },
       },
     },
@@ -74,7 +77,7 @@ export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {
     fetch: enhancedFetch,
   });
 
-  const linkOnError = onError(({ graphQLErrors, operation, forward }) => {
+  const linkOnError = onError(({ graphQLErrors, operation, networkError, forward }) => {
     if (graphQLErrors?.[0].message === TOKEN_EXPIRED) {
       const client = apolloClient ?? createClient;
       const refresh = fromPromise(
@@ -90,6 +93,11 @@ export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {
     cache: new InMemoryCache(cachePolicy),
     link: from([linkOnError, httpLink]),
     connectToDevTools: true,
+    defaultOptions: {
+      query: {
+        errorPolicy: "all",
+      },
+    },
   });
 
   return createClient;
