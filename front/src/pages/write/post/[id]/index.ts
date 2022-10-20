@@ -1,20 +1,27 @@
 import { GetServerSideProps } from "next";
-import { intializeClient } from "@lib/apllo";
+import { initializeClient } from "@lib/apollo";
 import { GET_USER_INFO } from "@queries/users";
 import { IGetUserInfo } from "@queries-types/users";
 import { addApolloState } from "@lib/addApolloState";
+import { IGetPost } from "@queries-types/posts";
+import { GET_POST } from "@queries/post/getPost.queries";
 
 export { default } from "@pages/WritePost";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const apolloClient = intializeClient({ ctx });
+  const { query } = ctx;
+  const apolloClient = initializeClient({ ctx });
 
   const { data } = await apolloClient.query<IGetUserInfo>({
     query: GET_USER_INFO,
-    errorPolicy: "all",
   });
 
-  if (!data)
+  const { data: postData } = await apolloClient.query<IGetPost>({
+    query: GET_POST,
+    variables: { input: { id: query.id } },
+  });
+
+  if (!data || !postData)
     return {
       props: {},
       redirect: {
@@ -24,6 +31,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
 
   return addApolloState(apolloClient, {
-    props: {},
+    props: {
+      post: postData.getPost.post,
+    },
   });
 };

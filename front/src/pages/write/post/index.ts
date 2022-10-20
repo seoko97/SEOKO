@@ -1,5 +1,5 @@
 import { GetServerSideProps } from "next";
-import { intializeClient } from "@lib/apllo";
+import { initializeClient } from "@lib/apollo";
 import { GET_USER_INFO } from "@queries/users";
 import { IGetUserInfo } from "@queries-types/users";
 import { addApolloState } from "@lib/addApolloState";
@@ -7,11 +7,10 @@ import { addApolloState } from "@lib/addApolloState";
 export { default } from "@pages/WritePost";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const apolloClient = intializeClient({ ctx });
+  const apolloClient = initializeClient({ ctx });
 
   const { data } = await apolloClient.query<IGetUserInfo>({
     query: GET_USER_INFO,
-    errorPolicy: "all",
   });
 
   if (!data)

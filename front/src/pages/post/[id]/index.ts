@@ -1,5 +1,5 @@
 import { addApolloState } from "@lib/addApolloState";
-import { intializeClient } from "@lib/apllo";
+import { initializeClient } from "@lib/apollo";
 import { IGetPost } from "@queries-types/posts";
 import { GET_POST } from "@queries/post/getPost.queries";
 import { GetServerSideProps } from "next";
@@ -9,12 +9,11 @@ export { default } from "@pages/Post";
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { query } = ctx;
 
-  const apolloClient = intializeClient({ ctx });
+  const apolloClient = initializeClient({ ctx });
 
   const result = await apolloClient.query<IGetPost>({
     query: GET_POST,
     variables: { input: { id: query.id } },
-    errorPolicy: "all",
   });
 
   if (!result.data && result.errors?.[0]) {

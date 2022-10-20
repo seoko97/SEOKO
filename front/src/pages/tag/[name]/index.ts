@@ -1,33 +1,33 @@
 import { GetServerSideProps } from "next";
 
 import { addApolloState } from "@lib/addApolloState";
-import { intializeClient } from "@lib/apllo";
+import { initializeClient } from "@lib/apollo";
 
-import { IGetTags } from "@queries-types/tags";
-import { IGetPostsByTag } from "@queries-types/posts";
-import { GET_TAGS } from "@queries/tag/getTags.queries";
-import { GET_POSTS_BY_TAG } from "@queries/post/getPostsByTag.queries";
+import { GET_POSTS } from "@queries/post";
+import { GET_TAG } from "@queries/tag";
 
-export { default } from "@pages/Tag";
+export { default } from "@pages/Tag/[name]";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { name } = ctx.query;
-  const apolloClient = intializeClient({ ctx });
+  const apolloClient = initializeClient({ ctx });
 
-  const { data: tagsData } = await apolloClient.query<IGetTags>({
-    query: GET_TAGS,
+  const {
+    query: { name },
+  } = ctx;
+
+  await apolloClient.query({
+    query: GET_POSTS,
+    variables: { input: { tag: name, category: "dev" } },
   });
 
-  await apolloClient.query<IGetPostsByTag>({
-    query: GET_POSTS_BY_TAG,
-    variables: { input: { tagName: name as string } },
-    errorPolicy: "all",
+  const data = await apolloClient.query({
+    query: GET_TAG,
+    variables: { input: name },
   });
 
   return addApolloState(apolloClient, {
     props: {
       tagName: name,
-      tags: tagsData.getTags.tags.slice().sort((a, b) => b.posts.length - a.posts.length) ?? [],
     },
   });
 };

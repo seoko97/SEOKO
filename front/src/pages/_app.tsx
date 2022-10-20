@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 import { ThemeProvider } from "@emotion/react";
 
 import cookieParser from "@lib/cookieParser";
-import { useApollo } from "@lib/apllo";
+import { useApollo } from "@lib/apollo";
 
 import AppLayout from "@frames/AppLayout";
 import DarkModeButton from "@molecules/DarkModeButton";
