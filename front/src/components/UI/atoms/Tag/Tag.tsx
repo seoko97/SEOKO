@@ -1,33 +1,34 @@
-import React, { memo, MouseEvent } from "react";
+import React, { memo } from "react";
 import styled from "@emotion/styled";
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
-  onClick: (e: MouseEvent<HTMLDivElement>) => void;
 }
 
 const StyledTag = styled.div`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 8px;
-  color: ${({ theme }) => theme.FONT_COLOR.LOGO_COLOR};
-  border: 1px solid ${({ theme }) => theme.FONT_COLOR.LOGO_COLOR};
-  font-weight: 400;
-  border-radius: 10px;
-  transition: background-color 0.3s;
+  box-sizing: content-box;
+  height: 28px;
+  padding: 0.2em 0.9em;
+  font-size: 0.8em;
 
   cursor: pointer;
-  font-size: 12px;
-  line-height: 16px;
+  transition: color 0.2s;
+
+  color: #2e4270;
+  background-color: #e8ebee;
+  font-weight: bold;
+  border-radius: 8px;
 
   &:hover {
-    background: ${({ theme }) => theme.SELECTION_EFFECT_COLOR.SECONDARY_COLOR};
+    color: ${({ theme }) => theme.FONT_COLOR.LOGO_COLOR};
   }
 `;
 
-const Tag = ({ onClick, children }: Props) => {
-  return <StyledTag onClick={onClick}>{children}</StyledTag>;
+const Tag = ({ children, ...props }: Props) => {
+  return <StyledTag {...props}>{children}</StyledTag>;
 };
 
 export default memo(Tag);

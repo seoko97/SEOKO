@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import styled from "@emotion/styled";
 
 type Props = React.ComponentProps<"input">;
@@ -15,9 +15,17 @@ const StyledInput = styled.input`
   }
 `;
 
-const Input = ({ value, placeholder, type, onChange }: Props) => {
-  return <StyledInput type={type} placeholder={placeholder} value={value} onChange={onChange} />;
-};
+const Input = forwardRef<HTMLInputElement, Props>(({ value, placeholder, type, onChange }, ref) => {
+  return (
+    <StyledInput
+      type={type}
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      ref={ref}
+    />
+  );
+});
 
 Input.defaultProps = {
   type: "text",
