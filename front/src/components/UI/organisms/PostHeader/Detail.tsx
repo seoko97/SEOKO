@@ -2,8 +2,6 @@ import React, { useCallback } from "react";
 import { dateTimeParser } from "@lib/dateTimeParser";
 import { IPost } from "@queries-types/posts";
 import styled from "@emotion/styled";
-import UserInfo from "@molecules/UserInfo/UserInfo";
-import { useRouter } from "next/router";
 
 const Container = styled.div`
   display: flex;
@@ -20,14 +18,8 @@ const Container = styled.div`
 `;
 
 const Detail = ({ createdAt }: Pick<IPost, "createdAt">) => {
-  const router = useRouter();
-
-  const onClickUserInfo = useCallback(() => router.push("/about"), []);
-
   return (
     <Container>
-      <UserInfo onClick={onClickUserInfo} />
-      <span>·</span>
       <span>{dateTimeParser(createdAt)}</span>
     </Container>
   );
