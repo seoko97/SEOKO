@@ -1,10 +1,9 @@
-import React from "react";
+import React, { memo } from "react";
+import Link from "next/link";
 import { useReactiveVar } from "@apollo/client";
 import styled from "@emotion/styled";
 import { userInfoVar } from "@store/userInfo";
 import SearchIcon from "@icons/SearchIcon/SearchIcon";
-import useModal from "@hooks/useModal";
-import SearchModal from "@modals/SearchModal";
 import UserMenu from "./UserMenu";
 import Menu from "./BaseMenu";
 
@@ -35,18 +34,18 @@ const Container = styled.div`
 
 const MenuBox = () => {
   const { username } = useReactiveVar(userInfoVar);
-  const [isOpen, openSearchForm, closeSearchForm] = useModal();
 
   return (
     <Container>
       {username && <UserMenu />}
-      <div onClick={openSearchForm}>
-        <SearchIcon />
-      </div>
-      {isOpen && <SearchModal onClose={closeSearchForm} />}
+      <Link href="/search">
+        <div>
+          <SearchIcon />
+        </div>
+      </Link>
       <Menu username={username} />
     </Container>
   );
 };
 
-export default MenuBox;
+export default memo(MenuBox);
