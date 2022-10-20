@@ -1,14 +1,13 @@
 import { GET_USER_INFO } from "@queries/users";
 import { setUserInfo } from "@store/userInfo";
 import { IGetUserInfo } from "@queries-types/users";
-import { intializeClient } from "./apllo";
+import { initializeClient } from "./apollo";
 
 const initializeSigninCheck = async () => {
-  const apolloClient = intializeClient();
+  const apolloClient = initializeClient();
 
   const { data } = await apolloClient.query<IGetUserInfo>({
     query: GET_USER_INFO,
-    errorPolicy: "all",
   });
 
   if (data?.getUserInfo?.ok) setUserInfo(data.getUserInfo.username);
