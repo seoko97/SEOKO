@@ -32,7 +32,7 @@ export const Container = styled.ul`
 const NavList = () => {
   const { username } = useReactiveVar(userInfoVar);
   const router = useRouter();
-  const [singout, { client }] = useMutation<ISignOut>(SIGN_OUT, {
+  const [signOutMutation, { client }] = useMutation<ISignOut>(SIGN_OUT, {
     onCompleted({ signout }) {
       if (signout.ok) {
         client.cache.evict({
@@ -45,14 +45,12 @@ const NavList = () => {
     },
   });
 
-  const onSignOut = useCallback(() => singout(), []);
-
   return (
     <Container>
       <li>{username} 님</li>
       <NavItem name="새 글쓰기" href="/write/post" />
       <NavItem name="프로젝트 추가" href="/write/project" />
-      <li onClick={onSignOut}>로그아웃</li>
+      <li onClick={() => signOutMutation}>로그아웃</li>
     </Container>
   );
 };
