@@ -9,7 +9,7 @@ const InlineCode = styled.code`
   color: ${({ theme }) => theme.MARK_DOWN.CODE_COLOR};
   font-weight: 600;
   font-size: 14.4px;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
 `;
 
 const inlineCode: CodeComponent = ({ children, ...props }) => {

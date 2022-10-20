@@ -5,7 +5,7 @@ import { IPost } from "@queries-types/posts";
 import PostImg from "./PostImg";
 import PostContent from "./PostContent";
 
-const StyedPostItem = styled.div`
+const Container = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
@@ -14,9 +14,7 @@ const StyedPostItem = styled.div`
   margin-bottom: 30px;
   position: relative;
   cursor: pointer;
-  border-radius: 10px;
   gap: 30px;
-  border-radius: 8px;
 
   transition: box-shadow 0.3s;
 
@@ -45,7 +43,7 @@ interface Props {
 const PostItem = ({ post }: Props) => {
   return (
     <Link href={`/post/${post._id}`}>
-      <StyedPostItem>
+      <Container>
         <PostImg titleImage={post.coverImg} />
         <PostContent
           content={post.content}
@@ -53,7 +51,7 @@ const PostItem = ({ post }: Props) => {
           title={post.title}
           createdAt={post.createdAt}
         />
-      </StyedPostItem>
+      </Container>
     </Link>
   );
 };

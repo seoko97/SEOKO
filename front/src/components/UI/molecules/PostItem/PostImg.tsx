@@ -11,16 +11,11 @@ const StyledPostImg = styled.div`
   width: 250px;
   padding-bottom: 200px;
   border-radius: 10px;
-  background-color: #ccc;
   transition: transform 0.3s, box-shadow 0.3s;
 
   & img {
     position: absolute;
     object-fit: cover;
-    border-radius: 10px;
-  }
-
-  & span {
     border-radius: 10px;
   }
 

@@ -16,7 +16,7 @@ const Container = styled.div`
   gap: 8px;
   position: sticky;
   top: 85px;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
 
   font-size: 0.9em;
 

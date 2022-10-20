@@ -2,7 +2,8 @@ import styled from "@emotion/styled";
 
 export const MarkdownWrapper = styled.div`
   width: 100%;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
+
   user-select: text;
   font-size: 1rem;
 
@@ -21,7 +22,7 @@ export const MarkdownWrapper = styled.div`
   & pre {
     color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
     border-radius: 1.7;
-    overflow-wrap: break-word;
+    overflow-wrap: anywhere;
 
     & .token {
       background: none;
@@ -56,7 +57,7 @@ export const MarkdownWrapper = styled.div`
   ul,
   ol {
     color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
-    overflow-wrap: break-word;
+    overflow-wrap: anywhere;
   }
 
   & > p,

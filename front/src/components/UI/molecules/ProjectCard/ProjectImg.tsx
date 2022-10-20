@@ -7,11 +7,12 @@ interface IProps {
 }
 const Container = styled.div`
   position: relative;
-  padding-bottom: 100%;
-  border-radius: 10px 10px;
-  background-color: #ccc;
+  width: 100%;
+  padding-bottom: 70%;
+  border-radius: 10px 10px 0 0;
 
   & img {
+    border-radius: 10px 10px 0 0;
     position: relative;
     object-fit: cover;
     transition: transform 0.3s;

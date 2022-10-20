@@ -17,14 +17,14 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
 
   gap: 30px;
   margin: 32px 0 60px 0;
 
   & > h1 {
     font-weight: 700;
-    font-size: 28px;
+    font-size: 2em;
     line-height: 1.2;
   }
 
@@ -46,18 +46,15 @@ const Container = styled.div`
     }
   }
 
-  @media (max-width: ${({ theme }) => theme.BP.PC}) {
-    & > .image-container {
-      width: 100%;
-    }
-  }
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
-    width: 100%;
     gap: 18px;
 
     & > h1 {
-      line-height: 1.6;
       font-size: 1.6em;
+    }
+    & > .image-container {
+      width: 100%;
+      padding-bottom: 60%;
     }
   }
 `;
@@ -104,8 +101,8 @@ const PostHeader = ({ post }: IProps) => {
         <Image priority={true} layout="fill" src={coverImg} objectFit="cover" />
       </div>
       <h1>{title}</h1>
-      {tags[0] && <TagList onClick={onClickTag} tags={tags} />}
       <Detail createdAt={createdAt} />
+      {tags[0] && <TagList onClick={onClickTag} tags={tags} />}
       {username && <PostNavigation onDelete={deletePost} onEdit={editPost} />}
     </Container>
   );

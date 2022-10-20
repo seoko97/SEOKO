@@ -17,29 +17,15 @@ const Container = styled.div`
   justify-content: flex-start;
   align-items: center;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
-  background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.SECONDARY_COLOR};
+  background-color: ${({ theme }) => theme.BACKGROUND_COLOR.SECONDARY_COLOR};
   border-radius: 8px;
   box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
-  margin: 1rem;
   cursor: pointer;
-  transition: transform 0.3s;
-
-  & div {
-    width: 100%;
-  }
+  transition: transform 0.3s, box-shadow 0.3s;
 
   &:hover {
-    & .caption {
-      display: flex;
-    }
-    & img {
-      transform: scale(1.1);
-    }
-  }
-
-  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
-    font-size: 0.8rem;
-    margin: 0 0 1rem 0;
+    transform: translateY(-10px);
+    box-shadow: rgb(0 0 0 / 20%) 0px 4px 16px 0px;
   }
 `;
 
