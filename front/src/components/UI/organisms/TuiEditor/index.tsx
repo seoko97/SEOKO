@@ -7,6 +7,10 @@ import "prismjs/themes/prism.css";
 import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
 import styled from "@emotion/styled";
 
+import { useMutation } from "@apollo/client";
+import { IAddImage } from "@queries-types/image";
+import { ADD_IMAGE } from "@queries/image/addImage.queries";
+
 interface EditorPropsWithHandlers extends EditorProps {
   onChange?(value: string): void;
 }
@@ -40,6 +44,7 @@ const TuiEditor = (props: Props) => {
   } = props;
 
   const editorRef = useRef<EditorType>();
+  const [addImageMutation] = useMutation<IAddImage>(ADD_IMAGE);
 
   const handleChange = useCallback(() => {
     if (!editorRef.current) return;
@@ -51,6 +56,21 @@ const TuiEditor = (props: Props) => {
 
     onChange(content);
   }, [props, editorRef]);
+
+  const addImageBlobHook = useCallback(async (blob, callback) => {
+    const { data } = await addImageMutation({
+      variables: {
+        input: {
+          type: "post",
+          image: blob,
+        },
+      },
+    });
+
+    if (!data) return;
+
+    callback(data.addImage.image, blob.name);
+  }, []);
 
   return (
     <>
@@ -72,6 +92,7 @@ const TuiEditor = (props: Props) => {
           useCommandShortcut={useCommandShortcut || true}
           ref={editorRef}
           onChange={handleChange}
+          hooks={{ addImageBlobHook }}
         />
       </Container>
     </>
