@@ -1,27 +1,21 @@
-import React, { memo, useCallback, useState } from "react";
+import React, { memo, useCallback, useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { useMutation } from "@apollo/client";
 
 import { ADD_SKILL, EDIT_SKILL, DELETE_SKILL } from "@queries/skills";
-import {
-  IAddSkill,
-  IDeleteSkill,
-  IEditSkill,
-  ISkill,
-  ISkillInput,
-  SkillType,
-} from "@queries-types/skill";
+import { IAddSkill, IDeleteSkill, IEditSkill, ISkill, ISkillInput } from "@queries-types/skill";
 
 import ModalLayout from "@modals/ModalLayout";
-import useInput from "@hooks/useInput";
 import Input from "@atoms/Input";
+import { IAddImage } from "@queries-types/image";
+import { ADD_IMAGE } from "@queries/image/addImage.queries";
 
 interface IProps {
   onClose: () => void;
   skill: ISkill | null;
 }
 
-const Container = styled.div`
+const Container = styled.form`
   width: 600px;
   height: fit-content;
 
@@ -58,9 +52,18 @@ const Container = styled.div`
 `;
 
 const SkillForm = ({ onClose, skill }: IProps) => {
-  const [name, onChangeName] = useInput(skill?.name ?? "");
-  const [icon, setIcon] = useState<string>(skill?.icon ?? "");
-  const [type, setType] = useState<SkillType | null>(skill?.type ?? null);
+  const formDataRef = useRef<ISkillInput>({
+    name: skill?.name || "",
+    icon: skill?.icon || "",
+    type: skill?.type || null,
+  });
+
+  const [addImageMutation] = useMutation<IAddImage>(ADD_IMAGE, {
+    onCompleted({ addImage }) {
+      const { image } = addImage;
+      formDataRef.current.icon = image;
+    },
+  });
 
   const [addSkillMutation] = useMutation<IAddSkill>(ADD_SKILL, {
     onCompleted({ addSkill }) {
@@ -79,35 +82,41 @@ const SkillForm = ({ onClose, skill }: IProps) => {
   });
 
   const onChangeType = useCallback((e) => {
-    setType(e.target.value || null);
+    formDataRef.current.type = e.target.value || null;
   }, []);
 
-  const onChangeIcon = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setIcon("/graphql.png");
+  const onChangeIcon: React.ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
+    if (!e.target.files) return;
+
+    addImageMutation({
+      variables: {
+        input: {
+          type: "skill",
+          image: e.target.files[0],
+        },
+      },
+    });
+  }, []);
+
+  const onChangeName = useCallback((e) => {
+    formDataRef.current.name = e.target.value;
   }, []);
 
   const onSubmitForm = useCallback(
     (e) => {
       e.preventDefault();
-      if (!name || !icon || !type) return alert("모든 항목을 입력해야합니다.");
-
       const conf = confirm("저장하시겠습니까?");
 
       if (!conf) return;
-      const input: ISkillInput = {
-        name,
-        type,
-        icon,
-      };
 
       if (skill) {
-        input._id = skill._id;
-        editSkillMutation({ variables: { input } });
+        formDataRef.current._id = skill._id;
+        editSkillMutation({ variables: { input: formDataRef.current } });
       } else {
-        addSkillMutation({ variables: { input } });
+        addSkillMutation({ variables: { input: formDataRef.current } });
       }
     },
-    [skill, name, icon, type],
+    [formDataRef.current],
   );
 
   const deleteSkill = useCallback(() => {
@@ -137,7 +146,7 @@ const SkillForm = ({ onClose, skill }: IProps) => {
         </div>
         <div>
           <span>이름</span>
-          <Input value={name} placeholder="이름입력" onChange={onChangeName} />
+          <Input placeholder="이름입력" onChange={onChangeName} />
         </div>
 
         <div>
