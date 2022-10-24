@@ -5,6 +5,7 @@ interface IPost {
   _id: string;
   content: string;
   coverImg: string;
+  category: string;
   tags: ITag[];
   title: string;
   createdAt: string;
@@ -41,11 +42,9 @@ interface IEditPost {
   editPost: CoreResponse;
 }
 
-type ISearchPostItem = Pick<IPost, "_id" | "title" | "coverImg" | "createdAt">;
-
 interface ISearchPosts {
   searchPosts: {
-    posts: ISearchPostItem[];
+    posts: IPost[];
   } & CoreResponse;
 }
 
@@ -63,7 +62,6 @@ export type {
   IGetPosts,
   IGetPostsByTag,
   IPost,
-  ISearchPostItem,
   ISearchPosts,
   ISiblingItem,
   ISiblingPost,

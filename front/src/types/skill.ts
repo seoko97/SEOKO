@@ -9,7 +9,7 @@ enum SkillType {
 interface ISkillInput {
   _id?: string;
   name: string;
-  type: SkillType;
+  type: SkillType | null;
   icon: string;
 }
 

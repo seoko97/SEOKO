@@ -13,4 +13,10 @@ interface IGetTags {
   } & CoreResponse;
 }
 
-export type { IGetTags, ITag };
+interface IGetTag {
+  getTag: {
+    tag: ITag;
+  } & CoreResponse;
+}
+
+export type { IGetTags, IGetTag, ITag };
