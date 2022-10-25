@@ -3,6 +3,7 @@ import { makeVar } from "@apollo/client";
 export interface IToc {
   level: number;
   text: string;
+  line: number;
 }
 
 export const tocVar = makeVar<IToc[]>([]);
