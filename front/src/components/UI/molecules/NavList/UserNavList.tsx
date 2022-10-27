@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import NavItem from "@atoms/NavItem";
 import styled from "@emotion/styled";
 import { useMutation, useReactiveVar } from "@apollo/client";
@@ -50,7 +50,7 @@ const NavList = () => {
       <li>{username} 님</li>
       <NavItem name="새 글쓰기" href="/write/post" />
       <NavItem name="프로젝트 추가" href="/write/project" />
-      <li onClick={() => signOutMutation}>로그아웃</li>
+      <li onClick={() => signOutMutation()}>로그아웃</li>
     </Container>
   );
 };
