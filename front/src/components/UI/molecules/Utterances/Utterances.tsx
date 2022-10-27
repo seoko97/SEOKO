@@ -9,16 +9,14 @@ interface IProps {
 const Container = styled.section`
   width: 100%;
 
-  & > div {
+  & .utterances {
     max-width: 100%;
-    width: 100%;
-    margin: 15px 0;
   }
 `;
 
-const Untterances = ({ repo }: IProps) => {
-  const ref = useRef<HTMLScriptElement>(null);
+const Utterances = ({ repo }: IProps) => {
   const router = useRouter();
+  const ref = useRef<HTMLScriptElement>(null);
 
   useEffect(() => {
     const utterances = document.createElement("script");
@@ -27,10 +25,9 @@ const Untterances = ({ repo }: IProps) => {
       repo,
       "issue-term": "pathname",
       label: "comment",
-      theme: "github-light",
       crossorigin: "anonymous",
       async: "true",
-      id: "untterances",
+      id: "utterances",
     };
     Object.entries(attributes).forEach(([key, value]) => {
       utterances.setAttribute(key, value);
@@ -39,11 +36,13 @@ const Untterances = ({ repo }: IProps) => {
     ref.current?.append(utterances);
 
     return () => {
-      if (ref.current && ref.current.children[0]) ref.current.children[0].remove();
+      if (ref.current && ref.current.children[0]) {
+        ref.current.children[0].remove();
+      }
     };
   }, [router.asPath]);
 
-  return <Container ref={ref} />;
+  return <Container className="un" ref={ref} />;
 };
 
-export default Untterances;
+export default Utterances;
