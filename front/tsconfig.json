@@ -29,6 +29,7 @@
       "@queries/*": ["src/queries/*"],
       "@queries-types/*": ["src/types/*"],
       "@lib/*": ["src/lib/*"],
+      "@config/*": ["src/config/*"],
       "@src/*": ["src/*"]
     }
   },

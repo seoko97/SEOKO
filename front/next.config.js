@@ -3,7 +3,6 @@ const Dotenv = require("dotenv-webpack");
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
-// const CompressionPlugin = require("compression-webpack-plugin");
 
 const prod = process.env.NODE_ENV === "production";
 
@@ -11,12 +10,11 @@ const nextConfig = {
   lessLoaderOptions: {
     javascriptEnabled: true,
   },
+  experimental: {
+    forceSwcTransforms: true,
+  },
   webpack: (config) => {
     const plugins = [...config.plugins, new Dotenv({ silent: true })];
-
-    // if (prod) {
-    //   plugins.push(new CompressionPlugin());
-    // }
 
     return {
       ...config,
@@ -25,7 +23,7 @@ const nextConfig = {
     };
   },
   images: {
-    domains: ["velog.velcdn.com", "image.toast.com"],
+    domains: ["image.toast.com"],
   },
 };
 
