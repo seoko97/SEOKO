@@ -28,7 +28,6 @@ export class PostService {
     return where;
   }
 
-  // 단일 포스트
   async getById(_id: string) {
     return await this.postModel.findById(_id);
   }
@@ -69,14 +68,24 @@ export class PostService {
     if (!post) throw new Error('포스트가 존재하지 않습니다.');
 
     if (deleteTags.length) {
-      await Promise.all(
-        post.tags.map((tag) =>
-          this.tagService.updateTag(tag._id, {
+      const updatedTags = await Promise.all(
+        post.tags.map((tag) => {
+          if (!deleteTags.includes(tag.name)) return;
+
+          return this.tagService.updateTag(tag._id, {
             $pull: {
               posts: post._id,
             },
-          }),
-        ),
+          });
+        }),
+      );
+
+      await Promise.all(
+        updatedTags.map((tag) => {
+          if (!tag) return;
+
+          if (!tag.posts.length) this.tagService.delete(tag._id);
+        }),
       );
 
       post.tags = (post.tags as Tag[]).filter((tag) => {
@@ -123,7 +132,7 @@ export class PostService {
 
     await Promise.all(
       tags.map((tag) => {
-        if (tag.posts?.length) this.tagService.delete(tag._id);
+        if (!tag.posts?.length) this.tagService.delete(tag._id);
       }),
     );
 
@@ -161,7 +170,6 @@ export class PostService {
     return { prev, next };
   }
 
-  // 복수 포스트
   async getPosts(input: GetPostsInput) {
     const { category, lastId, tag: tagName } = input ?? {};
 
