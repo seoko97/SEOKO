@@ -1,6 +1,6 @@
 import { ObjectType, Field, InputType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Model, Types, PopulatedDoc } from 'mongoose';
+import { Document, Model, Types } from 'mongoose';
 import { Post } from '@posts/post.model';
 
 export type TagDocument = Tag & Document;
