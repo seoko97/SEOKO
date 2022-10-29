@@ -4,12 +4,12 @@ import { CreateTagDTO } from './dto/createTag.dto';
 import { GetTagsRes } from './dto/getTagsRes.dto';
 import { TagService } from './tag.service';
 import { SearchTagsDTO, SearchTagsInput } from './dto/searchTags.dto';
+import { GetTagRes } from './dto/getTagRes.dto';
 
 @Resolver('Tag')
 export class TagResolver {
   constructor(private tagService: TagService) {}
 
-  // 단일
   @Mutation(() => CreateTagDTO)
   async createTag(@Args('input') input: string): Promise<CreateTagDTO> {
     const tag = await this.tagService.findOrCreate(input);
@@ -24,14 +24,13 @@ export class TagResolver {
     return { ok: true };
   }
 
-  @Query(() => CoreRes)
+  @Query(() => GetTagRes)
   async getTag(@Args('input') input: string) {
-    await this.tagService.getTag(input);
+    const tag = await this.tagService.getTag(input);
 
-    return { ok: true };
+    return { ok: true, tag };
   }
 
-  // 복수
   @Query(() => GetTagsRes)
   async getTags(): Promise<GetTagsRes> {
     const tags = await this.tagService.getTags();
