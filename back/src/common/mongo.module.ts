@@ -1,15 +1,18 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-
-const DATABASE_NAME = 'seoko_server';
-// const DATABASE_NAME = process.env.DB_NAME;
 
 @Module({
   imports: [
     MongooseModule.forRootAsync({
-      useFactory: async () => ({
-        uri: `mongodb://localhost/${DATABASE_NAME}`,
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: `mongodb://localhost:${configService.get('DB_PORT')}`,
+        dbName: configService.get('DB_NAME'),
+        user: configService.get('DB_USERNAME'),
+        pass: configService.get('DB_PASSWORD'),
       }),
+      inject: [ConfigService],
     }),
   ],
 })

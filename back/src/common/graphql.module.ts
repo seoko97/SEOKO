@@ -1,23 +1,32 @@
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { ApolloDriver } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
-import { join } from 'path';
 
-const prod = process.env.NODE_ENV === 'production';
+import { join } from 'path';
 
 @Module({
   imports: [
-    GraphQLModule.forRoot<ApolloDriverConfig>({
+    GraphQLModule.forRootAsync({
       driver: ApolloDriver,
-      playground: !prod,
-      debug: !prod,
-      autoSchemaFile: join(process.cwd(), 'schema.graphql'),
-      sortSchema: true,
-      cors: {
-        origin: 'http://localhost:3000',
-        credentials: true,
+      imports: [ConfigModule],
+      useFactory: async (config: ConfigService) => {
+        const isProd = config.get('NODE_ENV') === 'production';
+
+        return {
+          playground: !isProd,
+          debug: !isProd,
+          autoSchemaFile: join(process.cwd(), 'schema.graphql'),
+          sortSchema: true,
+          cors: {
+            origin: config.get('HOST'),
+            credentials: true,
+          },
+          context: (ctx) => ({ ...ctx }),
+          uploads: false,
+        };
       },
-      context: (ctx) => ({ ...ctx }),
+      inject: [ConfigService],
     }),
   ],
 })

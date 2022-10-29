@@ -5,10 +5,10 @@ import { UserService } from '@users/user.service';
 import { Response } from 'express';
 import { SigninInput, SigninRes } from './dto/signin.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
-import { jwtConstants } from './contants';
 import { AuthService } from './auth.service';
-import { ExpriedJwtAuthGuard } from './guards/jwt-auth.guard';
+import { ExpiredJwtAuthGuard } from './guards/jwt-auth.guard';
 import { CoreRes } from '@decorators/coreRes.decorator';
+import { ConfigService } from '@nestjs/config';
 
 const EXPIRED = 1000 * 60 * 60 * 24 * 7;
 
@@ -17,6 +17,7 @@ export class AuthResolver {
   constructor(
     private userService: UserService,
     private authService: AuthService,
+    private configService: ConfigService,
   ) {}
 
   @UseGuards(LocalAuthGuard)
@@ -28,8 +29,9 @@ export class AuthResolver {
   ): Promise<SigninRes> {
     const { username } = await this.userService.getById(_user._id);
     const accessToken = await this.authService.signin({ _id: _user._id });
+    const JWT_HEADER = this.configService.get('JWT_HEADER');
 
-    res.cookie(jwtConstants.header, accessToken, {
+    res.cookie(JWT_HEADER, accessToken, {
       httpOnly: true,
       maxAge: EXPIRED,
     });
@@ -37,7 +39,7 @@ export class AuthResolver {
     return { ok: true, username };
   }
 
-  @UseGuards(ExpriedJwtAuthGuard)
+  @UseGuards(ExpiredJwtAuthGuard)
   @Mutation(() => CoreRes)
   async refresh(
     @User() _user: ITokenUser,
@@ -48,10 +50,12 @@ export class AuthResolver {
 
     const isVerified = await this.authService.verifyRefresh(_user);
 
-    if (!isVerified) return { ok: false, error: 'expried refresh token' };
-    const accessToken = await this.authService.signin(_user);
+    if (!isVerified) return { ok: false, error: 'expired refresh token' };
 
-    res.cookie(jwtConstants.header, accessToken, {
+    const accessToken = await this.authService.signin(_user);
+    const JWT_HEADER = this.configService.get('JWT_HEADER');
+
+    res.cookie(JWT_HEADER, accessToken, {
       httpOnly: true,
       maxAge: EXPIRED,
     });
@@ -59,15 +63,19 @@ export class AuthResolver {
     return { ok: true };
   }
 
-  @UseGuards(ExpriedJwtAuthGuard)
+  @UseGuards(ExpiredJwtAuthGuard)
   @Mutation(() => CoreRes)
   async signout(
     @User() _user: ITokenUser,
     @Context() { res }: { res: Response },
   ) {
     if (!_user) return { ok: false, error: '로그인이 필요합니다.' };
+
+    const JWT_HEADER = this.configService.get('JWT_HEADER');
+
     await this.userService.updateRefreshToken(_user._id, null);
-    res.clearCookie(jwtConstants.header);
+
+    res.clearCookie(JWT_HEADER);
 
     return { ok: true };
   }

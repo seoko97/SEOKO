@@ -4,11 +4,14 @@ import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.js';
 import compression from 'compression';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const configService = app.get<ConfigService>(ConfigService);
+
   app.enableCors({
-    origin: 'http://localhost:3000',
+    origin: configService.get('HOST'),
     credentials: true,
   });
   app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }));
