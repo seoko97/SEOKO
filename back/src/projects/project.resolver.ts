@@ -38,8 +38,8 @@ export class ProjectResolver {
   }
 
   @Query(() => GetProjectDto)
-  async getProject(@Args('input') input: ProjectInput): Promise<GetProjectDto> {
-    const project = await this.projectService.getProject(input._id);
+  async getProject(@Args('input') input: string): Promise<GetProjectDto> {
+    const project = await this.projectService.getProject(input);
 
     return { ok: true, project };
   }
