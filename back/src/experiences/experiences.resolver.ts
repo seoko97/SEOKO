@@ -1,3 +1,5 @@
+import { JwtAuthGuard } from '@auth/guards/jwt-auth.guard';
+import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { DeleteExperienceInput } from './dto/deleteExperience.dto';
 import { EditExperienceInput } from './dto/editExperience.dto';
@@ -9,6 +11,7 @@ import { ExperienceService } from './experiences.service';
 export class ExperienceResolver {
   constructor(private experienceService: ExperienceService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => ExperienceDto)
   async addExperience(
     @Args('input') input: AddExperienceInput,
@@ -18,6 +21,7 @@ export class ExperienceResolver {
     return { ok: true, experience };
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => ExperienceDto)
   async editExperience(
     @Args('input') input: EditExperienceInput,
@@ -27,6 +31,7 @@ export class ExperienceResolver {
     return { ok: true, experience };
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => ExperienceDto)
   async deleteExperience(
     @Args('input') input: DeleteExperienceInput,
