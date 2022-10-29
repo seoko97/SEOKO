@@ -41,7 +41,7 @@ export class TagService {
   }
 
   async updateTag(_id: Types.ObjectId | string, query: any) {
-    return await this.tagModel.findOneAndUpdate({ _id }, query);
+    return await this.tagModel.findOneAndUpdate({ _id }, query, { new: true });
   }
 
   async delete(_id: string | Types.ObjectId) {
