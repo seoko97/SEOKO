@@ -14,6 +14,12 @@ input AddImageInput {
   type: String!
 }
 
+type AddImageRes {
+  error: String
+  image: String!
+  ok: Boolean!
+}
+
 input AddProjectInput {
   content: String!
   coverImg: String!
@@ -42,6 +48,7 @@ type CoreRes {
 }
 
 input CreatePostInput {
+  category: String!
   content: String!
   coverImg: String!
   tags: [String!]!
@@ -74,6 +81,7 @@ input EditExperienceInput {
 input EditPostInput {
   _id: String!
   addTags: [String!]!
+  category: String!
   content: String!
   coverImg: String!
   deleteTags: [String!]!
@@ -129,11 +137,6 @@ input GetPostInput {
   id: String!
 }
 
-input GetPostsByTagInput {
-  lastId: String
-  tagName: String
-}
-
 type GetPostsDTO {
   error: String
   ok: Boolean!
@@ -141,7 +144,9 @@ type GetPostsDTO {
 }
 
 input GetPostsInput {
+  category: String
   lastId: String
+  tag: String
 }
 
 type GetProjectDto {
@@ -160,6 +165,12 @@ type GetSkillsDto {
   error: String
   ok: Boolean!
   skills: GroupedSkills!
+}
+
+type GetTagRes {
+  error: String
+  ok: Boolean!
+  tag: Tag!
 }
 
 type GetTagsRes {
@@ -193,8 +204,7 @@ input InputUser {
 
 type Mutation {
   addExperience(input: AddExperienceInput!): ExperienceDto!
-  addImage(input: AddImageInput!): CoreRes!
-  addImage2(file: Upload!): CoreRes!
+  addImage(input: AddImageInput!): AddImageRes!
   addPost(input: CreatePostInput!): CoreRes!
   addProject(input: AddProjectInput!): CoreRes!
   addSkill(input: AddSkillInput!): AddSkillDto!
@@ -216,6 +226,7 @@ type Mutation {
 
 type Post {
   _id: String!
+  category: String!
   content: String!
   coverImg: String!
   createdAt: DateTime!
@@ -245,20 +256,21 @@ type Query {
   getExperiences: GetExperiencesDto!
   getPost(input: GetPostInput!): GetPostDTO!
   getPosts(input: GetPostsInput): GetPostsDTO!
-  getPostsByTag(input: GetPostsByTagInput): GetPostsDTO!
-  getProject(input: ProjectInput!): GetProjectDto!
+  getProject(input: String!): GetProjectDto!
   getProjects: GetProjectsDto!
   getSkills: GetSkillsDto!
-  getTag(input: String!): CoreRes!
+  getTag(input: String!): GetTagRes!
   getTags: GetTagsRes!
   getUserInfo: GetUserInfoDTO!
-  searchPosts(input: SearchPostsInput!): GetPostsDTO!
+  searchPosts(input: SearchPostsInput): GetPostsDTO!
   searchTags(input: SearchTagsInput!): SearchTagsDTO!
 }
 
 input SearchPostsInput {
+  category: String
   lastId: String
-  text: String!
+  tag: String
+  text: String
 }
 
 type SearchTagsDTO {
