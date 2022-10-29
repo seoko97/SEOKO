@@ -6,6 +6,7 @@ export class EditPostInput extends PickType(Post, [
   'coverImg',
   'title',
   'content',
+  'category',
   '_id',
 ]) {
   @Field(() => [String])
