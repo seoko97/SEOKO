@@ -34,12 +34,4 @@ export class ImageService {
       return { ok: false, error };
     }
   }
-
-  async addPostIamge() {
-    return '';
-  }
-
-  async addSkillIamge() {
-    return '';
-  }
 }
