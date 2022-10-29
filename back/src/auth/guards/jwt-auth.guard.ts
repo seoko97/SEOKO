@@ -6,7 +6,7 @@ import {
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { AuthGuard } from '@nestjs/passport';
 import { decryptValue } from '@utils/crypto';
-import { jwtConstants } from '../contants';
+import { jwtConstants } from '../constants';
 
 const setAuth = (context: ExecutionContext) => {
   const gqlContext = GqlExecutionContext.create(context);
@@ -37,7 +37,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 }
 
 @Injectable()
-export class ExpriedJwtAuthGuard extends AuthGuard('jwt-expried') {
+export class ExpiredJwtAuthGuard extends AuthGuard('jwt-expired') {
   constructor() {
     super();
   }
