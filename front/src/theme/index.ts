@@ -1,4 +1,5 @@
 export const bp = {
+  HDPC: "1280px",
   PC: "980px",
   TABLET: "768px",
   MOBILE: "480px",
@@ -6,11 +7,11 @@ export const bp = {
 
 export const lightTheme = {
   BP: bp,
-  BAKCGROUND_COLOR: {
+  BACKGROUND_COLOR: {
     PRIMARY_COLOR: "#F2F5F7",
     SECONDARY_COLOR: "rgb(250, 250, 250);",
     PRIMARY_COLOR_RGBA: "rgba(242, 245, 247, 0.5)",
-    THIRDARY_COLOR: "#23374D",
+    THIRDLY_COLOR: "#23374D",
   },
   FONT_COLOR: {
     PRIMARY_COLOR: "#212529",
@@ -36,11 +37,11 @@ export const lightTheme = {
 
 export const darkTheme = {
   BP: bp,
-  BAKCGROUND_COLOR: {
+  BACKGROUND_COLOR: {
     PRIMARY_COLOR: "#212529",
     SECONDARY_COLOR: "rgb(52, 58, 64)",
     PRIMARY_COLOR_RGBA: "rgba(33, 37, 41, 0.5)",
-    THIRDARY_COLOR: "#444444",
+    THIRDLY_COLOR: "#444444",
   },
   FONT_COLOR: {
     PRIMARY_COLOR: "#f8f9fa",
