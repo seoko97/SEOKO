@@ -12,7 +12,14 @@ const GlobalStyle = ({ theme }: GlobalProps) => (
     styles={css`
       ${reset}
 
-      body, #__next {
+      html {
+        -webkit-text-size-adjust: none;
+        -moz-text-size-adjust: none;
+        -o-text-size-adjust: none;
+      }
+
+      body,
+      #__next {
         height: 100%;
       }
 
@@ -22,7 +29,7 @@ const GlobalStyle = ({ theme }: GlobalProps) => (
         font-size: 16px;
         line-height: 1.5715;
         user-select: none;
-        background-color: ${theme.BAKCGROUND_COLOR.PRIMARY_COLOR};
+        background-color: ${theme.BACKGROUND_COLOR.PRIMARY_COLOR};
       }
 
       h1,
@@ -64,9 +71,8 @@ const GlobalStyle = ({ theme }: GlobalProps) => (
         border-radius: 5px;
       }
 
-      & * {
+      * {
         font-family: "Noto Sans KR", "Quicksand", sans-serif !important;
-
         box-sizing: border-box;
       }
     `}
