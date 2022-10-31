@@ -25,7 +25,7 @@ const Container = styled.form`
   max-height: 600px;
 
   display: flex;
-  gap: 20px;
+  gap: 1em;
   flex-direction: column;
   background-color: #eeeeee;
   padding: 30px 20px;
@@ -39,10 +39,42 @@ const Container = styled.form`
     font-weight: 500;
   }
 
+  & input[type="text"],
+  & textarea {
+    flex: 1;
+  }
+
+  & textarea {
+    flex: 1;
+    max-width: 100%;
+    min-height: 100px;
+    resize: none;
+  }
+
+  & > div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
   & button {
+    flex: 1;
     cursor: pointer;
     margin-top: 10px;
+    padding: 1em;
+    border-radius: 3px;
+    border: none;
+    background-color: ${({ theme }) => theme.BACKGROUND_COLOR.PRIMARY_COLOR};
+    color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   }
+
+  & > .button-form {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1em;
+  }
+
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     width: 100%;
     margin: 40px 16px 0 16px;
@@ -55,9 +87,21 @@ const ExperienceForm = ({ experience, onClose }: IProps) => {
   const [endDate, onChangeEndDate] = useInput(experience?.endDate || "");
   const [description, onChangeDescription] = useInput(experience?.description || "");
 
-  const [addExpMutation] = useMutation<IAddExperience>(ADD_EXPERIENCE);
-  const [editExpMutation] = useMutation<IEditExperience>(EDIT_EXPERIENCE);
-  const [deleteExpMutation] = useMutation<IDeleteExperience>(DELETE_EXPERIENCE);
+  const [addExpMutation] = useMutation<IAddExperience>(ADD_EXPERIENCE, {
+    onCompleted({ addExperience }) {
+      if (addExperience.ok) onClose();
+    },
+  });
+  const [editExpMutation] = useMutation<IEditExperience>(EDIT_EXPERIENCE, {
+    onCompleted({ editExperience }) {
+      if (editExperience.ok) onClose();
+    },
+  });
+  const [deleteExpMutation] = useMutation<IDeleteExperience>(DELETE_EXPERIENCE, {
+    onCompleted({ deleteExperience }) {
+      if (deleteExperience.ok) onClose();
+    },
+  });
 
   const onSubmitForm = useCallback(
     (e) => {
@@ -101,20 +145,22 @@ const ExperienceForm = ({ experience, onClose }: IProps) => {
       <Container onSubmit={onSubmitForm}>
         <h3>경력</h3>
         <div>
-          <span>회사명: </span>
+          <span>회사명:</span>
           <Input value={title} onChange={onChangeTitle} />
         </div>
         <div>
-          <span>상세: </span>
+          <span>상세:</span>
           <textarea value={description} onChange={onChangeDescription} />
         </div>
         <div>
-          <span>시작/종료: </span>
-          <Input value={startDate} onChange={onChangeStartDate} />
-          ~
-          <Input value={endDate} onChange={onChangeEndDate} />
+          <label htmlFor="startDate">시작</label>
+          <Input name="startDate" value={startDate} onChange={onChangeStartDate} type="date" />
         </div>
         <div>
+          <label htmlFor="endDate">종료</label>
+          <Input name="endDate" value={endDate} onChange={onChangeEndDate} type="date" />
+        </div>
+        <div className="button-form">
           {experience && (
             <button type="button" onClick={onClickDeleteBtn}>
               삭제

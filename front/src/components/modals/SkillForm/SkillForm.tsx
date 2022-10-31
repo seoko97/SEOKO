@@ -1,14 +1,15 @@
-import React, { memo, useCallback, useRef, useState } from "react";
+import React, { useCallback, useRef } from "react";
 import styled from "@emotion/styled";
 import { useMutation } from "@apollo/client";
 
 import { ADD_SKILL, EDIT_SKILL, DELETE_SKILL } from "@queries/skills";
 import { IAddSkill, IDeleteSkill, IEditSkill, ISkill, ISkillInput } from "@queries-types/skill";
 
-import ModalLayout from "@modals/ModalLayout";
-import Input from "@atoms/Input";
 import { IAddImage } from "@queries-types/image";
 import { ADD_IMAGE } from "@queries/image/addImage.queries";
+
+import ModalLayout from "@modals/ModalLayout";
+import Input from "@atoms/Input";
 
 interface IProps {
   onClose: () => void;
@@ -164,4 +165,4 @@ const SkillForm = ({ onClose, skill }: IProps) => {
   );
 };
 
-export default memo(SkillForm, (prev, next) => prev.skill === next.skill);
+export default SkillForm;
