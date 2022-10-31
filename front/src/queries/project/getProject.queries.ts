@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_PROJECT = gql`
-  query GetProject($input: ProjectInput!) {
+  query GetProject($input: String!) {
     getProject(input: $input) {
       ok
       error
