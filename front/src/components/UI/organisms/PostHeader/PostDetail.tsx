@@ -1,26 +1,26 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { dateTimeParser } from "@lib/dateTimeParser";
 import { IPost } from "@queries-types/posts";
 import styled from "@emotion/styled";
 
 const Container = styled.div`
+  width: 100%;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 15px;
-  width: 100%;
+  gap: 1em;
+
   color: ${({ theme }) => theme.FONT_COLOR.SECONDARY_COLOR};
-  & a:hover {
-    transition: color 0.3s;
-    color: ${({ theme }) => theme.SELECTION_EFFECT_COLOR.PRIMARY_COLOR};
-  }
+
   font-size: 14px;
 `;
 
-const Detail = ({ createdAt }: Pick<IPost, "createdAt">) => {
+const Detail = ({ category, createdAt }: Pick<IPost, "createdAt" | "category">) => {
   return (
     <Container>
       <span>{dateTimeParser(createdAt)}</span>
+      <span>{category.charAt(0).toUpperCase() + category.slice(1)}</span>
     </Container>
   );
 };
