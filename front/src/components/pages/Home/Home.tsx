@@ -1,36 +1,24 @@
-import React, { useCallback, useRef } from "react";
+import React from "react";
 
 import RowFrame from "@frames/RowFrame";
 import Intro from "@molecules/Intro";
 
-import PostList from "@organisms/PostList";
-import { useQuery } from "@apollo/client";
-import { IGetPosts } from "@queries-types/posts";
-import { GET_POSTS } from "@queries/post/getPosts.queries";
+import styled from "@emotion/styled";
+import HomeContent from "@organisms/HomeContent";
+
+const Container = styled(RowFrame)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
 
 const Home = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const { data, fetchMore } = useQuery<IGetPosts>(GET_POSTS, {
-    errorPolicy: "all",
-  });
-
-  const fetchMorePosts = useCallback(() => {
-    fetchMore({
-      variables: {
-        input: {
-          lastId: data?.getPosts.posts[data?.getPosts.posts.length - 1]._id,
-        },
-      },
-    });
-  }, [ref, data]);
-
   return (
-    <RowFrame>
+    <Container>
       <Intro />
-      {data?.getPosts?.posts[0] && (
-        <PostList ref={ref} posts={data?.getPosts.posts} func={fetchMorePosts} />
-      )}
-    </RowFrame>
+      <HomeContent />
+    </Container>
   );
 };
 
