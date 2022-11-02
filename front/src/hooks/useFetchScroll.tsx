@@ -5,7 +5,7 @@ type IProps = (targetEl: any, fetchCallback: () => void) => void;
 const useFetchScroll: IProps = (targetEl, fetchCallback) => {
   const observerRef = useRef<IntersectionObserver>();
 
-  const getObserber = useCallback(() => {
+  const getObserver = useCallback(() => {
     observerRef.current = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && targetEl.current?.lastElementChild) {
@@ -21,13 +21,13 @@ const useFetchScroll: IProps = (targetEl, fetchCallback) => {
     if (!targetEl.current?.lastElementChild || targetEl.current?.childNodes.length % 10 !== 0)
       return;
 
-    getObserber();
+    getObserver();
     observerRef.current?.observe(targetEl.current.lastElementChild);
 
     return () => {
       observerRef.current?.disconnect();
     };
-  }, [targetEl.current, getObserber]);
+  }, [targetEl.current, getObserver, fetchCallback]);
 };
 
 export default useFetchScroll;
