@@ -14,6 +14,7 @@ interface IProjectInput {
 interface IProject extends IProjectInput {
   _id: string;
   createdAt: string;
+  __typename?: string;
 }
 
 interface IAddProject {

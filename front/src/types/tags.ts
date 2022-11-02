@@ -4,7 +4,7 @@ import { IPost } from "./posts";
 interface ITag {
   _id: string;
   name: string;
-  posts: IPost[] | string[];
+  posts: IPost[];
 }
 
 interface IGetTags {

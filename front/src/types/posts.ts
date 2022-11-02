@@ -9,6 +9,7 @@ interface IPost {
   tags: ITag[];
   title: string;
   createdAt: string;
+  __typename?: string;
 }
 
 type ISiblingItem = Pick<IPost, "_id" | "title">;
