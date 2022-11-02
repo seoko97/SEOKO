@@ -15,17 +15,20 @@ const StyledInput = styled.input`
   }
 `;
 
-const Input = forwardRef<HTMLInputElement, Props>(({ value, placeholder, type, onChange }, ref) => {
-  return (
-    <StyledInput
-      type={type}
-      placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-      ref={ref}
-    />
-  );
-});
+const Input = forwardRef<HTMLInputElement, Props>(
+  ({ value, placeholder, type, onChange, ...props }, ref) => {
+    return (
+      <StyledInput
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        ref={ref}
+        {...props}
+      />
+    );
+  },
+);
 
 Input.defaultProps = {
   type: "text",
