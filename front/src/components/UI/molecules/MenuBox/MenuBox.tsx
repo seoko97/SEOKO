@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React from "react";
 import Link from "next/link";
 import { useReactiveVar } from "@apollo/client";
 import styled from "@emotion/styled";
@@ -13,6 +13,7 @@ const Container = styled.div`
   justify-content: center;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   gap: 15px;
+  & > a,
   & > div {
     display: flex;
     align-items: center;
@@ -39,13 +40,13 @@ const MenuBox = () => {
     <Container>
       {username && <UserMenu />}
       <Link href="/search">
-        <div>
+        <a>
           <SearchIcon />
-        </div>
+        </a>
       </Link>
       <Menu username={username} />
     </Container>
   );
 };
 
-export default memo(MenuBox);
+export default MenuBox;
