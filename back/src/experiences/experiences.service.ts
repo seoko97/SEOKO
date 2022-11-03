@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 import { EditExperienceInput } from './dto/editExperience.dto';
-import { AddExperienceInput } from './dto/Experience.dto';
+import { AddExperienceInput } from './dto/experience.dto';
 import { Experience, ExperienceModel } from './experiences.model';
 
 @Injectable()

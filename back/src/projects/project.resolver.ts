@@ -6,7 +6,7 @@ import { AddProjectInput } from './dto/addProjectInput.dto';
 import { EditProjectInput } from './dto/editProjectInput.dto';
 import { GetProjectDto } from './dto/getProject.dto';
 import { GetProjectsDto } from './dto/getProjects.dto';
-import { ProjectInput } from './dto/ProjectInput.dto';
+import { ProjectInput } from './dto/projectInput.dto';
 import { ProjectService } from './project.service';
 
 @Resolver()

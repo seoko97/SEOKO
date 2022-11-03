@@ -3,7 +3,7 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { DeleteExperienceInput } from './dto/deleteExperience.dto';
 import { EditExperienceInput } from './dto/editExperience.dto';
-import { AddExperienceInput, ExperienceDto } from './dto/Experience.dto';
+import { AddExperienceInput, ExperienceDto } from './dto/experience.dto';
 import { GetExperiencesDto } from './dto/getExperiences.dto';
 import { ExperienceService } from './experiences.service';
 
