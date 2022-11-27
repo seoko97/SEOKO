@@ -17,12 +17,23 @@ const Container = styled.div`
     object-fit: cover;
     transition: transform 0.3s;
   }
+
+  & span {
+    border-radius: 10px 10px 0 0;
+  }
 `;
 
 const ProjectImg = ({ src }: IProps) => {
   return (
     <Container>
-      <Image src={src} alt="project-image" layout="fill" />
+      <Image
+        priority
+        placeholder="blur"
+        blurDataURL={src}
+        src={src}
+        alt="project-image"
+        layout="fill"
+      />
     </Container>
   );
 };

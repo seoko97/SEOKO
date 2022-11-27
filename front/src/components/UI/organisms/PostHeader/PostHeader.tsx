@@ -1,14 +1,16 @@
 import React, { useCallback } from "react";
-import { useMutation, useReactiveVar } from "@apollo/client";
 import styled from "@emotion/styled";
 import Image from "next/image";
+import { useMutation, useReactiveVar } from "@apollo/client";
 import { useRouter } from "next/router";
-import PostNavigation from "@molecules/PostNavigation";
-import TagList from "@molecules/TagList";
+
 import { IDeletePost, IPost } from "@queries-types/posts";
 import { DELETE_POST } from "@queries/post/deletePost.queries";
 import { userInfoVar } from "@store/userInfo";
-import Detail from "./Detail";
+
+import PostNavigation from "@molecules/PostNavigation";
+import TagList from "@molecules/TagList";
+import Detail from "./PostDetail";
 
 const Container = styled.div`
   position: relative;
@@ -34,15 +36,18 @@ const Container = styled.div`
   }
 
   & > .image-container {
-    width: 90%;
+    width: 100%;
     position: relative;
-    padding-bottom: 50%;
+    padding-bottom: 60%;
     align-items: center;
 
     & img {
       border-radius: 10px;
       position: absolute;
       justify-content: center;
+    }
+    & > span {
+      border-radius: 10px;
     }
   }
 
@@ -53,7 +58,6 @@ const Container = styled.div`
       font-size: 1.6em;
     }
     & > .image-container {
-      width: 100%;
       padding-bottom: 60%;
     }
   }
@@ -64,7 +68,7 @@ interface IProps {
 }
 
 const PostHeader = ({ post }: IProps) => {
-  const { _id, title, coverImg, createdAt, tags } = post;
+  const { _id, title, coverImg, createdAt, tags, category } = post;
   const { username } = useReactiveVar(userInfoVar);
   const router = useRouter();
 
@@ -76,8 +80,10 @@ const PostHeader = ({ post }: IProps) => {
 
   const deletePost = useCallback(() => {
     if (!username) return;
-    const comf = confirm("삭제하시겠습니까?");
-    if (comf)
+
+    const conf = confirm("삭제하시겠습니까?");
+
+    if (conf)
       deletePostMutation({
         variables: {
           input: {
@@ -98,11 +104,19 @@ const PostHeader = ({ post }: IProps) => {
   return (
     <Container>
       <div className="image-container">
-        <Image priority={true} layout="fill" src={coverImg} objectFit="cover" />
+        <Image
+          priority
+          layout="fill"
+          alt="post-cover"
+          src={coverImg}
+          objectFit="cover"
+          placeholder="blur"
+          blurDataURL={coverImg}
+        />
       </div>
       <h1>{title}</h1>
-      <Detail createdAt={createdAt} />
       {tags[0] && <TagList onClick={onClickTag} tags={tags} />}
+      <Detail createdAt={createdAt} category={category} />
       {username && <PostNavigation onDelete={deletePost} onEdit={editPost} />}
     </Container>
   );

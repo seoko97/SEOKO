@@ -16,6 +16,8 @@ const StyledPostImg = styled.div`
   & img {
     position: absolute;
     object-fit: cover;
+  }
+  & > span {
     border-radius: 10px;
   }
 
@@ -27,7 +29,14 @@ const StyledPostImg = styled.div`
 
 const PostImg = ({ titleImage }: Props) => (
   <StyledPostImg className="post-image">
-    <Image src={titleImage} property="true" layout="fill" />
+    <Image
+      placeholder="blur"
+      blurDataURL={titleImage}
+      src={titleImage}
+      property="true"
+      layout="fill"
+      alt="post-image"
+    />
   </StyledPostImg>
 );
 
