@@ -12,16 +12,16 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { query } = ctx;
   const apolloClient = initializeClient({ ctx });
 
-  const { data } = await apolloClient.query<IGetUserInfo>({
+  const { data: userData } = await apolloClient.query<IGetUserInfo>({
     query: GET_USER_INFO,
   });
 
   const { data: projectData } = await apolloClient.query<IGetProject>({
     query: GET_PROJECT,
-    variables: { input: { _id: query.id } },
+    variables: { input: query.id },
   });
 
-  if (!data || !projectData)
+  if (!userData || !projectData)
     return {
       props: {},
       redirect: {
