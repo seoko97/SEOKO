@@ -14,6 +14,7 @@ import { AppProps } from "next/app";
 import { GetServerSidePropsContext } from "next";
 import { onError } from "@apollo/client/link/error";
 import { REFRESH } from "@queries/users";
+import { API_URL, isProd } from "@config/constance";
 import { APOLLO_STATE_PROP_NAME } from "./addApolloState";
 import { mergeItem } from "./mergeItem";
 
@@ -24,7 +25,6 @@ export interface IInitializeApollo {
   ctx?: GetServerSidePropsContext | null;
 }
 
-export const prod = process.env.NODE_ENV === "production";
 const TOKEN_EXPIRED = "jwt expired";
 
 let apolloClient: ApolloClient<NormalizedCacheObject>;
@@ -34,7 +34,7 @@ const cachePolicy: InMemoryCacheConfig = {
     Query: {
       fields: {
         getPosts: {
-          keyArgs: ["input", ["lastId", "category", "tag"]],
+          keyArgs: ["input", ["category", "tag"]],
           merge: mergeItem,
         },
         searchPosts: {
@@ -51,6 +51,7 @@ const cachePolicy: InMemoryCacheConfig = {
       },
     },
   },
+  addTypename: false,
 };
 
 export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {
@@ -72,12 +73,12 @@ export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {
   };
 
   const httpLink = createUploadLink({
-    uri: prod ? process.env.API_URL : "http://localhost:3065/graphql",
+    uri: `${API_URL}/graphql`,
     credentials: "include",
     fetch: enhancedFetch,
   });
 
-  const linkOnError = onError(({ graphQLErrors, operation, networkError, forward }) => {
+  const linkOnError = onError(({ graphQLErrors, operation, forward }) => {
     if (graphQLErrors?.[0].message === TOKEN_EXPIRED) {
       const client = apolloClient ?? createClient;
       const refresh = fromPromise(
@@ -92,7 +93,7 @@ export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {
     ssrMode: typeof window === undefined,
     cache: new InMemoryCache(cachePolicy),
     link: from([linkOnError, httpLink]),
-    connectToDevTools: true,
+    connectToDevTools: !isProd,
     defaultOptions: {
       query: {
         errorPolicy: "all",
