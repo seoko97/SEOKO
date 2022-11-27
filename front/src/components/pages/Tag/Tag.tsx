@@ -1,49 +1,75 @@
-import React, { memo, useCallback, useRef } from "react";
+import React, { useCallback } from "react";
+import Head from "next/head";
+import styled from "@emotion/styled";
+
+import { useQuery } from "@apollo/client";
+
+import { IGetTags } from "@queries-types/tags";
+import { GET_TAGS } from "@queries/tag";
+
+import AtomTag from "@atoms/Tag";
 import RowFrame from "@frames/RowFrame";
-import { ITag } from "@queries-types/tags";
-import { OperationVariables, useQuery } from "@apollo/client";
-import { GET_POSTS_BY_TAG } from "@queries/post/getPostsByTag.queries";
-import { IGetPostsByTag } from "@queries-types/posts";
-import PostList from "@organisms/PostList";
-import TagListForm from "@organisms/TagListForm";
+import { useRouter } from "next/router";
 
-interface IProps {
-  tagName: string | undefined;
-  tags: ITag[];
-}
+const Tag = () => {
+  const router = useRouter();
+  const { data } = useQuery<IGetTags>(GET_TAGS);
 
-const Tag = ({ tags, tagName }: IProps) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const { data, fetchMore } = useQuery<IGetPostsByTag>(GET_POSTS_BY_TAG, {
-    variables: tagName
-      ? {
-          input: {
-            tagName,
-          },
-        }
-      : {},
-  });
+  if (!data) return <></>;
 
-  const getMorePosts = useCallback(() => {
-    const variables: OperationVariables = {
-      input: {
-        lastId: data?.getPostsByTag.posts[data?.getPostsByTag.posts.length - 1]._id,
-      },
-    };
+  const {
+    getTags: { tags },
+  } = data;
 
-    if (tagName) variables.input.tagName = tagName;
+  const onClickTag: React.MouseEventHandler<HTMLDivElement> = useCallback((e) => {
+    const { currentTarget } = e;
 
-    fetchMore({ variables });
-  }, [tagName, data]);
+    if (currentTarget.dataset.name) {
+      router.push(`tag/${currentTarget.dataset.name}`);
+    }
+  }, []);
 
   return (
-    <RowFrame>
-      <TagListForm tags={tags} tagName={tagName} />
-      {data?.getPostsByTag?.posts[0] && (
-        <PostList func={getMorePosts} ref={ref} posts={data?.getPostsByTag.posts} />
-      )}
-    </RowFrame>
+    <>
+      <Head>
+        <title>태그목록 :: SEOKO</title>
+        <meta name="description" content={`${tags.length}개의 태그`} />
+        <meta name="og:title" content={`태그목록 :: SEOKO`} />
+        <meta name="og:description" content={`${tags.length}개의 태그`} />
+      </Head>
+      <Container>
+        <p>There ara {tags.length} Tags.</p>
+        <div>
+          {tags.map((tag) => (
+            <AtomTag key={tag._id} onClick={onClickTag} data-name={tag.name}>
+              {tag.name} ({tag.posts.length})
+            </AtomTag>
+          ))}
+        </div>
+      </Container>
+    </>
   );
 };
 
-export default memo(Tag, (prev, next) => prev.tagName === next.tagName);
+const Container = styled(RowFrame)`
+  width: ${({ theme }) => theme.BP.TABLET};
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 1.2em 0;
+
+  & > p {
+    font-size: 1.2em;
+    font-weight: 500;
+    color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
+  }
+
+  & > div {
+    width: 100%;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+`;
+
+export default Tag;

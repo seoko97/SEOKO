@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useMemo } from "react";
+import Head from "next/head";
 import styled from "@emotion/styled";
 import RowFrame from "@frames/RowFrame";
 
@@ -8,22 +9,25 @@ import Markdown from "@organisms/MarkDownViewer";
 import PostHeader from "@organisms/PostHeader";
 import PostFooter from "@organisms/PostFooter";
 import Toc from "@organisms/Toc";
+import removeMd from "remove-markdown";
 
 interface Props {
   post: IPost;
   siblingPost: ISiblingPost;
 }
 
+const Container = styled(RowFrame)`
+  width: 768px;
+`;
+
 const PostContent = styled.div`
   width: 100%;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 100% 250px;
+  gap: 4em;
 
-  & > div:first-of-type {
-    width: 75%;
-  }
-
-  @media (max-width: ${({ theme }) => theme.BP.PC}) {
+  @media (max-width: ${({ theme }) => theme.BP.HDPC}) {
+    display: block;
     & > div:first-of-type {
       width: 100%;
     }
@@ -31,17 +35,31 @@ const PostContent = styled.div`
 `;
 
 const Post = ({ post, siblingPost }: Props) => {
-  const { content } = post;
+  const { content, title, coverImg } = post;
+
+  const postDescription = useMemo(
+    () => removeMd(content, { useImgAltText: false }).slice(0, 200),
+    [],
+  );
 
   return (
-    <RowFrame>
-      <PostHeader post={post} />
-      <PostContent>
-        <Markdown content={content} />
-        <Toc content={content} />
-      </PostContent>
-      <PostFooter siblingPost={siblingPost} />
-    </RowFrame>
+    <>
+      <Head>
+        <title>{title} :: SEOKO</title>
+        <meta name="description" content={`${postDescription}...`} />
+        <meta name="og:title" content={`${title} :: SEOKO`} />
+        <meta name="og:description" content={`${postDescription}...`} />
+        <meta name="og:image" content={coverImg} />
+      </Head>
+      <Container>
+        <PostHeader post={post} />
+        <PostContent>
+          <Markdown content={content} />
+          <Toc content={content} />
+        </PostContent>
+        <PostFooter siblingPost={siblingPost} />
+      </Container>
+    </>
   );
 };
 
