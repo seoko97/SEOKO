@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import SiblingPost from "@molecules/SiblingPost";
-import Untterances from "@molecules/Untterances";
+import Utterances from "@molecules/Utterances";
 import { ISiblingPost } from "@queries-types/posts";
 
 interface IProps {
@@ -14,14 +14,18 @@ const Container = styled.div`
   flex-direction: column;
   gap: 30px;
   padding: 40px 0;
-  margin-top: 20px;
+  margin: 0 auto;
+
+  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
+    width: 100%;
+  }
 `;
 
 const PostFooter = ({ siblingPost }: IProps) => {
   return (
     <Container>
       <SiblingPost siblingPost={siblingPost} />
-      <Untterances repo="seoko97/SEOKO_utterances" />
+      <Utterances repo="seoko97/SEOKO_utterances" />
     </Container>
   );
 };
