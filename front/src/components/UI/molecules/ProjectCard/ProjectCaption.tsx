@@ -22,7 +22,12 @@ const Container = styled.div`
 
   & .ath,
   & .date {
+    width: 100%;
+    max-width: 200px;
     font-size: 0.8em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   & .date {
@@ -39,7 +44,7 @@ const ProjectCaption = ({ title, description, startDate, endDate }: IProps) => {
   return (
     <Container className="caption">
       <h3>{title}</h3>
-      <p className="ath">{description}</p>
+      <div className="ath">{description}</div>
       <p className="date">
         {startDate} ~ {endDate ?? "진행중"}
       </p>

@@ -5,6 +5,26 @@ import { IPost } from "@queries-types/posts";
 import PostImg from "./PostImg";
 import PostContent from "./PostContent";
 
+interface Props {
+  post: IPost;
+}
+
+const PostItem = ({ post }: Props) => {
+  return (
+    <Link href={`/post/${post._id}`}>
+      <Container>
+        <PostImg titleImage={post.coverImg} />
+        <PostContent
+          content={post.content}
+          tags={post.tags}
+          title={post.title}
+          createdAt={post.createdAt}
+        />
+      </Container>
+    </Link>
+  );
+};
+
 const Container = styled.div`
   width: 100%;
   display: flex;
@@ -35,25 +55,5 @@ const Container = styled.div`
     padding: 0;
   }
 `;
-
-interface Props {
-  post: IPost;
-}
-
-const PostItem = ({ post }: Props) => {
-  return (
-    <Link href={`/post/${post._id}`}>
-      <Container>
-        <PostImg titleImage={post.coverImg} />
-        <PostContent
-          content={post.content}
-          tags={post.tags}
-          title={post.title}
-          createdAt={post.createdAt}
-        />
-      </Container>
-    </Link>
-  );
-};
 
 export default memo(PostItem, (prev, next) => prev.post._id === next.post._id);

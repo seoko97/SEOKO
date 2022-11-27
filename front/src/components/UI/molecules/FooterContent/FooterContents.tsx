@@ -11,7 +11,7 @@ const Container = styled.div`
   align-items: center;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
 
-  & svg {
+  & a > svg {
     width: 42px;
     height: 42px;
     transition: all 0.2s ease-in-out 0s;

@@ -7,7 +7,7 @@ export const MarkdownWrapper = styled.div`
   user-select: text;
   font-size: 1rem;
 
-  & > :first-of-type {
+  & > :first-child {
     margin-top: 0;
   }
 
@@ -109,9 +109,9 @@ export const MarkdownWrapper = styled.div`
     font-size: 1em;
   }
   & img {
-    display: block;
-    margin: 0 auto;
     max-width: 100%;
+    border-radius: 10px;
+    margin: 0 auto;
   }
 
   & a {
@@ -119,9 +119,5 @@ export const MarkdownWrapper = styled.div`
     &:hover {
       text-decoration: underline;
     }
-  }
-
-  & img {
-    border-radius: 10px;
   }
 `;

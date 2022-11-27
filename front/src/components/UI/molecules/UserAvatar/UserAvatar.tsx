@@ -22,13 +22,21 @@ const Container = styled.div`
     border-radius: 50%;
     object-fit: cover;
   }
+
+  & * {
+    border-radius: 50%;
+  }
 `;
 
 const UserAvatar = ({ height, width, onClick }: IProps) => {
   return (
     <Container onClick={onClick && onClick}>
       <Image
-        src="https://velog.velcdn.com/post-images/godori/496c0830-3dc1-11e9-bc03-611ba17bddf2/banner-maker.png"
+        src="/main.jpg"
+        placeholder="blur"
+        blurDataURL="/main.jpg"
+        alt="user"
+        priority
         width={width}
         height={height}
       />

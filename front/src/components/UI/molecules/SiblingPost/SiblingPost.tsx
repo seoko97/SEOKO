@@ -10,11 +10,9 @@ interface IProps {
 const Container = styled.div`
   width: 100%;
   display: flex;
-  gap: 30px;
 
-  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
-    flex-direction: column-reverse;
-  }
+  margin: 0 auto;
+  gap: 30px;
 `;
 
 const SiblingPost = ({ siblingPost }: IProps) => {

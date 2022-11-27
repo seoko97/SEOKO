@@ -2,58 +2,18 @@ import React from "react";
 import Link from "next/link";
 import styled from "@emotion/styled";
 import { ISiblingItem } from "@queries-types/posts";
+import ReftIcon from "@icons/ArrowIcon/Reft";
+import RightIcon from "@icons/ArrowIcon/Right";
 
 interface IProps {
   post: ISiblingItem;
-  type: string;
+  type: keyof typeof ARROW;
 }
 
-const Container = styled.div<{ type: string }>`
-  width: 30%;
-  flex: 1;
-
-  & a {
-    border: 1px solid #ccc;
-    width: 100%;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: ${({ type }) => (type === "next" ? "flex-end" : "flex-start")};
-    gap: 12px;
-    background-color: ${({ theme }) => theme.BACKGROUND_COLOR.SECONDARY_COLOR};
-    padding: 16px;
-    border-radius: 8px;
-    transition: background-color 0.3s;
-
-    & span {
-      font-size: 13px;
-      font-weight: bold;
-      color: ${({ theme }) => theme.FONT_COLOR.SECONDARY_COLOR};
-    }
-
-    & h3 {
-      color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
-      display: block;
-      width: 100%;
-      font-weight: bold;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      text-align: ${({ type }) => (type === "next" ? "right" : "left")};
-      transition: color 0.3s;
-    }
-
-    :hover {
-      & h3 {
-        color: ${({ theme }) => theme.SELECTION_EFFECT_COLOR.PRIMARY_COLOR};
-      }
-    }
-  }
-
-  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
-    width: 100%;
-  }
-`;
+const ARROW = {
+  next: <ReftIcon />,
+  prev: <RightIcon />,
+};
 
 const SiblingItem = ({ post, type }: IProps) => {
   return (
@@ -61,7 +21,11 @@ const SiblingItem = ({ post, type }: IProps) => {
       {post && (
         <Link href={`/post/${post._id}`}>
           <a>
-            <span>{type === "next" ? "다음" : "이전"} 포스트</span>
+            <div>
+              {type === "prev" && <ReftIcon />}
+              {type.toLocaleUpperCase()}
+              {type === "next" && <RightIcon />}
+            </div>
             <h3>{post.title}</h3>
           </a>
         </Link>
@@ -69,5 +33,56 @@ const SiblingItem = ({ post, type }: IProps) => {
     </Container>
   );
 };
+
+const Container = styled.div<{ type: string }>`
+  flex: 1;
+
+  & a {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: ${({ type }) => (type === "next" ? "flex-end" : "flex-start")};
+    gap: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+
+    &:hover {
+      & h3 {
+        color: ${({ theme }) => theme.SELECTION_EFFECT_COLOR.PRIMARY_COLOR};
+      }
+    }
+  }
+
+  & div {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    font-size: 13px;
+    font-weight: bold;
+    color: ${({ theme }) => theme.FONT_COLOR.SECONDARY_COLOR};
+  }
+
+  & svg {
+    width: 1.2em;
+    height: 1.2em;
+    fill: ${({ theme }) => theme.FONT_COLOR.SECONDARY_COLOR};
+  }
+
+  & h3 {
+    color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
+    display: block;
+    width: 100%;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: ${({ type }) => (type === "next" ? "right" : "left")};
+    transition: color 0.3s;
+  }
+
+  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
+    width: 100%;
+  }
+`;
 
 export default SiblingItem;
