@@ -72,7 +72,7 @@ const GlobalStyle = ({ theme }: GlobalProps) => (
       }
 
       * {
-        font-family: "Noto Sans KR", "Quicksand", sans-serif !important;
+        font-family: "Noto Sans KR", sans-serif !important;
         box-sizing: border-box;
       }
     `}
