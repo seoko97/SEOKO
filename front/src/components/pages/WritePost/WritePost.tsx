@@ -3,8 +3,6 @@ import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import { useMutation } from "@apollo/client";
 
-import useInput from "@hooks/useInput";
-
 import { ADD_POST } from "@queries/post/addPost.queries";
 import { IAddPost, IEditPost, IPost } from "@queries-types/posts";
 import { EDIT_POST } from "@queries/post/editPost.queries";
@@ -13,104 +11,151 @@ import RowFrame from "@frames/RowFrame";
 import WriteFooter from "@molecules/WriteFooter";
 import TuiEditor from "@organisms/TuiEditor";
 
+import { ADD_IMAGE } from "@queries/image/addImage.queries";
+import { IAddImage } from "@queries-types/image";
 import WritePostHeader from "./WritePostHeader";
 
 interface IProps {
-  post: IPost | undefined;
+  post?: IPost;
 }
 
-const Container = styled(RowFrame)`
-  padding: 30px 0;
-`;
+interface IPostInput extends Pick<IPost, "category" | "title" | "content" | "coverImg"> {
+  _id?: string;
+  addTags?: string[];
+  deleteTags?: string[];
+}
 
 const WritePost = ({ post }: IProps) => {
   const router = useRouter();
+  const postInputData: IPostInput = {
+    _id: post?._id || undefined,
+    title: post?.title || "",
+    content: post?.content || "",
+    category: post?.category || "dev",
+    coverImg: post?.coverImg || "",
+  };
+
+  const postDataRef = useRef<IPostInput>(postInputData);
   const photoInputRef = useRef<HTMLInputElement | null>(null);
 
-  const [coverImg, setCoverImg] = useState<string>(post?.coverImg || "");
-  const [content, setContent] = useState<string>(post?.content || "");
   const [tags, setTags] = useState<string[]>(post?.tags.map((tag) => tag.name) || []);
+  const [coverImg, setCoverImg] = useState<string>(post?.coverImg || "");
 
-  const [title, onChangeTitle] = useInput(post?.title || "");
-  const [tagName, onChangeTagName, setTagName] = useInput("");
   const [deleteTags, setDeleteTags] = useState<string[]>([]);
   const [addTags, setAddTags] = useState<string[]>([]);
 
-  const [addPostMutation] = useMutation<IAddPost>(ADD_POST, {
+  const [addImageMutation] = useMutation<IAddImage>(ADD_IMAGE, {
+    onCompleted({ addImage }) {
+      const { image, ok } = addImage;
+
+      if (ok) {
+        setCoverImg(image);
+        postDataRef.current.coverImg = image;
+      }
+    },
+  });
+
+  const [addPostMutation, { client }] = useMutation<IAddPost>(ADD_POST, {
     onCompleted({ addPost }) {
-      if (addPost.ok) router.push("/");
+      if (addPost.ok) {
+        client.cache.reset();
+        router.push("/");
+      }
     },
   });
 
   const [editPostMutation] = useMutation<IEditPost>(EDIT_POST, {
     onCompleted({ editPost }) {
-      if (editPost.ok) router.push("/");
+      if (editPost.ok) {
+        client.cache.reset();
+        router.push("/");
+      }
     },
   });
-  const addPost = useCallback(async () => {
-    const comfirmPost = confirm("저장하시겠습니까?");
 
-    if (!comfirmPost) return;
-
-    if (title.length && content.length && coverImg) {
-      if (post) {
-        await editPostMutation({
-          variables: {
-            input: {
-              _id: post._id,
-              title,
-              content,
-              coverImg,
-              addTags,
-              deleteTags,
-            },
-          },
-        });
-      } else {
-        await addPostMutation({
-          variables: {
-            input: {
-              title,
-              content,
-              coverImg,
-              tags,
-            },
-          },
-        });
-      }
-    } else alert("필드를 모두 채워주세요");
-  }, [title, content, coverImg, tags]);
-
-  const addTag = useCallback(
+  const onChangeValue: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => {
-      if (!e.nativeEvent.isComposing) {
-        if (e.key === "Enter") {
-          const newTag = tagName.trim();
-          if (!tags.includes(tagName) && newTag.length) {
-            const existencedTag = post?.tags.find((tag) => tag.name === newTag);
+      const name = e.target.name as keyof Pick<IPostInput, "category">;
 
-            if (!existencedTag) setAddTags([...addTags, newTag]);
+      if (postDataRef.current[name] === undefined) return;
 
-            if (deleteTags.includes(newTag))
-              setDeleteTags(deleteTags.filter((tag) => tag !== newTag));
+      postDataRef.current[name] = e.target.value;
+    },
+    [postDataRef],
+  );
 
-            setTags([...tags, newTag]);
-            setTagName("");
-          }
-        } else if (e.key === "Backspace" && tags.length && !tagName.length) {
-          const newTags = [...tags];
+  const onChangeContent = useCallback(
+    (value: string) => {
+      postDataRef.current.content = value;
+    },
+    [postDataRef],
+  );
 
-          const $tag = newTags.pop();
+  const { title, content, category } = postDataRef.current;
 
-          const deletedTag = post?.tags.find((tag) => tag.name === $tag);
+  const addPost = useCallback(async () => {
+    const confirmPost = confirm("저장하시겠습니까?");
 
-          if ($tag && deletedTag) setDeleteTags([...deleteTags, $tag]);
+    if (!confirmPost) return;
 
-          setTags(newTags);
+    if (post) {
+      await editPostMutation({
+        variables: {
+          input: {
+            ...postDataRef.current,
+            addTags,
+            deleteTags,
+          },
+        },
+      });
+    } else {
+      await addPostMutation({
+        variables: {
+          input: {
+            ...postDataRef.current,
+            tags,
+          },
+        },
+      });
+    }
+  }, [postDataRef.current, tags, addTags, deleteTags]);
+
+  const addTag: React.KeyboardEventHandler<HTMLInputElement> = useCallback(
+    (e) => {
+      const tagName = e.currentTarget.value;
+
+      if (e.nativeEvent.isComposing) return;
+
+      if (e.key === "Enter") {
+        const newTag = tagName.trim();
+
+        if (tags.includes(tagName) || !newTag.length) return;
+
+        const existencesTag = post?.tags.find((tag) => tag.name === newTag);
+
+        if (!existencesTag) {
+          setAddTags([...addTags, newTag]);
         }
+
+        if (deleteTags.includes(newTag)) {
+          setDeleteTags(deleteTags.filter((tag) => tag !== newTag));
+        }
+
+        setTags([...tags, newTag]);
+        e.currentTarget.value = "";
+      } else if (e.key === "Backspace" && tags.length && !tagName.length) {
+        const newTags = [...tags];
+
+        const $tag = newTags.pop();
+
+        const deletedTag = post?.tags.find((tag) => tag.name === $tag);
+
+        if ($tag && deletedTag) setDeleteTags([...deleteTags, $tag]);
+
+        setTags(newTags);
       }
     },
-    [tags, tagName, deleteTags, addTags],
+    [tags, deleteTags, addTags, postDataRef.current],
   );
 
   const deleteTag = useCallback(
@@ -136,38 +181,50 @@ const WritePost = ({ post }: IProps) => {
   const coverImageHandler = useCallback(
     (e) => {
       e.preventDefault();
+
       if (photoInputRef?.current) photoInputRef.current.click();
     },
     [photoInputRef],
   );
 
   const onChangeImage = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files)
-      setCoverImg(
-        "https://velog.velcdn.com/post-images/godori/496c0830-3dc1-11e9-bc03-611ba17bddf2/banner-maker.png",
-      );
+    if (!e.target.files) return;
+
+    addImageMutation({
+      variables: {
+        input: {
+          type: "post",
+          image: e.target.files[0],
+        },
+      },
+    });
   }, []);
 
   return (
     <Container>
       <WritePostHeader
         title={title}
-        tagName={tagName}
         tags={tags}
+        category={category}
         coverImg={coverImg}
         photoInputRef={photoInputRef}
         addTag={addTag}
         deleteTag={deleteTag}
-        onChangeTagName={onChangeTagName}
-        onChangeTitle={onChangeTitle}
-        coverImageHandler={coverImageHandler}
+        onChangeTagName={onChangeValue}
+        onChangeTitle={onChangeValue}
+        onSelectCategory={onChangeValue}
         onChangeImage={onChangeImage}
         clearCoverImage={clearCoverImage}
+        coverImageHandler={coverImageHandler}
       />
-      <TuiEditor initialValue={content} onChange={setContent} />
+      <TuiEditor initialValue={content} onChange={onChangeContent} />
       <WriteFooter save={addPost} />
     </Container>
   );
 };
+
+const Container = styled(RowFrame)`
+  padding: 30px 0;
+`;
 
 export default WritePost;

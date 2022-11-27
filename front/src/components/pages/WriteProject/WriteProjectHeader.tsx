@@ -1,6 +1,8 @@
-import React, { ChangeEvent, memo, MouseEvent, MutableRefObject } from "react";
-import { Header } from "@pages/WritePost/WritePostHeader";
+import React, { MouseEvent, MutableRefObject } from "react";
+import { Container } from "@pages/WritePost/WritePostHeader";
 import ImageIcon from "@icons/ImageIcon";
+
+type ChangeEventHandler = React.ChangeEventHandler<HTMLInputElement>;
 
 interface IProps {
   title: string;
@@ -10,12 +12,12 @@ interface IProps {
   startDate: string;
   endDate: string;
   photoInputRef: MutableRefObject<HTMLInputElement | null>;
-  onChangeTitle: (e: ChangeEvent) => void;
-  onChangeDec: (e: ChangeEvent) => void;
-  onChangeGithubUrl: (e: ChangeEvent) => void;
-  onChangeDate: (e: ChangeEvent) => void;
+  onChangeTitle: ChangeEventHandler;
+  onChangeDec: ChangeEventHandler;
+  onChangeGithubUrl: ChangeEventHandler;
+  onChangeDate: ChangeEventHandler;
+  onChangeImage: ChangeEventHandler;
   coverImageHandler: (e: MouseEvent) => void;
-  onChangeImage: (e: ChangeEvent<HTMLInputElement>) => void;
   clearCoverImage: () => void;
 }
 
@@ -38,26 +40,34 @@ const WriteProjectHeader = (props: IProps) => {
   } = props;
 
   return (
-    <Header>
-      <input type="text" value={title} onChange={onChangeTitle} placeholder="제목을 입력하세요" />
+    <Container>
       <input
+        name="title"
         type="text"
-        value={description}
+        defaultValue={title}
+        onChange={onChangeTitle}
+        placeholder="제목을 입력하세요"
+      />
+      <input
+        name="description"
+        type="text"
+        defaultValue={description}
         onChange={onChangeDec}
         placeholder="소개를 입력하세요"
       />
       <input
+        name="githubUrl"
         type="text"
-        value={githubUrl}
+        defaultValue={githubUrl}
         onChange={onChangeGithubUrl}
         placeholder="깃허브 주소를 입력하세요"
       />
       <div>
         <span>프로젝트 시작 날짜 : </span>
         <input
-          type="text"
-          placeholder="YYYY-MM-DD"
           name="startDate"
+          type="date"
+          placeholder="YYYY-MM-DD"
           defaultValue={startDate}
           onChange={onChangeDate}
         />
@@ -65,9 +75,9 @@ const WriteProjectHeader = (props: IProps) => {
       <div>
         <span>프로젝트 종료 날짜 : </span>
         <input
-          type="text"
-          placeholder="YYYY-MM-DD"
           name="endDate"
+          type="date"
+          placeholder="YYYY-MM-DD"
           defaultValue={endDate}
           onChange={onChangeDate}
         />
@@ -89,8 +99,8 @@ const WriteProjectHeader = (props: IProps) => {
           />
         </div>
       </div>
-    </Header>
+    </Container>
   );
 };
 
-export default memo(WriteProjectHeader);
+export default WriteProjectHeader;

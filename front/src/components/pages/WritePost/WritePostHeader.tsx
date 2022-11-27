@@ -1,17 +1,17 @@
-import React, { ChangeEvent, KeyboardEvent, MouseEvent, MutableRefObject } from "react";
+import React, { MutableRefObject } from "react";
 import styled from "@emotion/styled";
 
 import Tag from "@atoms/Tag";
 import ImageIcon from "@icons/ImageIcon/ImageIcon";
 
-export const Header = styled.header`
+export const Container = styled.header`
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   display: flex;
   flex-direction: column;
   gap: 20px;
   margin-bottom: 30px;
 
-  & input {
+  & input[type="text"] {
     background-color: ${({ theme }) => theme.BACKGROUND_COLOR.PRIMARY_COLOR};
     color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
     transition: 0.3s background-color;
@@ -22,6 +22,11 @@ export const Header = styled.header`
     padding: 10px 8px;
     font-size: 20px;
     font-weight: 600;
+  }
+
+  & input[type="date"] {
+    border: none;
+    background: none;
   }
 
   & > div#line {
@@ -84,43 +89,52 @@ const TagList = styled.div`
 
 interface Props {
   title: string;
-  tagName: string;
   tags: string[];
-  coverImg: string;
-  deleteTag: (e: MouseEvent) => void;
-  addTag: (e: KeyboardEvent) => void;
-  onChangeTitle: (e: ChangeEvent) => void;
-  onChangeTagName: (e: ChangeEvent) => void;
-  coverImageHandler: (e: MouseEvent) => void;
-  onChangeImage: (e: ChangeEvent<HTMLInputElement>) => void;
-  clearCoverImage: () => void;
+  coverImg: string | null;
+  category: string;
+  onSelectCategory: React.ChangeEventHandler;
+  onChangeTagName: React.ChangeEventHandler;
+  onChangeImage: React.ChangeEventHandler;
+  onChangeTitle: React.ChangeEventHandler;
+  addTag: React.KeyboardEventHandler;
+  deleteTag: React.MouseEventHandler;
+  coverImageHandler: React.MouseEventHandler;
+  clearCoverImage: React.MouseEventHandler;
   photoInputRef: MutableRefObject<HTMLInputElement | null>;
 }
 
 const WritePostHeader = (props: Props) => {
   const {
     title,
-    tagName,
     tags,
     photoInputRef,
     coverImg,
+    category,
     addTag,
     deleteTag,
     onChangeTagName,
     onChangeTitle,
     coverImageHandler,
     onChangeImage,
+    onSelectCategory,
     clearCoverImage,
   } = props;
 
   return (
-    <Header>
-      <input type="text" value={title} onChange={onChangeTitle} placeholder="제목을 입력하세요" />
-      <div id="line" />
+    <Container>
+      <div>
+        <input
+          type="text"
+          name="title"
+          defaultValue={title}
+          onChange={onChangeTitle}
+          placeholder="제목을 입력하세요"
+        />
+      </div>
 
       <div>
         <TagList>
-          {tags[0] &&
+          {tags.length >= 0 &&
             tags.map((tag: string) => (
               <Tag key={tag} onClick={deleteTag}>
                 {tag}
@@ -128,12 +142,17 @@ const WritePostHeader = (props: Props) => {
             ))}
           <input
             type="text"
-            value={tagName}
             onChange={onChangeTagName}
-            placeholder="태그를 입력하세요"
             onKeyDown={addTag}
+            placeholder="태그를 입력하세요"
           />
         </TagList>
+      </div>
+      <div>
+        <select onChange={onSelectCategory} name="category" defaultValue={category}>
+          <option value="dev">Dev</option>
+          <option value="daily">Daily</option>
+        </select>
       </div>
 
       <div>
@@ -152,7 +171,7 @@ const WritePostHeader = (props: Props) => {
           />
         </div>
       </div>
-    </Header>
+    </Container>
   );
 };
 
