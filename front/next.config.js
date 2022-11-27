@@ -25,6 +25,9 @@ const nextConfig = {
   images: {
     domains: ["image.toast.com"],
   },
+  compiler: {
+    emotion: true,
+  },
 };
 
 module.exports = withTM(withBundleAnalyzer(nextConfig));
