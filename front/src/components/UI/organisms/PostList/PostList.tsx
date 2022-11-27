@@ -1,18 +1,16 @@
 import React, { forwardRef } from "react";
 import styled from "@emotion/styled";
 
-import PostItem from "@molecules/PostItem/Large";
+import PostItem from "@molecules/PostItem";
 import { IPost } from "@queries-types/posts";
 import useFetchScroll from "@hooks/useFetchScroll";
 
 const Container = styled.div`
   position: relative;
-  width: 100%;
-  margin-right: 30px;
-
-  @media (max-width: ${({ theme }) => theme.BP.PC}) {
-    margin-right: 0;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 interface IProps {
@@ -20,7 +18,7 @@ interface IProps {
   func: () => void;
 }
 
-export const PostList = forwardRef<HTMLDivElement, IProps>(({ posts, func }, ref) => {
+const PostList = forwardRef<HTMLDivElement, IProps>(({ posts, func }, ref) => {
   useFetchScroll(ref, func);
 
   return (
@@ -32,4 +30,4 @@ export const PostList = forwardRef<HTMLDivElement, IProps>(({ posts, func }, ref
   );
 });
 
-export default PostList;
+export default React.memo(PostList);

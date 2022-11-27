@@ -15,4 +15,4 @@ const NavItem: React.FC<Props> = ({ href, name }) => {
   );
 };
 
-export default NavItem;
+export default React.memo(NavItem);
