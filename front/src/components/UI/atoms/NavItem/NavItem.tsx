@@ -1,32 +1,17 @@
 import React from "react";
-import Link from "next/link";
-import styled from "@emotion/styled";
+import NextLink, { LinkProps } from "next/link";
 
-interface Props {
-  href: string;
+interface Props extends LinkProps {
   name: string;
 }
 
-const StyledNavItem = styled.li`
-  box-sizing: border-box;
-  padding: 30px;
-  width: 100%;
-  cursor: pointer;
-  color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
-  transition: background-color 0.2s ease-in-out;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
-`;
-
 const NavItem: React.FC<Props> = ({ href, name }) => {
   return (
-    <>
-      <Link href={href.toLowerCase()} prefetch={false}>
-        <StyledNavItem>{name}</StyledNavItem>
-      </Link>
-    </>
+    <NextLink href={href}>
+      <a>
+        <li>{name}</li>
+      </a>
+    </NextLink>
   );
 };
 

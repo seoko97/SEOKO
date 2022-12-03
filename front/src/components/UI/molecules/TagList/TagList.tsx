@@ -1,31 +1,34 @@
+import React, { memo, MouseEvent } from "react";
 import styled from "@emotion/styled";
-import React from "react";
 import Tag from "@atoms/Tag";
+import { ITag } from "@queries-types/tags";
 
 interface Props {
-  tags: string[];
+  tags: ITag[];
+  onClick: (e: MouseEvent<HTMLDivElement>) => void;
 }
 
-const StyledTagList = styled.div`
+const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
-  color: ${({ theme }) => theme.FONT_COLOR.LOGO_COLOR};
   font-weight: 500;
-  margin-top: 10px;
   flex-wrap: wrap;
+  gap: 5px 8px;
+  box-sizing: border-box;
+  z-index: 2;
 `;
 
-const TagList = ({ tags }: Props) => {
+const TagList = ({ tags, onClick }: Props) => {
   return (
-    <>
-      <StyledTagList>
-        {tags.map((tag, i) => (
-          <Tag key={i + tag} tagName={tag} />
-        ))}
-      </StyledTagList>
-    </>
+    <Container>
+      {tags.map((tag, i) => (
+        <Tag key={tag._id + i} onClick={onClick}>
+          {tag.name}
+        </Tag>
+      ))}
+    </Container>
   );
 };
 
-export default TagList;
+export default memo(TagList, (prev, next) => prev.tags.length === next.tags.length);

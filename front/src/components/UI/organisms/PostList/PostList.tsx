@@ -1,29 +1,33 @@
-import React from "react";
-import { useRecoilValue } from "recoil";
+import React, { forwardRef } from "react";
 import styled from "@emotion/styled";
 
-import { postState } from "@states/posts/atoms";
 import PostItem from "@molecules/PostItem";
+import { IPost } from "@queries-types/posts";
+import useFetchScroll from "@hooks/useFetchScroll";
 
-const StyledPostList = styled.div`
-  flex: 3;
-  margin-right: 30px;
-
-  @media (max-width: ${({ theme }) => theme.BP.HDPC}) {
-    margin-right: 0;
-  }
+const Container = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
-const PostList = () => {
-  const posts = useRecoilValue(postState);
+interface IProps {
+  posts: IPost[];
+  func: () => void;
+}
+
+const PostList = forwardRef<HTMLDivElement, IProps>(({ posts, func }, ref) => {
+  useFetchScroll(ref, func);
 
   return (
-    <>
-      <StyledPostList>
-        {posts && posts.map((el) => <PostItem key={el.id + el.title} post={el} />)}
-      </StyledPostList>
-    </>
+    <Container ref={ref}>
+      {posts.map((post, idx) => (
+        <PostItem key={post._id + post.title + idx} post={post} />
+      ))}
+    </Container>
   );
-};
+});
 
-export default PostList;
+export default React.memo(PostList);

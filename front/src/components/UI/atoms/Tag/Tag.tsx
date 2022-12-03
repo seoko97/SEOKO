@@ -1,31 +1,34 @@
-import React from "react";
-import Link from "next/link";
+import React, { memo } from "react";
 import styled from "@emotion/styled";
 
-interface Props {
-  tagName: string;
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
 }
 
 const StyledTag = styled.div`
-  padding: 5px 8px;
-  background-color: ${({ theme }) => theme.BAKCGROUND_COLOR.SECONDARY_COLOR};
-  font-size: 12px;
-  border-radius: 10px;
-  margin: 0 5px 5px 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: content-box;
+  height: 28px;
+  padding: 0.2em 0.9em;
+  font-size: 0.8em;
+
+  cursor: pointer;
+  transition: color 0.2s;
+
+  color: #2e4270;
+  background-color: #e8ebee;
+  font-weight: bold;
+  border-radius: 8px;
 
   &:hover {
-    text-decoration: underline;
+    color: ${({ theme }) => theme.FONT_COLOR.LOGO_COLOR};
   }
 `;
 
-const Tag = ({ tagName }: Props) => {
-  return (
-    <>
-      <Link href={`/tag/${tagName}`}>
-        <StyledTag>{tagName}</StyledTag>
-      </Link>
-    </>
-  );
+const Tag = ({ children, ...props }: Props) => {
+  return <StyledTag {...props}>{children}</StyledTag>;
 };
 
-export default Tag;
+export default memo(Tag);

@@ -1,25 +1,19 @@
 {
-   "compilerOptions": {
-      "baseUrl": ".",
-      "paths": {
-         "@src/*": [
-            "src/*"
-         ],
-         "@users/*": [
-            "src/users/*"
-         ],
-         "@auth/*": [
-            "src/auth/*"
-         ],
-         "@utils/*": [
-            "src/utils/*"
-         ],
-         "@decorators/*": [
-            "src/decorators/*"
-         ],
-         "@common/*": [
-            "src/common/*"
-         ]
-      }
-   }
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@users/*": ["src/users/*"],
+      "@auth/*": ["src/auth/*"],
+      "@posts/*": ["src/posts/*"],
+      "@tags/*": ["src/tags/*"],
+      "@utils/*": ["src/utils/*"],
+      "@decorators/*": ["src/decorators/*"],
+      "@common/*": ["src/common/*"],
+      "@categories/*": ["src/categories/*"],
+      "@projects/*": ["src/projects/*"],
+      "@skills/*": ["src/skills/*"],
+      "@experiences/*": ["src/experiences/*"],
+      "@src/*": ["src/*"]
+    }
+  }
 }

@@ -1,13 +1,19 @@
 import React from "react";
 import NavItem from "@atoms/NavItem";
+import { Container } from "./UserNavList";
 
-const NavList = () => (
-  <ul>
-    <NavItem name="홈" href="/" />
-    <NavItem name="카테고리" href="/category" />
-    <NavItem name="태그" href="/tag" />
+interface IProps {
+  username: string | null;
+}
+
+const NavList = ({ username }: IProps) => (
+  <Container>
+    <NavItem name="HOME" href="/" />
+    <NavItem name="TAG" href="/tag" />
+    <NavItem name="PROJECT" href="/project" />
     <NavItem name="ABOUT" href="/about" />
-  </ul>
+    {!username && <NavItem name="로그인" href="/signin" />}
+  </Container>
 );
 
-export default React.memo(NavList);
+export default NavList;

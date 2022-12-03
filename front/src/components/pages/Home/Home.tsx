@@ -1,49 +1,24 @@
-import React, { useEffect } from "react";
-import { useSetRecoilState } from "recoil";
-import styled from "@emotion/styled";
+import React from "react";
 
-import PageContent from "@molecules/PageContent";
-import PostList from "@organisms/PostList";
 import RowFrame from "@frames/RowFrame";
-import MainCategory from "@src/components/UI/molecules/MainCategory";
+import Intro from "@molecules/Intro";
 
-import { categoryState } from "@states/categories/atoms";
-import { postState, Props as PostProps } from "@states/posts/atoms";
+import styled from "@emotion/styled";
+import HomeContent from "@organisms/HomeContent";
 
-interface Props {
-  posts: PostProps[];
-  categories: any[];
-}
-const StyledDiv = styled.div`
-  position: relative;
-  width: 100%;
+const Container = styled(RowFrame)`
   display: flex;
-
-  @media (max-width: ${({ theme }) => theme.BP.HDPC}) {
-    flex-direction: column-reverse;
-  }
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
-const Home = ({ posts, categories }: Props) => {
-  const setPosts = useSetRecoilState(postState);
-  const setCategories = useSetRecoilState(categoryState);
-
-  useEffect(() => {
-    setPosts(posts);
-    setCategories(categories);
-  }, []);
-
+const Home = () => {
   return (
-    <>
-      <PageContent>
-        <RowFrame>
-          <StyledDiv>
-            <PostList />
-            <MainCategory />
-          </StyledDiv>
-        </RowFrame>
-      </PageContent>
-    </>
+    <Container>
+      <Intro />
+      <HomeContent />
+    </Container>
   );
 };
 

@@ -1,36 +1,43 @@
-import { ExtractJwt, Strategy as JStrategy } from "passport-jwt";
-import { Injectable } from "@nestjs/common";
-import { PassportStrategy } from "@nestjs/passport";
+import { ExtractJwt, Strategy as JStrategy } from 'passport-jwt';
+import { Injectable } from '@nestjs/common';
+import { PassportStrategy } from '@nestjs/passport';
+import { ConfigService } from '@nestjs/config';
 
-import { TokenUser } from "@decorators/user.decorator";
-import { jwtContents } from "../contents";
+import { ITokenUser } from '@decorators/user.decorator';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(JStrategy) {
-  constructor() {
+  constructor(private configService: ConfigService) {
+    const JWT_SECRET = configService.get('JWT_SECRET_KEY');
+
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: jwtContents.secret,
+      secretOrKey: JWT_SECRET,
     });
   }
 
-  validate(payload: TokenUser) {
-    return { id: payload.id };
+  validate(payload: ITokenUser) {
+    return { _id: payload._id };
   }
 }
 
 @Injectable()
-export class ExpriedJwtStrategy extends PassportStrategy(JStrategy, "jwt-expried") {
-  constructor() {
+export class ExpiredJwtStrategy extends PassportStrategy(
+  JStrategy,
+  'jwt-expired',
+) {
+  constructor(private configService: ConfigService) {
+    const JWT_SECRET = configService.get('JWT_SECRET_KEY');
+
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: jwtContents.secret,
+      secretOrKey: JWT_SECRET,
       ignoreExpiration: true,
     });
   }
 
-  validate(payload: TokenUser) {
-    return { id: payload.id };
+  validate(payload: ITokenUser) {
+    return { _id: payload._id };
   }
 }

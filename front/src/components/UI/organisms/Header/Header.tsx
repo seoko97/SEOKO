@@ -1,25 +1,17 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { css } from "@emotion/react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 
 import Logo from "@atoms/Logo";
 import RowFrame from "@frames/RowFrame";
-import Nav from "@organisms/Nav";
-import MenuIcon from "@icons/MenuIcon";
+import MenuBox from "@molecules/MenuBox";
 
-interface Props {
-  scrollPosition: number;
-  pathname: string;
-}
-
-const StyledHeader = styled.header<Props>`
+const Container = styled.header`
   width: 100%;
   position: sticky;
   top: -32px;
   padding-top: 32px;
-  transition: all 0.25s ease-in-out 0s;
-  z-index: 1;
+  z-index: 100;
+  transition: box-shadow 0.15s, backdrop-filter 0.3s, background-color 0.3s;
 
   & > div {
     display: flex;
@@ -28,63 +20,43 @@ const StyledHeader = styled.header<Props>`
     height: 72px;
   }
 
-  /* box-shadow: rgb(0 0 0 / 8%) 0px 0px 15px; */
+  &.fixed {
+    box-shadow: rgb(0 0 0 / 8%) 0px 0px 8px;
+  }
 
-  ${({ theme }) => css`
-    background: ${theme.BAKCGROUND_COLOR.PRIMARY_COLOR_RGBA};
-    backdrop-filter: blur(2px);
+  ${({ theme }) => `
+    background-color: ${theme.BACKGROUND_COLOR.PRIMARY_COLOR_RGBA};
+    backdrop-filter: blur(3px);
     & a {
       color: ${theme.FONT_COLOR.PRIMARY_COLOR};
-    }
-    & svg {
-      &:hover {
-        cursor: pointer;
-      }
-      fill: ${theme.FONT_COLOR.PRIMARY_COLOR};
     }
   `}
 `;
 
 const Header = () => {
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const [navState, setNavState] = useState(false);
-  const [pathName, setPathName] = useState("");
-  const router = useRouter();
-
-  const openMenu = useCallback(() => {
-    setNavState(!navState);
-  }, [navState]);
+  const [isFixed, setIsFixed] = useState(false);
 
   useEffect(() => {
-    setPathName(router.pathname);
-    const layoutRef = document.body;
+    const updateScroll = () => {
+      const scrollHeight = window.scrollY || document.documentElement.scrollTop;
 
-    const handleScroll = () => setScrollPosition(layoutRef.scrollTop);
+      if (scrollHeight >= 32) setIsFixed(true);
+      else setIsFixed(false);
+    };
 
-    layoutRef?.addEventListener("scroll", handleScroll);
-    return () => layoutRef?.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", updateScroll);
+
+    return () => window.removeEventListener("scroll", updateScroll);
   }, []);
 
-  useEffect(() => {
-    if (router.pathname !== pathName) {
-      setPathName(router.pathname);
-      setNavState(false);
-    }
-  }, [router.pathname, pathName]);
-
   return (
-    <>
-      <StyledHeader scrollPosition={scrollPosition} pathname={router.pathname}>
-        <RowFrame>
-          <Logo />
-          <div onClick={openMenu} id="menu_button">
-            <MenuIcon />
-          </div>
-        </RowFrame>
-      </StyledHeader>
-      <Nav menuController={openMenu} navState={navState} />
-    </>
+    <Container className={isFixed ? "fixed" : ""}>
+      <RowFrame>
+        <Logo />
+        <MenuBox />
+      </RowFrame>
+    </Container>
   );
 };
 
-export default React.memo(Header);
+export default Header;

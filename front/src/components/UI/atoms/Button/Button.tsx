@@ -3,6 +3,7 @@ import React from "react";
 
 interface Props {
   content: string;
+  loading: boolean;
 }
 
 const StyledButton = styled.button`
@@ -17,12 +18,8 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ content }: Props) => {
-  return (
-    <>
-      <StyledButton>{content}</StyledButton>
-    </>
-  );
+const Button = ({ content, loading }: Props) => {
+  return <StyledButton disabled={loading}>{content}</StyledButton>;
 };
 
 Button.defaultProps = {

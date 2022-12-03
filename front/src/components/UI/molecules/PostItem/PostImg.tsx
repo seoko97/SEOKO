@@ -1,48 +1,43 @@
-import styled from "@emotion/styled";
 import React from "react";
+import styled from "@emotion/styled";
+import Image from "next/image";
 
 interface Props {
   titleImage: string;
 }
 
 const StyledPostImg = styled.div`
+  position: relative;
   width: 250px;
-  height: 100%;
+  padding-bottom: 200px;
+  border-radius: 10px;
+  transition: transform 0.3s, box-shadow 0.3s;
 
-  & > div {
-    width: 100%;
-    position: relative;
-    padding-bottom: 200px;
-    & img {
-      border-radius: 10px;
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+  & img {
+    position: absolute;
+    object-fit: cover;
+  }
+  & > span {
+    border-radius: 10px;
   }
 
-  @media (max-width: ${({ theme }) => theme.BP.TABLET_Y}) {
+  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     width: 100%;
-    max-height: 400px;
-    & > div {
-      padding-bottom: 70%;
-    }
-
-    flex-direction: column;
+    padding-bottom: 70%;
   }
 `;
 
-const PostImg = ({ titleImage }: Props) => {
-  return (
-    <>
-      <StyledPostImg>
-        <div>
-          <img src={titleImage} alt="titleImg" />
-        </div>
-      </StyledPostImg>
-    </>
-  );
-};
+const PostImg = ({ titleImage }: Props) => (
+  <StyledPostImg className="post-image">
+    <Image
+      placeholder="blur"
+      blurDataURL={titleImage}
+      src={titleImage}
+      property="true"
+      layout="fill"
+      alt="post-image"
+    />
+  </StyledPostImg>
+);
 
 export default PostImg;

@@ -20,13 +20,11 @@ const StyledFooter = styled.footer`
 
 const Footer = () => {
   return (
-    <>
-      <StyledFooter>
-        <RowFrame>
-          <FooterContent />
-        </RowFrame>
-      </StyledFooter>
-    </>
+    <StyledFooter>
+      <RowFrame>
+        <FooterContent />
+      </RowFrame>
+    </StyledFooter>
   );
 };
 

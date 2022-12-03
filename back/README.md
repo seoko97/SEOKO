@@ -1,35 +1,27 @@
 # SEOKO's Back
 
-<br />
+### **Resolver**
 
-### **Table**
+- User [ ✅ ]
 
-- Users [ ]
+- Post [ ✅ ]
 
-- Auth [ ]
+- Tag [ ✅ ]
 
-- Posts [ ]
+- auth [ ✅ ]
 
-- Skills [ ]
+- Project [ ✅ ]
 
-- Tags [ ]
-
-- ...
 
 <br />
 
 ### **적용 Skills**
 
-- Nestjs
-- Express
+- NestJs
+- Apollo-Server
+- GraphQL
 - Passport
-- Sequelize
-- Jsonwebtoken
-- ... (적용시 추가)
+- mongoDB
+- Mongoose
+- JWT (Access, Refresh)
 
-<br />
-
-### **향후 진행 사항**
-
-- Auth 테이블과 Users 테이블 연결 후 jwt 토큰 인증 [ ✅ ]
-- ... 적용시 추가

@@ -1,56 +1,75 @@
-import React from "react";
+import React, { useCallback } from "react";
+import { useRouter } from "next/router";
+import removeMd from "remove-markdown";
+
 import styled from "@emotion/styled";
+
+import { ITag } from "@queries-types/tags";
+
 import TagList from "@molecules/TagList";
+import { dateTimeParser } from "@lib/dateTimeParser";
 
-const StyledPostConetent = styled.div`
-  width: calc(100% - 250px);
-  padding: 10px 20px;
+const StyledPostContent = styled.div`
+  flex: 1;
   box-sizing: border-box;
-
+  min-height: 200px;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
+  gap: 15px;
+
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   word-break: break-all;
 
   h1 {
-    font-weight: bold;
-    font-size: 20px;
-    margin-bottom: 5px;
-  }
-  p {
-    &:first-of-type {
-      font-size: 11px;
-      margin-bottom: 5px;
-      color: #ccc;
-      font-weight: 300;
-    }
-    &:last-of-type {
-      flex-grow: 2;
-      margin-bottom: 5px;
-    }
+    width: 100%;
+    transition: color 0.3s;
+    font-weight: 500;
+    font-size: 1.1em;
   }
 
-  @media (max-width: ${({ theme }) => theme.BP.TABLET_Y}) {
+  .date {
+    color: #949494;
+    font-weight: 400;
+    font-size: 0.9em;
+  }
+
+  p {
+    font-weight: 300;
+    margin-bottom: 8px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     width: 100%;
+    min-height: 0;
+
+    padding: 15px 5px;
+    gap: 10px;
   }
 `;
 
 interface Props {
   title: string;
   content: string;
-  tags: string[];
+  tags: ITag[];
+  createdAt: string;
 }
 
-const PostContent = ({ title, content, tags }: Props) => {
+const PostContent = ({ title, content, tags, createdAt }: Props) => {
+  const router = useRouter();
+  const parsedContent = removeMd(content, { listUnicodeChar: "" }).substring(0, 100);
+  const onClickTag = useCallback((e) => {
+    e.stopPropagation();
+    router.push(`/tag/${e.target.innerText}`);
+  }, []);
+
   return (
-    <>
-      <StyledPostConetent>
-        <h1>{title}</h1>
-        <p>날짜</p>
-        <p>{content}</p>
-        <TagList tags={tags} />
-      </StyledPostConetent>
-    </>
+    <StyledPostContent>
+      <h1>{title}</h1>
+      <p>{parsedContent.length >= 150 ? `${parsedContent}...` : parsedContent}</p>
+      {tags.length !== 0 && <TagList onClick={onClickTag} tags={tags} />}
+      <span className="date">{dateTimeParser(createdAt)}</span>
+    </StyledPostContent>
   );
 };
 

@@ -2,17 +2,17 @@
 
 ### **Page**
 
-- Main [ ]
+- Main [ ✅ ]
 
-- Post [ ]
+- Post [ ✅ ]
 
-- About [ ]
+- About [ ✅ ]
 
-- SignIn [ ]
+- SignIn [ ✅ ]
 
 - Project [ ]
 
-- Profile [ ]
+- Tag [ ✅ ]
 
 <br />
 
@@ -21,8 +21,9 @@
 - React
 - NextJs
 - Emotion
-- Typescript
-- Recoil
+- TypeScript
+- GraphQL
+- ApolloClient
 - Storybook
 - ... (적용시 추가)
 
@@ -36,4 +37,22 @@
 
 - 서버와 연결 후 User Avata 디자인 [ ✅ ]
 
-- 메인 페이지 디자인 [ ]
+- 메인 페이지 디자인 [ ✅ ]
+
+- 게시글 작성 페이지 디자인 [ ✅ ]
+
+- 게시글 상세 페이지 디자인 [ ✅ ]
+
+- 검색창 디자인 [ ✅ ]
+
+- 태그 페이지 디자인 [ ✅ ]
+
+- 소개 페이지 디자인 [ ✅ ]
+
+- 이미지 업로드 기능 [ ]
+
+- 렌더링 최적화 [ ]
+
+- 서버 연결 [ ]
+
+- ...

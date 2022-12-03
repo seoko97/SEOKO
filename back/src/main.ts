@@ -1,30 +1,28 @@
-import { NestFactory } from "@nestjs/core";
-import { NestExpressApplication } from "@nestjs/platform-express";
-import { ValidationPipe } from "@nestjs/common";
-
-import * as cookieParser from "cookie-parser";
-import * as compression from "compression";
-import { AppModule } from "./app.module";
+import { NestFactory } from '@nestjs/core';
+import cookieParser from 'cookie-parser';
+import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.js';
+import compression from 'compression';
+import { ValidationPipe } from '@nestjs/common';
+import { AppModule } from './app.module';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    cors: {
-      origin: true,
-      credentials: true,
-    },
+  const app = await NestFactory.create(AppModule);
+  const configService = app.get<ConfigService>(ConfigService);
+
+  app.enableCors({
+    origin: configService.get('HOST'),
+    credentials: true,
   });
+  app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }));
+  app.use(cookieParser());
+  app.use(compression());
 
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      transform: true,
       disableErrorMessages: true,
     }),
   );
-
-  app.use(cookieParser());
-  app.use(compression());
 
   await app.listen(3065);
 }

@@ -6,4 +6,4 @@ const CloseIcon = () => (
   </svg>
 );
 
-export default React.memo(CloseIcon);
+export default CloseIcon;

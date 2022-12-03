@@ -1,12 +1,9 @@
-import { IsString } from "class-validator";
+import { InputType, PickType } from '@nestjs/graphql';
+import { User } from '../user.model';
 
-export class CreateUserDto {
-  @IsString()
-  readonly userId?: string;
-
-  @IsString()
-  readonly password?: string;
-
-  @IsString()
-  readonly username?: string;
-}
+@InputType('InputUser')
+export class CreateUserInput extends PickType(User, [
+  'username',
+  'password',
+  'userId',
+]) {}

@@ -12,22 +12,26 @@ const GlobalStyle = ({ theme }: GlobalProps) => (
     styles={css`
       ${reset}
 
-      html, body, #__next {
+      html {
+        -webkit-text-size-adjust: none;
+        -moz-text-size-adjust: none;
+        -o-text-size-adjust: none;
+      }
+
+      body,
+      #__next {
         height: 100%;
       }
-      html,
+
       body {
-        overflow-x: hidden;
-        width: 100%;
         height: 100%;
-      }
-      body {
-        overflow-y: overlay;
         margin: 0;
-        font-size: 14px;
+        font-size: 16px;
         line-height: 1.5715;
         user-select: none;
+        background-color: ${theme.BACKGROUND_COLOR.PRIMARY_COLOR};
       }
+
       h1,
       h2,
       h3,
@@ -41,8 +45,35 @@ const GlobalStyle = ({ theme }: GlobalProps) => (
         text-decoration: none;
         outline: none;
       }
-      & * {
-        font-family: "Quicksand", "Noto Sans KR", sans-serif !important;
+
+      input,
+      textarea,
+      button {
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        border-radius: 0;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+      }
+
+      input:focus-visible {
+        outline: 0;
+      }
+
+      ::-webkit-scrollbar {
+        width: 5px;
+        background-color: inherit;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background-color: ${theme.FONT_COLOR.SECONDARY_COLOR};
+        border-radius: 5px;
+      }
+
+      * {
+        font-family: "Noto Sans KR", sans-serif !important;
+        box-sizing: border-box;
       }
     `}
   />

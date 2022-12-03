@@ -1,33 +1,46 @@
 import React from "react";
-import Link from "next/link";
 
 import styled from "@emotion/styled";
+import Image from "next/image";
 
-const StyledUserAvatar = styled.div`
-  width: 42px;
-  height: 42px;
-
+interface IProps {
+  width: number;
+  height: number;
+  onClick?: () => void;
+}
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: fit-content;
   border-radius: 50%;
-  background-color: #ccc;
 
-  cursor: pointer;
-
-  & > img {
-    border-radius: 50%;
+  & img {
     width: 100%;
     height: 100%;
+    border-radius: 10px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  & * {
+    border-radius: 50%;
   }
 `;
 
-const UserAvatar = () => {
+const UserAvatar = ({ height, width, onClick }: IProps) => {
   return (
-    <>
-      <StyledUserAvatar>
-        <Link href="/signin">
-          <img src="/main.jpg" alt="me" />
-        </Link>
-      </StyledUserAvatar>
-    </>
+    <Container onClick={onClick && onClick}>
+      <Image
+        src="/main.jpg"
+        placeholder="blur"
+        blurDataURL="/main.jpg"
+        alt="user"
+        priority
+        width={width}
+        height={height}
+      />
+    </Container>
   );
 };
 

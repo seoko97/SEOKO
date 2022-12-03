@@ -1,0 +1,163 @@
+import React, { ChangeEvent, useCallback, useRef, useState } from "react";
+import { useRouter } from "next/router";
+import { useMutation } from "@apollo/client";
+
+import TuiEditor from "@organisms/TuiEditor";
+import WriteFooter from "@molecules/WriteFooter";
+import RowFrame from "@frames/RowFrame";
+
+import { ADD_PROJECT } from "@queries/project/addProject.queries";
+import { EDIT_PROJECT } from "@queries/project/editProject.queries";
+import { IAddProject, IEditProject, IProject, IProjectInput } from "@queries-types/project";
+
+import { IAddImage } from "@queries-types/image";
+import { ADD_IMAGE } from "@queries/image/addImage.queries";
+import WriteProjectHeader from "./WriteProjectHeader";
+
+interface IProps {
+  project: IProject | undefined;
+}
+
+const PROJECT: IProjectInput = {
+  title: "",
+  description: "",
+  githubUrl: "",
+  content: "",
+  coverImg: "",
+  startDate: "",
+  endDate: "",
+};
+
+const removeTypename = <T extends IProject>(data: T | undefined) => {
+  if (!data) return;
+
+  const newData = { ...data };
+
+  if (newData.__typename) delete newData.__typename;
+
+  return newData;
+};
+
+const WriteProject = ({ project }: IProps) => {
+  const router = useRouter();
+  const projectDataRef = useRef<IProjectInput>(removeTypename(project) ?? PROJECT);
+  const photoInputRef = useRef<HTMLInputElement | null>(null);
+
+  const [coverImg, setCoverImg] = useState<string>(project?.coverImg || "");
+
+  const [addImageMutation] = useMutation<IAddImage>(ADD_IMAGE, {
+    onCompleted({ addImage }) {
+      const { image, ok } = addImage;
+      if (ok) {
+        setCoverImg(image);
+        projectDataRef.current.coverImg = image;
+      }
+    },
+  });
+
+  const [addProjectMutation, { client }] = useMutation<IAddProject>(ADD_PROJECT, {
+    onCompleted({ addProject }) {
+      if (addProject?.ok) {
+        client.cache.reset();
+        router.push("/");
+      }
+    },
+  });
+
+  const [editProjectMutation] = useMutation<IEditProject>(EDIT_PROJECT, {
+    onCompleted({ editProject }) {
+      if (editProject?.ok) {
+        client.cache.reset();
+        router.push("/");
+      }
+    },
+  });
+
+  const onChangeValue: React.ChangeEventHandler<HTMLInputElement> = useCallback(
+    (e) => {
+      const name = e.target.name as keyof IProjectInput;
+
+      if (projectDataRef.current[name] === undefined) return;
+
+      projectDataRef.current[name] = e.target.value;
+    },
+    [projectDataRef],
+  );
+
+  const onChangeContent = useCallback(
+    (value: string) => {
+      projectDataRef.current.content = value;
+    },
+    [projectDataRef],
+  );
+
+  const addProject = useCallback(() => {
+    const confirmProject = confirm("저장하시겠습니까?");
+
+    if (!confirmProject) return;
+
+    const input = { ...projectDataRef.current };
+
+    if (project) {
+      editProjectMutation({
+        variables: { input },
+      });
+    } else {
+      addProjectMutation({
+        variables: { input },
+      });
+    }
+  }, [projectDataRef]);
+
+  const clearCoverImage = useCallback(() => {
+    setCoverImg("");
+  }, []);
+
+  const onChangeImage = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+
+    addImageMutation({
+      variables: {
+        input: {
+          type: "post",
+          image: e.target.files[0],
+        },
+      },
+    });
+  }, []);
+
+  const coverImageHandler = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (photoInputRef?.current) photoInputRef.current.click();
+    },
+    [photoInputRef],
+  );
+
+  const { title, description, startDate, endDate, githubUrl } = projectDataRef.current;
+
+  return (
+    <RowFrame>
+      <WriteProjectHeader
+        title={title}
+        description={description}
+        startDate={startDate}
+        endDate={endDate ?? ""}
+        coverImg={coverImg}
+        githubUrl={githubUrl}
+        photoInputRef={photoInputRef}
+        onChangeTitle={onChangeValue}
+        onChangeDec={onChangeValue}
+        onChangeGithubUrl={onChangeValue}
+        onChangeDate={onChangeValue}
+        onChangeImage={onChangeImage}
+        clearCoverImage={clearCoverImage}
+        coverImageHandler={coverImageHandler}
+      />
+      <TuiEditor initialValue={project?.content} onChange={onChangeContent} />
+      <WriteFooter save={addProject} />
+    </RowFrame>
+  );
+};
+
+export default WriteProject;
