@@ -1,4 +1,4 @@
-name: Docker test - front
+name: SEOKO Client Deploy
 
 on:
    push:
