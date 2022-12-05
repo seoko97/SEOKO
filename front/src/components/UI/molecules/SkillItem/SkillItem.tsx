@@ -15,15 +15,16 @@ const Container = styled.div<{ isAdmin: boolean }>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0.5em;
 
   & img {
     cursor: ${({ isAdmin }) => (isAdmin ? "pointer" : "default")};
   }
 
   & h3 {
-    color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
+    color: ${({ theme }) => theme.FONT_COLOR.SECONDARY_COLOR};
     text-align: center;
-    font-size: 0.9rem;
+    font-weight: bold;
   }
 
   @media (max-width: ${({ theme }) => theme.BP.PC}) {
@@ -39,8 +40,8 @@ const SkillItem = ({ data, onClick }: IProps) => {
       <Image
         priority
         src={data.icon}
-        width={72}
-        height={72}
+        width={76}
+        height={76}
         alt={data.name}
         onClick={onClick ? () => onClick(data) : () => undefined}
       />

@@ -15,18 +15,15 @@ const Container = styled.div`
     margin-bottom: 16px;
   }
 
-  & .info {
-    & > h3 {
-      font-size: 1.2rem;
-      font-weight: 500;
-      margin-bottom: 5px;
-    }
+  & h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
 
-    & > .date {
-      font-size: 0.9em;
-      color: ${({ theme }) => theme.FONT_COLOR.SECONDARY_COLOR};
-      margin-top: 5px;
-    }
+  & .date {
+    font-size: 0.9em;
+    color: ${({ theme }) => theme.FONT_COLOR.SECONDARY_COLOR};
+    margin-top: 5px;
   }
 
   & .desc {
@@ -39,8 +36,15 @@ const Container = styled.div`
   }
 
   @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    & h3 {
+      font-size: 1.7em;
+    }
+    & .date {
+      font-size: 1.3em;
+    }
+
     & > div {
-      gap: 8px;
+      gap: 1em;
       flex-direction: column;
     }
   }

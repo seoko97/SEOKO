@@ -40,7 +40,7 @@ const Container = styled(RowFrame)`
   align-items: center;
   justify-content: flex-start;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
-  gap: 6em;
+  gap: 4em;
   margin: 3.5em auto;
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
