@@ -26,14 +26,7 @@ const Container = styled.div`
 const ProjectImg = ({ src }: IProps) => {
   return (
     <Container>
-      <Image
-        priority
-        placeholder="blur"
-        blurDataURL={src}
-        src={src}
-        alt="project-image"
-        layout="fill"
-      />
+      <Image priority src={src} alt="project-image" layout="fill" />
     </Container>
   );
 };

@@ -29,9 +29,15 @@ export class ImageService {
         ),
       );
 
-      return imageRes.data.file.url;
+      return this.httpsTransducer(imageRes.data.file.url);
     } catch (error) {
       return { ok: false, error };
     }
+  }
+
+  private httpsTransducer(url: string) {
+    const protocol = new URL(url).protocol;
+
+    return url.replace(protocol, 'https:');
   }
 }

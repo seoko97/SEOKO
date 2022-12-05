@@ -11,22 +11,24 @@ const Container = styled.div`
 
   & > div {
     display: flex;
-    gap: 40px;
-    margin-bottom: 16px;
+    gap: 3em;
+    margin-bottom: 1.8em;
+  }
+
+  & h3 {
+    font-size: 1.5rem;
+    font-weight: 500;
   }
 
   & .info {
-    & > h3 {
-      font-size: 1.2rem;
-      font-weight: 500;
-      margin-bottom: 5px;
-    }
+    width: 200px;
+    text-wrap: wrap;
+  }
 
-    & > .date {
-      font-size: 0.9em;
-      color: ${({ theme }) => theme.FONT_COLOR.SECONDARY_COLOR};
-      margin-top: 5px;
-    }
+  & .date {
+    font-size: 0.9em;
+    color: ${({ theme }) => theme.FONT_COLOR.SECONDARY_COLOR};
+    margin-top: 5px;
   }
 
   & .desc {
@@ -35,12 +37,25 @@ const Container = styled.div`
   }
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
-    padding: 8px 0;
+    padding: 0.5em;
   }
 
   @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    & h3 {
+      font-size: 1.6em;
+    }
+
+    & .info {
+      width: 100%;
+      text-wrap: wrap;
+    }
+
+    & .date {
+      font-size: 1.1em;
+    }
+
     & > div {
-      gap: 8px;
+      gap: 1em;
       flex-direction: column;
     }
   }

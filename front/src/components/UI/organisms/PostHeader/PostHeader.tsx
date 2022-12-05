@@ -104,15 +104,7 @@ const PostHeader = ({ post }: IProps) => {
   return (
     <Container>
       <div className="image-container">
-        <Image
-          priority
-          layout="fill"
-          alt="post-cover"
-          src={coverImg}
-          objectFit="cover"
-          placeholder="blur"
-          blurDataURL={coverImg}
-        />
+        <Image priority layout="fill" alt="post-cover" src={coverImg} objectFit="cover" />
       </div>
       <h1>{title}</h1>
       {tags[0] && <TagList onClick={onClickTag} tags={tags} />}

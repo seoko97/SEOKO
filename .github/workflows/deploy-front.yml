@@ -1,4 +1,4 @@
-name: Docker test - front
+name: SEOKO Client Deploy
 
 on:
    push:
@@ -13,7 +13,6 @@ jobs:
       runs-on: ubuntu-latest
       env:
          working-directory: ./front
-
       steps:
          - name: Checkout
            uses: actions/checkout@v3

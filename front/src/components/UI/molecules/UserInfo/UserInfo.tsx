@@ -1,6 +1,5 @@
-import styled from "@emotion/styled";
-import UserAvatar from "@molecules/UserAvatar";
 import React from "react";
+import styled from "@emotion/styled";
 
 const UserContainer = styled.div`
   display: flex;
@@ -29,7 +28,6 @@ interface IProps {
 const UserInfo = ({ onClick }: IProps) => {
   return (
     <UserContainer onClick={onClick}>
-      <UserAvatar width={30} height={30} />
       <span>지석호</span>
     </UserContainer>
   );

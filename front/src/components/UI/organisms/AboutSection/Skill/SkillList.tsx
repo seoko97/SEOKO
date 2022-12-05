@@ -18,26 +18,33 @@ const Container = styled.div`
 
   & > h4 {
     font-size: 1.1rem;
-    font-weight: 500;
+    font-weight: bold;
   }
 
   & > div {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1.3rem;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    justify-items: center;
+    grid-row-gap: 1.5em;
   }
 
   @media (max-width: ${({ theme }) => theme.BP.PC}) {
     & > div {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
+      grid-template-columns: repeat(5, 1fr);
     }
   }
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     padding: 8px 0;
+    & > div {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    & > div {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 `;
 
