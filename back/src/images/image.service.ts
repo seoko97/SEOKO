@@ -15,24 +15,20 @@ export class ImageService {
   constructor(private httpService: HttpService) {}
 
   async addImage(input: AddImageInput) {
-    try {
-      const { type, image } = input;
-      const nImage = await image;
+    const { type, image } = input;
+    const nImage = await image;
 
-      const uploadName = `${+new Date()}${nImage.filename}`;
+    const uploadName = `${+new Date()}${nImage.filename}`;
 
-      const imageRes = await firstValueFrom(
-        this.httpService.put(
-          `${process.env.IMAGE_UPLOAD_URL}/appkeys/${process.env.IMAGE_APP_KEY}/images?path=/${type}/${uploadName}&overwrite=true`,
-          nImage.createReadStream(),
-          UPLOAD_IMAGE_REQUEST_CONFIG,
-        ),
-      );
+    const imageRes = await firstValueFrom(
+      this.httpService.put(
+        `${process.env.IMAGE_UPLOAD_URL}/appkeys/${process.env.IMAGE_APP_KEY}/images?path=/${type}/${uploadName}&overwrite=true`,
+        nImage.createReadStream(),
+        UPLOAD_IMAGE_REQUEST_CONFIG,
+      ),
+    );
 
-      return this.httpsTransducer(imageRes.data.file.url);
-    } catch (error) {
-      return { ok: false, error };
-    }
+    return this.httpsTransducer(imageRes.data.file.url);
   }
 
   private httpsTransducer(url: string) {
