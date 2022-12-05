@@ -46,13 +46,11 @@ const ProjectHeader = ({ project }: IProps) => {
     <Container>
       <div className="image-container">
         <Image
-          priority
+          priority={true}
           layout="fill"
           alt="project-cover"
           src={project.coverImg}
           objectFit="cover"
-          placeholder="blur"
-          blurDataURL={project.coverImg}
         />
       </div>
       <h1>{project.title}</h1>

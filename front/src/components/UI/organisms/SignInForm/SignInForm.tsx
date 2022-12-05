@@ -48,6 +48,9 @@ const SignInForm = () => {
       const { ok, username } = signin;
       if (ok) setUserInfo(username);
     },
+    onError() {
+      alert("로그인에 실패하였습니다.");
+    },
   });
 
   useEffect(() => {

@@ -29,14 +29,7 @@ const StyledPostImg = styled.div`
 
 const PostImg = ({ titleImage }: Props) => (
   <StyledPostImg className="post-image">
-    <Image
-      placeholder="blur"
-      blurDataURL={titleImage}
-      src={titleImage}
-      property="true"
-      layout="fill"
-      alt="post-image"
-    />
+    <Image loading="lazy" src={titleImage} layout="fill" alt="post-image" />
   </StyledPostImg>
 );
 

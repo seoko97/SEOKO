@@ -29,7 +29,6 @@ interface IProps {
 const UserInfo = ({ onClick }: IProps) => {
   return (
     <UserContainer onClick={onClick}>
-      <UserAvatar width={30} height={30} />
       <span>지석호</span>
     </UserContainer>
   );

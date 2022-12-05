@@ -31,15 +31,7 @@ const Container = styled.div`
 const UserAvatar = ({ height, width, onClick }: IProps) => {
   return (
     <Container onClick={onClick && onClick}>
-      <Image
-        src="/main.jpg"
-        placeholder="blur"
-        blurDataURL="/main.jpg"
-        alt="user"
-        priority
-        width={width}
-        height={height}
-      />
+      <Image src="/main.jpg" alt="user" priority={true} width={width} height={height} />
     </Container>
   );
 };
