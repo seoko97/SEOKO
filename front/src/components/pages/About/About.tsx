@@ -41,7 +41,7 @@ const Container = styled(RowFrame)`
   justify-content: flex-start;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   gap: 4em;
-  margin: 3.5em auto;
+  margin: 2em auto;
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     font-size: 0.9rem;

@@ -11,13 +11,18 @@ const Container = styled.div`
 
   & > div {
     display: flex;
-    gap: 40px;
-    margin-bottom: 16px;
+    gap: 3em;
+    margin-bottom: 1.8em;
   }
 
   & h3 {
-    font-size: 1.2rem;
-    font-weight: bold;
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+
+  & .info {
+    width: 200px;
+    text-wrap: wrap;
   }
 
   & .date {
@@ -32,15 +37,21 @@ const Container = styled.div`
   }
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
-    padding: 8px 0;
+    padding: 0.5em;
   }
 
   @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
     & h3 {
-      font-size: 1.7em;
+      font-size: 1.6em;
     }
+
+    & .info {
+      width: 100%;
+      text-wrap: wrap;
+    }
+
     & .date {
-      font-size: 1.3em;
+      font-size: 1.1em;
     }
 
     & > div {

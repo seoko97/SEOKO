@@ -1,6 +1,5 @@
-import styled from "@emotion/styled";
-import UserAvatar from "@molecules/UserAvatar";
 import React from "react";
+import styled from "@emotion/styled";
 
 const UserContainer = styled.div`
   display: flex;
