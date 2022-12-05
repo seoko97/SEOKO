@@ -1,10 +1,9 @@
 const withTM = require("next-transpile-modules")(["react-syntax-highlighter"]);
 const Dotenv = require("dotenv-webpack");
+const CompressionPlugin = require("compression-webpack-plugin");
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
-
-const prod = process.env.NODE_ENV === "production";
 
 const nextConfig = {
   lessLoaderOptions: {
@@ -14,7 +13,13 @@ const nextConfig = {
     forceSwcTransforms: true,
   },
   webpack: (config) => {
+    const prod = process.env.NODE_ENV === "production";
+
     const plugins = [...config.plugins, new Dotenv({ silent: true })];
+
+    if (prod) {
+      plugins.push(new CompressionPlugin());
+    }
 
     return {
       ...config,
