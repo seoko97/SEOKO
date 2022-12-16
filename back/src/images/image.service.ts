@@ -2,17 +2,27 @@ import { Injectable } from '@nestjs/common';
 import { HttpService, HttpModuleOptions } from '@nestjs/axios';
 import { AddImageInput } from './dto/AddImageInput.dto';
 import { firstValueFrom } from 'rxjs';
-
-const UPLOAD_IMAGE_REQUEST_CONFIG: HttpModuleOptions = {
-  headers: {
-    Authorization: `${process.env.IMAGE_UPLOAD_SECRET_KEY}`,
-    'Content-Type': 'application/octet-stream',
-  },
-};
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class ImageService {
-  constructor(private httpService: HttpService) {}
+  private readonly IMAGE_UPLOAD_URL: string;
+  private readonly IMAGE_APP_KEY: string;
+  private readonly IMAGE_OPTION: HttpModuleOptions;
+
+  constructor(
+    private httpService: HttpService,
+    private configService: ConfigService,
+  ) {
+    this.IMAGE_UPLOAD_URL = configService.get('IMAGE_UPLOAD_URL');
+    this.IMAGE_APP_KEY = configService.get('IMAGE_APP_KEY');
+    this.IMAGE_OPTION = {
+      headers: {
+        Authorization: `${configService.get('IMAGE_UPLOAD_SECRET_KEY')}`,
+        'Content-Type': 'application/octet-stream',
+      },
+    };
+  }
 
   async addImage(input: AddImageInput) {
     const { type, image } = input;
@@ -22,9 +32,9 @@ export class ImageService {
 
     const imageRes = await firstValueFrom(
       this.httpService.put(
-        `${process.env.IMAGE_UPLOAD_URL}/appkeys/${process.env.IMAGE_APP_KEY}/images?path=/${type}/${uploadName}&overwrite=true`,
+        `${this.IMAGE_UPLOAD_URL}/appkeys/${this.IMAGE_APP_KEY}/images?path=/${type}/${uploadName}&overwrite=true`,
         nImage.createReadStream(),
-        UPLOAD_IMAGE_REQUEST_CONFIG,
+        this.IMAGE_OPTION,
       ),
     );
 

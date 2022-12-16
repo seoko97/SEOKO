@@ -1,12 +1,10 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 
-import { tagVar } from "@store/tag";
-
-import { useQuery, useReactiveVar } from "@apollo/client";
-import { IGetPosts } from "@queries-types/posts";
+import { useQuery } from "@apollo/client";
+import { IGetPosts, IPost } from "@queries-types/posts";
 import { GET_POSTS } from "@queries/post";
 import { getDataInput } from "@lib/getDataInput";
 
@@ -22,15 +20,23 @@ interface IFetchPostInput {
 const MainContent = () => {
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const selectedTag = useReactiveVar(tagVar);
+
   const { category } = router.query;
-  const defaultInput = getDataInput({ tag: selectedTag, category });
+  const defaultInput = getDataInput({ category });
 
   const { data, fetchMore } = useQuery<IGetPosts>(GET_POSTS, {
     variables: {
       input: defaultInput,
     },
   });
+
+  const [mainPosts, setMainPosts] = useState<IPost[]>(data?.getPosts.posts ?? []);
+
+  useEffect(() => {
+    const fetchedPosts = data?.getPosts.posts;
+
+    if (fetchedPosts) setMainPosts(fetchedPosts);
+  }, [data]);
 
   const fetchMorePosts = useCallback(() => {
     if (!data) return;
@@ -43,7 +49,6 @@ const MainContent = () => {
     const input: IFetchPostInput = getDataInput({
       lastId: posts[posts.length - 1]._id,
       category,
-      tag: selectedTag,
     });
 
     fetchMore({
@@ -51,7 +56,7 @@ const MainContent = () => {
         input,
       },
     });
-  }, [ref, data, selectedTag, category]);
+  }, [ref, data, category]);
 
   const onChangeCategory = useCallback(
     (category: string) => {
@@ -65,13 +70,13 @@ const MainContent = () => {
 
       router.push({ query });
     },
-    [selectedTag, router],
+    [router],
   );
 
   return (
     <Container>
       <ContentHeader changeCategory={onChangeCategory} />
-      <PostList ref={ref} posts={data?.getPosts.posts ?? []} func={fetchMorePosts} />
+      <PostList ref={ref} posts={mainPosts} func={fetchMorePosts} />
     </Container>
   );
 };

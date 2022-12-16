@@ -2,8 +2,6 @@ import { ObjectType, Field, InputType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Schema as MongooseSchema, Document, Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
-import { verify } from 'jsonwebtoken';
-import { jwtConstants } from '@auth/constants';
 import { CreateUserInput } from './dto/createUser.dto';
 
 const BCRYPT_SALT = 10;
@@ -43,13 +41,6 @@ export class User {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
-
-UserSchema.methods.verifyRefresh = function () {
-  if (!this.refreshToken) return false;
-  const result = verify(this.refreshToken, jwtConstants.secret);
-
-  return Boolean(result);
-};
 
 UserSchema.methods.comparePassword = async function (aPassword: string) {
   const isCompare = await bcrypt.compare(aPassword, this.password);

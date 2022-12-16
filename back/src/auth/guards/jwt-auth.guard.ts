@@ -3,26 +3,17 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { AuthGuard } from '@nestjs/passport';
-import { decryptValue } from '@utils/crypto';
-import { jwtConstants } from '../constants';
-
-const setAuth = (context: ExecutionContext) => {
-  const gqlContext = GqlExecutionContext.create(context);
-  const ctx = gqlContext.getContext();
-  const authCookie = ctx.req.cookies[jwtConstants.header];
-
-  if (authCookie)
-    ctx.req.headers.authorization = `Bearer ${decryptValue(authCookie)}`;
-
-  return ctx.req;
-};
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
-  constructor() {
+  private readonly JWT_HEADER;
+  constructor(private readonly configService: ConfigService) {
     super();
+
+    this.JWT_HEADER = configService.get('JWT_HEADER');
   }
 
   handleRequest(err: unknown, user: any, info: any) {
@@ -32,21 +23,35 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   }
 
   getRequest(context: ExecutionContext) {
-    return setAuth(context);
+    const gqlContext = GqlExecutionContext.create(context);
+    const ctx = gqlContext.getContext();
+    const authCookie = ctx.req.cookies[this.JWT_HEADER];
+
+    if (authCookie) ctx.req.headers.authorization = `Bearer ${authCookie}`;
+
+    return ctx.req;
   }
 }
 
 @Injectable()
 export class ExpiredJwtAuthGuard extends AuthGuard('jwt-expired') {
-  constructor() {
+  private readonly JWT_HEADER;
+  constructor(private readonly configService: ConfigService) {
     super();
-  }
 
+    this.JWT_HEADER = configService.get('JWT_HEADER');
+  }
   handleRequest(err: unknown, user: any) {
     return user;
   }
 
   getRequest(context: ExecutionContext) {
-    return setAuth(context);
+    const gqlContext = GqlExecutionContext.create(context);
+    const ctx = gqlContext.getContext();
+    const authCookie = ctx.req.cookies[this.JWT_HEADER];
+
+    if (authCookie) ctx.req.headers.authorization = `Bearer ${authCookie}`;
+
+    return ctx.req;
   }
 }

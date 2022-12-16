@@ -124,7 +124,9 @@ export const initializeClient = ({ initialState, ctx = null }: IInitializeApollo
   return _apolloClient;
 };
 
-export const useApollo = (pageProps: AppProps["pageProps"]) => {
+export const useApollo = (
+  pageProps: AppProps["pageProps"],
+): ApolloClient<NormalizedCacheObject> => {
   const state = pageProps?.[APOLLO_STATE_PROP_NAME];
   const store = useMemo(() => initializeClient({ initialState: state }), [state]);
   return store;

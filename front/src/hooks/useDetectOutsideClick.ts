@@ -26,10 +26,10 @@ const useDetectOutsideClick = (
       if (el.current !== null && !el.current.contains(e.target as Node)) setIsActive(false);
     };
 
-    if (isActive) window.addEventListener("click", onClick);
+    if (isActive) document.addEventListener("click", onClick);
 
     return () => {
-      window.removeEventListener("click", onClick);
+      document.removeEventListener("click", onClick);
     };
   }, [isActive, el]);
 
