@@ -6,7 +6,6 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { AuthGuard } from '@nestjs/passport';
-import { decryptValue } from '@utils/crypto';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
@@ -28,8 +27,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     const ctx = gqlContext.getContext();
     const authCookie = ctx.req.cookies[this.JWT_HEADER];
 
-    if (authCookie)
-      ctx.req.headers.authorization = `Bearer ${decryptValue(authCookie)}`;
+    if (authCookie) ctx.req.headers.authorization = `Bearer ${authCookie}`;
 
     return ctx.req;
   }
@@ -52,8 +50,7 @@ export class ExpiredJwtAuthGuard extends AuthGuard('jwt-expired') {
     const ctx = gqlContext.getContext();
     const authCookie = ctx.req.cookies[this.JWT_HEADER];
 
-    if (authCookie)
-      ctx.req.headers.authorization = `Bearer ${decryptValue(authCookie)}`;
+    if (authCookie) ctx.req.headers.authorization = `Bearer ${authCookie}`;
 
     return ctx.req;
   }
