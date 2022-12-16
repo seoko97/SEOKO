@@ -153,7 +153,7 @@ export class PostService {
   async getSiblingPost(_id: string) {
     const post = await this.postModel.findOne({ _id });
 
-    if (!post) throw new Error('포스트가 존재하지 않습니다.');
+    if (!post) throw new BadRequestException('포스트가 존재하지 않습니다.');
 
     const prev = await this.postModel
       .findOne({

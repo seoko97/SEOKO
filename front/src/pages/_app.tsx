@@ -46,10 +46,10 @@ const SEOKO = ({ Component, pageProps, mode: modeInCookie }: IPageProps) => {
           name="description"
           content="개발자를 목표로 공부하고 있는 지석호의 블로그, 포트폴리오 웹 페이지입니다."
         />
-        <meta name="og:title" content="SEOKO" />
-        <meta name="og:image" content="http://image.toast.com/aaaacgm/SEOKO.png" />
+        <meta name="og:title" property="og:title" content="SEOKO" />
+        <meta property="og:image" content="https://image.toast.com/aaaacgm/SEOKO.png" />
         <meta
-          name="og:description"
+          property="og:description"
           content="개발자를 목표로 공부하고 있는 지석호의 블로그, 포트폴리오 웹 페이지입니다."
         />
         <meta property="og:type" content="website" />

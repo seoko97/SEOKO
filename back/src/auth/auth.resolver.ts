@@ -1,14 +1,16 @@
 import { UseGuards } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Args, Mutation, Resolver, Context } from '@nestjs/graphql';
+
+import { CoreRes } from '@decorators/coreRes.decorator';
 import { ITokenUser, User } from '@decorators/user.decorator';
 import { UserService } from '@users/user.service';
 import { Response } from 'express';
+
 import { SigninInput, SigninRes } from './dto/signin.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthService } from './auth.service';
 import { ExpiredJwtAuthGuard } from './guards/jwt-auth.guard';
-import { CoreRes } from '@decorators/coreRes.decorator';
-import { ConfigService } from '@nestjs/config';
 
 const EXPIRED = 1000 * 60 * 60 * 24 * 7;
 
@@ -45,12 +47,9 @@ export class AuthResolver {
     @User() _user: ITokenUser,
     @Context() { res }: { res: Response },
   ): Promise<CoreRes> {
-    ('Refresh Resolver 실행');
     if (!_user) return { ok: false, error: '로그인이 필요합니다' };
 
-    const isVerified = await this.authService.verifyRefresh(_user);
-
-    if (!isVerified) return { ok: false, error: 'expired refresh token' };
+    await this.authService.verifyRefresh(_user);
 
     const accessToken = await this.authService.signin(_user);
     const JWT_HEADER = this.configService.get('JWT_HEADER');
