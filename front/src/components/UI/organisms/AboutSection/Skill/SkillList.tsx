@@ -23,19 +23,13 @@ const Container = styled.div`
 
   & > div {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     justify-items: center;
     grid-row-gap: 1.5em;
   }
 
-  @media (max-width: ${({ theme }) => theme.BP.PC}) {
-    & > div {
-      grid-template-columns: repeat(5, 1fr);
-    }
-  }
-
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
-    padding: 8px 0;
+    padding: 0.5em 0;
     & > div {
       grid-template-columns: repeat(3, 1fr);
     }
