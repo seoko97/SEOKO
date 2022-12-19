@@ -30,17 +30,21 @@ const Container = styled.section`
 
   display: flex;
   gap: 0.5em;
-  padding: 1.2em 1em;
+  padding: 1em 0;
+  margin-bottom: 0.8em;
 
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
 
   & > h1 {
-    font-size: 1.8em;
+    font-size: 2em;
     font-weight: 700;
   }
 
-  & > p {
-    font-size: 0.8em;
+  & > span {
+    font-size: 0.8rem;
+    margin-left: 0.5em;
+    font-weight: normal;
+    vertical-align: top;
   }
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
