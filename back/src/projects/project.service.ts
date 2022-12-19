@@ -26,6 +26,6 @@ export class ProjectService {
   }
 
   async getProjects() {
-    return await this.projectModel.find().sort({ _id: -1 });
+    return await this.projectModel.find().sort({ startDate: -1 });
   }
 }
