@@ -38,7 +38,7 @@ const Container = styled.div`
   flex-direction: column;
   gap: 8px;
   position: sticky;
-  top: 85px;
+  top: 120px;
   overflow-wrap: anywhere;
   font-size: 0.9em;
 
