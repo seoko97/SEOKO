@@ -33,12 +33,14 @@ const Tag = () => {
     <>
       <Head>
         <title>태그목록 :: SEOKO</title>
-        <meta name="description" content={`${tags.length}개의 태그`} />
-        <meta name="og:title" content={`태그목록 :: SEOKO`} />
-        <meta name="og:description" content={`${tags.length}개의 태그`} />
+        <meta property="description" content={`${tags.length}개의 태그`} />
+        <meta property="og:title" content={`태그목록 :: SEOKO`} />
+        <meta property="og:description" content={`${tags.length}개의 태그`} />
       </Head>
       <Container>
-        <p>There ara {tags.length} Tags.</p>
+        <h1>
+          Tags <span className="count">{tags.length} tags</span>
+        </h1>
         <div>
           {tags.map((tag) => (
             <AtomTag key={tag._id} onClick={onClickTag} data-name={tag.name}>
@@ -58,10 +60,11 @@ const Container = styled(RowFrame)`
   gap: 20px;
   padding: 1.2em 0;
 
-  & > p {
-    font-size: 1.2em;
-    font-weight: 500;
+  & > h1 {
     color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
+    font-size: 2em;
+    font-weight: 700;
+    margin-bottom: 0.3em;
   }
 
   & > div {
@@ -69,6 +72,13 @@ const Container = styled(RowFrame)`
     display: inline-flex;
     flex-wrap: wrap;
     gap: 12px;
+  }
+
+  & .count {
+    font-size: 0.8rem;
+    vertical-align: top;
+    margin-left: 0.5em;
+    font-weight: normal;
   }
 `;
 

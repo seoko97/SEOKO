@@ -18,9 +18,9 @@ const About = () => {
           name="description"
           content="개발자 지석호의 소개 페이지입니다. 저의 경험을 나열해 놓았습니다."
         />
-        <meta name="og:title" content="소개 :: SEOKO" />
+        <meta property="og:title" content="소개 :: SEOKO" />
         <meta
-          name="og:description"
+          property="og:description"
           content="개발자 지석호의 소개 페이지입니다. 저의 경험을 나열해 놓았습니다."
         />
       </Head>
