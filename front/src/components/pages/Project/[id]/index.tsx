@@ -37,9 +37,9 @@ const Project = ({ projectId }: IProps) => {
       <Head>
         <title>{project.title} :: SEOKO</title>
         <meta name="description" content={`${projectDescription}...`} />
-        <meta name="og:title" content={`${project.title} :: SEOKO`} />
-        <meta name="og:description" content={`${projectDescription}...`} />
-        <meta name="og:image" content={project.coverImg} />
+        <meta property="og:title" content={`${project.title} :: SEOKO`} />
+        <meta property="og:description" content={`${projectDescription}...`} />
+        <meta property="og:image" content={project.coverImg} />
       </Head>
       <Container>
         {data?.getProject && <ProjectHeader project={data.getProject.project} />}

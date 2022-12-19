@@ -39,7 +39,7 @@ const Post = ({ post, siblingPost }: Props) => {
 
   const postDescription = useMemo(
     () => removeMd(content, { useImgAltText: false }).slice(0, 200),
-    [],
+    [content],
   );
 
   return (
@@ -47,9 +47,9 @@ const Post = ({ post, siblingPost }: Props) => {
       <Head>
         <title>{title} :: SEOKO</title>
         <meta name="description" content={`${postDescription}...`} />
-        <meta name="og:title" content={`${title} :: SEOKO`} />
-        <meta name="og:description" content={`${postDescription}...`} />
-        <meta name="og:image" content={coverImg} />
+        <meta property="og:title" content={`${title} :: SEOKO`} />
+        <meta property="og:description" content={`${postDescription}...`} />
+        <meta property="og:image" content={coverImg} />
       </Head>
       <Container>
         <PostHeader post={post} />
