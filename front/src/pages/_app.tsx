@@ -42,16 +42,6 @@ const SEOKO = ({ Component, pageProps, mode: modeInCookie }: IPageProps) => {
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        <meta
-          name="description"
-          content="개발자를 목표로 공부하고 있는 지석호의 블로그, 포트폴리오 웹 페이지입니다."
-        />
-        <meta property="og:title" content="SEOKO" />
-        <meta property="og:image" content="https://image.toast.com/aaaacgm/SEOKO.png" />
-        <meta
-          property="og:description"
-          content="개발자를 목표로 공부하고 있는 지석호의 블로그, 포트폴리오 웹 페이지입니다."
-        />
         <meta property="og:type" content="website" />
         <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />

@@ -1,4 +1,5 @@
 import React from "react";
+import Head from "next/head";
 
 import RowFrame from "@frames/RowFrame";
 import Intro from "@molecules/Intro";
@@ -15,10 +16,24 @@ const Container = styled(RowFrame)`
 
 const Home = () => {
   return (
-    <Container>
-      <Intro />
-      <HomeContent />
-    </Container>
+    <>
+      <Head>
+        <meta
+          name="description"
+          content="개발자를 목표로 공부하고 있는 지석호의 블로그, 포트폴리오 웹 페이지입니다."
+        />
+        <meta property="og:title" content="SEOKO" />
+        <meta property="og:image" content="https://image.toast.com/aaaacgm/SEOKO.png" />
+        <meta
+          property="og:description"
+          content="개발자를 목표로 공부하고 있는 지석호의 블로그, 포트폴리오 웹 페이지입니다."
+        />
+      </Head>
+      <Container>
+        <Intro />
+        <HomeContent />
+      </Container>
+    </>
   );
 };
 
