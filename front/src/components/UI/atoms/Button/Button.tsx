@@ -1,9 +1,8 @@
 import styled from "@emotion/styled";
 import React from "react";
 
-interface Props {
-  content: string;
-  loading: boolean;
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  loading?: boolean;
 }
 
 const StyledButton = styled.button`
@@ -18,12 +17,12 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ content, loading }: Props) => {
-  return <StyledButton disabled={loading}>{content}</StyledButton>;
-};
-
-Button.defaultProps = {
-  content: "저장",
+const Button = ({ children, loading, ...props }: Props) => {
+  return (
+    <StyledButton {...props} disabled={loading}>
+      {children}
+    </StyledButton>
+  );
 };
 
 export default Button;
