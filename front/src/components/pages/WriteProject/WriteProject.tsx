@@ -11,7 +11,9 @@ import { EDIT_PROJECT } from "@queries/project/editProject.queries";
 import { IAddProject, IEditProject, IProject, IProjectInput } from "@queries-types/project";
 
 import { IAddImage } from "@queries-types/image";
+import { CoreResponse } from "@queries-types/core";
 import { ADD_IMAGE } from "@queries/image/addImage.queries";
+
 import WriteProjectHeader from "./WriteProjectHeader";
 
 interface IProps {
@@ -57,21 +59,22 @@ const WriteProject = ({ project }: IProps) => {
 
   const [addProjectMutation, { client }] = useMutation<IAddProject>(ADD_PROJECT, {
     onCompleted({ addProject }) {
-      if (addProject?.ok) {
-        client.cache.reset();
-        router.push("/");
-      }
+      movePageToProject(addProject);
     },
   });
 
   const [editProjectMutation] = useMutation<IEditProject>(EDIT_PROJECT, {
     onCompleted({ editProject }) {
-      if (editProject?.ok) {
-        client.cache.reset();
-        router.push("/");
-      }
+      movePageToProject(editProject);
     },
   });
+
+  const movePageToProject = <T extends CoreResponse>(data: T) => {
+    if (!data.ok) return;
+
+    client.cache.reset();
+    router.push("/project");
+  };
 
   const onChangeValue: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => {
