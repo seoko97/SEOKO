@@ -9,10 +9,11 @@ interface IProps {
 }
 
 const Container = styled.div`
+  flex: 1;
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+
   row-gap: 6px;
   padding: 10px;
 
@@ -23,20 +24,20 @@ const Container = styled.div`
   & .ath,
   & .date {
     width: 100%;
-    max-width: 200px;
-    font-size: 0.8em;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+  }
+
+  & .ath {
+    font-size: 0.9em;
   }
 
   & .date {
-    color: #8f8f8f;
+    font-size: 0.7em;
+    color: ${({ theme }) => theme.FONT_COLOR.SECONDARY_COLOR};
   }
 
   & h3 {
     font-size: 1.1em;
-    font-weight: 500;
+    font-weight: 700;
   }
 `;
 
@@ -46,7 +47,7 @@ const ProjectCaption = ({ title, description, startDate, endDate }: IProps) => {
       <h3>{title}</h3>
       <div className="ath">{description}</div>
       <p className="date">
-        {startDate} ~ {endDate ?? "진행중"}
+        {startDate} ~ {endDate || "진행중"}
       </p>
     </Container>
   );
