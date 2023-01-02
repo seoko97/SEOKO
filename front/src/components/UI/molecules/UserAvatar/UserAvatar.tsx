@@ -10,20 +10,9 @@ interface IProps {
 }
 const Container = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  height: fit-content;
-  border-radius: 50%;
 
-  & img {
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-
-  & * {
+  & img,
+  & span {
     border-radius: 50%;
   }
 `;
@@ -31,9 +20,9 @@ const Container = styled.div`
 const UserAvatar = ({ height, width, onClick }: IProps) => {
   return (
     <Container onClick={onClick && onClick}>
-      <Image src="/main.jpg" alt="user" priority={true} width={width} height={height} />
+      <Image src="/main.jpg" objectFit="cover" alt="user" width={width} height={height} />
     </Container>
   );
 };
 
-export default React.memo(UserAvatar);
+export default UserAvatar;
