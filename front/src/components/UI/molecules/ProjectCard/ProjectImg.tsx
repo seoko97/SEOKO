@@ -6,6 +6,7 @@ interface IProps {
   src: string;
 }
 const Container = styled.div`
+  flex: 2;
   position: relative;
   width: 100%;
   padding-bottom: 70%;
@@ -13,8 +14,6 @@ const Container = styled.div`
 
   & img {
     border-radius: 10px 10px 0 0;
-    position: relative;
-    object-fit: cover;
     transition: transform 0.3s;
   }
 
@@ -26,7 +25,7 @@ const Container = styled.div`
 const ProjectImg = ({ src }: IProps) => {
   return (
     <Container>
-      <Image priority src={src} alt="project-image" layout="fill" />
+      <Image priority src={src} alt="project-image" layout="fill" objectFit="cover" />
     </Container>
   );
 };

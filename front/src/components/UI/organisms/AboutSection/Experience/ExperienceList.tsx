@@ -8,6 +8,9 @@ interface IProps {
 }
 const Container = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
 
   & > div {
     display: flex;
@@ -16,7 +19,7 @@ const Container = styled.div`
   }
 
   & h3 {
-    font-size: 1.5rem;
+    font-size: 1.4em;
     font-weight: 500;
   }
 
@@ -26,32 +29,32 @@ const Container = styled.div`
   }
 
   & .date {
-    font-size: 0.9em;
+    font-size: 0.8rem;
     color: ${({ theme }) => theme.FONT_COLOR.SECONDARY_COLOR};
     margin-top: 5px;
   }
 
   & .desc {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+
+    gap: 0.5em;
     font-size: 0.9rem;
     white-space: pre-wrap;
-  }
 
-  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
-    padding: 0.5em;
+    & > li {
+      list-style: inside;
+      &::marker {
+        color: ${({ theme }) => theme.FONT_COLOR.LOGO_COLOR};
+      }
+    }
   }
 
   @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
-    & h3 {
-      font-size: 1.6em;
-    }
-
     & .info {
       width: 100%;
       text-wrap: wrap;
-    }
-
-    & .date {
-      font-size: 1.1em;
     }
 
     & > div {
@@ -72,9 +75,11 @@ const ExperienceList = ({ experiences, onClick }: IProps) => {
               {experience.startDate} ~ {experience.endDate}
             </p>
           </div>
-          <div className="desc" onClick={onClick ? () => onClick(experience) : undefined}>
-            <p>{experience.description}</p>
-          </div>
+          <ul className="desc" onClick={onClick ? () => onClick(experience) : undefined}>
+            {experience.description.split("\n").map((desc, i) => (
+              <li key={desc + i}>{desc}</li>
+            ))}
+          </ul>
         </div>
       ))}
     </Container>

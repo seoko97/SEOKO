@@ -13,7 +13,7 @@ const SectionHeader = ({ onClick, children }: IProps) => {
 
   return (
     <Container>
-      <h3>{children}</h3>
+      <h1>{children}</h1>
       {username && onClick && <span onClick={() => onClick()}>관리</span>}
     </Container>
   );
@@ -25,7 +25,7 @@ const Container = styled.div`
   gap: 1em;
   margin-bottom: 1em;
 
-  & > h3 {
+  & > h1 {
     font-size: 2em;
     font-weight: bold;
   }

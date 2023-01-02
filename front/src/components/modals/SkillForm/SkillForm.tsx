@@ -10,6 +10,7 @@ import { ADD_IMAGE } from "@queries/image/addImage.queries";
 
 import ModalLayout from "@modals/ModalLayout";
 import Input from "@atoms/Input";
+import Button from "@atoms/Button";
 
 interface IProps {
   onClose: () => void;
@@ -22,6 +23,7 @@ const Container = styled.form`
 
   display: flex;
   flex-direction: column;
+  gap: 2em;
   background-color: #eeeeee;
   padding: 30px 20px;
 
@@ -29,25 +31,41 @@ const Container = styled.form`
   margin-top: 30px;
 
   z-index: 101;
-  & > span {
-    cursor: pointer;
-    font-size: 20px;
-    align-self: flex-end;
+
+  & > h1 {
+    font-size: 1.1em;
+    text-align: center;
+    font-weight: 500;
   }
+
   & > div {
     display: flex;
-    flex-direction: column;
-    & > input,
-    select {
-      border: none;
+    align-items: center;
+    gap: 1.2em;
+
+    & h3 {
+      font-weight: 500;
     }
   }
+
+  & img {
+    width: 76px;
+    height: 76px;
+  }
+
   & button {
-    margin-top: 10px;
+    flex: 1;
+    margin-top: 0.5em;
+    padding: 0.5em;
+
+    &[name="delete"] {
+      background-color: #ff7373;
+      color: #fff;
+    }
   }
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
-    width: 100%;
+    width: 95%;
     margin: 40px 16px 0 16px;
   }
 `;
@@ -120,25 +138,29 @@ const SkillForm = ({ onClose, skill }: IProps) => {
     [formDataRef.current],
   );
 
-  const deleteSkill = useCallback(() => {
-    const conf = confirm("삭제하시겠습니까?");
+  const deleteSkill = useCallback(
+    (e) => {
+      e.preventDefault();
+      const conf = confirm("삭제하시겠습니까?");
 
-    if (!conf) return;
+      if (!conf) return;
 
-    deleteSkillMutation({
-      variables: {
-        input: { _id: skill?._id },
-      },
-    });
-  }, [skill]);
+      deleteSkillMutation({
+        variables: {
+          input: { _id: skill?._id },
+        },
+      });
+    },
+    [skill],
+  );
 
   return (
     <ModalLayout onClick={onClose}>
       <Container>
-        <h2>스킬</h2>
+        <h1>스킬 등록</h1>
         <div>
-          <span>분류</span>
-          <select onChange={onChangeType}>
+          <h3>분류</h3>
+          <select onChange={onChangeType} defaultValue={formDataRef.current.type ?? ""}>
             <option value="">선택</option>
             <option value="FRONT_END">FRONT</option>
             <option value="BACK_END">BACK</option>
@@ -146,19 +168,28 @@ const SkillForm = ({ onClose, skill }: IProps) => {
           </select>
         </div>
         <div>
-          <span>이름</span>
-          <Input placeholder="이름입력" onChange={onChangeName} />
+          <h3>이름</h3>
+          <Input
+            placeholder="이름입력"
+            onChange={onChangeName}
+            defaultValue={formDataRef.current.name ?? ""}
+          />
         </div>
 
         <div>
-          <span>아이콘</span>
+          <h3>아이콘</h3>
+          {formDataRef.current.icon && <img alt="icon" src={formDataRef.current.icon} />}
           <input type="file" onChange={onChangeIcon} />
         </div>
         <div>
-          {skill && <button onClick={deleteSkill}>삭제</button>}
-          <button type="submit" onClick={onSubmitForm}>
+          {skill && (
+            <Button onClick={deleteSkill} name="delete">
+              삭제
+            </Button>
+          )}
+          <Button name="save" onClick={onSubmitForm}>
             저장
-          </button>
+          </Button>
         </div>
       </Container>
     </ModalLayout>

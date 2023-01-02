@@ -84,7 +84,7 @@ const SignInForm = () => {
     <Container onSubmit={onClickSignInBtn}>
       <Input onChange={onChangeValue} placeholder="아이디" name="userId" />
       <Input onChange={onChangeValue} placeholder="비밀번호" type="password" name="password" />
-      <Button loading={loading} content="로그인" />
+      <Button loading={loading}>로그인</Button>
     </Container>
   );
 };

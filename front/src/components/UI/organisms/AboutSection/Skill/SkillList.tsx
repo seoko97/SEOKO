@@ -16,14 +16,15 @@ const Container = styled.div`
   gap: 1rem;
   margin-bottom: 3rem;
 
-  & > h4 {
+  & > h3 {
     font-size: 1.1rem;
     font-weight: bold;
+    margin-bottom: 0.7rem;
   }
 
   & > div {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     justify-items: center;
     grid-row-gap: 1.5em;
   }
@@ -45,7 +46,7 @@ const Container = styled.div`
 const SkillList = ({ skills, onClick, type }: IProps) => {
   return (
     <Container>
-      <h4>{type}</h4>
+      <h3>{type}</h3>
       <div>
         {skills.map((skill) => (
           <SkillItem key={skill._id} onClick={onClick || null} data={skill} />
