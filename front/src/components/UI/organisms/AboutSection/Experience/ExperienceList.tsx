@@ -37,6 +37,8 @@ const Container = styled.div`
   & .desc {
     display: flex;
     flex-direction: column;
+    height: fit-content;
+
     gap: 0.5em;
     font-size: 0.9rem;
     white-space: pre-wrap;
