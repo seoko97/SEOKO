@@ -51,8 +51,8 @@ const Tag = ({ tagName }: IProps) => {
       <Head>
         <title>태그 {tagName}에 대한 검색 결과 :: SEOKO</title>
         <meta name="description" content={`${posts.length}개의 포스트`} />
-        <meta name="og:title" content={`태그 ${tagName}에 대한 검색 결과 :: SEOKO`} />
-        <meta name="og:description" content={`${posts.length}개의 포스트`} />
+        <meta property="og:title" content={`태그 ${tagName}에 대한 검색 결과 :: SEOKO`} />
+        <meta property="og:description" content={`${posts.length}개의 포스트`} />
       </Head>
       <RowFrame>
         <TagDetail tagName={tagName} />

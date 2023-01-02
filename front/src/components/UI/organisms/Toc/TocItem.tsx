@@ -38,6 +38,7 @@ const Container = styled.div<{ level: number }>`
   padding-left: ${({ level }) => (level - 1) * 11}px;
   transition: all 0.2s ease 0s;
   color: rgb(173, 181, 189);
+  font-size: 0.9em;
 
   &:hover {
     color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
