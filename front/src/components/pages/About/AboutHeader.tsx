@@ -11,7 +11,14 @@ const AboutHeader = () => {
           안녕하세요 <br /> 개발자 <strong>지석호</strong>입니다.
         </h1>
         <div className="user-image">
-          <Image priority={true} src="/main.jpg" alt="main" width={200} height={200} />
+          <Image
+            priority={true}
+            src="/main.jpg"
+            alt="main"
+            width={200}
+            height={200}
+            objectFit="cover"
+          />
         </div>
       </div>
 
