@@ -13,13 +13,11 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 3rem;
+  gap: 0.5rem;
 
   & > h3 {
     font-size: 1.1rem;
     font-weight: bold;
-    margin-bottom: 0.7rem;
   }
 
   & > div {
@@ -27,10 +25,17 @@ const Container = styled.div`
     grid-template-columns: repeat(6, 1fr);
     justify-items: center;
     grid-row-gap: 1.5em;
+    border-radius: 1rem;
+    padding: 1.5rem 0.75rem;
+    background-color: ${({ theme }) => theme.BACKGROUND_COLOR.SECONDARY_COLOR};
+    box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 3rem;
   }
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
-    padding: 0.5em 0;
     & > div {
       grid-template-columns: repeat(3, 1fr);
     }

@@ -38,6 +38,7 @@ const SkillItem = ({ data, onClick }: IProps) => {
   return (
     <Container isAdmin={isAdmin}>
       <Image
+        priority
         src={data.icon}
         width={76}
         height={76}
