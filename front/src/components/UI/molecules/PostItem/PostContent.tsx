@@ -16,7 +16,7 @@ const StyledPostContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  gap: 15px;
+  gap: 1rem;
 
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   word-break: break-all;
@@ -31,7 +31,7 @@ const StyledPostContent = styled.div`
   .date {
     color: #949494;
     font-weight: 400;
-    font-size: 0.9em;
+    font-size: 0.9rem;
   }
 
   p {
@@ -43,8 +43,8 @@ const StyledPostContent = styled.div`
     width: 100%;
     min-height: 0;
 
-    padding: 15px 5px;
-    gap: 10px;
+    padding: 0.75rem 0.3rem;
+    gap: 0.75rem;
   }
 `;
 
