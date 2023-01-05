@@ -25,7 +25,7 @@ const Container = styled.div`
 const Intro = () => {
   return (
     <Container>
-      <UserAvatar width={150} height={150} />
+      <UserAvatar width={180} height={180} />
       <IntroInner />
     </Container>
   );
