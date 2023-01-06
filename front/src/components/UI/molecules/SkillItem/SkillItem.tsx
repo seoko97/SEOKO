@@ -9,12 +9,10 @@ interface IProps {
 }
 
 const Container = styled.div<{ isAdmin: boolean }>`
-  min-width: 100px;
+  width: 100px;
 
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   gap: 0.5em;
 
   & img {
@@ -43,6 +41,7 @@ const SkillItem = ({ data, onClick }: IProps) => {
         width={76}
         height={76}
         alt={data.name}
+        objectFit="scale-down"
         onClick={onClick ? () => onClick(data) : () => undefined}
       />
       <h3>{data.name}</h3>
