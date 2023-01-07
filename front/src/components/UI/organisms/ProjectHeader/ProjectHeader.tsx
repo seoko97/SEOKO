@@ -42,6 +42,7 @@ const ProjectHeader = ({ project }: IProps) => {
       },
     });
   }, [project]);
+
   return (
     <Container>
       <div className="image-container">
@@ -57,7 +58,7 @@ const ProjectHeader = ({ project }: IProps) => {
       <p className="desc lt">{project.description}</p>
       <div className="lt">
         <span>{dateTimeParser(project.startDate)}</span> ~{" "}
-        <span>{dateTimeParser(project.endDate ?? "")}</span>
+        <span>{project.endDate ? dateTimeParser(project.endDate) : "진행중"}</span>
       </div>
       <a target="_blank" href={project.githubUrl} rel="noreferrer">
         <GItHubIcon />
