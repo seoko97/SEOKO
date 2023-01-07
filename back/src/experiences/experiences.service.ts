@@ -23,6 +23,6 @@ export class ExperienceService {
     return await this.experienceModel.findOneAndDelete({ _id });
   }
   async getExperiences() {
-    return await this.experienceModel.find();
+    return await this.experienceModel.find().sort({ startDate: -1 });
   }
 }
