@@ -44,6 +44,11 @@ const Container = styled.div<{ type: string }>`
     align-items: ${({ type }) => (type === "next" ? "flex-end" : "flex-start")};
     gap: 12px;
     border-radius: 8px;
+    padding: 1rem;
+    background-color: ${({ theme }) => theme.BACKGROUND_COLOR.SECONDARY_COLOR};
+    border-radius: 0.5rem;
+    box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
+
     cursor: pointer;
 
     &:hover {

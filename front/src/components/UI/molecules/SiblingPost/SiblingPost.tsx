@@ -12,7 +12,11 @@ const Container = styled.div`
   display: flex;
 
   margin: 0 auto;
-  gap: 30px;
+  gap: 1.5rem;
+
+  @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
+    flex-direction: column;
+  }
 `;
 
 const SiblingPost = ({ siblingPost }: IProps) => {
