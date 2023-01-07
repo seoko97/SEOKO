@@ -27,16 +27,16 @@ const Container = styled.div`
   }
 
   & .ath {
-    font-size: 0.9em;
+    font-size: 0.9rem;
   }
 
   & .date {
-    font-size: 0.7em;
+    font-size: 0.8rem;
     color: ${({ theme }) => theme.FONT_COLOR.SECONDARY_COLOR};
   }
 
   & h3 {
-    font-size: 1.1em;
+    font-size: 1.1rem;
     font-weight: 700;
   }
 `;

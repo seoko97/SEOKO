@@ -42,7 +42,7 @@ const Utterances = ({ repo }: IProps) => {
     };
   }, [router.asPath]);
 
-  return <Container className="un" ref={ref} />;
+  return <Container ref={ref} />;
 };
 
 export default Utterances;

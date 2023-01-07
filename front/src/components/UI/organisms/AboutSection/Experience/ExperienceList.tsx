@@ -6,35 +6,59 @@ interface IProps {
   experiences: IExperience[];
   onClick: ((data: IExperience) => void) | null;
 }
+
+const ExperienceList = ({ experiences, onClick }: IProps) => {
+  return (
+    <Container>
+      {experiences.map((experience) => (
+        <Experience key={experience._id}>
+          <div className="info">
+            <h3>{experience.title}</h3>
+            <p>
+              {experience.startDate} ~ {experience.endDate}
+            </p>
+          </div>
+          <ul className="desc" onClick={onClick ? () => onClick(experience) : undefined}>
+            {experience.description.split("\n").map((desc, i) => (
+              <li key={desc + i}>{desc}</li>
+            ))}
+          </ul>
+        </Experience>
+      ))}
+    </Container>
+  );
+};
+
 const Container = styled.div`
   width: 100%;
+
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: 2.25em;
+`;
 
-  & > div {
-    display: flex;
-    gap: 3em;
-    margin-bottom: 1.8em;
-  }
+const Experience = styled.div`
+  width: 100%;
+  display: flex;
 
-  & h3 {
-    font-size: 1.4em;
-    font-weight: 500;
-  }
+  gap: 1.75rem;
 
-  & .info {
+  & > .info {
     width: 200px;
     text-wrap: wrap;
+    & > h3 {
+      font-size: 1.4em;
+      font-weight: 500;
+    }
+
+    & > p {
+      font-size: 0.8rem;
+      color: ${({ theme }) => theme.FONT_COLOR.SECONDARY_COLOR};
+      margin-top: 5px;
+    }
   }
 
-  & .date {
-    font-size: 0.8rem;
-    color: ${({ theme }) => theme.FONT_COLOR.SECONDARY_COLOR};
-    margin-top: 5px;
-  }
-
-  & .desc {
+  & > .desc {
     display: flex;
     flex-direction: column;
     height: fit-content;
@@ -52,38 +76,14 @@ const Container = styled.div`
   }
 
   @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
-    & .info {
+    gap: 1.25em;
+    flex-direction: column;
+
+    & > .info {
       width: 100%;
       text-wrap: wrap;
     }
-
-    & > div {
-      gap: 1em;
-      flex-direction: column;
-    }
   }
 `;
-
-const ExperienceList = ({ experiences, onClick }: IProps) => {
-  return (
-    <Container>
-      {experiences.map((experience) => (
-        <div key={experience._id}>
-          <div className="info">
-            <h3>{experience.title}</h3>
-            <p className="date">
-              {experience.startDate} ~ {experience.endDate}
-            </p>
-          </div>
-          <ul className="desc" onClick={onClick ? () => onClick(experience) : undefined}>
-            {experience.description.split("\n").map((desc, i) => (
-              <li key={desc + i}>{desc}</li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </Container>
-  );
-};
 
 export default ExperienceList;

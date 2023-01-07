@@ -26,15 +26,15 @@ const PostItem = ({ post }: Props) => {
 };
 
 const Container = styled.div`
+  position: relative;
+
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 
-  margin-bottom: 30px;
-  position: relative;
-  cursor: pointer;
-  gap: 30px;
+  margin-bottom: 1.9rem;
+  gap: 1.9rem;
 
   transition: box-shadow 0.3s;
 
@@ -48,11 +48,11 @@ const Container = styled.div`
       color: ${({ theme }) => theme.SELECTION_EFFECT_COLOR.PRIMARY_COLOR};
     }
   }
+  cursor: pointer;
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     flex-direction: column;
     gap: 0;
-    padding: 0;
   }
 `;
 

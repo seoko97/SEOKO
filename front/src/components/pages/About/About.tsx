@@ -7,6 +7,7 @@ import RowFrame from "@frames/RowFrame";
 import AboutSkillSection from "@organisms/AboutSection/Skill";
 import AboutExperienceSection from "@organisms/AboutSection/Experience/AboutExperienceSection";
 import AboutProjectSection from "@organisms/AboutSection/Project/AboutProjectSection";
+import AboutInfoSection from "@organisms/AboutSection/Info/AboutInfoSection";
 import AboutHeader from "./AboutHeader";
 
 const About = () => {
@@ -26,6 +27,7 @@ const About = () => {
       </Head>
       <Container>
         <AboutHeader />
+        <AboutInfoSection />
         <AboutSkillSection />
         <AboutExperienceSection />
         <AboutProjectSection />
@@ -40,7 +42,7 @@ const Container = styled(RowFrame)`
   align-items: center;
   justify-content: flex-start;
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
-  gap: 4em;
+  gap: 5rem;
   margin: 2em auto;
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {

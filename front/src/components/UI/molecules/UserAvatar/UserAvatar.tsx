@@ -20,7 +20,7 @@ const Container = styled.div`
 const UserAvatar = ({ height, width, onClick }: IProps) => {
   return (
     <Container onClick={onClick && onClick}>
-      <Image src="/main.jpg" objectFit="cover" alt="user" width={width} height={height} />
+      <Image priority src="/main.jpg" objectFit="cover" alt="user" width={width} height={height} />
     </Container>
   );
 };
