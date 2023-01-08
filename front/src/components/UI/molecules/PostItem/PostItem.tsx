@@ -41,7 +41,7 @@ const Container = styled.div`
   &:hover {
     & > .post-image {
       transform: translateY(-4px);
-      box-shadow: rgb(0 0 0 / 10%) 0px 4px 16px 0px;
+      box-shadow: ${({ theme }) => theme.BOX_SHADOW.EFFECT};
     }
 
     & h1 {

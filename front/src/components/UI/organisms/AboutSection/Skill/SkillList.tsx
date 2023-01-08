@@ -28,7 +28,7 @@ const Container = styled.div`
     border-radius: 1rem;
     padding: 1.5rem 0.75rem;
     background-color: ${({ theme }) => theme.BACKGROUND_COLOR.SECONDARY_COLOR};
-    box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
+    box-shadow: ${({ theme }) => theme.BOX_SHADOW.PRIMARY};
   }
 
   &:not(:last-child) {

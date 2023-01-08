@@ -19,12 +19,12 @@ const Container = styled.div`
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   background-color: ${({ theme }) => theme.BACKGROUND_COLOR.SECONDARY_COLOR};
   border-radius: 10px;
-  box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
+  box-shadow: ${({ theme }) => theme.BOX_SHADOW.PRIMARY};
   transition: transform 0.3s, box-shadow 0.3s;
 
   &:hover {
     transform: translateY(-10px);
-    box-shadow: rgb(0 0 0 / 20%) 0px 4px 16px 0px;
+    box-shadow: ${({ theme }) => theme.BOX_SHADOW.EFFECT};
   }
 
   cursor: pointer;
