@@ -84,6 +84,7 @@ const Container = styled.section`
     padding-bottom: 50%;
     align-items: center;
     border-radius: 12px;
+    box-shadow: ${({ theme }) => theme.BOX_SHADOW.PRIMARY};
 
     & img {
       position: absolute;

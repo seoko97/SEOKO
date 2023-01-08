@@ -5,6 +5,11 @@ export const bp = {
   MOBILE: "480px",
 };
 
+export const BOX_SHADOW = {
+  PRIMARY: "rgb(0 0 0 / 4%) 0px 4px 16px 0px",
+  EFFECT: "rgb(0 0 0 / 15%) 0px 4px 16px 0px",
+};
+
 export const lightTheme = {
   BP: bp,
   BACKGROUND_COLOR: {
@@ -33,6 +38,7 @@ export const lightTheme = {
     CODE_COLOR: "rgb(33 37 41)",
     BACK_COLOR: "rgb(233 236 239)",
   },
+  BOX_SHADOW,
 };
 
 export const darkTheme = {
@@ -63,6 +69,7 @@ export const darkTheme = {
     CODE_COLOR: "rgb(248 249 250)",
     BACK_COLOR: "rgb(73 80 87)",
   },
+  BOX_SHADOW,
 };
 
 export type ThemeType = typeof lightTheme;

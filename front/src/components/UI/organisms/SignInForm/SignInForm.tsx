@@ -19,7 +19,7 @@ const Container = styled.form`
   border-radius: 0.5em;
   gap: 1em;
   background-color: ${({ theme }) => theme.BACKGROUND_COLOR.SECONDARY_COLOR};
-  box-shadow: 0 1px 6px 0 hsla(0, 0%, 0%, 0.1);
+  box-shadow: ${({ theme }) => theme.BOX_SHADOW.PRIMARY};
 
   & > input {
     width: 100%;

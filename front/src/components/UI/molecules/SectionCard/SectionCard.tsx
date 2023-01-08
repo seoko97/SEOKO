@@ -31,7 +31,7 @@ const Container = styled.section`
 
   background-color: ${({ theme }) => theme.BACKGROUND_COLOR.SECONDARY_COLOR};
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
-  box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
+  box-shadow: ${({ theme }) => theme.BOX_SHADOW.PRIMARY};
 
   & > h3 {
     font-size: 1.75rem;

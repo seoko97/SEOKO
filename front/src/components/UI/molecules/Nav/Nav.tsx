@@ -13,7 +13,8 @@ const Container = styled.nav`
 
   background-color: ${({ theme }) => theme.BACKGROUND_COLOR.SECONDARY_COLOR};
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
-  box-shadow: 0px 9px 15px -15px #454545;
+  box-shadow: ${({ theme }) => theme.BOX_SHADOW.PRIMARY};
+
   border-radius: 10px;
 
   opacity: 0;

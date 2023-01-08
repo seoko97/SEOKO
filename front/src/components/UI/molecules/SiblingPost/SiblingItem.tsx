@@ -47,7 +47,7 @@ const Container = styled.div<{ type: string }>`
     padding: 1rem;
     background-color: ${({ theme }) => theme.BACKGROUND_COLOR.SECONDARY_COLOR};
     border-radius: 0.5rem;
-    box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
+    box-shadow: ${({ theme }) => theme.BOX_SHADOW.PRIMARY};
 
     cursor: pointer;
 

@@ -17,10 +17,10 @@ const StyledDarkModeButton = styled.div`
 
   background-color: ${({ theme }) => theme.BACKGROUND_COLOR.THIRDLY_COLOR};
   border-radius: 40px;
-  box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.4);
+  box-shadow: ${({ theme }) => theme.BOX_SHADOW.PRIMARY};
 
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
-  transition: background-color 0.3s, transform 0.3s;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
   & > div {
     display: flex;
     justify-content: center;
@@ -38,6 +38,7 @@ const StyledDarkModeButton = styled.div`
 
   &:hover {
     transform: scale(1.1);
+    box-shadow: ${({ theme }) => theme.BOX_SHADOW.EFFECT};
 
     & > div {
       & svg {
