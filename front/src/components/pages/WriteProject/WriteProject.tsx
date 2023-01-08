@@ -4,7 +4,7 @@ import { useMutation } from "@apollo/client";
 
 import TuiEditor from "@organisms/TuiEditor";
 import WriteFooter from "@molecules/WriteFooter";
-import RowFrame from "@frames/RowFrame";
+import { Container } from "@pages/WritePost/WritePost";
 
 import { ADD_PROJECT } from "@queries/project/addProject.queries";
 import { EDIT_PROJECT } from "@queries/project/editProject.queries";
@@ -140,7 +140,7 @@ const WriteProject = ({ project }: IProps) => {
   const { title, description, startDate, endDate, githubUrl } = projectDataRef.current;
 
   return (
-    <RowFrame>
+    <Container>
       <WriteProjectHeader
         title={title}
         description={description}
@@ -159,7 +159,7 @@ const WriteProject = ({ project }: IProps) => {
       />
       <TuiEditor initialValue={project?.content} onChange={onChangeContent} />
       <WriteFooter save={addProject} />
-    </RowFrame>
+    </Container>
   );
 };
 

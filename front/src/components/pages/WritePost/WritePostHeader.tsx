@@ -5,6 +5,7 @@ import Tag from "@atoms/Tag";
 import ImageIcon from "@icons/ImageIcon/ImageIcon";
 
 export const Container = styled.header`
+  width: ${({ theme }) => theme.BP.PC};
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   display: flex;
   flex-direction: column;
@@ -76,6 +77,10 @@ export const Container = styled.header`
       align-items: center;
       gap: 20px;
     }
+  }
+
+  @media (max-width: ${({ theme }) => theme.BP.PC}) {
+    width: 100%;
   }
 `;
 

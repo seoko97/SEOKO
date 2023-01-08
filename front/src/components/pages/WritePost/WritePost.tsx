@@ -223,8 +223,22 @@ const WritePost = ({ post }: IProps) => {
   );
 };
 
-const Container = styled(RowFrame)`
+export const Container = styled.div`
+  width: ${({ theme }) => theme.BP.HDPC};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin: 0 auto;
+  box-sizing: border-box;
+  position: relative;
+
   padding: 30px 0;
+
+  @media (max-width: ${({ theme }) => theme.BP.HDPC}) {
+    width: 100%;
+    padding: 0 16px;
+  }
 `;
 
 export default WritePost;

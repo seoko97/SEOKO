@@ -26,12 +26,6 @@ const EditorWithForwardedRef = forwardRef<EditorType | undefined, EditorPropsWit
   (props, ref) => <TEditor {...props} forwardedRef={ref as React.MutableRefObject<EditorType>} />,
 );
 
-const Container = styled.div`
-  background-color: #fff;
-  flex: 1;
-  min-height: 700px;
-`;
-
 const TuiEditor = (props: Props) => {
   const {
     initialValue,
@@ -87,7 +81,7 @@ const TuiEditor = (props: Props) => {
           {...props}
           initialValue={initialValue || "hello react editor world!"}
           previewStyle={previewStyle || "vertical"}
-          height={height || "700px"}
+          height={height || "1000px"}
           initialEditType={initialEditType || "markdown"}
           useCommandShortcut={useCommandShortcut || true}
           ref={editorRef}
@@ -98,5 +92,12 @@ const TuiEditor = (props: Props) => {
     </>
   );
 };
+
+const Container = styled.div`
+  width: 100%;
+  background-color: #fff;
+  flex: 1;
+  min-height: 1000px;
+`;
 
 export default memo(TuiEditor);
