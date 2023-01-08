@@ -40,6 +40,7 @@ const Container = styled.div`
     position: relative;
     padding-bottom: 60%;
     align-items: center;
+    box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
 
     & img {
       border-radius: 10px;
