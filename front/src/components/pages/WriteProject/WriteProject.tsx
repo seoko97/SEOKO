@@ -122,7 +122,7 @@ const WriteProject = ({ project }: IProps) => {
     addImageMutation({
       variables: {
         input: {
-          type: "post",
+          type: "project",
           image: e.target.files[0],
         },
       },
