@@ -24,6 +24,7 @@
       "@organisms/*": ["src/components/UI/organisms/*"],
       "@icons/*": ["src/components/icons/*"],
       "@modals/*": ["src/components/modals/*"],
+      "@components/*": ["src/components/*"],
       "@hooks/*": ["src/hooks/*"],
       "@store/*": ["src/store/*"],
       "@queries/*": ["src/queries/*"],
