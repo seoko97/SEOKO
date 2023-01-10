@@ -1,19 +1,23 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 import Head from "next/head";
 import { AppContext, AppProps } from "next/app";
+import { useRouter } from "next/router";
+import { ApolloProvider } from "@apollo/client";
+
 import { useCookies } from "react-cookie";
 import { ThemeProvider } from "@emotion/react";
 
 import cookieParser from "@lib/cookieParser";
 import { useApollo } from "@lib/apollo";
+import initializeSigninCheck from "@lib/initializeSigninCheck";
+import * as gtag from "@lib/gtag";
 
 import AppLayout from "@frames/AppLayout";
 import DarkModeButton from "@molecules/DarkModeButton";
-import { ApolloProvider } from "@apollo/client";
+import Analytics from "@components/Analytics";
 
 import { darkTheme, lightTheme } from "@theme/.";
 import GlobalStyle from "@theme/GlobalStyle";
-import initializeSigninCheck from "@lib/initializeSigninCheck";
 
 interface IPageProps extends AppProps {
   mode: string;
@@ -23,15 +27,29 @@ const SEOKO = ({ Component, pageProps, mode: modeInCookie }: IPageProps) => {
   const [cookies, setCookies] = useCookies(["mode"]);
   const mode = useMemo(() => cookies.mode || modeInCookie, [cookies.mode, modeInCookie]);
   const client = useApollo(pageProps);
+  const router = useRouter();
+
+  const onClickDarkMode = useCallback(() => {
+    setCookies("mode", mode === "light" ? "dark" : "light");
+  }, [mode]);
 
   useEffect(() => {
     if (!cookies.mode) setCookies("mode", "light");
     initializeSigninCheck();
   }, []);
 
-  const onClickDarkMode = useCallback(() => {
-    setCookies("mode", mode === "light" ? "dark" : "light");
-  }, [mode]);
+  useEffect(() => {
+    const handleRouteChange = (url: URL) => {
+      gtag.pageView(url);
+    };
+
+    router.events.on("routeChangeComplete", handleRouteChange);
+    router.events.on("hashChangeComplete", handleRouteChange);
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+      router.events.off("hashChangeComplete", handleRouteChange);
+    };
+  }, [router.events]);
 
   const checkMode = useMemo(() => (mode === "light" ? lightTheme : darkTheme), [mode]);
 
@@ -58,6 +76,7 @@ const SEOKO = ({ Component, pageProps, mode: modeInCookie }: IPageProps) => {
         <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
         <link rel="manifest" href="/favicons/site.webmanifest" />
       </Head>
+      <Analytics />
       <ApolloProvider client={client}>
         <ThemeProvider theme={checkMode}>
           <GlobalStyle theme={checkMode} />
