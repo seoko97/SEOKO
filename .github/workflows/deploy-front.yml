@@ -30,6 +30,7 @@ jobs:
            run: |
               echo "HOST=$HOST" >> .env
               echo "API_URL=$API_URL" >> .env
+              echo "NEXT_PUBLIC_GA_ID=$NEXT_PUBLIC_GA_ID" >> .env
            env:
               HOST: ${{secrets.HOST}}
               API_URL: ${{secrets.API_URL}}
