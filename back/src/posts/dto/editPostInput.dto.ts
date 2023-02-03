@@ -3,6 +3,7 @@ import { Post } from '../post.model';
 
 @InputType()
 export class EditPostInput extends PickType(Post, [
+  'isTemporary',
   'coverImg',
   'title',
   'content',
