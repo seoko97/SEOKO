@@ -5,7 +5,7 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AddProjectInput } from './dto/addProjectInput.dto';
 import { EditProjectInput } from './dto/editProjectInput.dto';
 import { GetProjectDto } from './dto/getProject.dto';
-import { GetProjectsDto } from './dto/getProjects.dto';
+import { GetProjectsDto, GetProjectsInput } from './dto/getProjects.dto';
 import { ProjectInput } from './dto/projectInput.dto';
 import { ProjectService } from './project.service';
 
@@ -45,8 +45,10 @@ export class ProjectResolver {
   }
 
   @Query(() => GetProjectsDto)
-  async getProjects(): Promise<GetProjectsDto> {
-    const projects = await this.projectService.getProjects();
+  async getProjects(
+    @Args('input', { nullable: true }) input?: GetProjectsInput,
+  ): Promise<GetProjectsDto> {
+    const projects = await this.projectService.getProjects(input);
 
     return { ok: true, projects };
   }

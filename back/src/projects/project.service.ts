@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Types } from 'mongoose';
+import { Types, FilterQuery } from 'mongoose';
 import { AddProjectInput } from './dto/addProjectInput.dto';
 import { EditProjectInput } from './dto/editProjectInput.dto';
-import { Project, ProjectModel } from './project.model';
+import { Project, ProjectDocument, ProjectModel } from './project.model';
 
 @Injectable()
 export class ProjectService {
@@ -25,7 +25,7 @@ export class ProjectService {
     return await this.projectModel.findById(_id);
   }
 
-  async getProjects() {
-    return await this.projectModel.find().sort({ startDate: -1 });
+  async getProjects(option: FilterQuery<ProjectDocument> = {}) {
+    return await this.projectModel.find(option).sort({ startDate: -1 });
   }
 }
