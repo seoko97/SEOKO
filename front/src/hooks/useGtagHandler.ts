@@ -1,3 +1,6 @@
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
+
 declare global {
   interface Window {
     gtag: (...args: any[]) => void;
@@ -28,3 +31,22 @@ export const event = ({ action, category, label, value }: GTagEvent) => {
     value,
   });
 };
+
+const useGtagHandler = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleRouteChange = (url: URL) => {
+      pageView(url);
+    };
+
+    router.events.on("routeChangeComplete", handleRouteChange);
+    router.events.on("hashChangeComplete", handleRouteChange);
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+      router.events.off("hashChangeComplete", handleRouteChange);
+    };
+  }, [router.events]);
+};
+
+export default useGtagHandler;

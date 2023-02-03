@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 import Head from "next/head";
 import { AppContext, AppProps } from "next/app";
-import { useRouter } from "next/router";
 import { ApolloProvider } from "@apollo/client";
 
 import { useCookies } from "react-cookie";
@@ -10,7 +9,7 @@ import { ThemeProvider } from "@emotion/react";
 import cookieParser from "@lib/cookieParser";
 import { useApollo } from "@lib/apollo";
 import initializeSigninCheck from "@lib/initializeSigninCheck";
-import * as gtag from "@lib/gtag";
+import useGtagHandler from "@hooks/useGtagHandler";
 
 import AppLayout from "@frames/AppLayout";
 import DarkModeButton from "@molecules/DarkModeButton";
@@ -27,7 +26,6 @@ const SEOKO = ({ Component, pageProps, mode: modeInCookie }: IPageProps) => {
   const [cookies, setCookies] = useCookies(["mode"]);
   const mode = useMemo(() => cookies.mode || modeInCookie, [cookies.mode, modeInCookie]);
   const client = useApollo(pageProps);
-  const router = useRouter();
 
   const onClickDarkMode = useCallback(() => {
     setCookies("mode", mode === "light" ? "dark" : "light");
@@ -38,18 +36,7 @@ const SEOKO = ({ Component, pageProps, mode: modeInCookie }: IPageProps) => {
     initializeSigninCheck();
   }, []);
 
-  useEffect(() => {
-    const handleRouteChange = (url: URL) => {
-      gtag.pageView(url);
-    };
-
-    router.events.on("routeChangeComplete", handleRouteChange);
-    router.events.on("hashChangeComplete", handleRouteChange);
-    return () => {
-      router.events.off("routeChangeComplete", handleRouteChange);
-      router.events.off("hashChangeComplete", handleRouteChange);
-    };
-  }, [router.events]);
+  useGtagHandler();
 
   const checkMode = useMemo(() => (mode === "light" ? lightTheme : darkTheme), [mode]);
 
@@ -93,6 +80,7 @@ const SEOKO = ({ Component, pageProps, mode: modeInCookie }: IPageProps) => {
 SEOKO.getInitialProps = async ({ ctx }: AppContext) => {
   const cookies = ctx.req?.headers?.cookie;
   const { mode } = cookieParser(cookies);
+
   return { mode: mode || "light" };
 };
 
