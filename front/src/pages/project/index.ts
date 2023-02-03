@@ -10,7 +10,10 @@ export { default } from "@pages/Project";
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apolloClient = initializeClient({ ctx });
 
-  await apolloClient.query<IGetProjects>({ query: GET_PROJECTS });
+  await apolloClient.query<IGetProjects>({
+    query: GET_PROJECTS,
+    variables: { input: { isTemporary: false } },
+  });
 
   return addApolloState(apolloClient, {
     props: {},
