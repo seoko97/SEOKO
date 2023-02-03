@@ -34,16 +34,15 @@ const cachePolicy: InMemoryCacheConfig = {
     Query: {
       fields: {
         getPosts: {
-          keyArgs: ["input", ["category", "tag"]],
+          keyArgs: ["input", ["category", "tag", "limit", "isTemporary"]],
           merge: mergeItem,
         },
         searchPosts: {
           keyArgs: ["input", ["text"]],
           merge: mergeItem,
         },
-        getPostsByTag: {
-          keyArgs: ["input", ["tagName"]],
-          merge: mergeItem,
+        getProjects: {
+          keyArgs: ["input", ["isTemporary"]],
         },
         getTag: {
           keyArgs: ["input"],
