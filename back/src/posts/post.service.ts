@@ -6,7 +6,6 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Types } from 'mongoose';
-import { ObjectId } from 'mongodb';
 import { Tag } from '@tags/tag.model';
 import { TagService } from '@tags/tag.service';
 import { CreatePostInput } from './dto/createPostInput.dto';
@@ -161,12 +160,12 @@ export class PostService {
     const siblingPost = [
       this.postModel
         .findOne({
-          _id: { $lt: new ObjectId(_id) },
+          _id: { $lt: _id },
         })
         .sort({ createdAt: -1 }),
       this.postModel
         .findOne({
-          _id: { $gt: new ObjectId(_id) },
+          _id: { $gt: _id },
         })
         .sort({ createdAt: 1 }),
     ];
@@ -177,18 +176,11 @@ export class PostService {
   }
 
   async getPosts(input: GetPostsInput) {
-    const {
-      lastId,
-      limit = 10,
-      tag: tagName,
-      isTemporary = true,
-      ...options
-    } = input ?? {};
+    const { lastId, limit = 10, tag: tagName, ...options } = input ?? {};
 
     const where: FilterQuery<PostDocument> = {
       ...options,
       ...this.getWhere(lastId),
-      isTemporary,
     };
 
     if (tagName) {
