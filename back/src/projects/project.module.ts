@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Project, Projectchema } from './project.model';
+import { Project, ProjectSchema } from './project.model';
 import { ProjectResolver } from './project.resolver';
 import { ProjectService } from './project.service';
 
@@ -9,7 +9,7 @@ import { ProjectService } from './project.service';
     MongooseModule.forFeature([
       {
         name: Project.name,
-        schema: Projectchema,
+        schema: ProjectSchema,
       },
     ]),
   ],
