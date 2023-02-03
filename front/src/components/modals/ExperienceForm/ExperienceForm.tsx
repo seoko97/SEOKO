@@ -1,6 +1,8 @@
 import React, { useCallback } from "react";
 import styled from "@emotion/styled";
-import ModalLayout from "@modals/ModalLayout";
+import { useMutation } from "@apollo/client";
+
+import useInput from "@hooks/useInput";
 import {
   IAddExperience,
   IDeleteExperience,
@@ -8,11 +10,11 @@ import {
   IExperience,
   IExperienceInput,
 } from "@queries-types/experience";
-import Input from "@atoms/Input";
-import useInput from "@hooks/useInput";
-import { useMutation } from "@apollo/client";
-
 import { ADD_EXPERIENCE, EDIT_EXPERIENCE, DELETE_EXPERIENCE } from "@queries/experience";
+
+import Input from "@atoms/Input";
+import Button from "@atoms/Button";
+import ModalLayout from "@modals/ModalLayout";
 
 interface IProps {
   onClose: () => void;
@@ -58,21 +60,15 @@ const Container = styled.form`
     flex-direction: column;
   }
 
-  & button {
-    flex: 1;
-    cursor: pointer;
-    margin-top: 10px;
-    padding: 1em;
-    border-radius: 3px;
-    border: none;
-    background-color: ${({ theme }) => theme.BACKGROUND_COLOR.PRIMARY_COLOR};
-    color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
-  }
-
   & > .button-form {
+    display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-end;
     gap: 1em;
+
+    & > button {
+      flex: 1;
+    }
   }
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
@@ -161,12 +157,14 @@ const ExperienceForm = ({ experience, onClose }: IProps) => {
           <Input name="endDate" value={endDate} onChange={onChangeEndDate} type="date" />
         </div>
         <div className="button-form">
+          <Button type="submit" buttonType="primary">
+            저장
+          </Button>
           {experience && (
-            <button type="button" onClick={onClickDeleteBtn}>
+            <Button type="button" onClick={onClickDeleteBtn} buttonType="danger">
               삭제
-            </button>
+            </Button>
           )}
-          <button type="submit">저장</button>
         </div>
       </Container>
     </ModalLayout>

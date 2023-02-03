@@ -55,13 +55,6 @@ const Container = styled.form`
 
   & button {
     flex: 1;
-    margin-top: 0.5em;
-    padding: 0.5em;
-
-    &[name="delete"] {
-      background-color: #ff7373;
-      color: #fff;
-    }
   }
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
@@ -182,14 +175,14 @@ const SkillForm = ({ onClose, skill }: IProps) => {
           <input type="file" onChange={onChangeIcon} />
         </div>
         <div>
+          <Button name="save" onClick={onSubmitForm} buttonType="primary">
+            저장
+          </Button>
           {skill && (
-            <Button onClick={deleteSkill} name="delete">
+            <Button onClick={deleteSkill} name="delete" buttonType="danger">
               삭제
             </Button>
           )}
-          <Button name="save" onClick={onSubmitForm}>
-            저장
-          </Button>
         </div>
       </Container>
     </ModalLayout>
