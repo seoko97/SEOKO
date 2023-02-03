@@ -26,6 +26,7 @@ input AddProjectInput {
   description: String!
   endDate: String
   githubUrl: String!
+  isTemporary: Boolean = false
   startDate: String!
   title: String!
 }
@@ -51,6 +52,7 @@ input CreatePostInput {
   category: String!
   content: String!
   coverImg: String!
+  isTemporary: Boolean!
   tags: [String!]!
   title: String!
 }
@@ -85,6 +87,7 @@ input EditPostInput {
   content: String!
   coverImg: String!
   deleteTags: [String!]!
+  isTemporary: Boolean!
   title: String!
 }
 
@@ -95,6 +98,7 @@ input EditProjectInput {
   description: String!
   endDate: String
   githubUrl: String!
+  isTemporary: Boolean = false
   startDate: String!
   title: String!
 }
@@ -145,7 +149,9 @@ type GetPostsDTO {
 
 input GetPostsInput {
   category: String
+  isTemporary: Boolean = false
   lastId: String
+  limit: Float
   tag: String
 }
 
@@ -159,6 +165,10 @@ type GetProjectsDto {
   error: String
   ok: Boolean!
   projects: [Project!]!
+}
+
+input GetProjectsInput {
+  isTemporary: Boolean!
 }
 
 type GetSkillsDto {
@@ -230,6 +240,7 @@ type Post {
   content: String!
   coverImg: String!
   createdAt: DateTime!
+  isTemporary: Boolean!
   tags: [Tag!]!
   title: String!
   updatedAt: DateTime!
@@ -243,6 +254,7 @@ type Project {
   description: String!
   endDate: String
   githubUrl: String!
+  isTemporary: Boolean!
   startDate: String!
   title: String!
   updatedAt: DateTime!
@@ -257,30 +269,21 @@ type Query {
   getPost(input: GetPostInput!): GetPostDTO!
   getPosts(input: GetPostsInput): GetPostsDTO!
   getProject(input: String!): GetProjectDto!
-  getProjects: GetProjectsDto!
+  getProjects(input: GetProjectsInput): GetProjectsDto!
   getSkills: GetSkillsDto!
   getTag(input: String!): GetTagRes!
   getTags: GetTagsRes!
   getUserInfo: GetUserInfoDTO!
   searchPosts(input: SearchPostsInput): GetPostsDTO!
-  searchTags(input: SearchTagsInput!): SearchTagsDTO!
 }
 
 input SearchPostsInput {
   category: String
+  isTemporary: Boolean = false
   lastId: String
+  limit: Float
   tag: String
   text: String
-}
-
-type SearchTagsDTO {
-  error: String
-  ok: Boolean!
-  tags: [Tag!]!
-}
-
-input SearchTagsInput {
-  text: String!
 }
 
 type SiblingPost {
