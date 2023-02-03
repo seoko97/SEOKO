@@ -1,6 +1,6 @@
 import React from "react";
 import NextScript from "next/script";
-import { GA_TRACKING_ID } from "@lib/gtag";
+import { GA_TRACKING_ID } from "@hooks/useGtagHandler";
 
 const Analytics = () => (
   <>
