@@ -13,6 +13,11 @@ interface IPost {
 }
 
 type ISiblingItem = Pick<IPost, "_id" | "title">;
+
+type IBasePosts = {
+  posts: IPost[];
+} & CoreResponse;
+
 interface ISiblingPost {
   next: ISiblingItem;
   prev: ISiblingItem;
@@ -26,9 +31,11 @@ interface IGetPost {
 }
 
 interface IGetPosts {
-  getPosts: {
-    posts: IPost[];
-  } & CoreResponse;
+  getPosts: IBasePosts;
+}
+
+interface ISearchPosts {
+  searchPosts: IBasePosts;
 }
 
 interface IAddPost {
@@ -43,27 +50,15 @@ interface IEditPost {
   editPost: CoreResponse;
 }
 
-interface ISearchPosts {
-  searchPosts: {
-    posts: IPost[];
-  } & CoreResponse;
-}
-
-interface IGetPostsByTag {
-  getPostsByTag: {
-    posts: IPost[];
-  } & CoreResponse;
-}
-
 export type {
   IAddPost,
   IDeletePost,
   IEditPost,
   IGetPost,
   IGetPosts,
-  IGetPostsByTag,
   IPost,
   ISearchPosts,
   ISiblingItem,
   ISiblingPost,
+  IBasePosts,
 };
