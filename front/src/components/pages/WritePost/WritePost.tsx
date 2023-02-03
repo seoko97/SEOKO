@@ -7,7 +7,6 @@ import { ADD_POST } from "@queries/post/addPost.queries";
 import { IAddPost, IEditPost, IPost } from "@queries-types/posts";
 import { EDIT_POST } from "@queries/post/editPost.queries";
 
-import RowFrame from "@frames/RowFrame";
 import WriteFooter from "@molecules/WriteFooter";
 import TuiEditor from "@organisms/TuiEditor";
 
@@ -91,34 +90,40 @@ const WritePost = ({ post }: IProps) => {
     [postDataRef],
   );
 
-  const { title, content, category } = postDataRef.current;
+  const addPost = useCallback(
+    async (e) => {
+      const confirmPost = confirm("저장하시겠습니까?");
 
-  const addPost = useCallback(async () => {
-    const confirmPost = confirm("저장하시겠습니까?");
+      if (!confirmPost) return;
 
-    if (!confirmPost) return;
+      const { dataset } = e.target;
+      const isTemporary = Boolean(dataset.isTemporary);
 
-    if (post) {
-      await editPostMutation({
-        variables: {
-          input: {
-            ...postDataRef.current,
-            addTags,
-            deleteTags,
+      if (post) {
+        await editPostMutation({
+          variables: {
+            input: {
+              ...postDataRef.current,
+              addTags,
+              deleteTags,
+              isTemporary,
+            },
           },
-        },
-      });
-    } else {
-      await addPostMutation({
-        variables: {
-          input: {
-            ...postDataRef.current,
-            tags,
+        });
+      } else {
+        await addPostMutation({
+          variables: {
+            input: {
+              ...postDataRef.current,
+              isTemporary,
+              tags,
+            },
           },
-        },
-      });
-    }
-  }, [postDataRef.current, tags, addTags, deleteTags]);
+        });
+      }
+    },
+    [postDataRef.current, tags, addTags, deleteTags],
+  );
 
   const addTag: React.KeyboardEventHandler<HTMLInputElement> = useCallback(
     (e) => {
@@ -199,6 +204,8 @@ const WritePost = ({ post }: IProps) => {
       },
     });
   }, []);
+
+  const { title, content, category } = postDataRef.current;
 
   return (
     <Container>

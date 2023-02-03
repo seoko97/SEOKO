@@ -2,48 +2,45 @@ import React, { useCallback } from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 
+import Button from "@atoms/Button";
+
 const Footer = styled.footer`
-  width: 100%;
+  width: ${({ theme }) => theme.BP.PC};
   margin-top: 30px;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 20px;
   margin-bottom: 20px;
 
-  & > button {
-    border: 0;
-    padding: 8px 10px;
-    cursor: pointer;
-    background-color: #367ddd;
-    color: #fff;
-    border-radius: 3px;
-    font-size: 18px;
-    font-weight: bold;
-
-    &.close {
-      background-color: #ff4136;
-    }
-    &:hover {
-      opacity: 0.7;
-    }
+  & > div {
+    display: flex;
+    gap: 1rem;
   }
 `;
 
 interface Props {
-  save: () => void;
+  save: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const WriteFooter = ({ save }: Props) => {
   const router = useRouter();
 
   const onMovePage = useCallback(() => router.back(), []);
+
   return (
     <Footer>
-      <button onClick={save}>저장</button>
-      <button className="close" onClick={onMovePage}>
-        나가기
-      </button>
+      <Button buttonSize="large" onClick={save} data-is-temporary="true">
+        임시저장
+      </Button>
+      <div>
+        <Button buttonType="primary" buttonSize="large" onClick={save}>
+          저장
+        </Button>
+        <Button buttonType="danger" buttonSize="large" className="close" onClick={onMovePage}>
+          나가기
+        </Button>
+      </div>
     </Footer>
   );
 };
