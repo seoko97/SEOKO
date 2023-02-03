@@ -13,24 +13,26 @@ export class TagService {
   ) {}
 
   async getTags() {
-    const tags = await this.tagModel.find();
+    const tags = await this.tagModel
+      .find()
+      .populate({ path: 'posts', select: 'isTemporary' })
+      .then((_tags) =>
+        _tags.filter((tag) => tag.posts.some((post) => !post.isTemporary)),
+      );
 
     tags.sort((a, b) => b.posts.length - a.posts.length);
 
     return tags;
   }
 
-  async searchTags(name: string) {
-    const tags = await this.tagModel.find({
-      name: {
-        $regex: name,
-      },
-    });
-
-    return tags;
-  }
   async getTag(name: string) {
-    return await this.tagModel.findOne({ name });
+    return await this.tagModel
+      .findOne({ name })
+      .populate({ path: 'posts', select: 'isTemporary' })
+      .then((_tag) => {
+        _tag.posts = _tag.posts.filter((post) => !post.isTemporary);
+        return _tag;
+      });
   }
   async getTagById(_id: Types.ObjectId) {
     return await this.tagModel.findOne({ _id });
