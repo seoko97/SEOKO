@@ -9,6 +9,7 @@ interface IPost {
   tags: ITag[];
   title: string;
   createdAt: string;
+  isTemporary: boolean;
   __typename?: string;
 }
 
