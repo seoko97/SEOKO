@@ -12,6 +12,7 @@ export const GET_PROJECT = gql`
         content
         coverImg
         githubUrl
+        isTemporary
         startDate
         endDate
       }

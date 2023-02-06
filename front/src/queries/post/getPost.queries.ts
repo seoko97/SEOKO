@@ -11,6 +11,7 @@ export const GET_POST = gql`
         title
         coverImg
         category
+        isTemporary
         tags {
           _id
           name
