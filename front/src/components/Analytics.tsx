@@ -1,15 +1,17 @@
 import React from "react";
 import NextScript from "next/script";
 import { GA_TRACKING_ID } from "@hooks/useGtagHandler";
+import { isProd } from "@config/constance";
 
-const Analytics = () => (
-  <>
-    <NextScript
-      strategy="afterInteractive"
-      src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
-    />
-    <NextScript id="google-analytics" strategy="afterInteractive">
-      {`
+const Analytics = () =>
+  isProd ? (
+    <>
+      <NextScript
+        strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+      />
+      <NextScript id="google-analytics" strategy="afterInteractive">
+        {`
           window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
@@ -17,8 +19,10 @@ const Analytics = () => (
               page_path: window.location.pathname,
             });
       `}
-    </NextScript>
-  </>
-);
+      </NextScript>
+    </>
+  ) : (
+    <></>
+  );
 
 export default Analytics;

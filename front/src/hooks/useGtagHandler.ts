@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { isProd } from "@config/constance";
 
 declare global {
   interface Window {
@@ -33,6 +34,8 @@ export const event = ({ action, category, label, value }: GTagEvent) => {
 };
 
 const useGtagHandler = () => {
+  if (!isProd) return;
+
   const router = useRouter();
 
   useEffect(() => {
