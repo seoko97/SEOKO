@@ -7,9 +7,9 @@ interface IProps {
 }
 
 const CATEGORIES = {
-  All: "all",
-  Dev: "dev",
-  Daily: "daily",
+  all: "All",
+  dev: "Dev",
+  daily: "Daily",
 } as const;
 
 const ContentHeader = ({ changeCategory }: IProps) => {
@@ -19,12 +19,13 @@ const ContentHeader = ({ changeCategory }: IProps) => {
 
   const onClickCategory: React.MouseEventHandler<HTMLLIElement> = useCallback(
     (e) => {
-      const category = e.currentTarget.innerText as keyof typeof CATEGORIES;
+      const category =
+        CATEGORIES[e.currentTarget.innerText.toLowerCase() as keyof typeof CATEGORIES];
 
-      if (!CATEGORIES[category]) return;
+      if (!category) return;
 
       setSelectedCategory(category);
-      changeCategory(category);
+      changeCategory(e.currentTarget.innerText.toLowerCase());
     },
     [changeCategory],
   );
@@ -32,7 +33,7 @@ const ContentHeader = ({ changeCategory }: IProps) => {
   return (
     <Container>
       <ul>
-        {Object.keys(CATEGORIES).map((category, i) => (
+        {Object.values(CATEGORIES).map((category, i) => (
           <li
             key={i + category}
             onClick={onClickCategory}

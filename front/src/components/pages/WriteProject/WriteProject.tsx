@@ -94,23 +94,28 @@ const WriteProject = ({ project }: IProps) => {
     [projectDataRef],
   );
 
-  const addProject = useCallback(() => {
-    const confirmProject = confirm("저장하시겠습니까?");
+  const addProject = useCallback(
+    (e) => {
+      const confirmProject = confirm("저장하시겠습니까?");
 
-    if (!confirmProject) return;
+      if (!confirmProject) return;
 
-    const input = { ...projectDataRef.current };
+      const { dataset } = e.target;
+      const isTemporary = Boolean(dataset.isTemporary);
+      const input = { ...projectDataRef.current, isTemporary };
 
-    if (project) {
-      editProjectMutation({
-        variables: { input },
-      });
-    } else {
-      addProjectMutation({
-        variables: { input },
-      });
-    }
-  }, [projectDataRef]);
+      if (project) {
+        editProjectMutation({
+          variables: { input },
+        });
+      } else {
+        addProjectMutation({
+          variables: { input },
+        });
+      }
+    },
+    [projectDataRef],
+  );
 
   const clearCoverImage = useCallback(() => {
     setCoverImg("");

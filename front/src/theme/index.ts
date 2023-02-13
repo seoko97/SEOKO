@@ -22,7 +22,6 @@ export const lightTheme = {
     PRIMARY_COLOR: "#212529",
     SECONDARY_COLOR: "#2b4f76",
     LOGO_COLOR: "#86caf4",
-    BUTTON_COLOR: "#f8f9fa",
   },
   SELECTION_EFFECT_COLOR: {
     PRIMARY_COLOR: "#569aff",
@@ -33,6 +32,7 @@ export const lightTheme = {
   },
   BUTTON_COLOR: {
     PRIMARY_COLOR: "#86caf4",
+    DANGER_COLOR: "#ff4d4f",
   },
   MARK_DOWN: {
     CODE_COLOR: "rgb(33 37 41)",
@@ -53,7 +53,6 @@ export const darkTheme = {
     PRIMARY_COLOR: "#f8f9fa",
     SECONDARY_COLOR: "#9ca3af",
     LOGO_COLOR: "#c58ff7",
-    BUTTON_COLOR: "#212529",
   },
   SELECTION_EFFECT_COLOR: {
     PRIMARY_COLOR: "#569aff",
@@ -64,6 +63,7 @@ export const darkTheme = {
   },
   BUTTON_COLOR: {
     PRIMARY_COLOR: "#A076F1",
+    DANGER_COLOR: "#ff4d4f",
   },
   MARK_DOWN: {
     CODE_COLOR: "rgb(248 249 250)",

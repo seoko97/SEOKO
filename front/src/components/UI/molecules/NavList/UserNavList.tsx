@@ -50,6 +50,7 @@ const NavList = () => {
       <li>{username} 님</li>
       <NavItem name="새 글쓰기" href="/write/post" />
       <NavItem name="프로젝트 추가" href="/write/project" />
+      <NavItem name="임시 저장 목록" href="/temporary" />
       <li onClick={() => signOutMutation()}>로그아웃</li>
     </Container>
   );

@@ -8,16 +8,16 @@ export class GetPostsInput {
   category?: string;
 
   @Field(() => String, { nullable: true })
-  tag?: string;
-
-  @Field(() => String, { nullable: true })
   lastId?: string;
-}
 
-@InputType()
-export class GetPostsByTagInput extends GetPostsInput {
+  @Field(() => Boolean, { nullable: true, defaultValue: false })
+  isTemporary?: string;
+
+  @Field(() => Number, { nullable: true })
+  limit?: number;
+
   @Field(() => String, { nullable: true })
-  tagName?: string;
+  tag?: string;
 }
 
 @ObjectType()

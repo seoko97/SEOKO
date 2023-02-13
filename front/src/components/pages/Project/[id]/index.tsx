@@ -1,32 +1,21 @@
 import React, { useMemo } from "react";
 import Head from "next/head";
+import removeMd from "remove-markdown";
 import styled from "@emotion/styled";
-import { useQuery } from "@apollo/client";
 
-import { IGetProject } from "@queries-types/project";
+import { IProject } from "@queries-types/project";
 
 import RowFrame from "@frames/RowFrame";
 import Markdown from "@organisms/MarkDownViewer";
 
-import { GET_PROJECT } from "@queries/project";
 import ProjectHeader from "@organisms/ProjectHeader";
-import removeMd from "remove-markdown";
+import auth from "@components/hoc/auth";
 
 interface IProps {
-  projectId: string;
+  project: IProject;
 }
 
-const Project = ({ projectId }: IProps) => {
-  const { data } = useQuery<IGetProject>(GET_PROJECT, {
-    variables: { input: projectId },
-  });
-
-  if (!data) return <></>;
-
-  const {
-    getProject: { project },
-  } = data;
-
+const Project = auth(({ project }: IProps) => {
   const projectDescription = useMemo(
     () => removeMd(project?.content, { useImgAltText: false }).slice(0, 200),
     [],
@@ -42,12 +31,12 @@ const Project = ({ projectId }: IProps) => {
         <meta property="og:image" content={project.coverImg} />
       </Head>
       <Container>
-        {data?.getProject && <ProjectHeader project={data.getProject.project} />}
+        <ProjectHeader project={project} />
         <Markdown content={project.content} />
       </Container>
     </>
   );
-};
+});
 
 const Container = styled(RowFrame)`
   display: flex;

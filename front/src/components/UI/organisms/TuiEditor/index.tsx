@@ -80,7 +80,7 @@ const TuiEditor = (props: Props) => {
       <Container>
         <EditorWithForwardedRef
           {...props}
-          initialValue={initialValue || "hello react editor world!"}
+          initialValue={initialValue || ""}
           previewStyle={previewStyle || "vertical"}
           height={height || "1000px"}
           initialEditType={initialEditType || "markdown"}

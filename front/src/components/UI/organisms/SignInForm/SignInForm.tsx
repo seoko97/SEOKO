@@ -25,11 +25,6 @@ const Container = styled.form`
     width: 100%;
   }
 
-  & > button {
-    width: 100%;
-    padding: 12px 0;
-  }
-
   @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
     width: 100%;
   }
@@ -43,7 +38,7 @@ const SignInForm = () => {
   });
 
   const { username } = useReactiveVar(userInfoVar);
-  const [signin, { loading }] = useMutation<ISignIn>(SIGN_IN, {
+  const [signin] = useMutation<ISignIn>(SIGN_IN, {
     onCompleted({ signin }) {
       const { ok, username } = signin;
       if (ok) setUserInfo(username);
@@ -84,7 +79,7 @@ const SignInForm = () => {
     <Container onSubmit={onClickSignInBtn}>
       <Input onChange={onChangeValue} placeholder="아이디" name="userId" />
       <Input onChange={onChangeValue} placeholder="비밀번호" type="password" name="password" />
-      <Button loading={loading}>로그인</Button>
+      <Button buttonType="primary">로그인</Button>
     </Container>
   );
 };

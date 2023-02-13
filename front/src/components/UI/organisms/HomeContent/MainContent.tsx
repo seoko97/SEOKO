@@ -6,27 +6,19 @@ import { useRouter } from "next/router";
 import { useQuery } from "@apollo/client";
 import { IGetPosts, IPost } from "@queries-types/posts";
 import { GET_POSTS } from "@queries/post";
-import { getDataInput } from "@lib/getDataInput";
 
 import PostList from "@organisms/PostList";
 import ContentHeader from "./ContentHeader";
-
-interface IFetchPostInput {
-  lastId?: string;
-  tag?: string;
-  category?: string;
-}
 
 const MainContent = () => {
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   const { category } = router.query;
-  const defaultInput = getDataInput({ category });
 
   const { data, fetchMore } = useQuery<IGetPosts>(GET_POSTS, {
     variables: {
-      input: defaultInput,
+      input: { category },
     },
   });
 
@@ -46,10 +38,10 @@ const MainContent = () => {
     } = data;
     if (posts.length % 10 !== 0) return;
 
-    const input: IFetchPostInput = getDataInput({
+    const input = {
       lastId: posts[posts.length - 1]._id,
       category,
-    });
+    };
 
     fetchMore({
       variables: {
@@ -62,9 +54,9 @@ const MainContent = () => {
     (category: string) => {
       const query = { ...router.query };
 
-      if (category !== "All") {
-        query.category = category.toLowerCase();
-      } else {
+      query.category = category;
+
+      if (category === "all") {
         delete query.category;
       }
 

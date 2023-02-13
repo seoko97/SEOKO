@@ -12,7 +12,7 @@ import { CreatePostInput } from './dto/createPostInput.dto';
 import { Post, PostDocument, PostModel } from './post.model';
 import { EditPostInput } from './dto/editPostInput.dto';
 import { SearchPostsInput } from './dto/searchPosts.dto';
-import { GetPostsByTagInput, GetPostsInput } from './dto/getPosts.dto';
+import { GetPostsInput } from './dto/getPosts.dto';
 
 @Injectable()
 export class PostService {
@@ -37,24 +37,26 @@ export class PostService {
       ...info,
     });
 
-    if (tags.length) {
-      const createdTag = await Promise.all(
-        tags.map(async (tagName) => {
-          const tag = await this.tagService.findOrCreate(tagName);
-
-          tag.posts.push(post._id);
-
-          await tag.save();
-
-          return tag;
-        }),
-      );
-
-      if (createdTag.length) post.tags = createdTag;
+    if (!tags.length) {
+      await post.save();
+      return post;
     }
 
-    await post.save();
+    const createdTag = await Promise.all(
+      tags.map(async (tagName) => {
+        const tag = await this.tagService.findOrCreate(tagName);
 
+        tag.posts.push(post._id);
+
+        await tag.save();
+
+        return tag;
+      }),
+    );
+
+    if (createdTag.length) post.tags = createdTag;
+
+    await post.save();
     return post;
   }
 
@@ -88,7 +90,7 @@ export class PostService {
         }),
       );
 
-      post.tags = (post.tags as Tag[]).filter((tag) => {
+      post.tags = post.tags.filter((tag) => {
         return !deleteTags.includes(tag.name);
       });
     }
@@ -141,13 +143,12 @@ export class PostService {
 
   async getPost(_id: string) {
     const post = await this.postModel.findOne({ _id });
-    const siblingPost = await this.getSiblingPost(_id);
 
     if (!post) throw new Error('포스트가 존재하지 않습니다.');
 
     await post.populate('tags');
 
-    return { post, siblingPost };
+    return post;
   }
 
   async getSiblingPost(_id: string) {
@@ -155,29 +156,33 @@ export class PostService {
 
     if (!post) throw new BadRequestException('포스트가 존재하지 않습니다.');
 
-    const prev = await this.postModel
-      .findOne({
-        _id: { $lt: _id },
-      })
-      .sort({ createdAt: -1 });
+    const siblingPost = [
+      this.postModel
+        .findOne({
+          _id: { $lt: _id },
+          isTemporary: false,
+        })
+        .sort({ createdAt: -1 }),
+      this.postModel
+        .findOne({
+          _id: { $gt: _id },
+          isTemporary: false,
+        })
+        .sort({ createdAt: 1 }),
+    ];
 
-    const next = await this.postModel
-      .findOne({
-        _id: { $gt: _id },
-      })
-      .sort({ createdAt: 1 });
+    const [prev, next] = await Promise.all(siblingPost);
 
     return { prev, next };
   }
 
   async getPosts(input: GetPostsInput) {
-    const { category, lastId, tag: tagName } = input ?? {};
+    const { lastId, limit = 10, tag: tagName, ...options } = input ?? {};
 
-    const where = this.getWhere(lastId);
-
-    if (category) {
-      where.category = category;
-    }
+    const where: FilterQuery<PostDocument> = {
+      ...options,
+      ...this.getWhere(lastId),
+    };
 
     if (tagName) {
       const tag = await this.tagService.getTag(tagName);
@@ -189,34 +194,11 @@ export class PostService {
       };
     }
 
-    return await this.postModel
+    return this.postModel
       .find(where)
       .sort({ _id: -1 })
-      .limit(10)
+      .limit(limit)
       .populate('tags');
-  }
-
-  async getPostsByTag(input: GetPostsByTagInput) {
-    const { lastId, tagName } = input;
-
-    const $tag = tagName ? await this.tagService.getTag(tagName) : null;
-
-    const where: FilterQuery<PostDocument> = {
-      ...this.getWhere(lastId),
-    };
-
-    if ($tag)
-      where.tags = {
-        $in: $tag._id,
-      };
-
-    const posts = await this.postModel
-      .find(where)
-      .sort({ _id: -1 })
-      .limit(10)
-      .populate('tags');
-
-    return posts;
   }
 
   async searchPosts(input: SearchPostsInput) {
@@ -233,10 +215,6 @@ export class PostService {
       ],
     };
 
-    return await this.postModel
-      .find(where)
-      .sort({ _id: -1 })
-      .limit(10)
-      .populate('tags');
+    return this.getPosts(where);
   }
 }

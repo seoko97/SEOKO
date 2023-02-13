@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_PROJECTS = gql`
-  query GetProjects {
-    getProjects {
+  query GetProjects($input: GetProjectsInput) {
+    getProjects(input: $input) {
       ok
       error
       projects {
@@ -12,6 +12,7 @@ export const GET_PROJECTS = gql`
         coverImg
         startDate
         endDate
+        isTemporary
       }
     }
   }

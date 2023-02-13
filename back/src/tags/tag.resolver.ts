@@ -3,7 +3,6 @@ import { CoreRes } from '@decorators/coreRes.decorator';
 import { CreateTagDTO } from './dto/createTag.dto';
 import { GetTagsRes } from './dto/getTagsRes.dto';
 import { TagService } from './tag.service';
-import { SearchTagsDTO, SearchTagsInput } from './dto/searchTags.dto';
 import { GetTagRes } from './dto/getTagRes.dto';
 
 @Resolver('Tag')
@@ -34,14 +33,6 @@ export class TagResolver {
   @Query(() => GetTagsRes)
   async getTags(): Promise<GetTagsRes> {
     const tags = await this.tagService.getTags();
-    return { ok: true, tags };
-  }
-
-  @Query(() => SearchTagsDTO)
-  async searchTags(
-    @Args('input') input: SearchTagsInput,
-  ): Promise<SearchTagsDTO> {
-    const tags = await this.tagService.searchTags(input.text);
     return { ok: true, tags };
   }
 }

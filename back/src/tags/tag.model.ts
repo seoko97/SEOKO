@@ -24,8 +24,8 @@ export class Tag {
     ref: 'Post',
     required: false,
   })
-  @Field(() => [Post || Types.ObjectId])
-  posts?: (Types.ObjectId | Post)[];
+  @Field(() => [Post])
+  posts?: Post[];
 }
 
 export const TagSchema = SchemaFactory.createForClass(Tag);

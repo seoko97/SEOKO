@@ -41,6 +41,10 @@ export class Post {
   @Field(() => [Tag])
   tags?: Tag[];
 
+  @Prop({ required: false, default: false })
+  @Field(() => Boolean)
+  isTemporary?: boolean;
+
   @Field(() => Date)
   createdAt: Date;
 

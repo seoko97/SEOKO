@@ -26,8 +26,4 @@ export class UserService {
   async updateRefreshToken(_id: string, refreshToken: string | null) {
     await this.userModel.updateOne({ _id }, { refreshToken });
   }
-
-  async test() {
-    return await this.userModel.find();
-  }
 }

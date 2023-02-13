@@ -54,6 +54,7 @@ const ProjectHeader = ({ project }: IProps) => {
           objectFit="cover"
         />
       </div>
+      {project.isTemporary && <h3>임시저장</h3>}
       <h1>{project.title}</h1>
       <p className="desc lt">{project.description}</p>
       <div className="lt">

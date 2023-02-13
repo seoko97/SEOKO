@@ -58,7 +58,9 @@ const ProjectBox = styled.section`
 `;
 
 const Project = () => {
-  const { data } = useQuery<IGetProjects>(GET_PROJECTS);
+  const { data } = useQuery<IGetProjects>(GET_PROJECTS, {
+    variables: { input: { isTemporary: false } },
+  });
   const projects = getProjectsByDate(data?.getProjects.projects);
   const yearsBtProject = Object.keys(projects).sort((a, b) => (a > b ? -1 : 1));
 

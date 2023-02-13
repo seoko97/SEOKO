@@ -15,11 +15,11 @@ const Container = styled.div`
 
 interface IProps {
   posts: IPost[];
-  func: () => void;
+  func?: () => void;
 }
 
 const PostList = forwardRef<HTMLDivElement, IProps>(({ posts, func }, ref) => {
-  useFetchScroll(ref, func);
+  if (func) useFetchScroll(ref, func);
 
   return (
     <Container ref={ref}>

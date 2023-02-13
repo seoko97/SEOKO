@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return addApolloState(apolloClient, {
     props: {
-      projectId: id,
+      project: data.getProject.project,
     },
   });
 };

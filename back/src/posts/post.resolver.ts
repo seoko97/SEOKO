@@ -42,7 +42,10 @@ export class PostResolver {
   @UseGuards(ObjectIdGuard)
   @Query(() => GetPostDTO)
   async getPost(@Args('input') input: GetPostInput): Promise<GetPostDTO> {
-    const { post, siblingPost } = await this.postService.getPost(input.id);
+    const [post, siblingPost] = await Promise.all([
+      this.postService.getPost(input.id),
+      this.postService.getSiblingPost(input.id),
+    ]);
 
     return { ok: true, post, siblingPost };
   }

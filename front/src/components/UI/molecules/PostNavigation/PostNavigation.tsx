@@ -1,3 +1,5 @@
+import Button from "@atoms/Button";
+import styled from "@emotion/styled";
 import React from "react";
 
 interface IProps {
@@ -7,11 +9,20 @@ interface IProps {
 
 const PostNavigation = ({ onDelete, onEdit }: IProps) => {
   return (
-    <div>
-      <button onClick={onEdit}>수정</button>
-      <button onClick={onDelete}>삭제</button>
-    </div>
+    <Container>
+      <Button buttonSize="small" onClick={onEdit}>
+        수정
+      </Button>
+      <Button buttonSize="small" onClick={onDelete} buttonType="danger">
+        삭제
+      </Button>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
 
 export default PostNavigation;
