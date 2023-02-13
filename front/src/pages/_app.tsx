@@ -32,7 +32,7 @@ const SEOKO = ({ Component, pageProps, mode: modeInCookie }: IPageProps) => {
   }, [mode]);
 
   useEffect(() => {
-    if (!cookies.mode) setCookies("mode", "light");
+    if (!cookies.mode && !modeInCookie) setCookies("mode", "light");
     initializeSigninCheck();
   }, []);
 
