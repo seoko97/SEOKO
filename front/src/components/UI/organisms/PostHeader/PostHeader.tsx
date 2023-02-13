@@ -107,6 +107,7 @@ const PostHeader = ({ post }: IProps) => {
       <div className="image-container">
         <Image priority layout="fill" alt="post-cover" src={coverImg} objectFit="cover" />
       </div>
+      {post.isTemporary && <h3>임시저장</h3>}
       <h1>{title}</h1>
       {tags[0] && <TagList onClick={onClickTag} tags={tags} />}
       <Detail createdAt={createdAt} category={category} />
