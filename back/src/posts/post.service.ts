@@ -143,13 +143,12 @@ export class PostService {
 
   async getPost(_id: string) {
     const post = await this.postModel.findOne({ _id });
-    const siblingPost = await this.getSiblingPost(_id);
 
     if (!post) throw new Error('포스트가 존재하지 않습니다.');
 
     await post.populate('tags');
 
-    return { post, siblingPost };
+    return post;
   }
 
   async getSiblingPost(_id: string) {
@@ -161,16 +160,18 @@ export class PostService {
       this.postModel
         .findOne({
           _id: { $lt: _id },
+          isTemporary: false,
         })
         .sort({ createdAt: -1 }),
       this.postModel
         .findOne({
           _id: { $gt: _id },
+          isTemporary: false,
         })
         .sort({ createdAt: 1 }),
     ];
 
-    const [prev, next] = await Promise.all(siblingPost.map((post) => post));
+    const [prev, next] = await Promise.all(siblingPost);
 
     return { prev, next };
   }
