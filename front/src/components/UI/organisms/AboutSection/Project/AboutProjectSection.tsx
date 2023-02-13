@@ -9,7 +9,13 @@ import SectionHeader from "../SectionHeader";
 import { Section } from "../styles";
 
 const AboutProjectSection = () => {
-  const { data } = useQuery<IGetAbout>(GET_ABOUT);
+  const { data } = useQuery<IGetAbout>(GET_ABOUT, {
+    variables: {
+      input: {
+        isTemporary: false,
+      },
+    },
+  });
 
   return (
     <Section>

@@ -19,7 +19,13 @@ const AboutExperienceSection = () => {
   const [isOpenExperienceForm, onOpenExperienceForm, onCloseExperienceForm] = useModal();
   const [selectedExperience, setSelectedExperience] = useState<IExperience | null>(null);
 
-  const { data, refetch } = useQuery<IGetAbout>(GET_ABOUT);
+  const { data, refetch } = useQuery<IGetAbout>(GET_ABOUT, {
+    variables: {
+      input: {
+        isTemporary: false,
+      },
+    },
+  });
 
   const onClickExperience = useCallback((data: IExperience | null = null) => {
     onOpenExperienceForm();
