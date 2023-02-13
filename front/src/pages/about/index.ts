@@ -10,6 +10,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await apolloClient.query({
     query: GET_ABOUT,
+    variables: {
+      input: { isTemporary: false },
+    },
   });
 
   return addApolloState(apolloClient, {

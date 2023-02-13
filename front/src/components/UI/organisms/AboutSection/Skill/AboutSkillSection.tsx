@@ -19,7 +19,13 @@ const AboutSkillSection = () => {
   const [isOpenSkillForm, onOpenSkillForm, onCloseSkillForm] = useModal();
   const [selectedSkill, setSelectedSkill] = useState<ISkill | null>(null);
 
-  const { data, refetch } = useQuery<IGetAbout>(GET_ABOUT);
+  const { data, refetch } = useQuery<IGetAbout>(GET_ABOUT, {
+    variables: {
+      input: {
+        isTemporary: false,
+      },
+    },
+  });
 
   const onClickSkill = useCallback((data: ISkill | null = null) => {
     onOpenSkillForm();

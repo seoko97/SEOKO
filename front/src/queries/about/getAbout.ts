@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_ABOUT = gql`
-  query getAboutData {
+  query getAboutData($input: GetProjectsInput) {
     getSkills {
       ok
       error
@@ -26,7 +26,7 @@ export const GET_ABOUT = gql`
         }
       }
     }
-    getProjects {
+    getProjects(input: $input) {
       ok
       error
       projects {
