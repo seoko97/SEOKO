@@ -34,11 +34,7 @@ const cachePolicy: InMemoryCacheConfig = {
     Query: {
       fields: {
         getPosts: {
-          keyArgs: ["input", ["category", "tag", "limit", "isTemporary"]],
-          merge: mergeItem,
-        },
-        searchPosts: {
-          keyArgs: ["input", ["text"]],
+          keyArgs: ["input", ["category", "tag", "limit", "isTemporary", "text"]],
           merge: mergeItem,
         },
         getProjects: {
@@ -121,6 +117,22 @@ export const initializeClient = ({ initialState, ctx = null }: IInitializeApollo
   if (typeof window === "undefined") return _apolloClient;
   if (!apolloClient) apolloClient = _apolloClient;
   return _apolloClient;
+
+  // // Next.js 에서 Apollo Client를 이용해 데이터를 가져오는 함수가 있다면 초기 상태값이 여기에 합쳐진다.
+  // if (initialState) {
+  //   // 클라이언트에서 받은 데이터인 현재 캐시 데이터를 가져온다.
+  //   const existingCache = _apolloClient.extract();
+  //   // 현재 캐시와 SSR 메소드인 getStaticProps/getServerSideProps 로 부터 받은 데이터를 합친다.
+  //   const data = Object.assign(initialState, existingCache);
+
+  //   // 합쳐진 데이터를 저장한다.
+  //   _apolloClient.cache.restore(data);
+  // }
+  // // SSG와 SSR은 항상 새로운 Apollo Client를 생성
+  // if (typeof window === "undefined") return _apolloClient;
+  // // 클라이언트의 Apollo Client는 한 번만 생성
+  // if (!apolloClient) apolloClient = _apolloClient;
+  // return _apolloClient;
 };
 
 export const useApollo = (
