@@ -13,6 +13,8 @@ const StyledPostImg = styled.div`
   border-radius: 10px;
   transition: transform 0.3s, box-shadow 0.3s;
 
+  background-color: ${({ theme }) => theme.BACKGROUND_COLOR.SECONDARY_COLOR};
+
   & img {
     position: absolute;
     object-fit: cover;
