@@ -13,7 +13,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await apolloClient.query({
     query: GET_POSTS,
-    variables: { input: { category } },
+    variables: { input: { category, text: "" } },
   });
 
   return addApolloState(apolloClient, {
