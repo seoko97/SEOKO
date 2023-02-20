@@ -37,26 +37,16 @@ const MainContent = () => {
   const debouncedChangeHandler = useCallback(debounce(textHandler, 300), []);
 
   const fetchMorePosts = useCallback(() => {
-    if (!data) return;
-
-    const {
-      getPosts: { posts },
-    } = data;
-
-    if (posts.length % 10 !== 0) return;
+    if (mainPosts.length % 10 !== 0) return;
 
     const input = {
-      lastId: posts[posts.length - 1]._id,
+      lastId: mainPosts[mainPosts.length - 1]._id,
       category,
       text,
     };
 
-    fetchMore({
-      variables: {
-        input,
-      },
-    });
-  }, [ref, data, category, text]);
+    fetchMore({ variables: { input } });
+  }, [ref, category, text, mainPosts]);
 
   const onChangeCategory = useCallback(
     (category: string) => {
