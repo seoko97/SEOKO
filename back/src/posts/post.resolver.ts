@@ -9,7 +9,6 @@ import { EditPostInput } from './dto/editPostInput.dto';
 import { GetPostDTO, GetPostInput } from './dto/getPost.dto';
 import { GetPostsDTO, GetPostsInput } from './dto/getPosts.dto';
 import { PostService } from './post.service';
-import { SearchPostsInput } from './dto/searchPosts.dto';
 
 @Resolver('Post')
 export class PostResolver {
@@ -55,18 +54,9 @@ export class PostResolver {
   async getPosts(
     @Args('input', { nullable: true }) input: GetPostsInput,
   ): Promise<GetPostsDTO> {
-    const posts = await this.postService.getPosts(input);
-
-    return { ok: true, posts };
-  }
-
-  @Query(() => GetPostsDTO)
-  async searchPosts(
-    @Args('input', { nullable: true }) input?: SearchPostsInput,
-  ): Promise<GetPostsDTO> {
     const posts = input?.text
       ? await this.postService.searchPosts(input)
-      : await this.postService.getPosts({ lastId: input?.lastId });
+      : await this.postService.getPosts(input);
 
     return { ok: true, posts };
   }

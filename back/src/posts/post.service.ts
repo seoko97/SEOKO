@@ -8,10 +8,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Types } from 'mongoose';
 import { Tag } from '@tags/tag.model';
 import { TagService } from '@tags/tag.service';
-import { CreatePostInput } from './dto/createPostInput.dto';
 import { Post, PostDocument, PostModel } from './post.model';
+import { CreatePostInput } from './dto/createPostInput.dto';
 import { EditPostInput } from './dto/editPostInput.dto';
-import { SearchPostsInput } from './dto/searchPosts.dto';
 import { GetPostsInput } from './dto/getPosts.dto';
 
 @Injectable()
@@ -177,11 +176,18 @@ export class PostService {
   }
 
   async getPosts(input: GetPostsInput) {
-    const { lastId, limit = 10, tag: tagName, ...options } = input ?? {};
+    const {
+      lastId,
+      limit = 10,
+      tag: tagName,
+      isTemporary,
+      ...options
+    } = input ?? {};
 
     const where: FilterQuery<PostDocument> = {
       ...options,
       ...this.getWhere(lastId),
+      isTemporary: isTemporary ?? false,
     };
 
     if (tagName) {
@@ -201,7 +207,7 @@ export class PostService {
       .populate('tags');
   }
 
-  async searchPosts(input: SearchPostsInput) {
+  async searchPosts(input: GetPostsInput) {
     const { text, lastId } = input;
 
     if (!text.length) return [];

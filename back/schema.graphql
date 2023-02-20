@@ -153,6 +153,7 @@ input GetPostsInput {
   lastId: String
   limit: Float
   tag: String
+  text: String
 }
 
 type GetProjectDto {
@@ -274,16 +275,6 @@ type Query {
   getTag(input: String!): GetTagRes!
   getTags: GetTagsRes!
   getUserInfo: GetUserInfoDTO!
-  searchPosts(input: SearchPostsInput): GetPostsDTO!
-}
-
-input SearchPostsInput {
-  category: String
-  isTemporary: Boolean = false
-  lastId: String
-  limit: Float
-  tag: String
-  text: String
 }
 
 type SiblingPost {
