@@ -11,13 +11,16 @@ export class GetPostsInput {
   lastId?: string;
 
   @Field(() => Boolean, { nullable: true, defaultValue: false })
-  isTemporary?: string;
+  isTemporary?: boolean;
 
   @Field(() => Number, { nullable: true })
   limit?: number;
 
   @Field(() => String, { nullable: true })
   tag?: string;
+
+  @Field(() => String, { nullable: true })
+  text?: string;
 }
 
 @ObjectType()
