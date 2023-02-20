@@ -24,7 +24,7 @@ const PostList = forwardRef<HTMLDivElement, IProps>(({ posts, func }, ref) => {
   return (
     <Container ref={ref}>
       {posts.map((post, idx) => (
-        <PostItem key={post._id + post.title + idx} post={post} />
+        <PostItem key={post._id + post.title + idx} post={post} idx={idx} />
       ))}
     </Container>
   );
