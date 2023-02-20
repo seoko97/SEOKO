@@ -3,7 +3,8 @@ import styled from "@emotion/styled";
 import Image from "next/image";
 
 interface Props {
-  titleImage: string;
+  src: string;
+  idx: number;
 }
 
 const StyledPostImg = styled.div`
@@ -12,6 +13,8 @@ const StyledPostImg = styled.div`
   padding-bottom: 200px;
   border-radius: 10px;
   transition: transform 0.3s, box-shadow 0.3s;
+
+  background-color: ${({ theme }) => theme.BACKGROUND_COLOR.SECONDARY_COLOR};
 
   & img {
     position: absolute;
@@ -27,10 +30,18 @@ const StyledPostImg = styled.div`
   }
 `;
 
-const PostImg = ({ titleImage }: Props) => (
-  <StyledPostImg className="post-image">
-    <Image loading="lazy" src={titleImage} layout="fill" alt="post-image" />
-  </StyledPostImg>
-);
+const PostImg = ({ src, idx }: Props) => {
+  return (
+    <StyledPostImg className="post-image">
+      <Image
+        priority={idx <= 2}
+        loading={idx > 2 ? "lazy" : "eager"}
+        src={src}
+        layout="fill"
+        alt="post-image"
+      />
+    </StyledPostImg>
+  );
+};
 
 export default PostImg;

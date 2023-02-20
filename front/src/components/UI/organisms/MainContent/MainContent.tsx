@@ -1,11 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import styled from "@emotion/styled";
+import debounce from "lodash/debounce";
+import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 
-import { useQuery } from "@apollo/client";
-import { IGetPosts, IPost } from "@queries-types/posts";
+import useInput from "@hooks/useInput";
+
 import { GET_POSTS } from "@queries/post";
+import { IGetPosts, IPost } from "@queries-types/posts";
 
 import PostList from "@organisms/PostList";
 import ContentHeader from "./ContentHeader";
@@ -13,12 +16,13 @@ import ContentHeader from "./ContentHeader";
 const MainContent = () => {
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const [text, textHandler] = useInput();
 
   const { category } = router.query;
 
   const { data, fetchMore } = useQuery<IGetPosts>(GET_POSTS, {
     variables: {
-      input: { category },
+      input: { category, text },
     },
   });
 
@@ -30,17 +34,21 @@ const MainContent = () => {
     if (fetchedPosts) setMainPosts(fetchedPosts);
   }, [data]);
 
+  const debouncedChangeHandler = useCallback(debounce(textHandler, 300), []);
+
   const fetchMorePosts = useCallback(() => {
     if (!data) return;
 
     const {
       getPosts: { posts },
     } = data;
+
     if (posts.length % 10 !== 0) return;
 
     const input = {
       lastId: posts[posts.length - 1]._id,
       category,
+      text,
     };
 
     fetchMore({
@@ -48,7 +56,7 @@ const MainContent = () => {
         input,
       },
     });
-  }, [ref, data, category]);
+  }, [ref, data, category, text]);
 
   const onChangeCategory = useCallback(
     (category: string) => {
@@ -67,17 +75,34 @@ const MainContent = () => {
 
   return (
     <Container>
-      <ContentHeader changeCategory={onChangeCategory} />
-      <PostList ref={ref} posts={mainPosts} func={fetchMorePosts} />
+      <ContentHeader changeCategory={onChangeCategory} changeText={debouncedChangeHandler} />
+      {mainPosts.length > 0 && <PostList ref={ref} posts={mainPosts} func={fetchMorePosts} />}
+      {mainPosts.length === 0 && <NoneContent>포스트를 찾을 수 없습니다 🙄</NoneContent>}
     </Container>
   );
 };
 
-const Container = styled.div`
-  flex: 1;
+const Container = styled.main`
+  width: 100%;
+
   display: flex;
   flex-direction: column;
   gap: 20px;
+`;
+
+const NoneContent = styled.p`
+  padding: 1em 0;
+
+  text-align: center;
+  font-size: 2em;
+
+  color: ${({ theme }) => theme.FONT_COLOR.SECONDARY_COLOR};
+  font-weight: bold;
+
+  @media (max-width: ${({ theme }) => theme.BP.MOBILE}) {
+    font-size: 1.3em;
+    padding: 3em 0;
+  }
 `;
 
 export default MainContent;

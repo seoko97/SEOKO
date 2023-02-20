@@ -7,13 +7,14 @@ import PostContent from "./PostContent";
 
 interface Props {
   post: IPost;
+  idx: number;
 }
 
-const PostItem = ({ post }: Props) => {
+const PostItem = ({ post, idx }: Props) => {
   return (
     <Link href={`/post/${post._id}`}>
       <Container>
-        <PostImg titleImage={post.coverImg} />
+        <PostImg src={post.coverImg} idx={idx} />
         <PostContent
           content={post.content}
           tags={post.tags}

@@ -4,14 +4,19 @@ import styled from "@emotion/styled";
 type Props = React.ComponentProps<"input">;
 
 const StyledInput = styled.input`
-  padding: 10px 14px;
-  border-radius: 3px;
-  border: 0;
-  border: 1px solid #d2d6dc;
+  width: 100%;
 
-  :focus-visible {
-    border: 1px solid ${({ theme }) => theme.SELECTION_EFFECT_COLOR.PRIMARY_COLOR};
+  padding: 0.5rem 2rem 0.5rem 1rem;
+  border-radius: 3px;
+  transition: border-color 0.2s, background-color 0.2s;
+
+  color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
+  border: 1px solid ${({ theme }) => theme.BORDER_COLOR.PRIMARY_COLOR};
+  background-color: ${({ theme }) => theme.BACKGROUND_COLOR.SECONDARY_COLOR};
+
+  &:focus-visible {
     outline: 0 !important;
+    border-color: ${({ theme }) => theme.SELECTION_EFFECT_COLOR.PRIMARY_COLOR};
   }
 `;
 

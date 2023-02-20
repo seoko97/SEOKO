@@ -15,10 +15,15 @@ export class TagService {
   async getTags() {
     const tags = await this.tagModel
       .find()
-      .populate({ path: 'posts', select: 'isTemporary' })
-      .then((_tags) =>
-        _tags.filter((tag) => tag.posts.some((post) => !post.isTemporary)),
-      );
+      .populate('posts')
+      .then((_tags) => {
+        const filteredTags = _tags.filter((tag) => {
+          tag.posts = tag.posts.filter((post) => !post.isTemporary);
+          return tag.posts.some((post) => !post.isTemporary);
+        });
+
+        return filteredTags;
+      });
 
     tags.sort((a, b) => b.posts.length - a.posts.length);
 
@@ -28,7 +33,10 @@ export class TagService {
   async getTag(name: string) {
     return await this.tagModel
       .findOne({ name })
-      .populate({ path: 'posts', select: 'isTemporary' })
+      .populate({
+        path: 'posts',
+        select: 'isTemporary',
+      })
       .then((_tag) => {
         _tag.posts = _tag.posts.filter((post) => !post.isTemporary);
         return _tag;

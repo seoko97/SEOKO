@@ -35,10 +35,6 @@ interface IGetPosts {
   getPosts: IBasePosts;
 }
 
-interface ISearchPosts {
-  searchPosts: IBasePosts;
-}
-
 interface IAddPost {
   addPost: CoreResponse;
 }
@@ -58,7 +54,6 @@ export type {
   IGetPost,
   IGetPosts,
   IPost,
-  ISearchPosts,
   ISiblingItem,
   ISiblingPost,
   IBasePosts,

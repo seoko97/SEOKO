@@ -5,7 +5,7 @@ import RowFrame from "@frames/RowFrame";
 import Intro from "@molecules/Intro";
 
 import styled from "@emotion/styled";
-import HomeContent from "@organisms/HomeContent";
+import MainContent from "@organisms/MainContent";
 
 const Container = styled(RowFrame)`
   display: flex;
@@ -31,7 +31,7 @@ const Home = () => {
       </Head>
       <Container>
         <Intro />
-        <HomeContent />
+        <MainContent />
       </Container>
     </>
   );

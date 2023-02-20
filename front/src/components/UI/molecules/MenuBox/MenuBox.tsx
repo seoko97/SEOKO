@@ -1,9 +1,7 @@
 import React from "react";
-import Link from "next/link";
 import { useReactiveVar } from "@apollo/client";
 import styled from "@emotion/styled";
 import { userInfoVar } from "@store/userInfo";
-import SearchIcon from "@icons/SearchIcon/SearchIcon";
 import UserMenu from "./UserMenu";
 import Menu from "./BaseMenu";
 
@@ -39,11 +37,6 @@ const MenuBox = () => {
   return (
     <Container>
       {username && <UserMenu />}
-      <Link href="/search">
-        <a>
-          <SearchIcon />
-        </a>
-      </Link>
       <Menu username={username} />
     </Container>
   );
