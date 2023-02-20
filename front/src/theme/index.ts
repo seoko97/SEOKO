@@ -28,7 +28,7 @@ export const lightTheme = {
     SECONDARY_COLOR: "rgb(222, 226, 230);",
   },
   BORDER_COLOR: {
-    PRIMARY_COLOR: "#cccccc",
+    PRIMARY_COLOR: "#d7dfe8",
   },
   BUTTON_COLOR: {
     PRIMARY_COLOR: "#86caf4",
@@ -59,7 +59,7 @@ export const darkTheme = {
     SECONDARY_COLOR: "rgb(73, 80, 87)",
   },
   BORDER_COLOR: {
-    PRIMARY_COLOR: "#cccccc",
+    PRIMARY_COLOR: "#b4bac2",
   },
   BUTTON_COLOR: {
     PRIMARY_COLOR: "#A076F1",
