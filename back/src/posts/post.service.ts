@@ -219,6 +219,7 @@ export class PostService {
         },
         this.getWhere(lastId),
       ],
+      ...input,
     };
 
     return this.getPosts(where);
