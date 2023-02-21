@@ -59,8 +59,8 @@ const SEOKO = ({ Component, pageProps, mode: modeInCookie }: IPageProps) => {
           <GlobalStyle theme={checkMode} />
           <AppLayout>
             <Component {...pageProps} />
-            <DarkModeButton mode={mode} onClick={onClickDarkMode} />
           </AppLayout>
+          <DarkModeButton mode={mode} onClick={onClickDarkMode} />
         </ThemeProvider>
       </ApolloProvider>
     </>
