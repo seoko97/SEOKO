@@ -1,9 +1,11 @@
 import React from "react";
+import dynamic from "next/dynamic";
 import { useReactiveVar } from "@apollo/client";
 import styled from "@emotion/styled";
 import { userInfoVar } from "@store/userInfo";
-import UserMenu from "./UserMenu";
-import Menu from "./BaseMenu";
+
+const UserMenu = dynamic(() => import("./UserMenu"));
+const Menu = dynamic(() => import("./BaseMenu"));
 
 const Container = styled.div`
   display: flex;
