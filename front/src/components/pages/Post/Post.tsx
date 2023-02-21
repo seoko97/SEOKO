@@ -10,7 +10,6 @@ import PostHeader from "@organisms/PostHeader";
 import PostFooter from "@organisms/PostFooter";
 import Toc from "@organisms/Toc";
 import removeMd from "remove-markdown";
-import auth from "@components/hoc/auth";
 
 interface Props {
   post: IPost;
@@ -35,7 +34,7 @@ const PostContent = styled.div`
   }
 `;
 
-const Post = auth(({ post, siblingPost }: Props) => {
+const Post = ({ post, siblingPost }: Props) => {
   const { content, title, coverImg } = post;
 
   const postDescription = useMemo(
@@ -62,6 +61,6 @@ const Post = auth(({ post, siblingPost }: Props) => {
       </Container>
     </>
   );
-});
+};
 
 export default Post;
