@@ -3,6 +3,7 @@ import { addApolloState } from "@lib/addApolloState";
 import { initializeClient } from "@lib/apollo";
 import { IGetProject } from "@queries-types/project";
 import { GET_PROJECT } from "@queries/project/getProject.queries";
+import { checkTemporaryByUser } from "@lib/checkTemporaryByUser";
 
 export { default } from "@pages/Project/[id]";
 
@@ -16,13 +17,25 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     variables: { input: id },
   });
 
-  if (!data || errors?.[0])
+  if (!data || errors?.[0]) {
     return {
       props: {},
       redirect: {
         destination: "/404",
       },
     };
+  }
+
+  const permissions = await checkTemporaryByUser(apolloClient, data.getProject.project.isTemporary);
+
+  if (permissions) {
+    return {
+      props: {},
+      redirect: {
+        destination: "/",
+      },
+    };
+  }
 
   return addApolloState(apolloClient, {
     props: {

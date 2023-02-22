@@ -1,5 +1,6 @@
 import { addApolloState } from "@lib/addApolloState";
 import { initializeClient } from "@lib/apollo";
+import { checkTemporaryByUser } from "@lib/checkTemporaryByUser";
 import { IGetPost } from "@queries-types/posts";
 import { GET_POST } from "@queries/post/getPost.queries";
 import { GetServerSideProps } from "next";
@@ -26,6 +27,17 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
 
   const { post, siblingPost } = result.data.getPost;
+
+  const isPermission = await checkTemporaryByUser(apolloClient, post.isTemporary);
+
+  if (isPermission) {
+    return {
+      props: {},
+      redirect: {
+        destination: "/",
+      },
+    };
+  }
 
   return addApolloState(apolloClient, {
     props: {

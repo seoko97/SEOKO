@@ -9,13 +9,12 @@ import RowFrame from "@frames/RowFrame";
 import Markdown from "@organisms/MarkDownViewer";
 
 import ProjectHeader from "@organisms/ProjectHeader";
-import auth from "@components/hoc/auth";
 
 interface IProps {
   project: IProject;
 }
 
-const Project = auth(({ project }: IProps) => {
+const Project = ({ project }: IProps) => {
   const projectDescription = useMemo(
     () => removeMd(project?.content, { useImgAltText: false }).slice(0, 200),
     [],
@@ -36,7 +35,7 @@ const Project = auth(({ project }: IProps) => {
       </Container>
     </>
   );
-});
+};
 
 const Container = styled(RowFrame)`
   display: flex;

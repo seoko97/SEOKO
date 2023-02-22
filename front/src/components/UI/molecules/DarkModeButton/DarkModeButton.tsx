@@ -9,52 +9,47 @@ interface Props {
 }
 
 const StyledDarkModeButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
+
   right: 30px;
   bottom: 30px;
+
+  width: 40px;
+  height: 40px;
+
   z-index: 50;
   cursor: pointer;
 
   background-color: ${({ theme }) => theme.BACKGROUND_COLOR.THIRDLY_COLOR};
-  border-radius: 40px;
   box-shadow: ${({ theme }) => theme.BOX_SHADOW.PRIMARY};
-
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
-  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-  & > div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
+  transition: background-color 0.3s, transform 0.3s;
+  border-radius: 50%;
 
-    & svg {
-      width: 24px;
-      height: 24px;
-      fill: #ccc;
-      transition: fill 0.3s;
-    }
+  & > svg {
+    width: 24px;
+    height: 24px;
+    fill: #ccc;
+    transition: fill 0.3s;
   }
 
   &:hover {
     transform: scale(1.1);
     box-shadow: ${({ theme }) => theme.BOX_SHADOW.EFFECT};
-
-    & > div {
-      & svg {
-        fill: #ffd500;
-      }
+    & > svg {
+      fill: #ffd500;
     }
   }
 `;
 
 const DarkModeButton = ({ mode, onClick }: Props) => {
   return (
-    <>
-      <StyledDarkModeButton onClick={onClick}>
-        <div>{mode && mode === "light" ? <SunIcon /> : <MoonIcon />}</div>
-      </StyledDarkModeButton>
-    </>
+    <StyledDarkModeButton onClick={onClick}>
+      {mode && mode === "light" ? <SunIcon /> : <MoonIcon />}
+    </StyledDarkModeButton>
   );
 };
 
