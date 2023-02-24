@@ -37,6 +37,7 @@ const Section = styled.section`
   & > h1 {
     font-size: 1.5rem;
     font-weight: 700;
+    color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   }
 
   &:first-of-type {
