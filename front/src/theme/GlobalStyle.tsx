@@ -13,6 +13,7 @@ const GlobalStyle = ({ theme }: GlobalProps) => (
       ${reset}
 
       html {
+        font-family: "Noto Sans KR", sans-serif !important;
         -webkit-text-size-adjust: none;
         -moz-text-size-adjust: none;
         -o-text-size-adjust: none;
@@ -72,7 +73,6 @@ const GlobalStyle = ({ theme }: GlobalProps) => (
       }
 
       * {
-        font-family: "Noto Sans KR", sans-serif !important;
         box-sizing: border-box;
       }
     `}
