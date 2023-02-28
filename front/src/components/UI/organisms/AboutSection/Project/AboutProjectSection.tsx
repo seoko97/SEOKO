@@ -1,26 +1,20 @@
 import React from "react";
 
-import { useQuery } from "@apollo/client";
-import { IGetAbout } from "@queries-types/about";
-import { GET_ABOUT } from "@queries/about";
+import { IProject } from "@queries-types/project";
 
 import ProjectList from "@molecules/ProjectList";
 import SectionHeader from "../SectionHeader";
 import { Section } from "../styles";
 
-const AboutProjectSection = () => {
-  const { data } = useQuery<IGetAbout>(GET_ABOUT, {
-    variables: {
-      input: {
-        isTemporary: false,
-      },
-    },
-  });
+interface IProps {
+  projects: IProject[];
+}
 
+const AboutProjectSection = ({ projects }: IProps) => {
   return (
     <Section>
       <SectionHeader>Project</SectionHeader>
-      <ProjectList projects={data?.getProjects.projects ?? []} />
+      <ProjectList projects={projects} />
     </Section>
   );
 };

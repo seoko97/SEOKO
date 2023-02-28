@@ -1,49 +1,37 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useQuery, useReactiveVar } from "@apollo/client";
+import React, { useCallback, useState } from "react";
+import { useReactiveVar } from "@apollo/client";
+import dynamic from "next/dynamic";
 
-import { IGetAbout } from "@queries-types/about";
 import { IExperience } from "@queries-types/experience";
-import { GET_ABOUT } from "@queries/about";
 
 import { userInfoVar } from "@store/userInfo";
 import useModal from "@hooks/useModal";
-
-import ExperienceForm from "@modals/ExperienceForm";
 
 import ExperienceList from "./ExperienceList";
 import SectionHeader from "../SectionHeader";
 import { Section } from "../styles";
 
-const AboutExperienceSection = () => {
+interface IProps {
+  experiences: IExperience[];
+}
+
+const ExperienceForm = dynamic(() => import("@modals/ExperienceForm"));
+
+const AboutExperienceSection = ({ experiences }: IProps) => {
   const { username } = useReactiveVar(userInfoVar);
   const [isOpenExperienceForm, onOpenExperienceForm, onCloseExperienceForm] = useModal();
   const [selectedExperience, setSelectedExperience] = useState<IExperience | null>(null);
-
-  const { data, refetch } = useQuery<IGetAbout>(GET_ABOUT, {
-    variables: {
-      input: {
-        isTemporary: false,
-      },
-    },
-  });
 
   const onClickExperience = useCallback((data: IExperience | null = null) => {
     onOpenExperienceForm();
     setSelectedExperience(data);
   }, []);
 
-  useEffect(() => {
-    refetch();
-  }, [isOpenExperienceForm]);
-
   return (
     <>
       <Section>
         <SectionHeader onClick={onClickExperience}>Experience</SectionHeader>
-        <ExperienceList
-          experiences={data?.getExperiences.experiences ?? []}
-          onClick={username ? onClickExperience : null}
-        />
+        <ExperienceList experiences={experiences} onClick={username ? onClickExperience : null} />
       </Section>
       {isOpenExperienceForm && (
         <ExperienceForm onClose={onCloseExperienceForm} experience={selectedExperience} />
