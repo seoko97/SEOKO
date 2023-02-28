@@ -3,14 +3,24 @@ import Head from "next/head";
 import styled from "@emotion/styled";
 
 import RowFrame from "@frames/RowFrame";
-
 import AboutSkillSection from "@organisms/AboutSection/Skill";
 import AboutExperienceSection from "@organisms/AboutSection/Experience/AboutExperienceSection";
 import AboutProjectSection from "@organisms/AboutSection/Project/AboutProjectSection";
 import AboutInfoSection from "@organisms/AboutSection/Info/AboutInfoSection";
+
+import { ISkills } from "@queries-types/skill";
+import { IExperience } from "@queries-types/experience";
+import { IProject } from "@queries-types/project";
+
 import AboutHeader from "./AboutHeader";
 
-const About = () => {
+interface IProps {
+  skills: ISkills;
+  experiences: IExperience[];
+  projects: IProject[];
+}
+
+const About = ({ skills, projects, experiences }: IProps) => {
   return (
     <>
       <Head>
@@ -28,9 +38,9 @@ const About = () => {
       <Container>
         <AboutHeader />
         <AboutInfoSection />
-        <AboutSkillSection />
-        <AboutExperienceSection />
-        <AboutProjectSection />
+        <AboutSkillSection skills={skills} />
+        <AboutExperienceSection experiences={experiences} />
+        <AboutProjectSection projects={projects} />
       </Container>
     </>
   );
