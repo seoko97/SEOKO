@@ -6,7 +6,6 @@ import {
   from,
   fromPromise,
   InMemoryCache,
-  InMemoryCacheConfig,
   NormalizedCacheObject,
 } from "@apollo/client";
 import { createUploadLink } from "apollo-upload-client";
@@ -18,10 +17,8 @@ import { API_URL, isProd } from "@config/constance";
 import { APOLLO_STATE_PROP_NAME } from "./addApolloState";
 import { mergeItem } from "./mergeItem";
 
-type InitialState = NormalizedCacheObject | undefined;
-
 export interface IInitializeApollo {
-  initialState?: InitialState;
+  initialState?: NormalizedCacheObject | undefined;
   ctx?: GetServerSidePropsContext | null;
 }
 
@@ -29,7 +26,7 @@ const TOKEN_EXPIRED = "jwt expired";
 
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
-const cachePolicy: InMemoryCacheConfig = {
+const cache = new InMemoryCache({
   typePolicies: {
     Query: {
       fields: {
@@ -37,17 +34,10 @@ const cachePolicy: InMemoryCacheConfig = {
           keyArgs: ["input", ["category", "tag", "limit", "isTemporary", "text"]],
           merge: mergeItem,
         },
-        getProjects: {
-          keyArgs: ["input", ["isTemporary"]],
-        },
-        getTag: {
-          keyArgs: ["input"],
-        },
       },
     },
   },
-  addTypename: false,
-};
+});
 
 export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {
   const cookie = ctx?.req?.headers.cookie || "";
@@ -67,12 +57,6 @@ export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {
     });
   };
 
-  const httpLink = createUploadLink({
-    uri: `${API_URL}/graphql`,
-    credentials: "include",
-    fetch: enhancedFetch,
-  });
-
   const linkOnError = onError(({ graphQLErrors, operation, forward }) => {
     if (graphQLErrors?.[0].message === TOKEN_EXPIRED) {
       const client = apolloClient ?? createClient;
@@ -84,9 +68,15 @@ export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {
     }
   });
 
+  const httpLink = createUploadLink({
+    uri: `${API_URL}/graphql`,
+    credentials: "include",
+    fetch: enhancedFetch,
+  });
+
   const createClient = new ApolloClient({
     ssrMode: typeof window === undefined,
-    cache: new InMemoryCache(cachePolicy),
+    cache,
     link: from([linkOnError, httpLink]),
     connectToDevTools: !isProd,
     defaultOptions: {

@@ -6,6 +6,8 @@ enum SkillType {
   DEV_OPS = "DEV_OPS",
 }
 
+type SkillKey = "front" | "back" | "devops";
+
 interface ISkillInput {
   _id?: string;
   name: string;
@@ -16,6 +18,10 @@ interface ISkillInput {
 interface ISkill extends ISkillInput {
   _id: string;
 }
+
+type ISkills = {
+  [key in SkillKey]: ISkill[];
+};
 
 type BaseSkillResult = {
   skill: ISkill;
@@ -35,12 +41,17 @@ interface IDeleteSkill {
 
 interface IGetSkills {
   getSkills: {
-    skills: {
-      front: ISkill[];
-      back: ISkill[];
-      devops: ISkill[];
-    };
+    skills: ISkills;
   } & CoreResponse;
 }
 
-export type { IAddSkill, IDeleteSkill, IEditSkill, IGetSkills, ISkill, ISkillInput, SkillType };
+export type {
+  IAddSkill,
+  IDeleteSkill,
+  IEditSkill,
+  IGetSkills,
+  ISkill,
+  ISkills,
+  ISkillInput,
+  SkillType,
+};
