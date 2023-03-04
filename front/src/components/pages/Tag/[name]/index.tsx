@@ -3,7 +3,7 @@ import Head from "next/head";
 
 import { useQuery } from "@apollo/client";
 
-import { IGetPosts } from "@queries-types/posts";
+import { IGetPosts, IGetPostsVariables } from "@queries-types/posts";
 import { GET_POSTS } from "@queries/post";
 
 import RowFrame from "@frames/RowFrame";
@@ -17,7 +17,7 @@ interface IProps {
 const Tag = ({ tagName }: IProps) => {
   const postsRef = useRef(null);
 
-  const { data: postsResult, fetchMore } = useQuery<IGetPosts>(GET_POSTS, {
+  const { data: postsResult, fetchMore } = useQuery<IGetPosts, IGetPostsVariables>(GET_POSTS, {
     variables: {
       input: {
         tag: tagName,
@@ -37,8 +37,8 @@ const Tag = ({ tagName }: IProps) => {
     fetchMore({
       variables: {
         input: {
-          lastId: posts[posts.length - 1]._id,
           tag: tagName,
+          lastId: posts[posts.length - 1]._id,
         },
       },
     });
