@@ -1,5 +1,5 @@
 import { ITag } from "@queries-types/tags";
-import { CoreResponse } from "./core";
+import { CoreResponse, CoreVariants } from "./core";
 
 interface IPost {
   _id: string;
@@ -47,6 +47,17 @@ interface IEditPost {
   editPost: CoreResponse;
 }
 
+interface IPostInput {
+  category?: string;
+  tag?: string;
+  lastId?: string;
+  limit?: number;
+  isTemporary?: boolean;
+  text?: string;
+}
+
+type IGetPostsVariables = CoreVariants<IPostInput>;
+
 export type {
   IAddPost,
   IDeletePost,
@@ -57,4 +68,6 @@ export type {
   ISiblingItem,
   ISiblingPost,
   IBasePosts,
+  IPostInput,
+  IGetPostsVariables,
 };
