@@ -7,4 +7,8 @@ interface CoreVariants<T> {
   input: T;
 }
 
-export type { CoreVariants, CoreResponse };
+type CoreResult<QueryName extends string, Input = CoreResponse> = {
+  [key in QueryName]: Input;
+};
+
+export type { CoreVariants, CoreResponse, CoreResult };
