@@ -1,4 +1,4 @@
-import { CoreResponse } from "./core";
+import { CoreResponse, CoreResult } from "./core";
 
 interface ISignIn {
   signin: {
@@ -14,10 +14,11 @@ interface IRefresh {
   refresh: CoreResponse;
 }
 
-interface IGetUserInfo {
-  getUserInfo: {
+type IGetUserInfo = CoreResult<
+  "getUserInfo",
+  {
     username: string;
-  } & CoreResponse;
-}
+  }
+>;
 
 export type { ISignIn, ISignOut, IGetUserInfo, IRefresh };

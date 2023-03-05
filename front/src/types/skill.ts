@@ -1,4 +1,4 @@
-import { CoreResponse } from "./core";
+import { CoreResponse, CoreResult } from "./core";
 
 enum SkillType {
   FRONT_END = "FRONT_END",
@@ -27,23 +27,15 @@ type BaseSkillResult = {
   skill: ISkill;
 } & CoreResponse;
 
-interface IAddSkill {
-  addSkill: BaseSkillResult;
-}
-
-interface IEditSkill {
-  editSkill: BaseSkillResult;
-}
-
-interface IDeleteSkill {
-  deleteSkill: BaseSkillResult;
-}
-
-interface IGetSkills {
-  getSkills: {
+type IAddSkill = CoreResult<"addSkill", BaseSkillResult>;
+type IEditSkill = CoreResult<"editSkill", BaseSkillResult>;
+type IDeleteSkill = CoreResult<"deleteSkill", BaseSkillResult>;
+type IGetSkills = CoreResult<
+  "getSkills",
+  {
     skills: ISkills;
-  } & CoreResponse;
-}
+  } & CoreResponse
+>;
 
 export type {
   IAddSkill,

@@ -1,5 +1,5 @@
 import { ITag } from "@queries-types/tags";
-import { CoreResponse, CoreVariants } from "./core";
+import { CoreResponse, CoreVariants, CoreResult } from "./core";
 
 interface IPost {
   _id: string;
@@ -19,35 +19,17 @@ type IBasePosts = {
   posts: IPost[];
 } & CoreResponse;
 
+interface IBasePost extends CoreResponse {
+  post: IPost;
+  siblingPost: ISiblingPost;
+}
+
 interface ISiblingPost {
   next: ISiblingItem;
   prev: ISiblingItem;
 }
 
-interface IGetPost {
-  getPost: {
-    post: IPost;
-    siblingPost: ISiblingPost;
-  } & CoreResponse;
-}
-
-interface IGetPosts {
-  getPosts: IBasePosts;
-}
-
-interface IAddPost {
-  addPost: CoreResponse;
-}
-
-interface IDeletePost {
-  deletePost: CoreResponse;
-}
-
-interface IEditPost {
-  editPost: CoreResponse;
-}
-
-interface IPostInput {
+interface IGetPostInput {
   category?: string;
   tag?: string;
   lastId?: string;
@@ -56,7 +38,30 @@ interface IPostInput {
   text?: string;
 }
 
-type IGetPostsVariables = CoreVariants<IPostInput>;
+interface BasePostInput extends Pick<IPost, "coverImg" | "title" | "content" | "category"> {
+  _id?: string;
+  isTemporary?: boolean;
+}
+
+interface IAddPostInput extends BasePostInput {
+  tags: string[];
+}
+
+interface IEditPostInput extends BasePostInput {
+  _id?: string;
+  addTags?: string[];
+  deleteTags?: string[];
+}
+
+type IGetPost = CoreResult<"getPost", IBasePost>;
+type IGetPosts = CoreResult<"getPosts", IBasePosts>;
+type IAddPost = CoreResult<"addPost">;
+type IDeletePost = CoreResult<"deletePost">;
+type IEditPost = CoreResult<"editPost">;
+
+type IGetPostsVariables = CoreVariants<IGetPostInput>;
+type IAddPostVariables = CoreVariants<IAddPostInput>;
+type IEditPostVariables = CoreVariants<IEditPostInput>;
 
 export type {
   IAddPost,
@@ -67,7 +72,12 @@ export type {
   IPost,
   ISiblingItem,
   ISiblingPost,
+  BasePostInput,
   IBasePosts,
-  IPostInput,
+  IGetPostInput,
+  IAddPostInput,
+  IEditPostInput,
   IGetPostsVariables,
+  IAddPostVariables,
+  IEditPostVariables,
 };

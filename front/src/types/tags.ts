@@ -1,4 +1,4 @@
-import { CoreResponse } from "./core";
+import { CoreResponse, CoreResult } from "./core";
 import { IPost } from "./posts";
 
 interface ITag {
@@ -7,16 +7,17 @@ interface ITag {
   posts: IPost[];
 }
 
-interface IGetTags {
-  getTags: {
+type IGetTags = CoreResult<
+  "getTags",
+  {
     tags: ITag[];
-  } & CoreResponse;
-}
-
-interface IGetTag {
-  getTag: {
+  } & CoreResponse
+>;
+type IGetTag = CoreResult<
+  "getTag",
+  {
     tag: ITag;
-  } & CoreResponse;
-}
+  } & CoreResponse
+>;
 
 export type { IGetTags, IGetTag, ITag };

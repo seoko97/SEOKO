@@ -1,11 +1,14 @@
-import { CoreResponse } from "./core";
+import { CoreResponse, CoreResult } from "./core";
 
-export interface IAddImageInput {
+interface IAddImageInput {
   image: File;
 }
 
-export interface IAddImage {
-  addImage: {
+type IAddImage = CoreResult<
+  "addImage",
+  {
     image: string;
-  } & CoreResponse;
-}
+  } & CoreResponse
+>;
+
+export type { IAddImageInput, IAddImage };
