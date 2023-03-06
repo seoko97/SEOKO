@@ -1,5 +1,5 @@
 import { ITag } from "@queries-types/tags";
-import { CoreResponse } from "./core";
+import { CoreResponse, CoreVariants, CoreResult } from "./core";
 
 interface IPost {
   _id: string;
@@ -19,33 +19,49 @@ type IBasePosts = {
   posts: IPost[];
 } & CoreResponse;
 
+interface IBasePost extends CoreResponse {
+  post: IPost;
+  siblingPost: ISiblingPost;
+}
+
 interface ISiblingPost {
   next: ISiblingItem;
   prev: ISiblingItem;
 }
 
-interface IGetPost {
-  getPost: {
-    post: IPost;
-    siblingPost: ISiblingPost;
-  } & CoreResponse;
+interface IGetPostInput {
+  category?: string;
+  tag?: string;
+  lastId?: string;
+  limit?: number;
+  isTemporary?: boolean;
+  text?: string;
 }
 
-interface IGetPosts {
-  getPosts: IBasePosts;
+interface BasePostInput extends Pick<IPost, "coverImg" | "title" | "content" | "category"> {
+  _id?: string;
+  isTemporary?: boolean;
 }
 
-interface IAddPost {
-  addPost: CoreResponse;
+interface IAddPostInput extends BasePostInput {
+  tags: string[];
 }
 
-interface IDeletePost {
-  deletePost: CoreResponse;
+interface IEditPostInput extends BasePostInput {
+  _id?: string;
+  addTags?: string[];
+  deleteTags?: string[];
 }
 
-interface IEditPost {
-  editPost: CoreResponse;
-}
+type IGetPost = CoreResult<"getPost", IBasePost>;
+type IGetPosts = CoreResult<"getPosts", IBasePosts>;
+type IAddPost = CoreResult<"addPost">;
+type IDeletePost = CoreResult<"deletePost">;
+type IEditPost = CoreResult<"editPost">;
+
+type IGetPostsVariables = CoreVariants<IGetPostInput>;
+type IAddPostVariables = CoreVariants<IAddPostInput>;
+type IEditPostVariables = CoreVariants<IEditPostInput>;
 
 export type {
   IAddPost,
@@ -56,5 +72,12 @@ export type {
   IPost,
   ISiblingItem,
   ISiblingPost,
+  BasePostInput,
   IBasePosts,
+  IGetPostInput,
+  IAddPostInput,
+  IEditPostInput,
+  IGetPostsVariables,
+  IAddPostVariables,
+  IEditPostVariables,
 };

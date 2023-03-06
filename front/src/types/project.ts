@@ -1,4 +1,4 @@
-import { CoreResponse } from "./core";
+import { CoreResponse, CoreResult } from "./core";
 
 interface IProjectInput {
   _id?: string;
@@ -18,29 +18,21 @@ interface IProject extends IProjectInput {
   __typename?: string;
 }
 
-interface IAddProject {
-  addProject: CoreResponse;
-}
-
-interface IDeleteProject {
-  deleteProject: CoreResponse;
-}
-
-interface IEditProject {
-  editProject: CoreResponse;
-}
-
-interface IGetProject {
-  getProject: {
+type IAddProject = CoreResult<"addProject">;
+type IDeleteProject = CoreResult<"deleteProject">;
+type IEditProject = CoreResult<"editProject">;
+type IGetProject = CoreResult<
+  "getProject",
+  {
     project: IProject;
-  } & CoreResponse;
-}
-
-interface IGetProjects {
-  getProjects: {
+  } & CoreResponse
+>;
+type IGetProjects = CoreResult<
+  "getProjects",
+  {
     projects: IProject[];
-  } & CoreResponse;
-}
+  } & CoreResponse
+>;
 
 export type {
   IAddProject,

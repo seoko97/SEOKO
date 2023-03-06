@@ -8,9 +8,11 @@ import { useRouter } from "next/router";
 import useInput from "@hooks/useInput";
 
 import { GET_POSTS } from "@queries/post";
-import { IGetPosts, IPost } from "@queries-types/posts";
+import { IGetPosts, IGetPostsVariables, IPost } from "@queries-types/posts";
 
 import PostList from "@organisms/PostList";
+import { checkParams } from "@lib/checkParamsType";
+
 import ContentHeader from "./ContentHeader";
 
 const MainContent = () => {
@@ -20,9 +22,9 @@ const MainContent = () => {
 
   const { category } = router.query;
 
-  const { data, fetchMore } = useQuery<IGetPosts>(GET_POSTS, {
+  const { data, fetchMore } = useQuery<IGetPosts, IGetPostsVariables>(GET_POSTS, {
     variables: {
-      input: { category, text },
+      input: { category: checkParams(category), text },
     },
   });
 

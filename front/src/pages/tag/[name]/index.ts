@@ -5,6 +5,8 @@ import { initializeClient } from "@lib/apollo";
 
 import { GET_POSTS } from "@queries/post";
 import { GET_TAG } from "@queries/tag";
+import { IGetPosts, IGetPostsVariables } from "@queries-types/posts";
+import { checkParams } from "@lib/checkParamsType";
 
 export { default } from "@pages/Tag/[name]";
 
@@ -15,9 +17,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     query: { name },
   } = ctx;
 
-  await apolloClient.query({
+  await apolloClient.query<IGetPosts, IGetPostsVariables>({
     query: GET_POSTS,
-    variables: { input: { tag: name } },
+    variables: { input: { tag: checkParams(name) } },
   });
 
   await apolloClient.query({

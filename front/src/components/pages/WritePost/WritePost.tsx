@@ -4,7 +4,15 @@ import styled from "@emotion/styled";
 import { useMutation } from "@apollo/client";
 
 import { ADD_POST } from "@queries/post/addPost.queries";
-import { IAddPost, IEditPost, IPost } from "@queries-types/posts";
+import {
+  BasePostInput,
+  IAddPost,
+  IAddPostVariables,
+  IEditPost,
+  IEditPostInput,
+  IEditPostVariables,
+  IPost,
+} from "@queries-types/posts";
 import { EDIT_POST } from "@queries/post/editPost.queries";
 
 import WriteFooter from "@molecules/WriteFooter";
@@ -18,15 +26,9 @@ interface IProps {
   post?: IPost;
 }
 
-interface IPostInput extends Pick<IPost, "category" | "title" | "content" | "coverImg"> {
-  _id?: string;
-  addTags?: string[];
-  deleteTags?: string[];
-}
-
 const WritePost = ({ post }: IProps) => {
   const router = useRouter();
-  const postInputData: IPostInput = {
+  const postInputData: BasePostInput = {
     _id: post?._id || undefined,
     title: post?.title || "",
     content: post?.content || "",
@@ -34,7 +36,7 @@ const WritePost = ({ post }: IProps) => {
     coverImg: post?.coverImg || "",
   };
 
-  const postDataRef = useRef<IPostInput>(postInputData);
+  const postDataRef = useRef<BasePostInput>(postInputData);
   const photoInputRef = useRef<HTMLInputElement | null>(null);
 
   const [tags, setTags] = useState<string[]>(post?.tags.map((tag) => tag.name) || []);
@@ -54,7 +56,7 @@ const WritePost = ({ post }: IProps) => {
     },
   });
 
-  const [addPostMutation, { client }] = useMutation<IAddPost>(ADD_POST, {
+  const [addPostMutation, { client }] = useMutation<IAddPost, IAddPostVariables>(ADD_POST, {
     onCompleted({ addPost }) {
       if (addPost.ok) {
         client.cache.reset();
@@ -63,7 +65,7 @@ const WritePost = ({ post }: IProps) => {
     },
   });
 
-  const [editPostMutation] = useMutation<IEditPost>(EDIT_POST, {
+  const [editPostMutation] = useMutation<IEditPost, IEditPostVariables>(EDIT_POST, {
     onCompleted({ editPost }) {
       if (editPost.ok) {
         client.cache.reset();
@@ -74,7 +76,7 @@ const WritePost = ({ post }: IProps) => {
 
   const onChangeValue: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => {
-      const name = e.target.name as keyof Pick<IPostInput, "category">;
+      const name = e.target.name as keyof Pick<IEditPostInput, "category">;
 
       if (postDataRef.current[name] === undefined) return;
 

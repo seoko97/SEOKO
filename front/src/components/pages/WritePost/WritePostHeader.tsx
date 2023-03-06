@@ -37,15 +37,6 @@ export const Container = styled.header`
     margin: 0 8px;
   }
 
-  & button {
-    border: 0;
-    border-radius: 10px;
-    padding: 5px 8px;
-    background-color: ${({ theme }) => theme.BACKGROUND_COLOR.SECONDARY_COLOR};
-    color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
-    cursor: pointer;
-  }
-
   & > div:last-of-type {
     display: flex;
     flex-direction: column;
@@ -127,39 +118,33 @@ const WritePostHeader = (props: Props) => {
 
   return (
     <Container>
-      <div>
+      <input
+        type="text"
+        name="title"
+        defaultValue={title}
+        onChange={onChangeTitle}
+        placeholder="제목을 입력하세요"
+      />
+      <TagList>
+        {tags.length >= 0 &&
+          tags.map((tag: string) => (
+            <Tag key={tag} onClick={deleteTag}>
+              {tag}
+            </Tag>
+          ))}
         <input
           type="text"
-          name="title"
-          defaultValue={title}
-          onChange={onChangeTitle}
-          placeholder="제목을 입력하세요"
+          onChange={onChangeTagName}
+          onKeyDown={addTag}
+          placeholder="태그를 입력하세요"
         />
-      </div>
-
-      <div>
-        <TagList>
-          {tags.length >= 0 &&
-            tags.map((tag: string) => (
-              <Tag key={tag} onClick={deleteTag}>
-                {tag}
-              </Tag>
-            ))}
-          <input
-            type="text"
-            onChange={onChangeTagName}
-            onKeyDown={addTag}
-            placeholder="태그를 입력하세요"
-          />
-        </TagList>
-      </div>
+      </TagList>
       <div>
         <select onChange={onSelectCategory} name="category" defaultValue={category}>
           <option value="dev">Dev</option>
           <option value="daily">Daily</option>
         </select>
       </div>
-
       <div>
         <span>커버 이미지</span>
         <div>

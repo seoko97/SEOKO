@@ -1,10 +1,12 @@
-import { CoreResponse } from "./core";
+import { CoreResponse, CoreResult } from "./core";
 
 enum SkillType {
   FRONT_END = "FRONT_END",
   BACK_END = "BACK_END",
   DEV_OPS = "DEV_OPS",
 }
+
+type SkillKey = "front" | "back" | "devops";
 
 interface ISkillInput {
   _id?: string;
@@ -17,30 +19,31 @@ interface ISkill extends ISkillInput {
   _id: string;
 }
 
+type ISkills = {
+  [key in SkillKey]: ISkill[];
+};
+
 type BaseSkillResult = {
   skill: ISkill;
 } & CoreResponse;
 
-interface IAddSkill {
-  addSkill: BaseSkillResult;
-}
+type IAddSkill = CoreResult<"addSkill", BaseSkillResult>;
+type IEditSkill = CoreResult<"editSkill", BaseSkillResult>;
+type IDeleteSkill = CoreResult<"deleteSkill", BaseSkillResult>;
+type IGetSkills = CoreResult<
+  "getSkills",
+  {
+    skills: ISkills;
+  } & CoreResponse
+>;
 
-interface IEditSkill {
-  editSkill: BaseSkillResult;
-}
-
-interface IDeleteSkill {
-  deleteSkill: BaseSkillResult;
-}
-
-interface IGetSkills {
-  getSkills: {
-    skills: {
-      front: ISkill[];
-      back: ISkill[];
-      devops: ISkill[];
-    };
-  } & CoreResponse;
-}
-
-export type { IAddSkill, IDeleteSkill, IEditSkill, IGetSkills, ISkill, ISkillInput, SkillType };
+export type {
+  IAddSkill,
+  IDeleteSkill,
+  IEditSkill,
+  IGetSkills,
+  ISkill,
+  ISkills,
+  ISkillInput,
+  SkillType,
+};

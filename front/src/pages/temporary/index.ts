@@ -1,6 +1,6 @@
 import { addApolloState } from "@lib/addApolloState";
 import { initializeClient } from "@lib/apollo";
-import { IGetPosts } from "@queries-types/posts";
+import { IGetPosts, IGetPostsVariables } from "@queries-types/posts";
 import { IGetProjects } from "@queries-types/project";
 import { IGetUserInfo } from "@queries-types/users";
 import { GET_POSTS } from "@queries/post";
@@ -31,7 +31,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     data: {
       getPosts: { posts },
     },
-  } = await apolloClient.query<IGetPosts>({
+  } = await apolloClient.query<IGetPosts, IGetPostsVariables>({
     query: GET_POSTS,
     variables: { input: { isTemporary: true } },
   });
