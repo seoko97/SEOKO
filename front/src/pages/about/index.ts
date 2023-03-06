@@ -17,11 +17,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     },
   });
 
-  const a = apolloClient.cache.readQuery({
-    query: GET_PROJECTS,
-    variables: { input: { isTemporary: false } },
-  });
-
   return addApolloState(apolloClient, {
     props: {
       skills: data?.getSkills.skills ?? [],
