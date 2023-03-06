@@ -18,7 +18,7 @@ type IGetUserInfo = CoreResult<
   "getUserInfo",
   {
     username: string;
-  }
+  } & CoreResponse
 >;
 
 export type { ISignIn, ISignOut, IGetUserInfo, IRefresh };
