@@ -1,11 +1,11 @@
 import { addApolloState } from "@lib/addApolloState";
 import { initializeClient } from "@lib/apollo";
+import { GET_USER_INFO_OPTION } from "@lib/initializeSigninCheck";
 import { IGetPosts, IGetPostsVariables } from "@queries-types/posts";
 import { IGetProjects } from "@queries-types/project";
 import { IGetUserInfo } from "@queries-types/users";
 import { GET_POSTS } from "@queries/post";
 import { GET_PROJECTS } from "@queries/project";
-import { GET_USER_INFO } from "@queries/users";
 import { GetServerSideProps } from "next";
 
 export { default } from "@pages/Temporary";
@@ -13,9 +13,7 @@ export { default } from "@pages/Temporary";
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apolloClient = initializeClient({ ctx });
 
-  const { data: userData } = await apolloClient.query<IGetUserInfo>({
-    query: GET_USER_INFO,
-  });
+  const { data: userData } = await apolloClient.query<IGetUserInfo>(GET_USER_INFO_OPTION);
 
   if (!userData) {
     return {
