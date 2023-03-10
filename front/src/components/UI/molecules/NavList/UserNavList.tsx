@@ -35,10 +35,7 @@ const NavList = () => {
   const [signOutMutation, { client }] = useMutation<ISignOut>(SIGN_OUT, {
     onCompleted({ signout }) {
       if (signout.ok) {
-        client.cache.evict({
-          id: "ROOT_QUERY",
-          fieldName: "getUserInfo",
-        });
+        client.clearStore();
         setUserInfo(null);
         router.push("/");
       }

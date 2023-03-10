@@ -72,7 +72,7 @@ const WriteProject = ({ project }: IProps) => {
   const movePageToProject = <T extends CoreResponse>(data: T) => {
     if (!data.ok) return;
 
-    client.cache.reset();
+    client.clearStore();
     router.push("/project");
   };
 
