@@ -59,7 +59,7 @@ const WritePost = ({ post }: IProps) => {
   const [addPostMutation, { client }] = useMutation<IAddPost, IAddPostVariables>(ADD_POST, {
     onCompleted({ addPost }) {
       if (addPost.ok) {
-        client.cache.reset();
+        client.clearStore();
         router.push("/");
       }
     },
@@ -68,7 +68,7 @@ const WritePost = ({ post }: IProps) => {
   const [editPostMutation] = useMutation<IEditPost, IEditPostVariables>(EDIT_POST, {
     onCompleted({ editPost }) {
       if (editPost.ok) {
-        client.cache.reset();
+        client.clearStore();
         router.push("/");
       }
     },
