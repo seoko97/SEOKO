@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useCallback, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
-import { useMutation } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 
 import { ADD_POST } from "@queries/post/addPost.queries";
 import {
@@ -20,6 +20,7 @@ import TuiEditor from "@organisms/TuiEditor";
 
 import { ADD_IMAGE } from "@queries/image/addImage.queries";
 import { IAddImage } from "@queries-types/image";
+import { CoreResponse } from "@queries-types/core";
 import WritePostHeader from "./WritePostHeader";
 
 interface IProps {
@@ -56,23 +57,51 @@ const WritePost = ({ post }: IProps) => {
     },
   });
 
-  const [addPostMutation, { client }] = useMutation<IAddPost, IAddPostVariables>(ADD_POST, {
+  const [addPostMutation] = useMutation<IAddPost, IAddPostVariables>(ADD_POST, {
     onCompleted({ addPost }) {
-      if (addPost.ok) {
-        client.clearStore();
-        router.push("/");
-      }
+      movePageToHome(addPost);
+    },
+    update(cache) {
+      cache.evict({
+        id: "ROOT_QUERY",
+        fieldName: "getPosts",
+      });
     },
   });
 
   const [editPostMutation] = useMutation<IEditPost, IEditPostVariables>(EDIT_POST, {
     onCompleted({ editPost }) {
-      if (editPost.ok) {
-        client.clearStore();
-        router.push("/");
-      }
+      movePageToHome(editPost);
+    },
+    update(cache, _, { variables }) {
+      const a = cache.readFragment({
+        id: `Post:${variables?.input._id}`,
+        fragment: gql`
+          fragment EditPost on Post {
+            _id
+            title
+          }
+        `,
+      });
+
+      console.log(a);
+      cache.evict({
+        id: "ROOT_QUERY",
+        fieldName: "getPost",
+        args: {
+          input: {
+            _id: variables?.input._id ?? "",
+          },
+        },
+      });
     },
   });
+
+  const movePageToHome = <T extends CoreResponse>(data: T) => {
+    if (!data.ok) return;
+
+    router.push("/");
+  };
 
   const onChangeValue: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => {

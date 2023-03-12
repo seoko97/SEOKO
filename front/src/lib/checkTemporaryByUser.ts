@@ -4,7 +4,7 @@ import { GET_USER_INFO_OPTION } from "./initializeSigninCheck";
 
 export const checkTemporaryByUser = async (
   apolloClient: ApolloClient<NormalizedCacheObject>,
-  isTemporary: boolean,
+  isTemporary: boolean | undefined,
 ) => {
   const { data } = await apolloClient.query<IGetUserInfo>(GET_USER_INFO_OPTION);
 

@@ -8,12 +8,19 @@ import { Container } from "@pages/WritePost/WritePost";
 
 import { ADD_PROJECT } from "@queries/project/addProject.queries";
 import { EDIT_PROJECT } from "@queries/project/editProject.queries";
-import { IAddProject, IEditProject, IProject, IProjectInput } from "@queries-types/project";
+import {
+  IAddProject,
+  IAddProjectVariables,
+  IEditProject,
+  IProject,
+  IProjectInput,
+} from "@queries-types/project";
 
 import { IAddImage } from "@queries-types/image";
 import { CoreResponse } from "@queries-types/core";
 import { ADD_IMAGE } from "@queries/image/addImage.queries";
 
+import { update } from "lodash";
 import WriteProjectHeader from "./WriteProjectHeader";
 
 interface IProps {
@@ -57,22 +64,36 @@ const WriteProject = ({ project }: IProps) => {
     },
   });
 
-  const [addProjectMutation, { client }] = useMutation<IAddProject>(ADD_PROJECT, {
+  const [addProjectMutation] = useMutation<IAddProject, IAddProjectVariables>(ADD_PROJECT, {
     onCompleted({ addProject }) {
       movePageToProject(addProject);
     },
+    update(cache, _) {
+      cache.evict({
+        id: "ROOT_QUERY",
+        fieldName: "getProjects",
+      });
+    },
   });
 
-  const [editProjectMutation] = useMutation<IEditProject>(EDIT_PROJECT, {
+  const [editProjectMutation] = useMutation<IEditProject, IAddProjectVariables>(EDIT_PROJECT, {
     onCompleted({ editProject }) {
       movePageToProject(editProject);
+    },
+    update(cache, _, { variables }) {
+      cache.evict({
+        id: "ROOT_QUERY",
+        fieldName: "getProject",
+        args: {
+          input: variables?.input._id,
+        },
+      });
     },
   });
 
   const movePageToProject = <T extends CoreResponse>(data: T) => {
     if (!data.ok) return;
 
-    client.clearStore();
     router.push("/project");
   };
 
@@ -82,7 +103,7 @@ const WriteProject = ({ project }: IProps) => {
 
       if (projectDataRef.current[name] === undefined) return;
 
-      projectDataRef.current[name] = e.target.value;
+      projectDataRef.current[name] = e.target.value as never;
     },
     [projectDataRef],
   );
@@ -102,7 +123,7 @@ const WriteProject = ({ project }: IProps) => {
 
       const { dataset } = e.target;
       const isTemporary = Boolean(dataset.isTemporary);
-      const input = { ...projectDataRef.current, isTemporary };
+      const input: IProjectInput = { ...projectDataRef.current, isTemporary };
 
       if (project) {
         editProjectMutation({
