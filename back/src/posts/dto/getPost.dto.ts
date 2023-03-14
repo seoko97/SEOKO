@@ -5,7 +5,7 @@ import { Post } from '@posts/post.model';
 @InputType()
 export class GetPostInput {
   @Field(() => String)
-  id: string;
+  _id: string;
 }
 
 @ObjectType()

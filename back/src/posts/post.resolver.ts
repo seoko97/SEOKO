@@ -25,7 +25,7 @@ export class PostResolver {
   @UseGuards(JwtAuthGuard)
   @Mutation(() => CoreRes)
   async deletePost(@Args('input') input: GetPostInput) {
-    await this.postService.deletePost(input.id);
+    await this.postService.deletePost(input._id);
 
     return { ok: true };
   }
@@ -42,8 +42,8 @@ export class PostResolver {
   @Query(() => GetPostDTO)
   async getPost(@Args('input') input: GetPostInput): Promise<GetPostDTO> {
     const [post, siblingPost] = await Promise.all([
-      this.postService.getPost(input.id),
-      this.postService.getSiblingPost(input.id),
+      this.postService.getPost(input._id),
+      this.postService.getSiblingPost(input._id),
     ]);
 
     return { ok: true, post, siblingPost };

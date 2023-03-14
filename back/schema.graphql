@@ -138,7 +138,7 @@ type GetPostDTO {
 }
 
 input GetPostInput {
-  id: String!
+  _id: String!
 }
 
 type GetPostsDTO {
