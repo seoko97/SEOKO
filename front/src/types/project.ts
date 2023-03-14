@@ -1,4 +1,4 @@
-import { CoreResponse, CoreResult } from "./core";
+import { CoreResponse, CoreResult, CoreVariables } from "./core";
 
 interface IProjectInput {
   _id?: string;
@@ -9,12 +9,12 @@ interface IProjectInput {
   githubUrl: string;
   startDate: string;
   endDate: string | null;
+  isTemporary?: boolean;
 }
 
 interface IProject extends IProjectInput {
   _id: string;
   createdAt: string;
-  isTemporary: boolean;
   __typename?: string;
 }
 
@@ -34,6 +34,9 @@ type IGetProjects = CoreResult<
   } & CoreResponse
 >;
 
+type IAddProjectVariables = CoreVariables<IProjectInput>;
+type IGetProjectVariables = CoreVariables<string>;
+
 export type {
   IAddProject,
   IDeleteProject,
@@ -42,4 +45,6 @@ export type {
   IGetProjects,
   IProject,
   IProjectInput,
+  IAddProjectVariables,
+  IGetProjectVariables,
 };
