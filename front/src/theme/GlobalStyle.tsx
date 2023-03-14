@@ -64,6 +64,7 @@ const GlobalStyle = ({ theme }: GlobalProps) => (
 
       ::-webkit-scrollbar {
         width: 5px;
+        height: 10px;
         background-color: inherit;
       }
 
