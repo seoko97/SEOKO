@@ -1,5 +1,5 @@
 import { ITag } from "@queries-types/tags";
-import { CoreResponse, CoreVariants, CoreResult } from "./core";
+import { CoreResponse, CoreVariables, CoreResult } from "./core";
 
 interface IPost {
   _id: string;
@@ -59,9 +59,9 @@ type IAddPost = CoreResult<"addPost">;
 type IDeletePost = CoreResult<"deletePost">;
 type IEditPost = CoreResult<"editPost">;
 
-type IGetPostsVariables = CoreVariants<IGetPostInput>;
-type IAddPostVariables = CoreVariants<IAddPostInput>;
-type IEditPostVariables = CoreVariants<IEditPostInput>;
+type IGetPostsVariables = CoreVariables<IGetPostInput>;
+type IAddPostVariables = CoreVariables<IAddPostInput>;
+type IEditPostVariables = CoreVariables<IEditPostInput>;
 
 export type {
   IAddPost,
