@@ -20,7 +20,6 @@ import { IAddImage } from "@queries-types/image";
 import { CoreResponse } from "@queries-types/core";
 import { ADD_IMAGE } from "@queries/image/addImage.queries";
 
-import { update } from "lodash";
 import WriteProjectHeader from "./WriteProjectHeader";
 
 interface IProps {

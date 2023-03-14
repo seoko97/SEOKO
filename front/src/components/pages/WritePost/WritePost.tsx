@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useCallback, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
-import { gql, useMutation } from "@apollo/client";
+import {  useMutation } from "@apollo/client";
 
 import { ADD_POST } from "@queries/post/addPost.queries";
 import {

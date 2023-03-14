@@ -2,7 +2,6 @@ import { addApolloState } from "@lib/addApolloState";
 import { initializeClient } from "@lib/apollo";
 import { IGetAbout } from "@queries-types/about";
 import { GET_ABOUT } from "@queries/about";
-import { GET_PROJECTS } from "@queries/project";
 import { GetServerSideProps } from "next";
 
 export { default } from "@pages/About";
