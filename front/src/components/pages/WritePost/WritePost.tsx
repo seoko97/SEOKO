@@ -74,23 +74,12 @@ const WritePost = ({ post }: IProps) => {
       movePageToHome(editPost);
     },
     update(cache, _, { variables }) {
-      const a = cache.readFragment({
-        id: `Post:${variables?.input._id}`,
-        fragment: gql`
-          fragment EditPost on Post {
-            _id
-            title
-          }
-        `,
-      });
-
-      console.log(a);
       cache.evict({
         id: "ROOT_QUERY",
         fieldName: "getPost",
         args: {
           input: {
-            _id: variables?.input._id ?? "",
+            _id: variables?.input._id,
           },
         },
       });
