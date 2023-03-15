@@ -100,13 +100,17 @@ const WriteProject = ({ _id }: IProps) => {
           getProject: data.editProject,
         },
       });
+      cache.evict({
+        id: "ROOT_QUERY",
+        fieldName: "getProjects",
+      });
     },
   });
 
   const movePageToProject = <T extends CoreResponse>(data: T) => {
     if (!data.ok) return;
 
-    router.push("/project");
+    router.push("/");
   };
 
   const onChangeValue: React.ChangeEventHandler<HTMLInputElement> = useCallback(

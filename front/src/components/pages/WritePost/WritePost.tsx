@@ -103,6 +103,10 @@ const WritePost = ({ _id }: IProps) => {
           },
         },
       });
+      cache.evict({
+        id: "ROOT_QUERY",
+        fieldName: "getPosts",
+      });
     },
   });
 
