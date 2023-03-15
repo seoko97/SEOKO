@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useCallback, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
-import {  useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 
 import { ADD_POST } from "@queries/post/addPost.queries";
 import {
@@ -11,6 +11,7 @@ import {
   IEditPost,
   IEditPostInput,
   IEditPostVariables,
+  IGetPost,
   IPost,
 } from "@queries-types/posts";
 import { EDIT_POST } from "@queries/post/editPost.queries";
@@ -21,6 +22,7 @@ import TuiEditor from "@organisms/TuiEditor";
 import { ADD_IMAGE } from "@queries/image/addImage.queries";
 import { IAddImage } from "@queries-types/image";
 import { CoreResponse } from "@queries-types/core";
+import { GET_POST } from "@queries/post";
 import WritePostHeader from "./WritePostHeader";
 
 interface IProps {
@@ -73,13 +75,21 @@ const WritePost = ({ post }: IProps) => {
     onCompleted({ editPost }) {
       movePageToHome(editPost);
     },
-    update(cache, _, { variables }) {
-      cache.evict({
-        id: "ROOT_QUERY",
-        fieldName: "getPost",
-        args: {
-          input: {
-            _id: variables?.input._id,
+    update(cache, { data }, { variables }) {
+      const prev = cache.readQuery<IGetPost>({
+        query: GET_POST,
+        variables: { input: { _id: variables?.input._id } },
+      });
+
+      if (!data || !prev) return;
+
+      cache.writeQuery<IGetPost>({
+        query: GET_POST,
+        variables: { input: { _id: variables?.input._id } },
+        data: {
+          getPost: {
+            ...prev?.getPost,
+            post: data.editPost.post,
           },
         },
       });

@@ -12,6 +12,7 @@ import {
   IAddProject,
   IAddProjectVariables,
   IEditProject,
+  IGetProject,
   IProject,
   IProjectInput,
 } from "@queries-types/project";
@@ -20,6 +21,7 @@ import { IAddImage } from "@queries-types/image";
 import { CoreResponse } from "@queries-types/core";
 import { ADD_IMAGE } from "@queries/image/addImage.queries";
 
+import { GET_PROJECT } from "@queries/project";
 import WriteProjectHeader from "./WriteProjectHeader";
 
 interface IProps {
@@ -79,12 +81,14 @@ const WriteProject = ({ project }: IProps) => {
     onCompleted({ editProject }) {
       movePageToProject(editProject);
     },
-    update(cache, _, { variables }) {
-      cache.evict({
-        id: "ROOT_QUERY",
-        fieldName: "getProject",
-        args: {
-          input: variables?.input._id,
+    update(cache, { data }, { variables }) {
+      if (!data) return;
+
+      cache.writeQuery<IGetProject>({
+        query: GET_PROJECT,
+        variables: { input: variables?.input._id },
+        data: {
+          getProject: data.editProject,
         },
       });
     },
