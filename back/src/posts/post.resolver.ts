@@ -6,7 +6,7 @@ import { CoreRes } from '@decorators/coreRes.decorator';
 import { ObjectIdGuard } from '@decorators/guards/ObjectId.guard';
 import { CreatePostInput } from './dto/createPostInput.dto';
 import { EditPostInput } from './dto/editPostInput.dto';
-import { GetPostDTO, GetPostInput } from './dto/getPost.dto';
+import { BasePostDTO, GetPostDTO, GetPostInput } from './dto/getPost.dto';
 import { GetPostsDTO, GetPostsInput } from './dto/getPosts.dto';
 import { PostService } from './post.service';
 
@@ -15,11 +15,11 @@ export class PostResolver {
   constructor(private postService: PostService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Mutation(() => CoreRes)
-  async addPost(@Args('input') input: CreatePostInput): Promise<CoreRes> {
-    await this.postService.createPost(input);
+  @Mutation(() => BasePostDTO)
+  async addPost(@Args('input') input: CreatePostInput): Promise<BasePostDTO> {
+    const post = await this.postService.createPost(input);
 
-    return { ok: true };
+    return { ok: true, post };
   }
 
   @UseGuards(JwtAuthGuard)
@@ -31,11 +31,11 @@ export class PostResolver {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Mutation(() => CoreRes)
-  async editPost(@Args('input') input: EditPostInput) {
-    await this.postService.editPost(input);
+  @Mutation(() => BasePostDTO)
+  async editPost(@Args('input') input: EditPostInput): Promise<BasePostDTO> {
+    const post = await this.postService.editPost(input);
 
-    return { ok: true };
+    return { ok: true, post };
   }
 
   @UseGuards(ObjectIdGuard)
