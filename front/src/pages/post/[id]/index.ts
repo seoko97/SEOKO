@@ -8,13 +8,13 @@ import { GetServerSideProps } from "next";
 export { default } from "@pages/Post";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { query } = ctx;
+  const { id } = ctx.query;
 
   const apolloClient = initializeClient({ ctx });
 
   const result = await apolloClient.query<IGetPost>({
     query: GET_POST,
-    variables: { input: { _id: query.id } },
+    variables: { input: { _id: id } },
   });
 
   if (!result.data && result.errors?.[0]) {
@@ -43,6 +43,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     props: {
       post,
       siblingPost,
+      _id: id,
     },
   });
 };
