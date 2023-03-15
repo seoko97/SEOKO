@@ -3,17 +3,18 @@ import Head from "next/head";
 import styled from "@emotion/styled";
 import RowFrame from "@frames/RowFrame";
 
-import { IPost, ISiblingPost } from "@queries-types/posts";
+import { IGetPost } from "@queries-types/posts";
 
 import Markdown from "@organisms/MarkDownViewer";
 import PostHeader from "@organisms/PostHeader";
 import PostFooter from "@organisms/PostFooter";
 import Toc from "@organisms/Toc";
 import removeMd from "remove-markdown";
+import { useQuery } from "@apollo/client";
+import { GET_POST } from "@queries/post";
 
 interface Props {
-  post: IPost;
-  siblingPost: ISiblingPost;
+  _id: string;
 }
 
 const Container = styled(RowFrame)`
@@ -34,7 +35,15 @@ const PostContent = styled.div`
   }
 `;
 
-const Post = ({ post, siblingPost }: Props) => {
+const Post = ({ _id }: Props) => {
+  const { data } = useQuery<IGetPost>(GET_POST, {
+    variables: { input: { _id } },
+  });
+
+  if (!data) return <></>;
+
+  const { post, siblingPost } = data.getPost;
+
   const { content, title, coverImg } = post;
 
   const postDescription = useMemo(

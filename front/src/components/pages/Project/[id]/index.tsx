@@ -3,18 +3,28 @@ import Head from "next/head";
 import removeMd from "remove-markdown";
 import styled from "@emotion/styled";
 
-import { IProject } from "@queries-types/project";
+import { IGetProject } from "@queries-types/project";
 
 import RowFrame from "@frames/RowFrame";
 import Markdown from "@organisms/MarkDownViewer";
 
 import ProjectHeader from "@organisms/ProjectHeader";
+import { useQuery } from "@apollo/client";
+import { GET_PROJECT } from "@queries/project";
 
 interface IProps {
-  project: IProject;
+  _id: string;
 }
 
-const Project = ({ project }: IProps) => {
+const Project = ({ _id }: IProps) => {
+  const { data } = useQuery<IGetProject>(GET_PROJECT, {
+    variables: { input: _id },
+  });
+
+  if (!data) return <></>;
+
+  const { project } = data.getProject;
+
   const projectDescription = useMemo(
     () => removeMd(project?.content, { useImgAltText: false }).slice(0, 200),
     [],
