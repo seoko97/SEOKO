@@ -109,13 +109,13 @@ export class PostService {
       post.tags.push(...createdTag);
     }
 
-    await post.updateOne({
-      $set: info,
-    });
+    for (const key in info) {
+      post[key] = info[key];
+    }
 
     await post.save();
 
-    return { ok: true };
+    return post;
   }
 
   async deletePost(_id: string) {
