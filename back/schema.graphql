@@ -43,6 +43,12 @@ input AddSkillInput {
   type: SkillType!
 }
 
+type BasePostDTO {
+  error: String
+  ok: Boolean!
+  post: Post!
+}
+
 type CoreRes {
   error: String
   ok: Boolean!
@@ -216,8 +222,8 @@ input InputUser {
 type Mutation {
   addExperience(input: AddExperienceInput!): ExperienceDto!
   addImage(input: AddImageInput!): AddImageRes!
-  addPost(input: CreatePostInput!): CoreRes!
-  addProject(input: AddProjectInput!): CoreRes!
+  addPost(input: CreatePostInput!): BasePostDTO!
+  addProject(input: AddProjectInput!): GetProjectDto!
   addSkill(input: AddSkillInput!): AddSkillDto!
   create(input: InputUser!): CoreRes!
   createTag(input: String!): CreateTagDTO!
@@ -227,8 +233,8 @@ type Mutation {
   deleteSkill(input: SkillInput!): AddSkillDto!
   deleteTag(_id: String!): CoreRes!
   editExperience(input: EditExperienceInput!): ExperienceDto!
-  editPost(input: EditPostInput!): CoreRes!
-  editProject(input: EditProjectInput!): CoreRes!
+  editPost(input: EditPostInput!): BasePostDTO!
+  editProject(input: EditProjectInput!): GetProjectDto!
   editSkill(input: EditSkillInput!): AddSkillDto!
   refresh: CoreRes!
   signin(input: SigninInput!): SigninRes!
