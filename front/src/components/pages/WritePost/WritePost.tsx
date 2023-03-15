@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useCallback, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 
 import { ADD_POST } from "@queries/post/addPost.queries";
 import {
@@ -26,10 +26,20 @@ import { GET_POST } from "@queries/post";
 import WritePostHeader from "./WritePostHeader";
 
 interface IProps {
-  post?: IPost;
+  _id: string;
 }
 
-const WritePost = ({ post }: IProps) => {
+const WritePost = ({ _id }: IProps) => {
+  const { data } = useQuery<IGetPost>(GET_POST, {
+    variables: {
+      input: { _id },
+    },
+  });
+
+  if (!data) return <></>;
+
+  const { post } = data.getPost;
+
   const router = useRouter();
   const postInputData: BasePostInput = {
     _id: post?._id || undefined,

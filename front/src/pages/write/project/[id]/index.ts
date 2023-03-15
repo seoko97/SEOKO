@@ -9,14 +9,14 @@ import { GET_USER_INFO_OPTION } from "@lib/initializeSigninCheck";
 export { default } from "@pages/WriteProject";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { query } = ctx;
+  const { id } = ctx.query;
   const apolloClient = initializeClient({ ctx });
 
   const { data: userData } = await apolloClient.query<IGetUserInfo>(GET_USER_INFO_OPTION);
 
   const { data: projectData } = await apolloClient.query<IGetProject>({
     query: GET_PROJECT,
-    variables: { input: query.id },
+    variables: { input: id },
   });
 
   if (!userData || !projectData)
@@ -30,7 +30,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return addApolloState(apolloClient, {
     props: {
-      project: projectData.getProject.project,
+      _id: id,
     },
   });
 };
