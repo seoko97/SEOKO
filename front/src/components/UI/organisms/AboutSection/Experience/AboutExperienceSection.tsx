@@ -1,24 +1,22 @@
 import React, { useCallback, useState } from "react";
-import { useReactiveVar } from "@apollo/client";
+import { useQuery, useReactiveVar } from "@apollo/client";
 import dynamic from "next/dynamic";
 
-import { IExperience } from "@queries-types/experience";
+import { IExperience, IGetExperiences } from "@queries-types/experience";
 
 import { userInfoVar } from "@store/userInfo";
 import useModal from "@hooks/useModal";
 
+import { GET_EXPERIENCES } from "@queries/experience";
 import ExperienceList from "./ExperienceList";
 import SectionHeader from "../SectionHeader";
 import { Section } from "../styles";
 
-interface IProps {
-  experiences: IExperience[];
-}
-
 const ExperienceForm = dynamic(() => import("@modals/ExperienceForm"));
 
-const AboutExperienceSection = ({ experiences }: IProps) => {
+const AboutExperienceSection = () => {
   const { username } = useReactiveVar(userInfoVar);
+  const { data } = useQuery<IGetExperiences>(GET_EXPERIENCES);
   const [isOpenExperienceForm, onOpenExperienceForm, onCloseExperienceForm] = useModal();
   const [selectedExperience, setSelectedExperience] = useState<IExperience | null>(null);
 
@@ -26,6 +24,10 @@ const AboutExperienceSection = ({ experiences }: IProps) => {
     onOpenExperienceForm();
     setSelectedExperience(data);
   }, []);
+
+  if (!data) return <></>;
+
+  const { experiences } = data.getExperiences;
 
   return (
     <>

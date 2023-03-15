@@ -1,16 +1,24 @@
 import React from "react";
+import { useQuery } from "@apollo/client";
 
-import { IProject } from "@queries-types/project";
+import { IGetProjects } from "@queries-types/project";
+
+import { GET_PROJECTS } from "@queries/project";
 
 import ProjectList from "@molecules/ProjectList";
 import SectionHeader from "../SectionHeader";
 import { Section } from "../styles";
 
-interface IProps {
-  projects: IProject[];
-}
+const AboutProjectSection = () => {
+  const { data } = useQuery<IGetProjects>(GET_PROJECTS, {
+    variables: {
+      input: { isTemporary: false },
+    },
+  });
 
-const AboutProjectSection = ({ projects }: IProps) => {
+  if (!data) return <></>;
+
+  const { projects } = data.getProjects;
   return (
     <Section>
       <SectionHeader>Project</SectionHeader>

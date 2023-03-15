@@ -1,24 +1,22 @@
 import React, { useCallback, useState } from "react";
-import { useReactiveVar } from "@apollo/client";
+import { useQuery, useReactiveVar } from "@apollo/client";
 import dynamic from "next/dynamic";
 
-import { ISkill, ISkills } from "@queries-types/skill";
+import { IGetSkills, ISkill } from "@queries-types/skill";
 
 import { userInfoVar } from "@store/userInfo";
 import useModal from "@hooks/useModal";
 
+import { GET_SKILLS } from "@queries/skills";
 import SkillList from "./SkillList";
 import SectionHeader from "../SectionHeader";
 import { Section } from "../styles";
 
-interface IProps {
-  skills: ISkills;
-}
-
 const SkillForm = dynamic(() => import("@modals/SkillForm"));
 
-const AboutSkillSection = ({ skills }: IProps) => {
+const AboutSkillSection = () => {
   const { username } = useReactiveVar(userInfoVar);
+  const { data } = useQuery<IGetSkills>(GET_SKILLS);
   const [isOpenSkillForm, onOpenSkillForm, onCloseSkillForm] = useModal();
   const [selectedSkill, setSelectedSkill] = useState<ISkill | null>(null);
 
@@ -27,17 +25,17 @@ const AboutSkillSection = ({ skills }: IProps) => {
     setSelectedSkill(data);
   }, []);
 
+  if (!data) return <></>;
+
+  const { front, back, devops } = data.getSkills.skills;
+
   return (
     <>
       <Section>
         <SectionHeader onClick={onClickSkill}>Skill</SectionHeader>
-        <SkillList
-          skills={skills.front}
-          onClick={username ? onClickSkill : null}
-          type="Front-End"
-        />
-        <SkillList skills={skills.back} onClick={username ? onClickSkill : null} type="Back-End" />
-        <SkillList skills={skills.devops} onClick={username ? onClickSkill : null} type="DevOps" />
+        <SkillList skills={front} onClick={username ? onClickSkill : null} type="Front-End" />
+        <SkillList skills={back} onClick={username ? onClickSkill : null} type="Back-End" />
+        <SkillList skills={devops} onClick={username ? onClickSkill : null} type="DevOps" />
       </Section>
       {isOpenSkillForm && <SkillForm onClose={onCloseSkillForm} skill={selectedSkill} />}
     </>
