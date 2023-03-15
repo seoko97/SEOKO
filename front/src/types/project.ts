@@ -18,15 +18,14 @@ interface IProject extends IProjectInput {
   __typename?: string;
 }
 
-type IAddProject = CoreResult<"addProject">;
+interface IBaseProjectResponse extends CoreResponse {
+  project: IProject;
+}
+
 type IDeleteProject = CoreResult<"deleteProject">;
-type IEditProject = CoreResult<"editProject">;
-type IGetProject = CoreResult<
-  "getProject",
-  {
-    project: IProject;
-  } & CoreResponse
->;
+type IGetProject = CoreResult<"getProject", IBaseProjectResponse>;
+type IAddProject = CoreResult<"addProject", IBaseProjectResponse>;
+type IEditProject = CoreResult<"editProject", IBaseProjectResponse>;
 type IGetProjects = CoreResult<
   "getProjects",
   {
@@ -40,10 +39,10 @@ type IGetProjectVariables = CoreVariables<string>;
 export type {
   IAddProject,
   IDeleteProject,
-  IEditProject,
   IGetProject,
   IGetProjects,
   IProject,
+  IEditProject,
   IProjectInput,
   IAddProjectVariables,
   IGetProjectVariables,
