@@ -14,7 +14,9 @@ export class ProjectService {
   }
 
   async editProject({ _id, ...info }: EditProjectInput) {
-    return await this.projectModel.updateOne({ _id }, info);
+    return await this.projectModel.findOneAndUpdate({ _id }, info, {
+      new: true,
+    });
   }
 
   async deleteProject(_id: Types.ObjectId | string) {

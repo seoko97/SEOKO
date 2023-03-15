@@ -14,19 +14,23 @@ export class ProjectResolver {
   constructor(private projectService: ProjectService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Mutation(() => CoreRes)
-  async addProject(@Args('input') input: AddProjectInput): Promise<CoreRes> {
-    await this.projectService.addProject(input);
+  @Mutation(() => GetProjectDto)
+  async addProject(
+    @Args('input') input: AddProjectInput,
+  ): Promise<GetProjectDto> {
+    const project = await this.projectService.addProject(input);
 
-    return { ok: true };
+    return { ok: true, project };
   }
 
   @UseGuards(JwtAuthGuard)
-  @Mutation(() => CoreRes)
-  async editProject(@Args('input') input: EditProjectInput): Promise<CoreRes> {
-    await this.projectService.editProject(input);
+  @Mutation(() => GetProjectDto)
+  async editProject(
+    @Args('input') input: EditProjectInput,
+  ): Promise<GetProjectDto> {
+    const project = await this.projectService.editProject(input);
 
-    return { ok: true };
+    return { ok: true, project };
   }
 
   @UseGuards(JwtAuthGuard)
