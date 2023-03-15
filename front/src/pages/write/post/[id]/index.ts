@@ -16,7 +16,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   const { data: postData } = await apolloClient.query<IGetPost>({
     query: GET_POST,
-    variables: { input: { id: query.id } },
+    variables: { input: { _id: query.id } },
   });
 
   if (!data || !postData)

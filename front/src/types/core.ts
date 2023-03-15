@@ -3,7 +3,7 @@ interface CoreResponse {
   error: any;
 }
 
-interface CoreVariants<T> {
+interface CoreVariables<T> {
   input: T;
 }
 
@@ -11,4 +11,4 @@ type CoreResult<QueryName extends string, Input = CoreResponse> = {
   [key in QueryName]: Input;
 };
 
-export type { CoreVariants, CoreResponse, CoreResult };
+export type { CoreVariables, CoreResponse, CoreResult };

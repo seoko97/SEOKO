@@ -8,19 +8,9 @@ import AboutExperienceSection from "@organisms/AboutSection/Experience/AboutExpe
 import AboutProjectSection from "@organisms/AboutSection/Project/AboutProjectSection";
 import AboutInfoSection from "@organisms/AboutSection/Info/AboutInfoSection";
 
-import { ISkills } from "@queries-types/skill";
-import { IExperience } from "@queries-types/experience";
-import { IProject } from "@queries-types/project";
-
 import AboutHeader from "./AboutHeader";
 
-interface IProps {
-  skills: ISkills;
-  experiences: IExperience[];
-  projects: IProject[];
-}
-
-const About = ({ skills, projects, experiences }: IProps) => {
+const About = () => {
   return (
     <>
       <Head>
@@ -38,9 +28,9 @@ const About = ({ skills, projects, experiences }: IProps) => {
       <Container>
         <AboutHeader />
         <AboutInfoSection />
-        <AboutSkillSection skills={skills} />
-        <AboutExperienceSection experiences={experiences} />
-        <AboutProjectSection projects={projects} />
+        <AboutSkillSection />
+        <AboutExperienceSection />
+        <AboutProjectSection />
       </Container>
     </>
   );

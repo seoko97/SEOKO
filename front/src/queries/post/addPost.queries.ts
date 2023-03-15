@@ -5,6 +5,19 @@ export const ADD_POST = gql`
     addPost(input: $input) {
       ok
       error
+      post {
+        _id
+        content
+        title
+        coverImg
+        category
+        isTemporary
+        tags {
+          _id
+          name
+        }
+        createdAt
+      }
     }
   }
 `;

@@ -11,6 +11,7 @@ import {
   IEditPost,
   IEditPostInput,
   IEditPostVariables,
+  IGetPost,
   IPost,
 } from "@queries-types/posts";
 import { EDIT_POST } from "@queries/post/editPost.queries";
@@ -20,6 +21,8 @@ import TuiEditor from "@organisms/TuiEditor";
 
 import { ADD_IMAGE } from "@queries/image/addImage.queries";
 import { IAddImage } from "@queries-types/image";
+import { CoreResponse } from "@queries-types/core";
+import { GET_POST } from "@queries/post";
 import WritePostHeader from "./WritePostHeader";
 
 interface IProps {
@@ -56,23 +59,48 @@ const WritePost = ({ post }: IProps) => {
     },
   });
 
-  const [addPostMutation, { client }] = useMutation<IAddPost, IAddPostVariables>(ADD_POST, {
+  const [addPostMutation] = useMutation<IAddPost, IAddPostVariables>(ADD_POST, {
     onCompleted({ addPost }) {
-      if (addPost.ok) {
-        client.clearStore();
-        router.push("/");
-      }
+      movePageToHome(addPost);
+    },
+    update(cache) {
+      cache.evict({
+        id: "ROOT_QUERY",
+        fieldName: "getPosts",
+      });
     },
   });
 
   const [editPostMutation] = useMutation<IEditPost, IEditPostVariables>(EDIT_POST, {
     onCompleted({ editPost }) {
-      if (editPost.ok) {
-        client.clearStore();
-        router.push("/");
-      }
+      movePageToHome(editPost);
+    },
+    update(cache, { data }, { variables }) {
+      const prev = cache.readQuery<IGetPost>({
+        query: GET_POST,
+        variables: { input: { _id: variables?.input._id } },
+      });
+
+      if (!data || !prev) return;
+
+      cache.writeQuery<IGetPost>({
+        query: GET_POST,
+        variables: { input: { _id: variables?.input._id } },
+        data: {
+          getPost: {
+            ...prev?.getPost,
+            post: data.editPost.post,
+          },
+        },
+      });
     },
   });
+
+  const movePageToHome = <T extends CoreResponse>(data: T) => {
+    if (!data.ok) return;
+
+    router.push("/");
+  };
 
   const onChangeValue: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => {

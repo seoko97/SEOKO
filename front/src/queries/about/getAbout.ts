@@ -36,6 +36,7 @@ export const GET_ABOUT = gql`
         coverImg
         startDate
         endDate
+        isTemporary
       }
     }
     getExperiences {

@@ -5,7 +5,13 @@ import { Post } from '@posts/post.model';
 @InputType()
 export class GetPostInput {
   @Field(() => String)
-  id: string;
+  _id: string;
+}
+
+@ObjectType()
+export class BasePostDTO extends CoreRes {
+  @Field(() => Post)
+  post!: Post;
 }
 
 @ObjectType()
@@ -18,10 +24,7 @@ class SiblingPost {
 }
 
 @ObjectType()
-export class GetPostDTO extends CoreRes {
-  @Field(() => Post)
-  post!: Post;
-
+export class GetPostDTO extends BasePostDTO {
   @Field(() => SiblingPost)
   siblingPost!: SiblingPost;
 }

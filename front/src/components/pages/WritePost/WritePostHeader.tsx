@@ -28,6 +28,7 @@ export const Container = styled.header`
   & input[type="date"] {
     border: none;
     background: none;
+    color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   }
 
   & > div#line {
