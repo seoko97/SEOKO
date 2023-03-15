@@ -5,6 +5,17 @@ export const EDIT_PROJECT = gql`
     editProject(input: $input) {
       ok
       error
+      project {
+        _id
+        title
+        description
+        content
+        coverImg
+        githubUrl
+        isTemporary
+        startDate
+        endDate
+      }
     }
   }
 `;

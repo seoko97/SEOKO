@@ -5,6 +5,17 @@ export const ADD_PROJECT = gql`
     addProject(input: $input) {
       ok
       error
+      project {
+        _id
+        title
+        description
+        content
+        coverImg
+        githubUrl
+        isTemporary
+        startDate
+        endDate
+      }
     }
   }
 `;
