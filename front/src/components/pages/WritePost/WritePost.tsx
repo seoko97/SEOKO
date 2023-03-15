@@ -26,19 +26,16 @@ import { GET_POST } from "@queries/post";
 import WritePostHeader from "./WritePostHeader";
 
 interface IProps {
-  _id: string;
+  _id?: string;
 }
 
 const WritePost = ({ _id }: IProps) => {
   const { data } = useQuery<IGetPost>(GET_POST, {
-    variables: {
-      input: { _id },
-    },
+    variables: { input: { _id: _id ?? "" } },
+    skip: !_id,
   });
 
-  if (!data) return <></>;
-
-  const { post } = data.getPost;
+  const post = data?.getPost.post;
 
   const router = useRouter();
   const postInputData: BasePostInput = {

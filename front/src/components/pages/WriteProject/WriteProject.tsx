@@ -50,15 +50,14 @@ const removeTypename = <T extends IProject>(data: T | undefined) => {
 };
 
 const WriteProject = ({ _id }: IProps) => {
-  const router = useRouter();
   const { data } = useQuery<IGetProject>(GET_PROJECT, {
-    variables: { input: _id },
+    variables: { input: _id ?? "" },
+    skip: !_id,
   });
 
-  if (!data) return <></>;
+  const project = data?.getProject.project;
 
-  const { project } = data.getProject;
-
+  const router = useRouter();
   const projectDataRef = useRef<IProjectInput>(removeTypename(project) ?? PROJECT);
   const photoInputRef = useRef<HTMLInputElement | null>(null);
 
