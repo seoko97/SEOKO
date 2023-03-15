@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useCallback, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 
 import TuiEditor from "@organisms/TuiEditor";
 import WriteFooter from "@molecules/WriteFooter";
@@ -26,6 +26,7 @@ import WriteProjectHeader from "./WriteProjectHeader";
 
 interface IProps {
   project: IProject | undefined;
+  _id: string;
 }
 
 const PROJECT: IProjectInput = {
@@ -48,8 +49,16 @@ const removeTypename = <T extends IProject>(data: T | undefined) => {
   return newData;
 };
 
-const WriteProject = ({ project }: IProps) => {
+const WriteProject = ({ _id }: IProps) => {
   const router = useRouter();
+  const { data } = useQuery<IGetProject>(GET_PROJECT, {
+    variables: { input: _id },
+  });
+
+  if (!data) return <></>;
+
+  const { project } = data.getProject;
+
   const projectDataRef = useRef<IProjectInput>(removeTypename(project) ?? PROJECT);
   const photoInputRef = useRef<HTMLInputElement | null>(null);
 
