@@ -9,6 +9,12 @@ export class GetPostInput {
 }
 
 @ObjectType()
+export class BasePostDTO extends CoreRes {
+  @Field(() => Post)
+  post!: Post;
+}
+
+@ObjectType()
 class SiblingPost {
   @Field(() => Post, { nullable: true })
   next: Post;
@@ -18,10 +24,7 @@ class SiblingPost {
 }
 
 @ObjectType()
-export class GetPostDTO extends CoreRes {
-  @Field(() => Post)
-  post!: Post;
-
+export class GetPostDTO extends BasePostDTO {
   @Field(() => SiblingPost)
   siblingPost!: SiblingPost;
 }
