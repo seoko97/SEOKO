@@ -34,6 +34,7 @@ jobs:
            env:
               HOST: ${{secrets.HOST}}
               API_URL: ${{secrets.API_URL}}
+              NEXT_PUBLIC_GA_ID: ${{secrets.NEXT_PUBLIC_GA_ID}}
            working-directory: ${{ env.working-directory }}
 
          - name: Login to Docker Registry
