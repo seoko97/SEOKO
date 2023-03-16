@@ -77,7 +77,7 @@ const WriteProject = ({ _id }: IProps) => {
     onCompleted({ addProject }) {
       movePageToProject(addProject);
     },
-    update(cache, _) {
+    update(cache) {
       cache.evict({
         id: "ROOT_QUERY",
         fieldName: "getProjects",

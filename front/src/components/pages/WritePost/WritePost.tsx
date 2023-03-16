@@ -12,7 +12,6 @@ import {
   IEditPostInput,
   IEditPostVariables,
   IGetPost,
-  IPost,
 } from "@queries-types/posts";
 import { EDIT_POST } from "@queries/post/editPost.queries";
 
