@@ -19,11 +19,7 @@ SEOKO는 개발자 지석호의 포트폴리오 및 블로그 기능을 포함�
 <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white">
 <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=Next.js&logoColor=white">
 <img src="https://img.shields.io/badge/emotion-DB7093?style=for-the-badge&logo=&logoColor=white">
-<img src="https://img.shields.io/badge/Apollo Client
--FF4F8B?style=for-the-badge&logo=Apollo GraphQL
-&logoColor=white">
-<img src="https://img.shields.io/badge/TUIEditor (WYSIWYG Editor)
--0099E5?style=for-the-badge&logo=&logoColor=white">
+<img src="https://img.shields.io/badge/Apollo Client-FF4F8B?style=for-the-badge&logo=Apollo GraphQL&logoColor=white">
 </p>
 
 **`BACKEND`**
@@ -31,9 +27,7 @@ SEOKO는 개발자 지석호의 포트폴리오 및 블로그 기능을 포함�
 <p>
 <img src="https://img.shields.io/badge/nestjs-E0234E?style=for-the-badge&logo=nestjs&logoColor=white">
 <img src="https://img.shields.io/badge/GraphQL-E10098?style=for-the-badge&logo=GraphQL&logoColor=white">
-<img src="https://img.shields.io/badge/Apollo Server
--FF4F8B?style=for-the-badge&logo=Apollo GraphQL
-&logoColor=white">
+<img src="https://img.shields.io/badge/Apollo Server-FF4F8B?style=for-the-badge&logo=Apollo GraphQL&logoColor=white">
 <img src="https://img.shields.io/badge/mongoDB-47A248?style=for-the-badge&logo=mongoDB&logoColor=white">
 <img src="https://img.shields.io/badge/mongoose-47A248?style=for-the-badge&logo=mognoose&logoColor=white">
 </p>
