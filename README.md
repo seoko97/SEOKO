@@ -9,8 +9,7 @@ SEOKO는 개발자 지석호의 포트폴리오 및 블로그 기능을 포함�
 **`LANGUAGE`**
 
 <p>
-<img src="https://img.shields.io/badge/TypeScript
--3178C6?style=for-the-badge&logo=typescript&logoColor=white">
+<img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white">
 </p>
 
 **`FRONTEND`**
