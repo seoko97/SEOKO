@@ -75,7 +75,7 @@ const PostHeader = ({ post }: IProps) => {
 
   const [deletePostMutation] = useMutation<IDeletePost>(DELETE_POST, {
     onCompleted({ deletePost }) {
-      if (deletePost.ok) router.push("/");
+      if (deletePost.ok) router.replace("/");
     },
   });
 
@@ -84,14 +84,9 @@ const PostHeader = ({ post }: IProps) => {
 
     const conf = confirm("삭제하시겠습니까?");
 
-    if (conf)
-      deletePostMutation({
-        variables: {
-          input: {
-            id: _id,
-          },
-        },
-      });
+    if (!conf) return;
+
+    deletePostMutation({ variables: { input: { _id } } });
   }, [username, _id]);
 
   const editPost = useCallback(() => {

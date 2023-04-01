@@ -16,17 +16,18 @@ interface IProps {
 }
 
 const ProjectHeader = ({ project }: IProps) => {
+  const { _id, title, coverImg, description, endDate, githubUrl, startDate, isTemporary } = project;
   const router = useRouter();
   const { username } = useReactiveVar(userInfoVar);
 
   const [deleteProjectMutation] = useMutation<IDeleteProject>(DELETE_PROJECT, {
     onCompleted({ deleteProject }) {
-      if (deleteProject.ok) router.replace("/");
+      if (deleteProject.ok) router.replace("/project");
     },
   });
 
   const editProject = useCallback(() => {
-    router.push(`/write/project/${project._id}`);
+    router.push(`/write/project/${_id}`);
   }, [project]);
 
   const deleteProject = useCallback(() => {
@@ -34,34 +35,22 @@ const ProjectHeader = ({ project }: IProps) => {
 
     if (!conf) return;
 
-    deleteProjectMutation({
-      variables: {
-        input: {
-          _id: project._id,
-        },
-      },
-    });
+    deleteProjectMutation({ variables: { input: { _id } } });
   }, [project]);
 
   return (
     <Container>
       <div className="image-container">
-        <Image
-          priority={true}
-          layout="fill"
-          alt="project-cover"
-          src={project.coverImg}
-          objectFit="cover"
-        />
+        <Image priority layout="fill" alt="project-cover" src={coverImg} objectFit="cover" />
       </div>
-      {project.isTemporary && <h3>임시저장</h3>}
-      <h1>{project.title}</h1>
-      <p className="desc lt">{project.description}</p>
+      {isTemporary && <h3>임시저장</h3>}
+      <h1>{title}</h1>
+      <p className="desc lt">{description}</p>
       <div className="lt">
-        <span>{dateTimeParser(project.startDate)}</span> ~{" "}
-        <span>{project.endDate ? dateTimeParser(project.endDate) : "진행중"}</span>
+        <span>{dateTimeParser(startDate)}</span> ~
+        <span>{endDate ? dateTimeParser(endDate) : "진행중"}</span>
       </div>
-      <a target="_blank" href={project.githubUrl} rel="noreferrer">
+      <a target="_blank" href={githubUrl} rel="noreferrer">
         <GItHubIcon />
       </a>
       {username && <PostNavigation onEdit={editProject} onDelete={deleteProject} />}
