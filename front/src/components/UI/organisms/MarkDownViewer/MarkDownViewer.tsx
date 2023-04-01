@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { memo, useEffect } from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
@@ -18,6 +18,7 @@ const MarkDownViewer = ({ content }: Props) => {
       resetToc();
     };
   }, [content]);
+
   return (
     <MarkdownWrapper>
       <Markdown rehypePlugins={[rehypeRaw]} remarkPlugins={[remarkGfm]} components={renderers}>
@@ -27,4 +28,4 @@ const MarkDownViewer = ({ content }: Props) => {
   );
 };
 
-export default MarkDownViewer;
+export default memo(MarkDownViewer);
