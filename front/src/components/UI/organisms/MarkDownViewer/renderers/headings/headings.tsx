@@ -6,7 +6,7 @@ import { getClassNameByToc } from "@lib/getClassNameByToc";
 const heading: HeadingComponent = ({ children, level, node }) => {
   useEffect(() => {
     setTocVar({ level, text: children.toString(), line: node.position?.start.line || 0 });
-  }, []);
+  }, [children]);
 
   return React.createElement(
     node.tagName,
