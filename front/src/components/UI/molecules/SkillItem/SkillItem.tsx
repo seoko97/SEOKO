@@ -9,8 +9,6 @@ interface IProps {
 }
 
 const Container = styled.div<{ isAdmin: boolean }>`
-  width: 100px;
-
   display: flex;
   flex-direction: column;
   gap: 0.5em;

@@ -9,15 +9,11 @@ const Container = styled.div`
   flex: 2;
   position: relative;
   width: 100%;
-  padding-bottom: 70%;
+  aspect-ratio: 130 / 100;
   border-radius: 10px 10px 0 0;
 
+  & span,
   & img {
-    border-radius: 10px 10px 0 0;
-    transition: transform 0.3s;
-  }
-
-  & span {
     border-radius: 10px 10px 0 0;
   }
 `;
@@ -25,7 +21,7 @@ const Container = styled.div`
 const ProjectImg = ({ src }: IProps) => {
   return (
     <Container>
-      <Image priority src={src} alt="project-image" layout="fill" objectFit="cover" />
+      <Image priority src={src} alt="project-image" layout="fill" objectFit="cover" sizes="300px" />
     </Container>
   );
 };

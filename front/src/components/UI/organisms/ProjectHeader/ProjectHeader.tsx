@@ -70,8 +70,8 @@ const Container = styled.section`
 
   & > .image-container {
     width: 90%;
+    aspect-ratio: 160 / 100;
     position: relative;
-    padding-bottom: 50%;
     align-items: center;
     border-radius: 12px;
     box-shadow: ${({ theme }) => theme.BOX_SHADOW.PRIMARY};
@@ -90,7 +90,7 @@ const Container = styled.section`
 
   & > h1 {
     font-weight: 700;
-    font-size: 2em;
+    font-size: 1.5rem;
     line-height: 1.2;
     overflow-wrap: anywhere;
   }
@@ -111,11 +111,10 @@ const Container = styled.section`
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     & > h1 {
       line-height: 1.6;
-      font-size: 1.6em;
+      font-size: 1.4em;
     }
     & > .image-container {
       width: 100%;
-      padding-bottom: 60%;
     }
   }
 `;
