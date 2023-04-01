@@ -51,7 +51,7 @@ export class TagService {
   }
 
   async updateTag(_id: Types.ObjectId | string, query: any) {
-    return await this.tagModel.findOneAndUpdate({ _id }, query, { new: true });
+    return await this.tagModel.updateOne({ _id }, query);
   }
 
   async delete(_id: string | Types.ObjectId) {
@@ -59,16 +59,21 @@ export class TagService {
 
     if (!tag) throw new Error('태그가 존재하지 않습니다.');
 
-    await Promise.all(
-      tag.posts.map((postId) => {
-        return this.postService.updatePost(postId._id, {
-          $pull: {
-            tags: tag._id,
-          },
-        });
-      }),
-    );
+    await this.postService.deleteManyByTagId(tag._id);
 
     return { ok: true };
+  }
+
+  async deleteManyByPostId(_id: string) {
+    await this.tagModel.updateMany(
+      { posts: { $in: _id } },
+      { $pull: { posts: _id } },
+    );
+
+    await this.deleteEmptyTags();
+  }
+
+  async deleteEmptyTags() {
+    await this.tagModel.deleteMany({ posts: { $size: 0 } });
   }
 }

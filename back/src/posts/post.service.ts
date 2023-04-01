@@ -6,7 +6,6 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Types } from 'mongoose';
-import { Tag } from '@tags/tag.model';
 import { TagService } from '@tags/tag.service';
 import { Post, PostDocument, PostModel } from './post.model';
 import { CreatePostInput } from './dto/createPostInput.dto';
@@ -32,9 +31,7 @@ export class PostService {
   }
 
   async createPost({ tags, ...info }: CreatePostInput) {
-    const post = await this.postModel.create({
-      ...info,
-    });
+    const post = await this.postModel.create({ ...info });
 
     if (!tags.length) {
       await post.save();
@@ -56,6 +53,8 @@ export class PostService {
     if (createdTag.length) post.tags = createdTag;
 
     await post.save();
+    await post.populate('tags');
+
     return post;
   }
 
@@ -68,43 +67,37 @@ export class PostService {
 
     if (!post) throw new Error('포스트가 존재하지 않습니다.');
 
+    // 삭제된 테그들을 포스트에서 제거/태그에서 포스트 제거/태그가 비어있으면 삭제
     if (deleteTags.length) {
-      const updatedTags = await Promise.all(
+      await Promise.all(
         post.tags.map((tag) => {
           if (!deleteTags.includes(tag.name)) return;
 
           return this.tagService.updateTag(tag._id, {
-            $pull: {
-              posts: post._id,
-            },
+            $pull: { posts: post._id },
           });
-        }),
-      );
-
-      await Promise.all(
-        updatedTags.map((tag) => {
-          if (!tag) return;
-
-          if (!tag.posts.length) this.tagService.delete(tag._id);
         }),
       );
 
       post.tags = post.tags.filter((tag) => {
         return !deleteTags.includes(tag.name);
       });
+
+      await this.tagService.deleteEmptyTags();
     }
 
     if (addTags.length) {
-      const createdTag = (await Promise.all(
+      const createdTag = await Promise.all(
         addTags.map(async (tagName) => {
           const tag = await this.tagService.findOrCreate(tagName);
 
           tag.posts.push(post._id);
+
           await tag.save();
 
           return tag;
         }),
-      )) as Tag[];
+      );
 
       post.tags.push(...createdTag);
     }
@@ -119,23 +112,9 @@ export class PostService {
   }
 
   async deletePost(_id: string) {
-    const post = await this.postModel.findOneAndDelete({ _id });
+    await this.postModel.deleteOne({ _id });
 
-    const tags = await Promise.all(
-      post.tags.map((tag) =>
-        this.tagService.updateTag(tag._id, {
-          $pull: {
-            posts: post._id,
-          },
-        }),
-      ),
-    );
-
-    await Promise.all(
-      tags.map((tag) => {
-        if (!tag.posts?.length) this.tagService.delete(tag._id);
-      }),
-    );
+    await this.tagService.deleteManyByPostId(_id);
 
     return { ok: true };
   }
@@ -155,7 +134,7 @@ export class PostService {
 
     if (!post) throw new BadRequestException('포스트가 존재하지 않습니다.');
 
-    const siblingPost = [
+    const [prev, next] = await Promise.all([
       this.postModel
         .findOne({
           _id: { $lt: _id },
@@ -168,9 +147,7 @@ export class PostService {
           isTemporary: false,
         })
         .sort({ createdAt: 1 }),
-    ];
-
-    const [prev, next] = await Promise.all(siblingPost);
+    ]);
 
     return { prev, next };
   }
@@ -223,5 +200,12 @@ export class PostService {
     };
 
     return this.getPosts(where);
+  }
+
+  async deleteManyByTagId(tagId: string) {
+    return await this.postModel.updateMany(
+      { tags: { $in: tagId } },
+      { $pull: { tags: tagId } },
+    );
   }
 }
