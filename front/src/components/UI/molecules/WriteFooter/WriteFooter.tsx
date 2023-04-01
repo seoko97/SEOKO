@@ -17,6 +17,11 @@ const Footer = styled.footer`
     display: flex;
     gap: 1rem;
   }
+
+  @media (max-width: ${({ theme }) => theme.BP.PC}) {
+    width: 100%;
+    font-size: 0.8rem;
+  }
 `;
 
 interface Props {
