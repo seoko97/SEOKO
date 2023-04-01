@@ -21,12 +21,12 @@ const Container = styled.div`
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   overflow-wrap: anywhere;
 
-  gap: 30px;
+  gap: 1.2rem;
   margin: 32px 0 60px 0;
 
   & > h1 {
     font-weight: 700;
-    font-size: 2em;
+    font-size: 1.5rem;
     line-height: 1.2;
   }
 
@@ -37,8 +37,8 @@ const Container = styled.div`
 
   & > .image-container {
     width: 100%;
+    aspect-ratio: 150 / 100;
     position: relative;
-    padding-bottom: 60%;
     align-items: center;
     box-shadow: ${({ theme }) => theme.BOX_SHADOW.PRIMARY};
 
@@ -53,13 +53,8 @@ const Container = styled.div`
   }
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
-    gap: 18px;
-
     & > h1 {
-      font-size: 1.6em;
-    }
-    & > .image-container {
-      padding-bottom: 60%;
+      font-size: 1.4em;
     }
   }
 `;
@@ -75,7 +70,7 @@ const PostHeader = ({ post }: IProps) => {
 
   const [deletePostMutation] = useMutation<IDeletePost>(DELETE_POST, {
     onCompleted({ deletePost }) {
-      if (deletePost.ok) router.push("/");
+      if (deletePost.ok) router.replace("/");
     },
   });
 
@@ -84,14 +79,9 @@ const PostHeader = ({ post }: IProps) => {
 
     const conf = confirm("삭제하시겠습니까?");
 
-    if (conf)
-      deletePostMutation({
-        variables: {
-          input: {
-            id: _id,
-          },
-        },
-      });
+    if (!conf) return;
+
+    deletePostMutation({ variables: { input: { _id } } });
   }, [username, _id]);
 
   const editPost = useCallback(() => {

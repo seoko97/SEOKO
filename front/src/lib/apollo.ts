@@ -39,7 +39,7 @@ const cache = new InMemoryCache({
   },
 });
 
-export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {
+export const createApolloClient = ({ ctx, initialState }: IInitializeApollo) => {
   const cookie = ctx?.req?.headers.cookie || "";
   const enhancedFetch = (url: RequestInfo, init: RequestInit) => {
     const token = ctx?.res?.getHeader("set-cookie") as string | undefined;
@@ -76,7 +76,7 @@ export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {
 
   const createClient = new ApolloClient({
     ssrMode: typeof window === undefined,
-    cache,
+    cache: cache.restore(initialState || {}),
     link: from([linkOnError, httpLink]),
     connectToDevTools: !isProd,
     defaultOptions: {
@@ -90,7 +90,7 @@ export const createApolloClient = (ctx: GetServerSidePropsContext | null) => {
 };
 
 export const initializeClient = ({ initialState, ctx = null }: IInitializeApollo = {}) => {
-  const _apolloClient = apolloClient ?? createApolloClient(ctx);
+  const _apolloClient = apolloClient ?? createApolloClient({ ctx, initialState });
 
   if (initialState) {
     const existingCache = _apolloClient.extract();
@@ -104,6 +104,7 @@ export const initializeClient = ({ initialState, ctx = null }: IInitializeApollo
 
     _apolloClient.cache.restore(data);
   }
+
   if (typeof window === "undefined") return _apolloClient;
   if (!apolloClient) apolloClient = _apolloClient;
   return _apolloClient;
@@ -114,5 +115,6 @@ export const useApollo = (
 ): ApolloClient<NormalizedCacheObject> => {
   const state = pageProps?.[APOLLO_STATE_PROP_NAME];
   const store = useMemo(() => initializeClient({ initialState: state }), [state]);
+
   return store;
 };

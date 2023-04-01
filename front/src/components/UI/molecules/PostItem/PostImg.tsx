@@ -10,23 +10,20 @@ interface Props {
 const StyledPostImg = styled.div`
   position: relative;
   width: 250px;
-  padding-bottom: 200px;
+  aspect-ratio: 130 / 100;
+
   border-radius: 10px;
   transition: transform 0.3s, box-shadow 0.3s;
 
   background-color: ${({ theme }) => theme.BACKGROUND_COLOR.SECONDARY_COLOR};
 
+  & > span,
   & img {
-    position: absolute;
-    object-fit: cover;
-  }
-  & > span {
     border-radius: 10px;
   }
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     width: 100%;
-    padding-bottom: 70%;
   }
 `;
 
@@ -34,11 +31,12 @@ const PostImg = ({ src, idx }: Props) => {
   return (
     <StyledPostImg className="post-image">
       <Image
-        priority={idx <= 2}
-        loading={idx > 2 ? "lazy" : "eager"}
+        alt="post-image"
+        priority={idx <= 5}
+        loading={idx > 5 ? "lazy" : "eager"}
         src={src}
         layout="fill"
-        alt="post-image"
+        objectFit="cover"
       />
     </StyledPostImg>
   );

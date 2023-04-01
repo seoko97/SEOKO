@@ -16,16 +16,16 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement>, IButtonPr
 
 const BUTTON_SIZE: StyleProps = {
   default: {
-    fontSize: "1rem",
-    padding: "0.5rem 1rem",
+    fontSize: "1em",
+    padding: "0.5em 1em",
   },
   large: {
-    fontSize: "1.2rem",
-    padding: "1rem 1.2rem",
+    fontSize: "1.2em",
+    padding: "1em 1.2em",
   },
   small: {
-    fontSize: "1rem",
-    padding: "0.5rem 1rem",
+    fontSize: "1em",
+    padding: "0.5em 1em",
   },
 };
 
