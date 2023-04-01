@@ -34,8 +34,8 @@ const PostImg = ({ src, idx }: Props) => {
   return (
     <StyledPostImg className="post-image">
       <Image
-        priority={idx <= 2}
-        loading={idx > 2 ? "lazy" : "eager"}
+        priority={idx <= 5}
+        loading={idx > 5 ? "lazy" : "eager"}
         src={src}
         layout="fill"
         alt="post-image"
