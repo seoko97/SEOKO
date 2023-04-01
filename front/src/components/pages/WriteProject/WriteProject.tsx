@@ -22,6 +22,7 @@ import { CoreResponse } from "@queries-types/core";
 import { ADD_IMAGE } from "@queries/image/addImage.queries";
 
 import { GET_PROJECT } from "@queries/project";
+import { removeTypename } from "@lib/removeTypename";
 import WriteProjectHeader from "./WriteProjectHeader";
 
 interface IProps {
@@ -37,16 +38,6 @@ const PROJECT: IProjectInput = {
   coverImg: "",
   startDate: "",
   endDate: "",
-};
-
-const removeTypename = <T extends IProject>(data: T | undefined) => {
-  if (!data) return;
-
-  const newData = { ...data };
-
-  if (newData.__typename) delete newData.__typename;
-
-  return newData;
 };
 
 const WriteProject = ({ _id }: IProps) => {
@@ -77,39 +68,18 @@ const WriteProject = ({ _id }: IProps) => {
     onCompleted({ addProject }) {
       movePageToProject(addProject);
     },
-    update(cache) {
-      cache.evict({
-        id: "ROOT_QUERY",
-        fieldName: "getProjects",
-      });
-    },
   });
 
   const [editProjectMutation] = useMutation<IEditProject, IAddProjectVariables>(EDIT_PROJECT, {
     onCompleted({ editProject }) {
       movePageToProject(editProject);
     },
-    update(cache, { data }, { variables }) {
-      if (!data) return;
-
-      cache.writeQuery<IGetProject>({
-        query: GET_PROJECT,
-        variables: { input: variables?.input._id },
-        data: {
-          getProject: data.editProject,
-        },
-      });
-      cache.evict({
-        id: "ROOT_QUERY",
-        fieldName: "getProjects",
-      });
-    },
   });
 
   const movePageToProject = <T extends CoreResponse>(data: T) => {
     if (!data.ok) return;
 
-    router.push("/");
+    router.push("/project");
   };
 
   const onChangeValue: React.ChangeEventHandler<HTMLInputElement> = useCallback(
@@ -150,7 +120,7 @@ const WriteProject = ({ _id }: IProps) => {
         });
       }
     },
-    [projectDataRef],
+    [projectDataRef, project],
   );
 
   const clearCoverImage = useCallback(() => {

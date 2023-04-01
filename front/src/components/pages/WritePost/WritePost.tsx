@@ -69,40 +69,11 @@ const WritePost = ({ _id }: IProps) => {
     onCompleted({ addPost }) {
       movePageToHome(addPost);
     },
-    update(cache) {
-      cache.evict({
-        id: "ROOT_QUERY",
-        fieldName: "getPosts",
-      });
-    },
   });
 
   const [editPostMutation] = useMutation<IEditPost, IEditPostVariables>(EDIT_POST, {
     onCompleted({ editPost }) {
       movePageToHome(editPost);
-    },
-    update(cache, { data }, { variables }) {
-      const prev = cache.readQuery<IGetPost>({
-        query: GET_POST,
-        variables: { input: { _id: variables?.input._id } },
-      });
-
-      if (!data || !prev) return;
-
-      cache.writeQuery<IGetPost>({
-        query: GET_POST,
-        variables: { input: { _id: variables?.input._id } },
-        data: {
-          getPost: {
-            ...prev?.getPost,
-            post: data.editPost.post,
-          },
-        },
-      });
-      cache.evict({
-        id: "ROOT_QUERY",
-        fieldName: "getPosts",
-      });
     },
   });
 
