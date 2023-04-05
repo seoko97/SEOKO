@@ -10,12 +10,16 @@ export const GET_USER_INFO_OPTION: QueryOptions = {
 };
 
 const initializeSigninCheck = async () => {
-  const apolloClient = initializeClient();
+  try {
+    const apolloClient = initializeClient();
 
-  const { data } = await apolloClient.query<IGetUserInfo>(GET_USER_INFO_OPTION);
+    const { data } = await apolloClient.query<IGetUserInfo>(GET_USER_INFO_OPTION);
 
-  if (data?.getUserInfo?.ok) setUserInfo(data.getUserInfo.username);
-  else setUserInfo(null);
+    if (data?.getUserInfo?.ok) setUserInfo(data.getUserInfo.username);
+    else setUserInfo(null);
+  } catch (e) {
+    setUserInfo(null);
+  }
 };
 
 export default initializeSigninCheck;
