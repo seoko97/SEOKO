@@ -4,6 +4,7 @@ import { PostModule } from '@posts/post.module';
 import { Tag, TagSchema } from './tag.model';
 import { TagService } from './tag.service';
 import { TagResolver } from './tag.resolver';
+import { TagRepository } from './tag.repository';
 
 @Module({
   imports: [
@@ -16,6 +17,6 @@ import { TagResolver } from './tag.resolver';
     forwardRef(() => PostModule),
   ],
   exports: [TagService],
-  providers: [TagResolver, TagService],
+  providers: [TagResolver, TagService, TagRepository],
 })
 export class TagModule {}
