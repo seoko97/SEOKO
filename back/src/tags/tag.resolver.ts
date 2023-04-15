@@ -1,6 +1,4 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { CoreRes } from '@decorators/coreRes.decorator';
-import { CreateTagDTO } from './dto/createTag.dto';
+import { Args, Query, Resolver } from '@nestjs/graphql';
 import { GetTagsRes } from './dto/getTagsRes.dto';
 import { TagService } from './tag.service';
 import { GetTagRes } from './dto/getTagRes.dto';
@@ -8,20 +6,6 @@ import { GetTagRes } from './dto/getTagRes.dto';
 @Resolver('Tag')
 export class TagResolver {
   constructor(private tagService: TagService) {}
-
-  @Mutation(() => CreateTagDTO)
-  async createTag(@Args('input') input: string): Promise<CreateTagDTO> {
-    const tag = await this.tagService.findOrCreate(input);
-
-    return { ok: true, tag };
-  }
-
-  @Mutation(() => CoreRes)
-  async deleteTag(@Args('_id') _id: string): Promise<CoreRes> {
-    await this.tagService.delete(_id);
-
-    return { ok: true };
-  }
 
   @Query(() => GetTagRes)
   async getTag(@Args('input') input: string) {
