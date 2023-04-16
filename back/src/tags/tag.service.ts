@@ -1,7 +1,6 @@
 import { Types } from 'mongoose';
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { PostService } from '@posts/post.service';
 import { Tag, TagModel } from './tag.model';
 import { TagRepository } from './tag.repository';
 
@@ -9,8 +8,6 @@ import { TagRepository } from './tag.repository';
 export class TagService {
   constructor(
     @InjectModel(Tag.name) private tagModel: TagModel,
-    @Inject(forwardRef(() => PostService))
-    private postService: PostService,
     private tagRepository: TagRepository,
   ) {}
 
@@ -22,16 +19,26 @@ export class TagService {
     return await this.tagRepository.getTag(name);
   }
 
-  async findOrCreate(name: string) {
-    return await this.tagModel.findOrCreate(name);
-  }
-
   async updateTag(_id: Types.ObjectId | string, query: any) {
     return await this.tagModel.updateOne({ _id }, query);
   }
 
-  async updateManyByPostId(tags: string[], postId: string) {
-    await this.tagRepository.updateManyByPostId(tags, postId);
+  async pushAndReturnTagsByPostId(tagNames: string[], postId: string) {
+    const tags = await Promise.all(
+      tagNames.map((tagName) => this.tagRepository.findOrCreate(tagName)),
+    );
+
+    await this.tagRepository.addPostIdInTags(tags, postId);
+
+    return tags;
+  }
+
+  async deletePostIdInTags(tags: string[], postId: string) {
+    await this.tagRepository.deletePostIdInTags(tags, postId);
+
+    const afterUpdate = await this.tagRepository.getTagsByTagNames(tags);
+
+    return afterUpdate;
   }
 
   async deleteManyByPostId(_id: string) {
