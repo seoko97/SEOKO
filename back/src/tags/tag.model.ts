@@ -29,11 +29,3 @@ export class Tag {
 }
 
 export const TagSchema = SchemaFactory.createForClass(Tag);
-
-TagSchema.statics.findOrCreate = async function (name: string) {
-  const tag = await this.findOne({ name });
-
-  if (tag) return tag;
-
-  return await this.create({ name });
-};
