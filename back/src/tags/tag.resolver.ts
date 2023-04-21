@@ -1,7 +1,8 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
+import { GetTagRes } from './dto/getTagRes.dto';
 import { GetTagsRes } from './dto/getTagsRes.dto';
 import { TagService } from './tag.service';
-import { GetTagRes } from './dto/getTagRes.dto';
 
 @Resolver('Tag')
 export class TagResolver {
@@ -11,12 +12,12 @@ export class TagResolver {
   async getTag(@Args('input') input: string) {
     const tag = await this.tagService.getTag(input);
 
-    return { ok: true, tag };
+    return { tag };
   }
 
   @Query(() => GetTagsRes)
-  async getTags(): Promise<GetTagsRes> {
+  async getTags() {
     const tags = await this.tagService.getTags();
-    return { ok: true, tags };
+    return { tags };
   }
 }
