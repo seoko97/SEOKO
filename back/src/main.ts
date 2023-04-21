@@ -1,10 +1,13 @@
+import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.js';
-import compression from 'compression';
-import { ValidationPipe } from '@nestjs/common';
+
+import { SuccessInterceptor } from '@common/interseptors/success.interceptor';
+
 import { AppModule } from './app.module';
-import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -18,11 +21,8 @@ async function bootstrap() {
   app.use(cookieParser());
   app.use(compression());
 
-  app.useGlobalPipes(
-    new ValidationPipe({
-      disableErrorMessages: true,
-    }),
-  );
+  app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
+  app.useGlobalInterceptors(new SuccessInterceptor());
 
   await app.listen(3065);
 }
