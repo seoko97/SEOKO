@@ -1,3 +1,4 @@
+import { BaseSchema } from '@common/schema/base.schema';
 import { ObjectType, Field, InputType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Tag } from '@tags/tag.model';
@@ -13,10 +14,7 @@ export type PostModel = Model<PostDocument>;
 @Schema({ timestamps: true })
 @InputType('PostModel', { isAbstract: true })
 @ObjectType()
-export class Post {
-  @Field(() => String)
-  _id: Types.ObjectId;
-
+export class Post extends BaseSchema {
   @Prop({ required: true })
   @Field(() => String)
   title!: string;
@@ -37,6 +35,7 @@ export class Post {
     type: [{ type: Types.ObjectId }],
     ref: 'Tag',
     required: false,
+    default: [],
   })
   @Field(() => [Tag])
   tags?: Tag[];
@@ -44,12 +43,6 @@ export class Post {
   @Prop({ required: false, default: false })
   @Field(() => Boolean)
   isTemporary?: boolean;
-
-  @Field(() => Date)
-  createdAt: Date;
-
-  @Field(() => Date)
-  updatedAt: Date;
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);

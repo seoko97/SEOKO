@@ -1,6 +1,7 @@
+import { BaseSchema } from '@common/schema/base.schema';
 import { ObjectType, Field, InputType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Model, Types } from 'mongoose';
+import { Document, Model } from 'mongoose';
 
 export type ExperienceDocument = Experience & Document;
 export interface ExperienceModel extends Model<ExperienceDocument> {
@@ -10,10 +11,7 @@ export interface ExperienceModel extends Model<ExperienceDocument> {
 @Schema({ timestamps: true })
 @InputType('ExperienceModel', { isAbstract: true })
 @ObjectType()
-export class Experience {
-  @Field(() => String)
-  _id: Types.ObjectId;
-
+export class Experience extends BaseSchema {
   @Prop({ required: true, unique: true })
   @Field(() => String)
   title!: string;

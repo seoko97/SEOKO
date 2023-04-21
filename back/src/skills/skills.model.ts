@@ -1,3 +1,4 @@
+import { BaseSchema } from '@common/schema/base.schema';
 import {
   ObjectType,
   Field,
@@ -23,10 +24,7 @@ registerEnumType(SkillType, { name: 'SkillType' });
 @Schema({ timestamps: true })
 @InputType('SkillModel', { isAbstract: true })
 @ObjectType()
-export class Skill {
-  @Field(() => String)
-  _id: Types.ObjectId;
-
+export class Skill extends BaseSchema {
   @Prop({ required: true, unique: true })
   @Field(() => String)
   name!: string;
