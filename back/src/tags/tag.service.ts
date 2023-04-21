@@ -1,7 +1,8 @@
-import { Types } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Tag, TagModel } from './tag.model';
+import { Tag, TagDocument, TagModel } from './tag.model';
+import { FilterQuery } from 'mongoose';
+
 import { TagRepository } from './tag.repository';
 
 @Injectable()
@@ -19,7 +20,7 @@ export class TagService {
     return await this.tagRepository.getTag(name);
   }
 
-  async updateTag(_id: Types.ObjectId | string, query: any) {
+  async updateTag(_id: string, query: FilterQuery<TagDocument>) {
     return await this.tagModel.updateOne({ _id }, query);
   }
 

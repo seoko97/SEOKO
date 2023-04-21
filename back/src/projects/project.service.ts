@@ -19,11 +19,11 @@ export class ProjectService {
     });
   }
 
-  async deleteProject(_id: Types.ObjectId | string) {
+  async deleteProject(_id: string) {
     return await this.projectModel.deleteOne({ _id });
   }
 
-  async getProject(_id: Types.ObjectId | string) {
+  async getProject(_id: string) {
     return await this.projectModel.findById(_id);
   }
 
