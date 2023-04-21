@@ -1,10 +1,11 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import * as bcrypt from 'bcrypt';
+
 import { CoreRes } from '@decorators/coreRes.decorator';
+
 import { CreateUserInput } from './dto/createUser.dto';
 import { User, UserModel } from './user.model';
-
-import * as bcrypt from 'bcrypt';
 
 const BCRYPT_SALT = 10;
 @Injectable()

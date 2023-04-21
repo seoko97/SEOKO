@@ -1,6 +1,7 @@
+import { FilterQuery } from 'mongoose';
+
 import { GetPostsInput } from '@posts/dto/getPosts.dto';
 import { PostDocument } from '@posts/post.model';
-import { FilterQuery } from 'mongoose';
 
 export const getQueryOptionsByPost = (input: GetPostsInput) => {
   const { category, isTemporary, lastId, text } = input;

@@ -1,8 +1,10 @@
-import { BaseSchema } from '@common/schema/base.schema';
 import { ObjectType, Field, InputType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Tag } from '@tags/tag.model';
+import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator';
 import { Document, Model, Types } from 'mongoose';
+
+import { BaseSchema } from '@common/schema/base.schema';
+import { Tag } from '@tags/tag.model';
 
 export enum CATEGORY {
   DEV = 'dev',
@@ -15,21 +17,32 @@ export type PostModel = Model<PostDocument>;
 @InputType('PostModel', { isAbstract: true })
 @ObjectType()
 export class Post extends BaseSchema {
+  @IsString()
   @Prop({ required: true })
   @Field(() => String)
   title!: string;
 
+  @IsString()
   @Prop({ required: true })
   @Field(() => String)
   content!: string;
 
+  @IsString()
   @Prop({ required: true })
   @Field(() => String)
   coverImg!: string;
 
+  @IsEnum(CATEGORY)
+  @IsOptional()
   @Prop({ required: true, enum: CATEGORY })
   @Field(() => String)
   category!: CATEGORY;
+
+  @IsBoolean()
+  @IsOptional()
+  @Prop({ required: false, default: false })
+  @Field(() => Boolean, { defaultValue: false, nullable: true })
+  isTemporary?: boolean;
 
   @Prop({
     type: [{ type: Types.ObjectId }],
@@ -39,10 +52,6 @@ export class Post extends BaseSchema {
   })
   @Field(() => [Tag])
   tags?: Tag[];
-
-  @Prop({ required: false, default: false })
-  @Field(() => Boolean)
-  isTemporary?: boolean;
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);

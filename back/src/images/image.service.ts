@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
 import { HttpService, HttpModuleOptions } from '@nestjs/axios';
-import { AddImageInput } from './dto/AddImageInput.dto';
-import { firstValueFrom } from 'rxjs';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { firstValueFrom } from 'rxjs';
+
+import { AddImageInput } from './dto/AddImageInput.dto';
 
 @Injectable()
 export class ImageService {

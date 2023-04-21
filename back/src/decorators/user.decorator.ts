@@ -1,4 +1,8 @@
-import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+import {
+  createParamDecorator,
+  ExecutionContext,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 
 export interface ITokenUser {
@@ -7,5 +11,9 @@ export interface ITokenUser {
 
 export const User = createParamDecorator((_, context: ExecutionContext) => {
   const ctx = GqlExecutionContext.create(context);
-  return ctx.getContext().req.user;
+  const user = ctx.getContext().req.user;
+
+  if (!user) throw new UnauthorizedException('로그인이 필요합니다.');
+
+  return user;
 });

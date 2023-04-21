@@ -1,12 +1,14 @@
 import { NotFoundException, Inject, Injectable } from '@nestjs/common';
-import { InjectConnection, InjectModel } from '@nestjs/mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+
 import { TagService } from '@tags/tag.service';
-import { Post, PostModel } from './post.model';
+import { getQueryOptionsByPost } from '@utils/getQueryOptionsByPost';
+
 import { CreatePostInput } from './dto/createPostInput.dto';
 import { EditPostInput } from './dto/editPostInput.dto';
 import { GetPostsInput } from './dto/getPosts.dto';
+import { Post, PostModel } from './post.model';
 import { PostRepository } from './post.repository';
-import { getQueryOptionsByPost } from '@utils/getQueryOptionsByPost';
 
 @Injectable()
 export class PostService {

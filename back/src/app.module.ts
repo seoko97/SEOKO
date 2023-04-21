@@ -1,13 +1,15 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { UserModule } from '@users/user.module';
+
 import { AuthModule } from '@auth/auth.module';
 import { CommonModule } from '@common/module/common.module';
-import { PostModule } from '@posts/post.module';
-import { TagModule } from '@tags/tag.module';
-import { ProjectModule } from '@projects/project.module';
 import { ExperienceModule } from '@experiences/experiences.module';
+import { PostModule } from '@posts/post.module';
+import { ProjectModule } from '@projects/project.module';
 import { SkillModule } from '@skills/skills.module';
+import { TagModule } from '@tags/tag.module';
+import { UserModule } from '@users/user.module';
+
 import { ImageModule } from './images/image.module';
 
 @Module({

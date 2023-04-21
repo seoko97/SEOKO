@@ -1,16 +1,16 @@
 import { UseGuards } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Args, Mutation, Resolver, Context } from '@nestjs/graphql';
+import { Response } from 'express';
 
 import { CoreRes } from '@decorators/coreRes.decorator';
 import { ITokenUser, User } from '@decorators/user.decorator';
 import { UserService } from '@users/user.service';
-import { Response } from 'express';
 
-import { SigninInput, SigninRes } from './dto/signin.dto';
-import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthService } from './auth.service';
+import { SigninInput, SigninRes } from './dto/signin.dto';
 import { ExpiredJwtAuthGuard } from './guards/jwt-auth.guard';
+import { LocalAuthGuard } from './guards/local-auth.guard';
 
 const EXPIRED = 1000 * 60 * 60 * 24 * 7;
 
@@ -28,7 +28,7 @@ export class AuthResolver {
     @Args('input') _: SigninInput,
     @User() _user: ITokenUser,
     @Context() { res }: { res: Response },
-  ): Promise<SigninRes> {
+  ) {
     const { username } = await this.userService.getById(_user._id);
     const accessToken = await this.authService.signin({ _id: _user._id });
     const JWT_HEADER = this.configService.get('JWT_HEADER');
@@ -38,7 +38,7 @@ export class AuthResolver {
       maxAge: EXPIRED,
     });
 
-    return { ok: true, username };
+    return { username };
   }
 
   @UseGuards(ExpiredJwtAuthGuard)
@@ -46,9 +46,7 @@ export class AuthResolver {
   async refresh(
     @User() _user: ITokenUser,
     @Context() { res }: { res: Response },
-  ): Promise<CoreRes> {
-    if (!_user) return { ok: false, error: '로그인이 필요합니다' };
-
+  ) {
     await this.authService.verifyRefresh(_user);
 
     const accessToken = await this.authService.signin(_user);
@@ -58,8 +56,6 @@ export class AuthResolver {
       httpOnly: true,
       maxAge: EXPIRED,
     });
-
-    return { ok: true };
   }
 
   @UseGuards(ExpiredJwtAuthGuard)
@@ -75,7 +71,5 @@ export class AuthResolver {
     await this.userService.updateRefreshToken(_user._id, null);
 
     res.clearCookie(JWT_HEADER);
-
-    return { ok: true };
   }
 }

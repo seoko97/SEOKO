@@ -1,5 +1,7 @@
-import { CoreRes } from '@decorators/coreRes.decorator';
 import { Field, ObjectType } from '@nestjs/graphql';
+
+import { CoreRes } from '@decorators/coreRes.decorator';
+
 import { Skill } from '../skills.model';
 
 @ObjectType()

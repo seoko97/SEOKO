@@ -1,8 +1,10 @@
 import { ObjectType, Field, InputType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { IsString } from 'class-validator';
 import { Document, Model, Types } from 'mongoose';
-import { Post } from '@posts/post.model';
+
 import { BaseSchema } from '@common/schema/base.schema';
+import { Post } from '@posts/post.model';
 
 export type TagDocument = Tag & Document;
 export interface TagModel extends Model<TagDocument> {
@@ -13,6 +15,7 @@ export interface TagModel extends Model<TagDocument> {
 @InputType('TagModel', { isAbstract: true })
 @ObjectType()
 export class Tag extends BaseSchema {
+  @IsString()
   @Prop({ required: true, index: true, unique: true })
   @Field(() => String)
   name!: string;
