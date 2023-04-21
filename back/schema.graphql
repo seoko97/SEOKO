@@ -58,7 +58,7 @@ input CreatePostInput {
   category: String!
   content: String!
   coverImg: String!
-  isTemporary: Boolean!
+  isTemporary: Boolean = false
   tags: [String!]!
   title: String!
 }
@@ -87,7 +87,7 @@ input EditPostInput {
   content: String!
   coverImg: String!
   deleteTags: [String!]!
-  isTemporary: Boolean!
+  isTemporary: Boolean = false
   title: String!
 }
 
@@ -171,7 +171,7 @@ type GetProjectsDto {
 }
 
 input GetProjectsInput {
-  isTemporary: Boolean!
+  isTemporary: Boolean = false
 }
 
 type GetSkillsDto {
@@ -204,24 +204,12 @@ type GroupedSkills {
   front: [Skill!]!
 }
 
-input InputUser {
-  """User Password"""
-  password: String!
-
-  """User ID"""
-  userId: String!
-
-  """User Name"""
-  username: String!
-}
-
 type Mutation {
   addExperience(input: AddExperienceInput!): ExperienceDto!
   addImage(input: AddImageInput!): AddImageRes!
   addPost(input: CreatePostInput!): BasePostDTO!
   addProject(input: AddProjectInput!): GetProjectDto!
   addSkill(input: AddSkillInput!): AddSkillDto!
-  create(input: InputUser!): CoreRes!
   deleteExperience(input: DeleteExperienceInput!): ExperienceDto!
   deletePost(input: GetPostInput!): CoreRes!
   deleteProject(input: ProjectInput!): CoreRes!
@@ -241,7 +229,7 @@ type Post {
   content: String!
   coverImg: String!
   createdAt: DateTime!
-  isTemporary: Boolean!
+  isTemporary: Boolean
   tags: [Tag!]!
   title: String!
   updatedAt: DateTime!
@@ -255,7 +243,7 @@ type Project {
   description: String!
   endDate: String
   githubUrl: String!
-  isTemporary: Boolean!
+  isTemporary: Boolean
   startDate: String!
   title: String!
   updatedAt: DateTime!
