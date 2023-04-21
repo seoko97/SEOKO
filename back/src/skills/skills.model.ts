@@ -1,4 +1,3 @@
-import { BaseSchema } from '@common/schema/base.schema';
 import {
   ObjectType,
   Field,
@@ -6,7 +5,10 @@ import {
   registerEnumType,
 } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Model, Types } from 'mongoose';
+import { IsEnum, IsString } from 'class-validator';
+import { Document, Model } from 'mongoose';
+
+import { BaseSchema } from '@common/schema/base.schema';
 
 export enum SkillType {
   FRONT_END = 'FRONT_END',
@@ -15,9 +17,7 @@ export enum SkillType {
 }
 
 export type SkillDocument = Skill & Document;
-export interface SkillModel extends Model<SkillDocument> {
-  findOrCreate: (name: string) => SkillDocument;
-}
+export type SkillModel = Model<SkillDocument>;
 
 registerEnumType(SkillType, { name: 'SkillType' });
 
@@ -25,14 +25,17 @@ registerEnumType(SkillType, { name: 'SkillType' });
 @InputType('SkillModel', { isAbstract: true })
 @ObjectType()
 export class Skill extends BaseSchema {
+  @IsString()
   @Prop({ required: true, unique: true })
   @Field(() => String)
   name!: string;
 
+  @IsEnum(SkillType)
   @Prop({ required: true, enum: ['FRONT_END', 'BACK_END', 'DEV_OPS'] })
   @Field(() => SkillType)
   type!: SkillType;
 
+  @IsString()
   @Prop({ required: true })
   @Field(() => String)
   icon!: string;
