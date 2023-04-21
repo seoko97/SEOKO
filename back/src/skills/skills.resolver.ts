@@ -2,8 +2,8 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { AddSkillDto, AddSkillInput } from './dto/addSkill.dto';
 import { EditSkillInput } from './dto/editSkillInput.dto';
-import { SkillInput } from './dto/skillInput.dto';
 import { GetSkillsDto } from './dto/getSkills.dto';
+import { SkillInput } from './dto/skillInput.dto';
 import { SkillService } from './skills.service';
 
 @Resolver('Skill')

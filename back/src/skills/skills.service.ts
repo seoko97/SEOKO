@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Types } from 'mongoose';
+
 import { AddSkillInput } from './dto/addSkill.dto';
 import { EditSkillInput } from './dto/editSkillInput.dto';
 import { GroupedSkills } from './dto/getSkills.dto';
@@ -39,7 +39,7 @@ export class SkillService {
     return groupSkills;
   }
 
-  async deleteSkill(_id: string | Types.ObjectId) {
+  async deleteSkill(_id: string) {
     return await this.skillModel.findOneAndDelete({ _id });
   }
 }

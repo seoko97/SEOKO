@@ -1,9 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Post, PostDocument, PostModel } from './post.model';
-import { EditPostArgs } from './dto/editPostInput.dto';
 import { FilterQuery } from 'mongoose';
+
 import { CreatePostInput } from './dto/createPostInput.dto';
+import { EditPostArgs } from './dto/editPostInput.dto';
+import { Post, PostDocument, PostModel } from './post.model';
 
 @Injectable()
 export class PostRepository {

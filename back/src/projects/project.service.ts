@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Types, FilterQuery } from 'mongoose';
+import { FilterQuery } from 'mongoose';
+
 import { AddProjectInput } from './dto/addProjectInput.dto';
 import { EditProjectInput } from './dto/editProjectInput.dto';
 import { Project, ProjectDocument, ProjectModel } from './project.model';

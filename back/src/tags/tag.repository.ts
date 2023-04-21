@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Tag, TagDocument, TagModel } from './tag.model';
+
 import { GET_TAGS_OPTIONS, GET_TAG_OPTIONS } from '@utils/constants';
+
+import { Tag, TagDocument, TagModel } from './tag.model';
 
 @Injectable()
 export class TagRepository {

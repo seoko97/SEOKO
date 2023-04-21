@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+
+import { TagModule } from '@tags/tag.module';
+
 import { Post, PostSchema } from './post.model';
+import { PostRepository } from './post.repository';
 import { PostResolver } from './post.resolver';
 import { PostService } from './post.service';
-import { PostRepository } from './post.repository';
-import { TagModule } from '@tags/tag.module';
 
 @Module({
   imports: [

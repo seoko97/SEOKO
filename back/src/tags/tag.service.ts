@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Tag, TagDocument, TagModel } from './tag.model';
 import { FilterQuery } from 'mongoose';
 
+import { Tag, TagDocument, TagModel } from './tag.model';
 import { TagRepository } from './tag.repository';
 
 @Injectable()
