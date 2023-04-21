@@ -63,12 +63,6 @@ input CreatePostInput {
   title: String!
 }
 
-type CreateTagDTO {
-  error: String
-  ok: Boolean!
-  tag: Tag!
-}
-
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -118,10 +112,12 @@ input EditSkillInput {
 
 type Experience {
   _id: String!
+  createdAt: DateTime!
   description: String!
   endDate: String
   startDate: String!
   title: String!
+  updatedAt: DateTime!
 }
 
 type ExperienceDto {
@@ -226,12 +222,10 @@ type Mutation {
   addProject(input: AddProjectInput!): GetProjectDto!
   addSkill(input: AddSkillInput!): AddSkillDto!
   create(input: InputUser!): CoreRes!
-  createTag(input: String!): CreateTagDTO!
   deleteExperience(input: DeleteExperienceInput!): ExperienceDto!
   deletePost(input: GetPostInput!): CoreRes!
   deleteProject(input: ProjectInput!): CoreRes!
   deleteSkill(input: SkillInput!): AddSkillDto!
-  deleteTag(_id: String!): CoreRes!
   editExperience(input: EditExperienceInput!): ExperienceDto!
   editPost(input: EditPostInput!): BasePostDTO!
   editProject(input: EditProjectInput!): GetProjectDto!
@@ -304,9 +298,11 @@ type SigninRes {
 
 type Skill {
   _id: String!
+  createdAt: DateTime!
   icon: String!
   name: String!
   type: SkillType!
+  updatedAt: DateTime!
 }
 
 input SkillInput {
@@ -321,8 +317,10 @@ enum SkillType {
 
 type Tag {
   _id: String!
+  createdAt: DateTime!
   name: String!
   posts: [Post!]!
+  updatedAt: DateTime!
 }
 
 """The `Upload` scalar type represents a file upload."""
