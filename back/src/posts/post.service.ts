@@ -1,7 +1,7 @@
 import { NotFoundException, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
-import { Transactional } from '@decorators/transaction.decorator';
+import { Transactional } from '@common/decorators/transaction.decorator';
 import { TagService } from '@tags/tag.service';
 import { getQueryOptionsByPost } from '@utils/getQueryOptionsByPost';
 

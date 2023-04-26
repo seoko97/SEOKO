@@ -1,9 +1,9 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
-import { JwtAuthGuard } from '@auth/guards/jwt-auth.guard';
-import { CoreRes } from '@decorators/coreRes.decorator';
-import { ObjectIdGuard } from '@decorators/guards/ObjectId.guard';
+import { CoreRes } from '@common/decorators/coreRes.decorator';
+import { JwtAuthGuard } from '@common/guards/jwt-auth.guard';
+import { ObjectIdGuard } from '@common/guards/ObjectId.guard';
 
 import { CreatePostInput } from './dto/createPostInput.dto';
 import { EditPostInput } from './dto/editPostInput.dto';

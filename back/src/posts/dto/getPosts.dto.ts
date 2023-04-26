@@ -2,7 +2,7 @@ import { applyDecorators } from '@nestjs/common';
 import { Field, InputType, ObjectType, PickType } from '@nestjs/graphql';
 import { IsNumber, IsOptional, IsString } from 'class-validator';
 
-import { CoreRes } from '@decorators/coreRes.decorator';
+import { CoreRes } from '@common/decorators/coreRes.decorator';
 
 import { Post } from '../post.model';
 

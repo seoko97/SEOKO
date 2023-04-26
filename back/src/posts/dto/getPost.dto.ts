@@ -1,7 +1,7 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { IsMongoId } from 'class-validator';
 
-import { CoreRes } from '@decorators/coreRes.decorator';
+import { CoreRes } from '@common/decorators/coreRes.decorator';
 import { Post } from '@posts/post.model';
 
 @InputType()

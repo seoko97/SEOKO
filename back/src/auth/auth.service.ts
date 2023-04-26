@@ -5,7 +5,7 @@ import * as bcrypt from 'bcrypt';
 import { AES, enc } from 'crypto-js';
 import { verify } from 'jsonwebtoken';
 
-import { ITokenUser } from '@decorators/user.decorator';
+import { ITokenUser } from '@common/decorators/user.decorator';
 import { User } from '@users/user.model';
 import { UserService } from '@users/user.service';
 
