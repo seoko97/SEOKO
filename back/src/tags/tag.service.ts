@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery } from 'mongoose';
 
+import { Transactional } from '@decorators/transaction.decorator';
+
 import { Tag, TagDocument, TagModel } from './tag.model';
 import { TagRepository } from './tag.repository';
 
@@ -24,6 +26,7 @@ export class TagService {
     return await this.tagModel.updateOne({ _id }, query);
   }
 
+  @Transactional()
   async pushAndReturnTagsByPostId(tagNames: string[], postId: string) {
     const tags = await Promise.all(
       tagNames.map((tagName) => this.tagRepository.findOrCreate(tagName)),
@@ -34,6 +37,7 @@ export class TagService {
     return tags;
   }
 
+  @Transactional()
   async deletePostIdInTags(tags: string[], postId: string) {
     await this.tagRepository.deletePostIdInTags(tags, postId);
 
@@ -42,6 +46,7 @@ export class TagService {
     return afterUpdate;
   }
 
+  @Transactional()
   async deleteManyByPostId(_id: string) {
     await this.tagRepository.deleteManyByPostId(_id);
   }
