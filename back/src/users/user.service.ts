@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt';
 
-import { CoreRes } from '@decorators/coreRes.decorator';
+import { CoreRes } from '@common/decorators/coreRes.decorator';
 
 import { CreateUserInput } from './dto/createUser.dto';
 import { User, UserModel } from './user.model';

@@ -1,6 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 
-import { CoreRes } from '@decorators/coreRes.decorator';
+import { CoreRes } from '@common/decorators/coreRes.decorator';
 import { Project } from '@projects/project.model';
 
 @ObjectType()

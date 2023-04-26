@@ -3,14 +3,14 @@ import { ConfigService } from '@nestjs/config';
 import { Args, Mutation, Resolver, Context } from '@nestjs/graphql';
 import { Response } from 'express';
 
-import { CoreRes } from '@decorators/coreRes.decorator';
-import { ITokenUser, User } from '@decorators/user.decorator';
+import { CoreRes } from '@common/decorators/coreRes.decorator';
+import { ITokenUser, User } from '@common/decorators/user.decorator';
 import { UserService } from '@users/user.service';
 
 import { AuthService } from './auth.service';
 import { SigninInput, SigninRes } from './dto/signin.dto';
-import { ExpiredJwtAuthGuard } from './guards/jwt-auth.guard';
-import { LocalAuthGuard } from './guards/local-auth.guard';
+import { ExpiredJwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { LocalAuthGuard } from '../common/guards/local-auth.guard';
 
 const EXPIRED = 1000 * 60 * 60 * 24 * 7;
 

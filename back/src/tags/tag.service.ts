@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery } from 'mongoose';
 
-import { Transactional } from '@decorators/transaction.decorator';
+import { Transactional } from '@common/decorators/transaction.decorator';
 
 import { Tag, TagDocument, TagModel } from './tag.model';
 import { TagRepository } from './tag.repository';
