@@ -1,6 +1,7 @@
 import { NotFoundException, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
+import { Transactional } from '@decorators/transaction.decorator';
 import { TagService } from '@tags/tag.service';
 import { getQueryOptionsByPost } from '@utils/getQueryOptionsByPost';
 
@@ -18,6 +19,7 @@ export class PostService {
     private readonly postRepository: PostRepository,
   ) {}
 
+  @Transactional()
   async createPost({ tags, ...info }: CreatePostInput) {
     const post = await this.postRepository.createPost({ ...info });
 
@@ -34,6 +36,7 @@ export class PostService {
     return post;
   }
 
+  @Transactional()
   async editPost(input: EditPostInput) {
     const { _id, addTags, deleteTags } = input;
 
@@ -57,6 +60,7 @@ export class PostService {
     return updatedPost;
   }
 
+  @Transactional()
   async deletePost(_id: string) {
     await this.postRepository.deletePost(_id);
     await this.tagService.deleteManyByPostId(_id);
@@ -95,6 +99,8 @@ export class PostService {
       };
     }
 
-    return this.postRepository.getPosts(where, limit);
+    const posts = await this.postRepository.getPosts(where, limit);
+
+    return posts;
   }
 }
