@@ -9,16 +9,7 @@ export { default } from "@pages/WritePost";
 export const getServerSideProps = withErrorHandling(async (ctx) => {
   const apolloClient = initializeClient({ ctx });
 
-  const { data } = await apolloClient.query<IGetUserInfo>(GET_USER_INFO_OPTION);
-
-  if (!data)
-    return {
-      props: {},
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
+  await apolloClient.query<IGetUserInfo>(GET_USER_INFO_OPTION);
 
   return addApolloState(apolloClient, {
     props: {},

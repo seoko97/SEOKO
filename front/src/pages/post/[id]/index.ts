@@ -28,15 +28,10 @@ export const getServerSideProps = withErrorHandling(async (ctx) => {
 
   const { post, siblingPost } = result.data.getPost;
 
-  const isPermission = await checkTemporaryByUser(apolloClient, post.isTemporary);
+  if (post.isTemporary) {
+    const isPermission = await checkTemporaryByUser(apolloClient, post.isTemporary);
 
-  if (isPermission) {
-    return {
-      props: {},
-      redirect: {
-        destination: "/",
-      },
-    };
+    if (isPermission) throw new Error("권한이 없습니다.");
   }
 
   return addApolloState(apolloClient, {
