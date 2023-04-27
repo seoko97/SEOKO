@@ -4,7 +4,7 @@ export const GET_POSTS = gql`
   query GetPosts($input: GetPostsInput) {
     getPosts(input: $input) {
       ok
-      error
+
       posts {
         _id
         content
