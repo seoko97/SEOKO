@@ -1,25 +1,25 @@
-import { GetServerSideProps } from "next";
-import { initializeClient } from "@lib/apollo";
+import { initializeClient } from "@lib/apollo/apollo";
 import { IGetUserInfo } from "@queries-types/users";
-import { addApolloState } from "@lib/addApolloState";
+import { addApolloState } from "@lib/apollo/addApolloState";
 import { IGetProject } from "@queries-types/project";
 import { GET_PROJECT } from "@queries/project/getProject.queries";
 import { GET_USER_INFO_OPTION } from "@lib/initializeSigninCheck";
+import { withErrorHandling } from "@lib/withErrorHandling";
 
 export { default } from "@pages/WriteProject";
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps = withErrorHandling(async (ctx) => {
   const { id } = ctx.query;
   const apolloClient = initializeClient({ ctx });
 
-  const { data: userData } = await apolloClient.query<IGetUserInfo>(GET_USER_INFO_OPTION);
+  await apolloClient.query<IGetUserInfo>(GET_USER_INFO_OPTION);
 
   const { data: projectData } = await apolloClient.query<IGetProject>({
     query: GET_PROJECT,
     variables: { input: id },
   });
 
-  if (!userData || !projectData)
+  if (!projectData)
     return {
       props: {},
       redirect: {
@@ -33,4 +33,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       _id: id,
     },
   });
-};
+});

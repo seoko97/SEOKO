@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
-import { addApolloState } from "@lib/addApolloState";
-import { initializeClient } from "@lib/apollo";
+import { addApolloState } from "@lib/apollo/addApolloState";
+import { initializeClient } from "@lib/apollo/apollo";
 import { IGetProject } from "@queries-types/project";
 import { GET_PROJECT } from "@queries/project/getProject.queries";
 import { checkTemporaryByUser } from "@lib/checkTemporaryByUser";
