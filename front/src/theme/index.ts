@@ -67,7 +67,7 @@ export const darkTheme = {
   },
   MARK_DOWN: {
     CODE_COLOR: "rgb(248 249 250)",
-    BACK_COLOR: "rgb(73 80 87)",
+    BACK_COLOR: "rgb(45, 50, 54)",
   },
   BOX_SHADOW,
 };

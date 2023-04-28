@@ -24,13 +24,12 @@ const Container = styled.header`
     box-shadow: rgb(0 0 0 / 8%) 0px 0px 8px;
   }
 
-  ${({ theme }) => `
-    background-color: ${theme.BACKGROUND_COLOR.PRIMARY_COLOR_RGBA};
-    backdrop-filter: blur(3px);
-    & a {
-      color: ${theme.FONT_COLOR.PRIMARY_COLOR};
-    }
-  `}
+  backdrop-filter: blur(3px);
+  background-color: ${({ theme }) => theme.BACKGROUND_COLOR.PRIMARY_COLOR_RGBA};
+
+  & a {
+    color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
+  }
 `;
 
 const Header = () => {
