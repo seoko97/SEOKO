@@ -89,12 +89,10 @@ interface Props {
   tags: string[];
   coverImg: string | null;
   category: string;
-  onSelectCategory: React.ChangeEventHandler;
-  onChangeTagName: React.ChangeEventHandler;
-  onChangeImage: React.ChangeEventHandler;
-  onChangeTitle: React.ChangeEventHandler;
   tagHandler: React.KeyboardEventHandler;
+  onChangeImage: React.ChangeEventHandler;
   onClickTag: React.MouseEventHandler;
+  onChangeValue: React.ChangeEventHandler;
   coverImageHandler: React.MouseEventHandler;
   clearCoverImage: React.MouseEventHandler;
   photoInputRef: MutableRefObject<HTMLInputElement | null>;
@@ -109,11 +107,9 @@ const WritePostHeader = (props: Props) => {
     category,
     tagHandler,
     onClickTag,
-    onChangeTagName,
-    onChangeTitle,
     coverImageHandler,
+    onChangeValue,
     onChangeImage,
-    onSelectCategory,
     clearCoverImage,
   } = props;
 
@@ -123,7 +119,7 @@ const WritePostHeader = (props: Props) => {
         type="text"
         name="title"
         defaultValue={title}
-        onChange={onChangeTitle}
+        onChange={onChangeValue}
         placeholder="제목을 입력하세요"
       />
       <TagList>
@@ -135,13 +131,13 @@ const WritePostHeader = (props: Props) => {
           ))}
         <input
           type="text"
-          onChange={onChangeTagName}
+          onChange={onChangeValue}
           onKeyDown={tagHandler}
           placeholder="태그를 입력하세요"
         />
       </TagList>
       <div>
-        <select onChange={onSelectCategory} name="category" defaultValue={category}>
+        <select onChange={onChangeValue} name="category" defaultValue={category}>
           <option value="dev">Dev</option>
           <option value="daily">Daily</option>
         </select>

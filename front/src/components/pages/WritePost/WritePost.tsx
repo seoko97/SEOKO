@@ -81,9 +81,7 @@ const WritePost = ({ _id }: IProps) => {
         photoInputRef={photoInputRef}
         tagHandler={tagHandler}
         onClickTag={onClickTag}
-        onChangeTagName={onChangeValue}
-        onChangeTitle={onChangeValue}
-        onSelectCategory={onChangeValue}
+        onChangeValue={onChangeValue}
         onChangeImage={onChangeImage}
         clearCoverImage={clearCoverImage}
         coverImageHandler={coverImageHandler}
