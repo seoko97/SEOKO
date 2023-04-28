@@ -28,7 +28,7 @@ const usePostMutation = (post?: IPost) => {
   const onMutation = async <T extends BasePostInput>(input: T) => {
     const mutation = post ? editPostMutation : addPostMutation;
 
-    mutation({ variables: { input } });
+    await mutation({ variables: { input } });
   };
 
   return [onMutation];
