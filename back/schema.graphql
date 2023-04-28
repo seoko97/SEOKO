@@ -15,7 +15,6 @@ input AddImageInput {
 }
 
 type AddImageRes {
-  error: String
   image: String!
   ok: Boolean!
 }
@@ -32,7 +31,6 @@ input AddProjectInput {
 }
 
 type AddSkillDto {
-  error: String
   ok: Boolean!
   skill: Skill!
 }
@@ -44,13 +42,11 @@ input AddSkillInput {
 }
 
 type BasePostDTO {
-  error: String
   ok: Boolean!
   post: Post!
 }
 
 type CoreRes {
-  error: String
   ok: Boolean!
 }
 
@@ -121,19 +117,16 @@ type Experience {
 }
 
 type ExperienceDto {
-  error: String
   experience: Experience!
   ok: Boolean!
 }
 
 type GetExperiencesDto {
-  error: String
   experiences: [Experience!]!
   ok: Boolean!
 }
 
 type GetPostDTO {
-  error: String
   ok: Boolean!
   post: Post!
   siblingPost: SiblingPost!
@@ -144,7 +137,6 @@ input GetPostInput {
 }
 
 type GetPostsDTO {
-  error: String
   ok: Boolean!
   posts: [Post!]!
 }
@@ -159,13 +151,11 @@ input GetPostsInput {
 }
 
 type GetProjectDto {
-  error: String
   ok: Boolean!
   project: Project!
 }
 
 type GetProjectsDto {
-  error: String
   ok: Boolean!
   projects: [Project!]!
 }
@@ -175,25 +165,21 @@ input GetProjectsInput {
 }
 
 type GetSkillsDto {
-  error: String
   ok: Boolean!
   skills: GroupedSkills!
 }
 
 type GetTagRes {
-  error: String
   ok: Boolean!
   tag: Tag!
 }
 
 type GetTagsRes {
-  error: String
   ok: Boolean!
   tags: [Tag!]!
 }
 
 type GetUserInfoDTO {
-  error: String
   ok: Boolean!
   username: String!
 }
@@ -279,7 +265,6 @@ input SigninInput {
 }
 
 type SigninRes {
-  error: String
   ok: Boolean!
   username: String!
 }

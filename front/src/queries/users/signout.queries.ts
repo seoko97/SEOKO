@@ -4,7 +4,6 @@ export const SIGN_OUT = gql`
   mutation Signout {
     signout {
       ok
-      error
     }
   }
 `;

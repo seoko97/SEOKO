@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
 import styled from "@emotion/styled";
 import { useMutation } from "@apollo/client";
 
@@ -15,6 +15,7 @@ import { ADD_EXPERIENCE, EDIT_EXPERIENCE, DELETE_EXPERIENCE } from "@queries/exp
 import Input from "@atoms/Input";
 import Button from "@atoms/Button";
 import ModalLayout from "@modals/ModalLayout";
+import { useExperienceMutation } from "@hooks/apollo/experience/useExperienceMutation";
 
 interface IProps {
   onClose: () => void;
@@ -78,50 +79,32 @@ const Container = styled.form`
 `;
 
 const ExperienceForm = ({ experience, onClose }: IProps) => {
-  const [title, onChangeTitle] = useInput(experience?.title || "");
-  const [startDate, onChangeStartDate] = useInput(experience?.startDate || "");
-  const [endDate, onChangeEndDate] = useInput(experience?.endDate || "");
-  const [description, onChangeDescription] = useInput(experience?.description || "");
+  const experienceInputRef = useRef<IExperienceInput>(
+    experience ?? {
+      title: "",
+      description: "",
+      startDate: "",
+      endDate: "",
+    },
+  );
 
-  const [addExpMutation] = useMutation<IAddExperience>(ADD_EXPERIENCE, {
-    onCompleted({ addExperience }) {
-      if (addExperience.ok) onClose();
-    },
-  });
-  const [editExpMutation] = useMutation<IEditExperience>(EDIT_EXPERIENCE, {
-    onCompleted({ editExperience }) {
-      if (editExperience.ok) onClose();
-    },
-  });
-  const [deleteExpMutation] = useMutation<IDeleteExperience>(DELETE_EXPERIENCE, {
-    onCompleted({ deleteExperience }) {
-      if (deleteExperience.ok) onClose();
-    },
-  });
+  const { title, description, endDate, startDate } = experienceInputRef.current;
+
+  const [onCreateOrUpdateExp, onDeleteExp] = useExperienceMutation(onClose);
 
   const onSubmitForm = useCallback(
     (e) => {
       e.preventDefault();
-      if (!title && !description && !startDate && !endDate)
+
+      if (!title && !description && !startDate && !endDate) {
         return alert("모든 항목을 입력해야합니다.");
+      }
 
       const conf = confirm("저장하시겠습니까?");
 
       if (!conf) return;
 
-      const input: IExperienceInput = {
-        title,
-        description,
-        startDate,
-        endDate,
-      };
-
-      if (experience) {
-        input._id = experience._id;
-        editExpMutation({ variables: { input } });
-      } else {
-        addExpMutation({ variables: { input } });
-      }
+      onCreateOrUpdateExp(experienceInputRef.current);
     },
     [experience, title, description, startDate, endDate],
   );
@@ -129,12 +112,16 @@ const ExperienceForm = ({ experience, onClose }: IProps) => {
   const onClickDeleteBtn = useCallback(() => {
     const conf = confirm("삭제하시겠습니까?");
 
-    if (!conf) return;
+    if (!conf || !experience) return;
 
-    deleteExpMutation({
-      variables: { input: { _id: experience?._id } },
-    });
+    onDeleteExp(experience._id);
   }, [experience]);
+
+  const onChnageExperienceInput: React.ChangeEventHandler = (e) => {
+    const { name, value } = e.currentTarget as HTMLInputElement;
+
+    experienceInputRef.current[name as keyof IExperienceInput] = value;
+  };
 
   return (
     <ModalLayout onClick={onClose}>
@@ -142,19 +129,24 @@ const ExperienceForm = ({ experience, onClose }: IProps) => {
         <h3>경력</h3>
         <div>
           <span>회사명:</span>
-          <Input value={title} onChange={onChangeTitle} />
+          <Input name="title" value={title} onChange={onChnageExperienceInput} />
         </div>
         <div>
           <span>상세:</span>
-          <textarea value={description} onChange={onChangeDescription} />
+          <textarea value={description} onChange={onChnageExperienceInput} />
         </div>
         <div>
           <label htmlFor="startDate">시작</label>
-          <Input name="startDate" value={startDate} onChange={onChangeStartDate} type="date" />
+          <Input
+            name="startDate"
+            value={startDate}
+            onChange={onChnageExperienceInput}
+            type="date"
+          />
         </div>
         <div>
           <label htmlFor="endDate">종료</label>
-          <Input name="endDate" value={endDate} onChange={onChangeEndDate} type="date" />
+          <Input name="endDate" value={endDate} onChange={onChnageExperienceInput} type="date" />
         </div>
         <div className="button-form">
           <Button type="submit" buttonType="primary">

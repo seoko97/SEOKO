@@ -1,6 +1,5 @@
 interface CoreResponse {
   ok: boolean;
-  error: any;
 }
 
 interface CoreVariables<T> {

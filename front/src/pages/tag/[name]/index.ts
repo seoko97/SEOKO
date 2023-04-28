@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next";
 
-import { addApolloState } from "@lib/addApolloState";
-import { initializeClient } from "@lib/apollo";
+import { addApolloState } from "@lib/apollo/addApolloState";
+import { initializeClient } from "@lib/apollo/apollo";
 
 import { GET_POSTS } from "@queries/post";
 import { GET_TAG } from "@queries/tag";

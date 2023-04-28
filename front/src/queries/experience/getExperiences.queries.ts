@@ -4,7 +4,7 @@ export const GET_EXPERIENCES = gql`
   query GetExperiences {
     getExperiences {
       ok
-      error
+
       experiences {
         _id
         title

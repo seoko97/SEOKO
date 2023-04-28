@@ -1,5 +1,5 @@
-import { addApolloState } from "@lib/addApolloState";
-import { initializeClient } from "@lib/apollo";
+import { addApolloState } from "@lib/apollo/addApolloState";
+import { initializeClient } from "@lib/apollo/apollo";
 import { IGetAbout } from "@queries-types/about";
 import { GET_ABOUT } from "@queries/about";
 import { GetServerSideProps } from "next";

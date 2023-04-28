@@ -4,7 +4,7 @@ export const GET_PROJECTS = gql`
   query GetProjects($input: GetProjectsInput) {
     getProjects(input: $input) {
       ok
-      error
+
       projects {
         _id
         title

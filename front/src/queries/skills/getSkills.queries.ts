@@ -4,7 +4,7 @@ export const GET_SKILLS = gql`
   query GetSkills {
     getSkills {
       ok
-      error
+
       skills {
         front {
           _id

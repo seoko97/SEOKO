@@ -18,12 +18,12 @@ import { GraphQLModule } from '@nestjs/graphql';
           debug: !isProd,
           autoSchemaFile: join(process.cwd(), 'schema.graphql'),
           sortSchema: true,
+          uploads: false,
           cors: {
             origin: config.get('HOST'),
             credentials: true,
           },
           context: (ctx) => ({ ...ctx }),
-          uploads: false,
         };
       },
       inject: [ConfigService],

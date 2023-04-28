@@ -1,44 +1,22 @@
-import React, { ChangeEvent, useCallback, useRef, useState } from "react";
-import { useRouter } from "next/router";
-import { useMutation, useQuery } from "@apollo/client";
+import React, { useCallback, useRef } from "react";
+import { useQuery } from "@apollo/client";
 
 import TuiEditor from "@organisms/TuiEditor";
 import WriteFooter from "@molecules/WriteFooter";
 import { Container } from "@pages/WritePost/WritePost";
 
-import { ADD_PROJECT } from "@queries/project/addProject.queries";
-import { EDIT_PROJECT } from "@queries/project/editProject.queries";
-import {
-  IAddProject,
-  IAddProjectVariables,
-  IEditProject,
-  IGetProject,
-  IProject,
-  IProjectInput,
-} from "@queries-types/project";
-
-import { IAddImage } from "@queries-types/image";
-import { CoreResponse } from "@queries-types/core";
-import { ADD_IMAGE } from "@queries/image/addImage.queries";
+import { IGetProject, IProject, IProjectInput } from "@queries-types/project";
 
 import { GET_PROJECT } from "@queries/project";
-import { removeTypename } from "@lib/removeTypename";
+import { useAddImage } from "@hooks/apollo/image/useAddImge";
+import { useWriteProject } from "@hooks/write/project/useWriteProject";
+import { useProjectMutation } from "@hooks/apollo/project/useProjectMutation";
 import WriteProjectHeader from "./WriteProjectHeader";
 
 interface IProps {
   project: IProject | undefined;
   _id: string;
 }
-
-const PROJECT: IProjectInput = {
-  title: "",
-  description: "",
-  githubUrl: "",
-  content: "",
-  coverImg: "",
-  startDate: "",
-  endDate: "",
-};
 
 const WriteProject = ({ _id }: IProps) => {
   const { data } = useQuery<IGetProject>(GET_PROJECT, {
@@ -48,57 +26,17 @@ const WriteProject = ({ _id }: IProps) => {
 
   const project = data?.getProject.project;
 
-  const router = useRouter();
-  const projectDataRef = useRef<IProjectInput>(removeTypename(project) ?? PROJECT);
   const photoInputRef = useRef<HTMLInputElement | null>(null);
 
-  const [coverImg, setCoverImg] = useState<string>(project?.coverImg || "");
+  const [mutation] = useProjectMutation(project);
 
-  const [addImageMutation] = useMutation<IAddImage>(ADD_IMAGE, {
-    onCompleted({ addImage }) {
-      const { image, ok } = addImage;
-      if (ok) {
-        setCoverImg(image);
-        projectDataRef.current.coverImg = image;
-      }
-    },
+  const [projectDataRef, onChangeValue, onChangeContent] = useWriteProject(project);
+  const [coverImg, onChangeImage, clearCoverImage] = useAddImage({
+    defaultImg: project?.coverImg,
+    type: "project",
   });
 
-  const [addProjectMutation] = useMutation<IAddProject, IAddProjectVariables>(ADD_PROJECT, {
-    onCompleted({ addProject }) {
-      movePageToProject(addProject);
-    },
-  });
-
-  const [editProjectMutation] = useMutation<IEditProject, IAddProjectVariables>(EDIT_PROJECT, {
-    onCompleted({ editProject }) {
-      movePageToProject(editProject);
-    },
-  });
-
-  const movePageToProject = <T extends CoreResponse>(data: T) => {
-    if (!data.ok) return;
-
-    router.push("/project");
-  };
-
-  const onChangeValue: React.ChangeEventHandler<HTMLInputElement> = useCallback(
-    (e) => {
-      const name = e.target.name as keyof IProjectInput;
-
-      if (projectDataRef.current[name] === undefined) return;
-
-      projectDataRef.current[name] = e.target.value as never;
-    },
-    [projectDataRef],
-  );
-
-  const onChangeContent = useCallback(
-    (value: string) => {
-      projectDataRef.current.content = value;
-    },
-    [projectDataRef],
-  );
+  const { title, description, startDate, endDate, githubUrl } = projectDataRef.current;
 
   const addProject = useCallback(
     (e) => {
@@ -110,35 +48,10 @@ const WriteProject = ({ _id }: IProps) => {
       const isTemporary = Boolean(dataset.isTemporary);
       const input: IProjectInput = { ...projectDataRef.current, isTemporary };
 
-      if (project) {
-        editProjectMutation({
-          variables: { input },
-        });
-      } else {
-        addProjectMutation({
-          variables: { input },
-        });
-      }
+      mutation(input);
     },
     [projectDataRef, project],
   );
-
-  const clearCoverImage = useCallback(() => {
-    setCoverImg("");
-  }, []);
-
-  const onChangeImage = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-
-    addImageMutation({
-      variables: {
-        input: {
-          type: "project",
-          image: e.target.files[0],
-        },
-      },
-    });
-  }, []);
 
   const coverImageHandler = useCallback(
     (e) => {
@@ -147,8 +60,6 @@ const WriteProject = ({ _id }: IProps) => {
     },
     [photoInputRef],
   );
-
-  const { title, description, startDate, endDate, githubUrl } = projectDataRef.current;
 
   return (
     <Container>
@@ -160,10 +71,7 @@ const WriteProject = ({ _id }: IProps) => {
         coverImg={coverImg}
         githubUrl={githubUrl}
         photoInputRef={photoInputRef}
-        onChangeTitle={onChangeValue}
-        onChangeDec={onChangeValue}
-        onChangeGithubUrl={onChangeValue}
-        onChangeDate={onChangeValue}
+        onChangeValue={onChangeValue}
         onChangeImage={onChangeImage}
         clearCoverImage={clearCoverImage}
         coverImageHandler={coverImageHandler}
