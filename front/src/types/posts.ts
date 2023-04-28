@@ -46,7 +46,7 @@ interface BasePostInput extends Pick<IPost, "coverImg" | "title" | "content" | "
 }
 
 interface IAddPostInput extends BasePostInput {
-  tags: string[];
+  tags?: string[];
 }
 
 interface IEditPostInput extends BasePostInput {
