@@ -93,8 +93,8 @@ interface Props {
   onChangeTagName: React.ChangeEventHandler;
   onChangeImage: React.ChangeEventHandler;
   onChangeTitle: React.ChangeEventHandler;
-  addTag: React.KeyboardEventHandler;
-  deleteTag: React.MouseEventHandler;
+  tagHandler: React.KeyboardEventHandler;
+  onClickTag: React.MouseEventHandler;
   coverImageHandler: React.MouseEventHandler;
   clearCoverImage: React.MouseEventHandler;
   photoInputRef: MutableRefObject<HTMLInputElement | null>;
@@ -107,8 +107,8 @@ const WritePostHeader = (props: Props) => {
     photoInputRef,
     coverImg,
     category,
-    addTag,
-    deleteTag,
+    tagHandler,
+    onClickTag,
     onChangeTagName,
     onChangeTitle,
     coverImageHandler,
@@ -129,14 +129,14 @@ const WritePostHeader = (props: Props) => {
       <TagList>
         {tags.length >= 0 &&
           tags.map((tag: string) => (
-            <Tag key={tag} onClick={deleteTag}>
+            <Tag key={tag} onClick={onClickTag}>
               {tag}
             </Tag>
           ))}
         <input
           type="text"
           onChange={onChangeTagName}
-          onKeyDown={addTag}
+          onKeyDown={tagHandler}
           placeholder="태그를 입력하세요"
         />
       </TagList>
