@@ -1,14 +1,10 @@
-import React, { useCallback, useRef } from "react";
+import React, { useRef } from "react";
 import Head from "next/head";
-
-import { useQuery } from "@apollo/client";
-
-import { IGetPosts, IGetPostsVariables } from "@queries-types/posts";
-import { GET_POSTS } from "@queries/post";
 
 import RowFrame from "@frames/RowFrame";
 import TagDetail from "@molecules/TagDetail";
 import PostList from "@organisms/PostList";
+import { useGetPosts } from "@hooks/apollo/post/useGetPosts";
 
 interface IProps {
   tagName: string;
@@ -17,34 +13,9 @@ interface IProps {
 const Tag = ({ tagName }: IProps) => {
   const postsRef = useRef(null);
 
-  const { data: postsResult, fetchMore } = useQuery<IGetPosts, IGetPostsVariables>(GET_POSTS, {
-    variables: {
-      input: {
-        tag: tagName,
-      },
-    },
+  const [posts, fetchMorePosts] = useGetPosts({
+    tag: tagName,
   });
-
-  const fetchMorePosts = useCallback(() => {
-    if (!postsResult) return;
-
-    const {
-      getPosts: { posts },
-    } = postsResult;
-
-    if (posts.length % 10 !== 0) return;
-
-    fetchMore({
-      variables: {
-        input: {
-          tag: tagName,
-          lastId: posts[posts.length - 1]._id,
-        },
-      },
-    });
-  }, [postsResult, tagName]);
-
-  const posts = postsResult?.getPosts.posts ?? [];
 
   return (
     <>
