@@ -1,16 +1,59 @@
 import React, { useCallback } from "react";
 import styled from "@emotion/styled";
 import Image from "next/image";
-import { useMutation, useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client";
 import { useRouter } from "next/router";
 
-import { IDeletePost, IPost } from "@queries-types/posts";
-import { DELETE_POST } from "@queries/post/deletePost.queries";
+import { IPost } from "@queries-types/posts";
 import { userInfoVar } from "@store/userInfo";
 
 import PostNavigation from "@molecules/PostNavigation";
 import TagList from "@molecules/TagList";
+import { useDeletePost } from "@hooks/apollo/post/usePostMutation";
 import Detail from "./PostDetail";
+
+interface IProps {
+  post: IPost;
+}
+
+const PostHeader = ({ post }: IProps) => {
+  const { _id, title, coverImg, createdAt, tags, category } = post;
+  const { username } = useReactiveVar(userInfoVar);
+  const router = useRouter();
+
+  const [deletePostMutation] = useDeletePost(post._id);
+
+  const deletePost = useCallback(() => {
+    if (!username) return;
+
+    const conf = confirm("삭제하시겠습니까?");
+
+    if (!conf) return;
+
+    deletePostMutation();
+  }, [username, _id]);
+
+  const editPost = useCallback(() => {
+    router.push(`/write/post/${_id}`);
+  }, []);
+
+  const onClickTag = useCallback((e) => {
+    router.push(`/tag/${e.target.innerText}`);
+  }, []);
+
+  return (
+    <Container>
+      <div className="image-container">
+        <Image priority layout="fill" alt="post-cover" src={coverImg} objectFit="cover" />
+      </div>
+      {post.isTemporary && <h3>임시저장</h3>}
+      <h1>{title}</h1>
+      {tags[0] && <TagList onClick={onClickTag} tags={tags} />}
+      <Detail createdAt={createdAt} category={category} />
+      {username && <PostNavigation onDelete={deletePost} onEdit={editPost} />}
+    </Container>
+  );
+};
 
 const Container = styled.div`
   position: relative;
@@ -58,52 +101,5 @@ const Container = styled.div`
     }
   }
 `;
-
-interface IProps {
-  post: IPost;
-}
-
-const PostHeader = ({ post }: IProps) => {
-  const { _id, title, coverImg, createdAt, tags, category } = post;
-  const { username } = useReactiveVar(userInfoVar);
-  const router = useRouter();
-
-  const [deletePostMutation] = useMutation<IDeletePost>(DELETE_POST, {
-    onCompleted({ deletePost }) {
-      if (deletePost.ok) router.replace("/");
-    },
-  });
-
-  const deletePost = useCallback(() => {
-    if (!username) return;
-
-    const conf = confirm("삭제하시겠습니까?");
-
-    if (!conf) return;
-
-    deletePostMutation({ variables: { input: { _id } } });
-  }, [username, _id]);
-
-  const editPost = useCallback(() => {
-    router.push(`/write/post/${_id}`);
-  }, []);
-
-  const onClickTag = useCallback((e) => {
-    router.push(`/tag/${e.target.innerText}`);
-  }, []);
-
-  return (
-    <Container>
-      <div className="image-container">
-        <Image priority layout="fill" alt="post-cover" src={coverImg} objectFit="cover" />
-      </div>
-      {post.isTemporary && <h3>임시저장</h3>}
-      <h1>{title}</h1>
-      {tags[0] && <TagList onClick={onClickTag} tags={tags} />}
-      <Detail createdAt={createdAt} category={category} />
-      {username && <PostNavigation onDelete={deletePost} onEdit={editPost} />}
-    </Container>
-  );
-};
 
 export default PostHeader;

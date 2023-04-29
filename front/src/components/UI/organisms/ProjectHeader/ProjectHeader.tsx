@@ -2,14 +2,14 @@ import React, { useCallback } from "react";
 import styled from "@emotion/styled";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useMutation, useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client";
 
 import { dateTimeParser } from "@lib/dateTimeParser";
-import { IDeleteProject, IProject } from "@queries-types/project";
+import { IProject } from "@queries-types/project";
 import PostNavigation from "@molecules/PostNavigation";
-import { DELETE_PROJECT } from "@queries/project";
 import GItHubIcon from "@icons/GItHubIcon";
 import { userInfoVar } from "@store/userInfo";
+import { useDeleteProject } from "@hooks/apollo/project/useProjectMutation";
 
 interface IProps {
   project: IProject;
@@ -20,11 +20,7 @@ const ProjectHeader = ({ project }: IProps) => {
   const router = useRouter();
   const { username } = useReactiveVar(userInfoVar);
 
-  const [deleteProjectMutation] = useMutation<IDeleteProject>(DELETE_PROJECT, {
-    onCompleted({ deleteProject }) {
-      if (deleteProject.ok) router.replace("/project");
-    },
-  });
+  const [deleteProjectMutation] = useDeleteProject(project._id);
 
   const editProject = useCallback(() => {
     router.push(`/write/project/${_id}`);
@@ -35,7 +31,7 @@ const ProjectHeader = ({ project }: IProps) => {
 
     if (!conf) return;
 
-    deleteProjectMutation({ variables: { input: { _id } } });
+    deleteProjectMutation();
   }, [project]);
 
   return (
