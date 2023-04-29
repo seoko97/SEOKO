@@ -55,8 +55,6 @@ export class PostResolver {
   async getPosts(@Args('input', { nullable: true }) input: GetPostsInput) {
     const posts = await this.postService.getPosts(input);
 
-    console.log('@@');
-
     return { posts };
   }
 }
