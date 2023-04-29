@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NavItem from "@atoms/NavItem";
 import styled from "@emotion/styled";
 import { useMutation, useReactiveVar } from "@apollo/client";
@@ -33,11 +33,9 @@ const NavList = () => {
   const { username } = useReactiveVar(userInfoVar);
   const router = useRouter();
   const [signOutMutation] = useMutation<ISignOut>(SIGN_OUT, {
-    onCompleted({ signout }) {
-      if (signout.ok) {
-        setUserInfo(null);
-        router.push("/");
-      }
+    onCompleted() {
+      if (router.pathname === "/") router.reload();
+      else router.push("/");
     },
   });
 
