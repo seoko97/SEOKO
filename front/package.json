@@ -28,7 +28,7 @@
     "emotion-reset": "^3.0.1",
     "graphql": "^16.5.0",
     "lodash": "^4.17.21",
-    "next": "^12.0.1",
+    "next": "^12.3.4",
     "next-transpile-modules": "^9.0.0",
     "prismjs": "^1.28.0",
     "react": "17.0.2",
