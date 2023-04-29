@@ -10,6 +10,7 @@ interface IExperienceInput {
 
 interface IExperience extends IExperienceInput {
   _id: string;
+  __typename: string;
 }
 
 type BaseExperienceResult = {
