@@ -1,14 +1,7 @@
 import { useRouter } from "next/router";
-import {
-  MutableRefObject,
-  useState,
-  useEffect,
-  Dispatch,
-  SetStateAction,
-  useCallback,
-} from "react";
+import { MutableRefObject, useState, useEffect } from "react";
 
-type RetrunObj = [boolean, Dispatch<SetStateAction<boolean>>, () => void];
+type RetrunObj = [boolean, () => void];
 
 const useDetectOutsideClick = (
   el: MutableRefObject<Node | null>,
@@ -17,11 +10,13 @@ const useDetectOutsideClick = (
   const router = useRouter();
   const [isActive, setIsActive] = useState(initialState);
 
-  const onChangeActive = useCallback(() => {
+  const onChangeActive = () => {
     setIsActive(!isActive);
-  }, [isActive]);
+  };
 
   useEffect(() => {
+    if (!isActive) return;
+
     const onClick = (e: MouseEvent) => {
       if (el.current !== null && !el.current.contains(e.target as Node)) setIsActive(false);
     };
@@ -37,7 +32,7 @@ const useDetectOutsideClick = (
     setIsActive(false);
   }, [router.asPath]);
 
-  return [isActive, setIsActive, onChangeActive];
+  return [isActive, onChangeActive];
 };
 
 export default useDetectOutsideClick;

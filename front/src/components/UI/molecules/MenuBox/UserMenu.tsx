@@ -7,7 +7,7 @@ import useDetectOutsideClick from "@hooks/useDetectOutsideClick";
 const UserMenu = () => {
   const userNavRef = useRef(null);
 
-  const [isActive, , activeHandler] = useDetectOutsideClick(userNavRef, false);
+  const [isActive, activeHandler] = useDetectOutsideClick(userNavRef, false);
 
   return (
     <>
