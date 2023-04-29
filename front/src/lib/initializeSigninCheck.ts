@@ -2,7 +2,7 @@ import { GET_USER_INFO } from "@queries/users";
 import { setUserInfo } from "@store/userInfo";
 import { IGetUserInfo } from "@queries-types/users";
 import { QueryOptions } from "@apollo/client";
-import { initializeClient } from "./apollo";
+import { initializeClient } from "./apollo/apollo";
 
 export const GET_USER_INFO_OPTION: QueryOptions = {
   query: GET_USER_INFO,
