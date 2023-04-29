@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import Image from "next/image";
+import Image from "next/future/image";
 
 interface Props {
   src: string;
@@ -16,9 +16,10 @@ const StyledPostImg = styled.div`
   transition: transform 0.3s, box-shadow 0.3s;
 
   background-color: ${({ theme }) => theme.BACKGROUND_COLOR.SECONDARY_COLOR};
+  overflow: "hidden";
 
-  & > span,
-  & img {
+  & > img {
+    object-fit: cover;
     border-radius: 10px;
   }
 
@@ -35,8 +36,7 @@ const PostImg = ({ src, idx }: Props) => {
         priority={idx <= 5}
         loading={idx > 5 ? "lazy" : "eager"}
         src={src}
-        layout="fill"
-        objectFit="cover"
+        fill
       />
     </StyledPostImg>
   );
