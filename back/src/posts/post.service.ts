@@ -49,15 +49,13 @@ export class PostService {
       this.tagService.pushAndReturnTagsByPostId(addTags, post._id),
     ]);
 
-    const updatedPost = await this.postRepository.updatePost({
+    await this.postRepository.updatePost({
       ...input,
       addTags: aTags,
       deleteTags: dTags,
     });
 
     await this.postRepository.updateManyByEmptyPosts();
-
-    return updatedPost;
   }
 
   @Transactional()

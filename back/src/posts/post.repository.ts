@@ -30,10 +30,6 @@ export class PostRepository {
       { _id },
       { $addToSet: { tags: { $each: addTags } } },
     );
-
-    const updatedPost = await this.getPostById(_id);
-
-    return updatedPost;
   }
 
   async updateManyByEmptyPosts() {
