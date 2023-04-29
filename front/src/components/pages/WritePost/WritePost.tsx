@@ -9,9 +9,9 @@ import TuiEditor from "@organisms/TuiEditor";
 
 import { GET_POST } from "@queries/post";
 import { useWriteTag } from "@hooks/write/post/useWriteTag";
-import { useAddImage } from "@hooks/apollo/image/useAddImge";
+import { useAddImage } from "@hooks/apollo/image/useAddImage";
 import { useWritePost } from "@hooks/write/post/useWritePost";
-import usePostMutation from "@hooks/apollo/post/usePostMutation";
+import { usePostMutation } from "@hooks/apollo/post/usePostMutation";
 import WritePostHeader from "./WritePostHeader";
 
 interface IProps {
