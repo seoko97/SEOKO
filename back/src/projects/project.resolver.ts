@@ -1,8 +1,8 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
-import { JwtAuthGuard } from '@common/guards/jwt-auth.guard';
 import { CoreRes } from '@common/decorators/coreRes.decorator';
+import { JwtAuthGuard } from '@common/guards/jwt-auth.guard';
 
 import { AddProjectInput } from './dto/addProjectInput.dto';
 import { EditProjectInput } from './dto/editProjectInput.dto';
