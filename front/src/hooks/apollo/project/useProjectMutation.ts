@@ -49,6 +49,8 @@ const useProjectMutation = (project?: IProject) => {
         fragment: PROJECT_FRAGMENT,
         data: project,
       });
+      cache.evict({ fieldName: "getProjects" });
+      cache.gc();
     },
   });
 

@@ -48,6 +48,8 @@ const usePostMutation = (post?: IPost) => {
         fragment: POST_FRAGMENT,
         data: data.editPost.post,
       });
+      cache.evict({ fieldName: "getPosts" });
+      cache.gc();
     },
   });
 
