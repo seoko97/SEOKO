@@ -6,21 +6,17 @@ enum SkillType {
   DEV_OPS = "DEV_OPS",
 }
 
-type SkillKey = "front" | "back" | "devops";
-
 interface ISkillInput {
   _id?: string;
   name: string;
-  type: SkillType | null;
+  type?: SkillType;
   icon: string;
 }
 
-interface ISkill extends ISkillInput {
-  _id: string;
-}
+type ISkill = Required<ISkillInput>;
 
 type ISkills = {
-  [key in SkillKey]: ISkill[];
+  [key in SkillType]: ISkill[];
 };
 
 type BaseSkillResult = {

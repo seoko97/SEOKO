@@ -31,7 +31,7 @@ export class Skill extends BaseSchema {
   name!: string;
 
   @IsEnum(SkillType)
-  @Prop({ required: true, enum: ['FRONT_END', 'BACK_END', 'DEV_OPS'] })
+  @Prop({ required: true, enum: SkillType })
   @Field(() => SkillType)
   type!: SkillType;
 
