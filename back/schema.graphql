@@ -185,9 +185,9 @@ type GetUserInfoDTO {
 }
 
 type GroupedSkills {
-  back: [Skill!]!
-  devops: [Skill!]!
-  front: [Skill!]!
+  BACK_END: [Skill!]!
+  DEV_OPS: [Skill!]!
+  FRONT_END: [Skill!]!
 }
 
 type Mutation {
