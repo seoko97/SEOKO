@@ -92,7 +92,7 @@ const Container = styled.div`
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     & > h1 {
-      font-size: 1.4em;
+      font-size: 1.3em;
     }
   }
 `;

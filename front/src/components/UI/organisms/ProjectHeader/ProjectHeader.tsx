@@ -102,8 +102,8 @@ const Container = styled.section`
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     & > h1 {
-      line-height: 1.6;
-      font-size: 1.4em;
+      /* line-height: 1.6; */
+      font-size: 1.3em;
     }
     & > .image-container {
       width: 100%;
