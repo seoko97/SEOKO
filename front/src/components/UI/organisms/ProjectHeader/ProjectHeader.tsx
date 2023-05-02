@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import styled from "@emotion/styled";
-import Image from "next/image";
+import Image from "@atoms/Image";
 import { useRouter } from "next/router";
 import { useReactiveVar } from "@apollo/client";
 
@@ -37,7 +37,7 @@ const ProjectHeader = ({ project }: IProps) => {
   return (
     <Container>
       <div className="image-container">
-        <Image priority layout="fill" alt="project-cover" src={coverImg} objectFit="cover" />
+        <Image priority fill alt="project-cover" src={coverImg} />
       </div>
       {isTemporary && <h3>임시저장</h3>}
       <h1>{title}</h1>
@@ -66,16 +66,14 @@ const Container = styled.section`
 
   & > .image-container {
     width: 90%;
-    aspect-ratio: 160 / 100;
+    aspect-ratio: 150 / 100;
     position: relative;
     align-items: center;
-    border-radius: 12px;
+    border-radius: 1rem;
     box-shadow: ${({ theme }) => theme.BOX_SHADOW.PRIMARY};
 
-    & img {
-      position: absolute;
-      justify-content: center;
-      border-radius: 12px;
+    & > img {
+      aspect-ratio: 130 / 100;
     }
   }
 
@@ -83,12 +81,10 @@ const Container = styled.section`
     text-align: center;
     justify-content: center;
   }
-
   & > h1 {
     font-weight: 700;
-    font-size: 1.5rem;
-    line-height: 1.2;
-    overflow-wrap: anywhere;
+    font-size: 1.35rem;
+    margin: 0.5rem 0 1rem 0;
   }
 
   & svg {

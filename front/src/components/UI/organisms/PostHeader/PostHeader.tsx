@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import styled from "@emotion/styled";
-import Image from "next/image";
+import Image from "@atoms/Image";
 import { useReactiveVar } from "@apollo/client";
 import { useRouter } from "next/router";
 
@@ -44,7 +44,7 @@ const PostHeader = ({ post }: IProps) => {
   return (
     <Container>
       <div className="image-container">
-        <Image priority layout="fill" alt="post-cover" src={coverImg} objectFit="cover" />
+        <Image priority alt="post-cover" src={coverImg} />
       </div>
       {post.isTemporary && <h3>임시저장</h3>}
       <h1>{title}</h1>
@@ -64,13 +64,13 @@ const Container = styled.div`
   color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
   overflow-wrap: anywhere;
 
-  gap: 1.2rem;
+  gap: 1rem;
   margin: 32px 0 60px 0;
 
   & > h1 {
     font-weight: 700;
-    font-size: 1.5rem;
-    line-height: 1.2;
+    font-size: 1.35rem;
+    margin: 0.5rem 0 1rem 0;
   }
 
   & > * {
@@ -85,13 +85,8 @@ const Container = styled.div`
     align-items: center;
     box-shadow: ${({ theme }) => theme.BOX_SHADOW.PRIMARY};
 
-    & img {
-      border-radius: 10px;
-      position: absolute;
-      justify-content: center;
-    }
-    & > span {
-      border-radius: 10px;
+    & > img {
+      aspect-ratio: 150 / 100;
     }
   }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/future/image";
+import Image from "@atoms/Image";
 import styled from "@emotion/styled";
 
 interface IProps {
@@ -8,6 +8,9 @@ interface IProps {
 const Container = styled.div`
   flex: 2;
   position: relative;
+
+  display: flex;
+
   width: 100%;
   aspect-ratio: 130 / 100;
   border-radius: 10px 10px 0 0;
@@ -21,7 +24,7 @@ const Container = styled.div`
 const ProjectImg = ({ src }: IProps) => {
   return (
     <Container>
-      <Image priority src={src} alt="project-image" fill />
+      <Image priority src={src} alt="project-image" />
     </Container>
   );
 };
