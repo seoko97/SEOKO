@@ -11,7 +11,6 @@ const Img = styled(NextImage)`
   aspect-ratio: 130 / 100;
 
   border-radius: 1rem;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 
   object-fit: cover;
   border-radius: 10px;

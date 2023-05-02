@@ -48,6 +48,7 @@ const Project = ({ _id }: IProps) => {
 };
 
 const Container = styled(RowFrame)`
+  width: 768px;
   display: flex;
   flex-direction: column;
   gap: 20px;

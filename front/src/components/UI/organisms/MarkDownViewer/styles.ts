@@ -116,6 +116,10 @@ export const MarkdownWrapper = styled.div`
     font-size: 1em;
   }
 
+  & > p:has(> img) {
+    display: flex;
+  }
+
   & a {
     color: #00bfa5;
     &:hover {

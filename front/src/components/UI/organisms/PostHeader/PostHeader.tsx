@@ -79,10 +79,9 @@ const Container = styled.div`
   }
 
   & > .image-container {
-    width: 100%;
-    aspect-ratio: 150 / 100;
-    position: relative;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1rem;
     box-shadow: ${({ theme }) => theme.BOX_SHADOW.PRIMARY};
 
     & > img {

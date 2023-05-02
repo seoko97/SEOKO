@@ -28,12 +28,11 @@ jobs:
 
          - name: Create .env file
            run: |
-              echo "DB_HOST=$DB_HOST" >> .env
-              echo "DB_PORT=$DB_PORT" >> .env
+              echo "HOST=$HOST" >> .env
+              echo "DB_URI=$DB_URI" >> .env
               echo "DB_NAME=$DB_NAME" >> .env
               echo "DB_USERNAME=$DB_USERNAME" >> .env
               echo "DB_PASSWORD=$DB_PASSWORD" >> .env
-              echo "HOST=$HOST" >> .env
               echo "JWT_SECRET_KEY=$JWT_SECRET_KEY" >> .env
               echo "JWT_HEADER=$JWT_HEADER" >> .env
               echo "SIGNIN_SECRET_KEY=$SIGNIN_SECRET_KEY" >> .env
@@ -41,12 +40,11 @@ jobs:
               echo "IMAGE_UPLOAD_URL=$IMAGE_UPLOAD_URL" >> .env
               echo "IMAGE_APP_KEY=$IMAGE_APP_KEY" >> .env
            env:
-              DB_HOST: ${{secrets.DB_HOST}}
-              DB_PORT: ${{secrets.DB_PORT}}
+              HOST: ${{secrets.HOST}}
+              DB_URI: ${{secrets.DB_URI}}
               DB_NAME: ${{secrets.DB_NAME}}
               DB_USERNAME: ${{secrets.DB_USERNAME}}
               DB_PASSWORD: ${{secrets.DB_PASSWORD}}
-              HOST: ${{secrets.HOST}}
               JWT_SECRET_KEY: ${{secrets.JWT_SECRET_KEY}}
               JWT_HEADER: ${{secrets.JWT_HEADER}}
               SIGNIN_SECRET_KEY: ${{secrets.SIGNIN_SECRET_KEY}}
