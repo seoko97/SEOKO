@@ -11,6 +11,7 @@ const StyledPostImg = styled.div`
   position: relative;
 
   display: flex;
+  flex-direction: column;
   width: 250px;
 
   aspect-ratio: 130 / 100;

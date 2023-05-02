@@ -10,7 +10,7 @@ const SyntaxWrapper = styled(SyntaxHighlighter)`
   background-color: ${({ theme }) => theme.MARK_DOWN.BACK_COLOR} !important;
   transition: background-color 0.3s !important;
 
-  box-shadow: rgb(0 0 0 / 15%) 0px 5px 16px 0px;
+  box-shadow: ${({ theme }) => theme.BOX_SHADOW.PRIMARY};
 
   border-radius: 4px;
 

@@ -10,13 +10,11 @@ const Container = styled.div`
   position: relative;
 
   display: flex;
+  flex-direction: column;
 
   width: 100%;
   aspect-ratio: 130 / 100;
-  border-radius: 10px 10px 0 0;
-
   & > img {
-    object-fit: cover;
     border-radius: 10px 10px 0 0;
   }
 `;

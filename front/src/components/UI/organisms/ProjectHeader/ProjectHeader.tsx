@@ -37,7 +37,7 @@ const ProjectHeader = ({ project }: IProps) => {
   return (
     <Container>
       <div className="image-container">
-        <Image priority fill alt="project-cover" src={coverImg} />
+        <Image priority alt="project-cover" src={coverImg} />
       </div>
       {isTemporary && <h3>임시저장</h3>}
       <h1>{title}</h1>
@@ -65,15 +65,13 @@ const Container = styled.section`
   gap: 1em;
 
   & > .image-container {
-    width: 90%;
-    aspect-ratio: 150 / 100;
-    position: relative;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
     border-radius: 1rem;
     box-shadow: ${({ theme }) => theme.BOX_SHADOW.PRIMARY};
 
     & > img {
-      aspect-ratio: 130 / 100;
+      aspect-ratio: 150 / 100;
     }
   }
 
@@ -102,7 +100,6 @@ const Container = styled.section`
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     & > h1 {
-      /* line-height: 1.6; */
       font-size: 1.3em;
     }
     & > .image-container {

@@ -11,8 +11,8 @@ const Img = styled(NextImage)`
   width: auto;
   height: auto;
   position: relative;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-  border-radius: 0.8rem;
+  box-shadow: ${({ theme }) => theme.BOX_SHADOW.PRIMARY};
+  border-radius: 0.3rem;
 
   margin: 0 auto;
 `;
