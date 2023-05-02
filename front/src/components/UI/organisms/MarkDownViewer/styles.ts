@@ -5,10 +5,14 @@ export const MarkdownWrapper = styled.div`
   overflow-wrap: anywhere;
 
   user-select: text;
-  font-size: 1rem;
+  font-size: 0.9rem;
 
-  & > :first-child {
+  & > *:first-child {
     margin-top: 0;
+  }
+
+  & > p {
+    position: relative;
   }
 
   & td {
@@ -16,10 +20,12 @@ export const MarkdownWrapper = styled.div`
   }
 
   & > * {
-    line-height: 2;
+    line-height: 1.7;
   }
 
   & pre {
+    transition: color 0.3s;
+
     color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
     border-radius: 1.7;
     overflow-wrap: anywhere;
@@ -56,6 +62,8 @@ export const MarkdownWrapper = styled.div`
   td,
   ul,
   ol {
+    transition: color 0.3s;
+
     color: ${({ theme }) => theme.FONT_COLOR.PRIMARY_COLOR};
     overflow-wrap: anywhere;
   }
@@ -65,8 +73,7 @@ export const MarkdownWrapper = styled.div`
   & > ol,
   & table,
   & blockquote,
-  & pre,
-  & img {
+  & pre {
     margin-bottom: 24px;
   }
   & h1,
@@ -81,37 +88,32 @@ export const MarkdownWrapper = styled.div`
   }
 
   h1 {
-    margin-top: 64px;
+    margin-top: 3em;
     font-size: 2em;
   }
   h2 {
-    margin-top: 64px;
-    margin-bottom: 24px;
+    margin-top: 2.7em;
+    margin-bottom: 1.5em;
     font-size: 1.6em;
   }
   h3 {
-    margin-top: 48px;
-    margin-bottom: 24px;
+    margin-top: 2.4em;
+    margin-bottom: 1.2em;
     font-size: 1.35em;
   }
   h4 {
-    margin-top: 36px;
-    margin-bottom: 24px;
+    margin-top: 2.1em;
+    margin-bottom: 1em;
     font-size: 1.25em;
   }
   h5 {
-    margin-top: 24px;
-    margin-bottom: 24px;
+    margin-top: 2.1em;
+    margin-bottom: 1em;
     font-size: 1.1em;
   }
   h6 {
-    margin-top: 24px;
+    margin-top: 2.1em;
     font-size: 1em;
-  }
-  & img {
-    max-width: 100%;
-    border-radius: 10px;
-    margin: 0 auto;
   }
 
   & a {

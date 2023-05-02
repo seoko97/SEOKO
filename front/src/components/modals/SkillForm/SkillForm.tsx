@@ -6,7 +6,7 @@ import { ISkill, ISkillInput } from "@queries-types/skill";
 import ModalLayout from "@modals/ModalLayout";
 import Input from "@atoms/Input";
 import Button from "@atoms/Button";
-import { useAddImage } from "@hooks/apollo/image/useAddImge";
+import { useAddImage } from "@hooks/apollo/image/useAddImage";
 import { useSkillMutation } from "@hooks/apollo/skill/useSkillMutation";
 
 interface IProps {
@@ -64,7 +64,7 @@ const SkillForm = ({ onClose, skill }: IProps) => {
   const formDataRef = useRef<Omit<ISkillInput, "icon">>({
     _id: skill?._id ?? undefined,
     name: skill?.name ?? "",
-    type: skill?.type ?? null,
+    type: skill?.type ?? undefined,
   });
 
   const [coverImg, onChangeImage] = useAddImage({
@@ -93,7 +93,7 @@ const SkillForm = ({ onClose, skill }: IProps) => {
 
       onCreateOrUpdateSkill(input);
     },
-    [formDataRef.current],
+    [formDataRef.current, coverImg],
   );
 
   const deleteSkill = useCallback(

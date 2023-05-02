@@ -5,19 +5,19 @@ export const GET_ABOUT = gql`
     getSkills {
       ok
       skills {
-        front {
+        FRONT_END {
           _id
           name
           type
           icon
         }
-        back {
+        BACK_END {
           _id
           name
           type
           icon
         }
-        devops {
+        DEV_OPS {
           _id
           name
           type

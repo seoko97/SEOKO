@@ -1,7 +1,7 @@
 import React from "react";
 
 import styled from "@emotion/styled";
-import Image from "next/image";
+import Image from "next/future/image";
 
 interface IProps {
   width: number;
@@ -11,8 +11,8 @@ interface IProps {
 const Container = styled.div`
   display: flex;
 
-  & img,
-  & span {
+  & img {
+    object-fit: cover;
     border-radius: 50%;
   }
 `;
@@ -20,7 +20,7 @@ const Container = styled.div`
 const UserAvatar = ({ height, width, onClick }: IProps) => {
   return (
     <Container onClick={onClick && onClick}>
-      <Image priority src="/main.jpg" objectFit="cover" alt="user" width={width} height={height} />
+      <Image priority src="/main.jpg" alt="user" width={width} height={height} />
     </Container>
   );
 };

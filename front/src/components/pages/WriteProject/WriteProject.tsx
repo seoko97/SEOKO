@@ -8,7 +8,7 @@ import { Container } from "@pages/WritePost/WritePost";
 import { IGetProject, IProject, IProjectInput } from "@queries-types/project";
 
 import { GET_PROJECT } from "@queries/project";
-import { useAddImage } from "@hooks/apollo/image/useAddImge";
+import { useAddImage } from "@hooks/apollo/image/useAddImage";
 import { useWriteProject } from "@hooks/write/project/useWriteProject";
 import { useProjectMutation } from "@hooks/apollo/project/useProjectMutation";
 import WriteProjectHeader from "./WriteProjectHeader";
@@ -46,7 +46,7 @@ const WriteProject = ({ _id }: IProps) => {
 
       const { dataset } = e.target;
       const isTemporary = Boolean(dataset.isTemporary);
-      const input: IProjectInput = { ...projectDataRef.current, isTemporary };
+      const input: IProjectInput = { ...projectDataRef.current, isTemporary, coverImg };
 
       mutation(input);
     },

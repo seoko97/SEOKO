@@ -32,7 +32,9 @@ export class PostResolver {
   @UseGuards(JwtAuthGuard)
   @Mutation(() => BasePostDTO)
   async editPost(@Args('input') input: EditPostInput) {
-    const post = await this.postService.editPost(input);
+    await this.postService.editPost(input);
+
+    const post = await this.postService.getPost(input._id);
 
     return { post };
   }

@@ -1,15 +1,15 @@
 import React, { useCallback } from "react";
 import styled from "@emotion/styled";
-import Image from "next/image";
+import Image from "@atoms/Image";
 import { useRouter } from "next/router";
-import { useMutation, useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client";
 
 import { dateTimeParser } from "@lib/dateTimeParser";
-import { IDeleteProject, IProject } from "@queries-types/project";
+import { IProject } from "@queries-types/project";
 import PostNavigation from "@molecules/PostNavigation";
-import { DELETE_PROJECT } from "@queries/project";
 import GItHubIcon from "@icons/GItHubIcon";
 import { userInfoVar } from "@store/userInfo";
+import { useDeleteProject } from "@hooks/apollo/project/useProjectMutation";
 
 interface IProps {
   project: IProject;
@@ -20,11 +20,7 @@ const ProjectHeader = ({ project }: IProps) => {
   const router = useRouter();
   const { username } = useReactiveVar(userInfoVar);
 
-  const [deleteProjectMutation] = useMutation<IDeleteProject>(DELETE_PROJECT, {
-    onCompleted({ deleteProject }) {
-      if (deleteProject.ok) router.replace("/project");
-    },
-  });
+  const [deleteProjectMutation] = useDeleteProject(project._id);
 
   const editProject = useCallback(() => {
     router.push(`/write/project/${_id}`);
@@ -35,13 +31,13 @@ const ProjectHeader = ({ project }: IProps) => {
 
     if (!conf) return;
 
-    deleteProjectMutation({ variables: { input: { _id } } });
+    deleteProjectMutation();
   }, [project]);
 
   return (
     <Container>
       <div className="image-container">
-        <Image priority layout="fill" alt="project-cover" src={coverImg} objectFit="cover" />
+        <Image priority fill alt="project-cover" src={coverImg} />
       </div>
       {isTemporary && <h3>임시저장</h3>}
       <h1>{title}</h1>
@@ -70,16 +66,14 @@ const Container = styled.section`
 
   & > .image-container {
     width: 90%;
-    aspect-ratio: 160 / 100;
+    aspect-ratio: 150 / 100;
     position: relative;
     align-items: center;
-    border-radius: 12px;
+    border-radius: 1rem;
     box-shadow: ${({ theme }) => theme.BOX_SHADOW.PRIMARY};
 
-    & img {
-      position: absolute;
-      justify-content: center;
-      border-radius: 12px;
+    & > img {
+      aspect-ratio: 130 / 100;
     }
   }
 
@@ -87,12 +81,10 @@ const Container = styled.section`
     text-align: center;
     justify-content: center;
   }
-
   & > h1 {
     font-weight: 700;
-    font-size: 1.5rem;
-    line-height: 1.2;
-    overflow-wrap: anywhere;
+    font-size: 1.35rem;
+    margin: 0.5rem 0 1rem 0;
   }
 
   & svg {
@@ -110,8 +102,8 @@ const Container = styled.section`
 
   @media (max-width: ${({ theme }) => theme.BP.TABLET}) {
     & > h1 {
-      line-height: 1.6;
-      font-size: 1.4em;
+      /* line-height: 1.6; */
+      font-size: 1.3em;
     }
     & > .image-container {
       width: 100%;

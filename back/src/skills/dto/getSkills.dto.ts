@@ -2,18 +2,22 @@ import { Field, ObjectType } from '@nestjs/graphql';
 
 import { CoreRes } from '@common/decorators/coreRes.decorator';
 
-import { Skill } from '../skills.model';
+import { Skill, SkillType } from '../skills.model';
+
+type IGroupedSkills = {
+  [key in SkillType]: Skill[];
+};
 
 @ObjectType()
-export class GroupedSkills {
+export class GroupedSkills implements IGroupedSkills {
   @Field(() => [Skill])
-  front!: Skill[];
+  FRONT_END!: Skill[];
 
   @Field(() => [Skill])
-  back!: Skill[];
+  BACK_END!: Skill[];
 
   @Field(() => [Skill])
-  devops!: Skill[];
+  DEV_OPS!: Skill[];
 }
 
 @ObjectType()

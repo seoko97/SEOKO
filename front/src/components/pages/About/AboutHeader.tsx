@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+import Image from "next/future/image";
 import styled from "@emotion/styled";
 import Info from "@molecules/Intro/Info";
 
@@ -11,14 +11,7 @@ const AboutHeader = () => {
           안녕하세요 <br /> 개발자 <strong>지석호</strong>입니다.
         </h1>
         <div className="user-image">
-          <Image
-            priority={true}
-            src="/main.jpg"
-            alt="main"
-            width={200}
-            height={200}
-            objectFit="cover"
-          />
+          <Image priority={true} src="/main.jpg" alt="main" width={200} height={200} />
         </div>
       </div>
 

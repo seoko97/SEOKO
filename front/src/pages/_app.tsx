@@ -7,7 +7,7 @@ import { useCookies } from "react-cookie";
 import { ThemeProvider } from "@emotion/react";
 
 import cookieParser from "@lib/cookieParser";
-import { useApollo } from "@lib/apollo";
+import { useApollo } from "@lib/apollo/useApollo";
 import initializeSigninCheck from "@lib/initializeSigninCheck";
 import useGtagHandler from "@hooks/useGtagHandler";
 
@@ -32,7 +32,7 @@ const SEOKO = ({ Component, pageProps, mode: modeInCookie }: IPageProps) => {
   }, [mode]);
 
   useEffect(() => {
-    if (!cookies.mode && !modeInCookie) setCookies("mode", "light");
+    if (!cookies.mode) setCookies("mode", "light");
     initializeSigninCheck();
   }, []);
 
