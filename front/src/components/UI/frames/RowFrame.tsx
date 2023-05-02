@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export default styled.div`
+const RowFrame = styled.div`
   width: 980px;
   margin: 0 auto;
   box-sizing: border-box;
@@ -11,3 +11,5 @@ export default styled.div`
     padding: 0 16px;
   }
 `;
+
+export default RowFrame;

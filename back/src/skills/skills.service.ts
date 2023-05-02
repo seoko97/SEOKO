@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Types } from 'mongoose';
+
 import { AddSkillInput } from './dto/addSkill.dto';
 import { EditSkillInput } from './dto/editSkillInput.dto';
 import { GroupedSkills } from './dto/getSkills.dto';
@@ -23,23 +23,23 @@ export class SkillService {
 
     const groupSkills = skills.reduce(
       (groups, skill) => {
-        if (skill.type === SkillType.FRONT_END) groups.front.push(skill);
-        else if (skill.type === SkillType.BACK_END) groups.back.push(skill);
-        else if (skill.type === SkillType.DEV_OPS) groups.devops.push(skill);
+        if (skill.type === SkillType.FRONT_END) groups.FRONT_END.push(skill);
+        else if (skill.type === SkillType.BACK_END) groups.BACK_END.push(skill);
+        else if (skill.type === SkillType.DEV_OPS) groups.DEV_OPS.push(skill);
 
         return groups;
       },
       {
-        front: [],
-        back: [],
-        devops: [],
-      } as { [key: string]: Skill[] },
+        FRONT_END: [],
+        BACK_END: [],
+        DEV_OPS: [],
+      } as { [key in SkillType]: Skill[] },
     ) as unknown as GroupedSkills;
 
     return groupSkills;
   }
 
-  async deleteSkill(_id: string | Types.ObjectId) {
+  async deleteSkill(_id: string) {
     return await this.skillModel.findOneAndDelete({ _id });
   }
 }

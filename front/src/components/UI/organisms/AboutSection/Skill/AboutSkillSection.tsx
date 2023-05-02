@@ -27,15 +27,17 @@ const AboutSkillSection = () => {
 
   if (!data) return <></>;
 
-  const { front, back, devops } = data.getSkills.skills;
+  const { FRONT_END, BACK_END, DEV_OPS } = data.getSkills.skills;
+
+  const onClick = username ? onClickSkill : null;
 
   return (
     <>
       <Section>
         <SectionHeader onClick={onClickSkill}>Skill</SectionHeader>
-        <SkillList skills={front} onClick={username ? onClickSkill : null} type="Front-End" />
-        <SkillList skills={back} onClick={username ? onClickSkill : null} type="Back-End" />
-        <SkillList skills={devops} onClick={username ? onClickSkill : null} type="DevOps" />
+        <SkillList skills={FRONT_END} onClick={onClick} type="Front-End" />
+        <SkillList skills={BACK_END} onClick={onClick} type="Back-End" />
+        <SkillList skills={DEV_OPS} onClick={onClick} type="DevOps" />
       </Section>
       {isOpenSkillForm && <SkillForm onClose={onCloseSkillForm} skill={selectedSkill} />}
     </>

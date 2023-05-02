@@ -12,11 +12,8 @@ interface IProps {
   startDate: string;
   endDate: string;
   photoInputRef: MutableRefObject<HTMLInputElement | null>;
-  onChangeTitle: ChangeEventHandler;
-  onChangeDec: ChangeEventHandler;
-  onChangeGithubUrl: ChangeEventHandler;
-  onChangeDate: ChangeEventHandler;
   onChangeImage: ChangeEventHandler;
+  onChangeValue: ChangeEventHandler;
   coverImageHandler: (e: MouseEvent) => void;
   clearCoverImage: () => void;
 }
@@ -30,10 +27,7 @@ const WriteProjectHeader = (props: IProps) => {
     startDate,
     endDate,
     photoInputRef,
-    onChangeDate,
-    onChangeDec,
-    onChangeTitle,
-    onChangeGithubUrl,
+    onChangeValue,
     onChangeImage,
     clearCoverImage,
     coverImageHandler,
@@ -45,21 +39,21 @@ const WriteProjectHeader = (props: IProps) => {
         name="title"
         type="text"
         defaultValue={title}
-        onChange={onChangeTitle}
+        onChange={onChangeValue}
         placeholder="제목을 입력하세요"
       />
       <input
         name="description"
         type="text"
         defaultValue={description}
-        onChange={onChangeDec}
+        onChange={onChangeValue}
         placeholder="소개를 입력하세요"
       />
       <input
         name="githubUrl"
         type="text"
         defaultValue={githubUrl}
-        onChange={onChangeGithubUrl}
+        onChange={onChangeValue}
         placeholder="깃허브 주소를 입력하세요"
       />
       <div>
@@ -69,7 +63,7 @@ const WriteProjectHeader = (props: IProps) => {
           type="date"
           placeholder="YYYY-MM-DD"
           defaultValue={startDate}
-          onChange={onChangeDate}
+          onChange={onChangeValue}
         />
       </div>
       <div>
@@ -79,7 +73,7 @@ const WriteProjectHeader = (props: IProps) => {
           type="date"
           placeholder="YYYY-MM-DD"
           defaultValue={endDate}
-          onChange={onChangeDate}
+          onChange={onChangeValue}
         />
       </div>
       <div id="line" />

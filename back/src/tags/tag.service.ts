@@ -1,79 +1,53 @@
-import { Types } from 'mongoose';
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { PostService } from '@posts/post.service';
-import { Tag, TagModel } from './tag.model';
+import { FilterQuery } from 'mongoose';
+
+import { Transactional } from '@common/decorators/transaction.decorator';
+
+import { Tag, TagDocument, TagModel } from './tag.model';
+import { TagRepository } from './tag.repository';
 
 @Injectable()
 export class TagService {
   constructor(
     @InjectModel(Tag.name) private tagModel: TagModel,
-    @Inject(forwardRef(() => PostService))
-    private postService: PostService,
+    private tagRepository: TagRepository,
   ) {}
 
   async getTags() {
-    const tags = await this.tagModel
-      .find()
-      .populate('posts')
-      .then((_tags) => {
-        const filteredTags = _tags.filter((tag) => {
-          tag.posts = tag.posts.filter((post) => !post.isTemporary);
-          return tag.posts.some((post) => !post.isTemporary);
-        });
+    return await this.tagRepository.getTags();
+  }
 
-        return filteredTags;
-      });
+  async getTag(name: string) {
+    return await this.tagRepository.getTag(name);
+  }
 
-    tags.sort((a, b) => b.posts.length - a.posts.length);
+  async updateTag(_id: string, query: FilterQuery<TagDocument>) {
+    return await this.tagModel.updateOne({ _id }, query);
+  }
+
+  @Transactional()
+  async pushAndReturnTagsByPostId(tagNames: string[], postId: string) {
+    const tags = await Promise.all(
+      tagNames.map((tagName) => this.tagRepository.findOrCreate(tagName)),
+    );
+
+    await this.tagRepository.addPostIdInTags(tags, postId);
 
     return tags;
   }
 
-  async getTag(name: string) {
-    return await this.tagModel
-      .findOne({ name })
-      .populate({
-        path: 'posts',
-        select: 'isTemporary',
-      })
-      .then((_tag) => {
-        _tag.posts = _tag.posts.filter((post) => !post.isTemporary);
-        return _tag;
-      });
-  }
-  async getTagById(_id: Types.ObjectId) {
-    return await this.tagModel.findOne({ _id });
+  @Transactional()
+  async deletePostIdInTags(tags: string[], postId: string) {
+    await this.tagRepository.deletePostIdInTags(tags, postId);
+
+    const afterUpdate = await this.tagRepository.getTagsByTagNames(tags);
+
+    return afterUpdate;
   }
 
-  async findOrCreate(name: string) {
-    return await this.tagModel.findOrCreate(name);
-  }
-
-  async updateTag(_id: Types.ObjectId | string, query: any) {
-    return await this.tagModel.updateOne({ _id }, query);
-  }
-
-  async delete(_id: string | Types.ObjectId) {
-    const tag = await this.tagModel.findOneAndDelete({ _id });
-
-    if (!tag) throw new Error('태그가 존재하지 않습니다.');
-
-    await this.postService.deleteManyByTagId(tag._id);
-
-    return { ok: true };
-  }
-
+  @Transactional()
   async deleteManyByPostId(_id: string) {
-    await this.tagModel.updateMany(
-      { posts: { $in: _id } },
-      { $pull: { posts: _id } },
-    );
-
-    await this.deleteEmptyTags();
-  }
-
-  async deleteEmptyTags() {
-    await this.tagModel.deleteMany({ posts: { $size: 0 } });
+    await this.tagRepository.deleteManyByPostId(_id);
   }
 }

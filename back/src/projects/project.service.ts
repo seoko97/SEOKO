@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Types, FilterQuery } from 'mongoose';
+import { FilterQuery } from 'mongoose';
+
 import { AddProjectInput } from './dto/addProjectInput.dto';
 import { EditProjectInput } from './dto/editProjectInput.dto';
 import { Project, ProjectDocument, ProjectModel } from './project.model';
@@ -19,11 +20,11 @@ export class ProjectService {
     });
   }
 
-  async deleteProject(_id: Types.ObjectId | string) {
+  async deleteProject(_id: string) {
     return await this.projectModel.deleteOne({ _id });
   }
 
-  async getProject(_id: Types.ObjectId | string) {
+  async getProject(_id: string) {
     return await this.projectModel.findById(_id);
   }
 

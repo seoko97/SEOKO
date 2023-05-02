@@ -1,17 +1,22 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { CoreRes } from '@decorators/coreRes.decorator';
+import * as bcrypt from 'bcrypt';
+
+import { CoreRes } from '@common/decorators/coreRes.decorator';
+
 import { CreateUserInput } from './dto/createUser.dto';
 import { User, UserModel } from './user.model';
 
+const BCRYPT_SALT = 10;
 @Injectable()
 export class UserService {
   constructor(@InjectModel(User.name) private userModel: UserModel) {}
 
   async create(input: CreateUserInput): Promise<CoreRes> {
-    await this.userModel.hashPassword(input);
+    const inputToHashed = await this.hashPassword(input);
 
-    await this.userModel.create(input);
+    await this.userModel.create(inputToHashed);
+
     return { ok: true };
   }
 
@@ -25,5 +30,20 @@ export class UserService {
 
   async updateRefreshToken(_id: string, refreshToken: string | null) {
     await this.userModel.updateOne({ _id }, { refreshToken });
+  }
+
+  async hashPassword(input: CreateUserInput) {
+    if (!input.password) {
+      throw new BadRequestException('비밀번호가 존재하지 않습니다.');
+    }
+    const hashedPassword = (await bcrypt.hash(
+      input.password,
+      BCRYPT_SALT,
+    )) as string;
+
+    return {
+      ...input,
+      password: hashedPassword,
+    };
   }
 }

@@ -1,7 +1,9 @@
-import { JwtAuthGuard } from '@auth/guards/jwt-auth.guard';
-import { CoreRes } from '@decorators/coreRes.decorator';
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+
+import { CoreRes } from '@common/decorators/coreRes.decorator';
+import { JwtAuthGuard } from '@common/guards/jwt-auth.guard';
+
 import { AddProjectInput } from './dto/addProjectInput.dto';
 import { EditProjectInput } from './dto/editProjectInput.dto';
 import { GetProjectDto } from './dto/getProject.dto';
@@ -15,45 +17,39 @@ export class ProjectResolver {
 
   @UseGuards(JwtAuthGuard)
   @Mutation(() => GetProjectDto)
-  async addProject(
-    @Args('input') input: AddProjectInput,
-  ): Promise<GetProjectDto> {
+  async addProject(@Args('input') input: AddProjectInput) {
     const project = await this.projectService.addProject(input);
 
-    return { ok: true, project };
+    return { project };
   }
 
   @UseGuards(JwtAuthGuard)
   @Mutation(() => GetProjectDto)
-  async editProject(
-    @Args('input') input: EditProjectInput,
-  ): Promise<GetProjectDto> {
+  async editProject(@Args('input') input: EditProjectInput) {
     const project = await this.projectService.editProject(input);
 
-    return { ok: true, project };
+    return { project };
   }
 
   @UseGuards(JwtAuthGuard)
   @Mutation(() => CoreRes)
-  async deleteProject(@Args('input') input: ProjectInput): Promise<CoreRes> {
+  async deleteProject(@Args('input') input: ProjectInput) {
     await this.projectService.deleteProject(input._id);
-
-    return { ok: true };
   }
 
   @Query(() => GetProjectDto)
-  async getProject(@Args('input') input: string): Promise<GetProjectDto> {
+  async getProject(@Args('input') input: string) {
     const project = await this.projectService.getProject(input);
 
-    return { ok: true, project };
+    return { project };
   }
 
   @Query(() => GetProjectsDto)
   async getProjects(
     @Args('input', { nullable: true }) input?: GetProjectsInput,
-  ): Promise<GetProjectsDto> {
+  ) {
     const projects = await this.projectService.getProjects(input);
 
-    return { ok: true, projects };
+    return { projects };
   }
 }

@@ -1,13 +1,13 @@
-import { GetServerSideProps } from "next";
-import { addApolloState } from "@lib/addApolloState";
-import { initializeClient } from "@lib/apollo";
+import { addApolloState } from "@lib/apollo/addApolloState";
+import { initializeClient } from "@lib/apollo/apollo";
 import { IGetProject } from "@queries-types/project";
 import { GET_PROJECT } from "@queries/project/getProject.queries";
 import { checkTemporaryByUser } from "@lib/checkTemporaryByUser";
+import { withErrorHandling } from "@lib/withErrorHandling";
 
 export { default } from "@pages/Project/[id]";
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps = withErrorHandling(async (ctx) => {
   const { id } = ctx.query;
 
   const apolloClient = initializeClient({ ctx });
@@ -26,15 +26,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  const permissions = await checkTemporaryByUser(apolloClient, data.getProject.project.isTemporary);
+  const { project } = data.getProject;
 
-  if (permissions) {
-    return {
-      props: {},
-      redirect: {
-        destination: "/",
-      },
-    };
+  if (project.isTemporary) {
+    const isPermission = await checkTemporaryByUser(apolloClient, project.isTemporary);
+
+    if (isPermission) throw new Error("권한이 없습니다.");
   }
 
   return addApolloState(apolloClient, {
@@ -42,4 +39,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       _id: id,
     },
   });
-};
+});

@@ -5,8 +5,6 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
 
-const MONTH = 60 * 60 * 24 * 30;
-
 const nextConfig = {
   lessLoaderOptions: {
     javascriptEnabled: true,
@@ -31,7 +29,7 @@ const nextConfig = {
   },
   images: {
     domains: ["image.toast.com"],
-    minimumCacheTTL: MONTH,
+    minimumCacheTTL: 86400,
     formats: ["image/webp"],
     deviceSizes: [480, 768, 980],
   },

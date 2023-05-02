@@ -4,7 +4,7 @@ export const GET_TAG = gql`
   query GetTag($input: String!) {
     getTag(input: $input) {
       ok
-      error
+
       tag {
         _id
         name

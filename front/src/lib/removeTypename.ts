@@ -2,7 +2,7 @@ interface IProps {
   __typename?: string;
 }
 
-export const removeTypename = <T extends IProps>(data: T | undefined) => {
+export const removeTypename = <T extends IProps>(data?: T | null) => {
   if (!data) return;
 
   const newData = { ...data };

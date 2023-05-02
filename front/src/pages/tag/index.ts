@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
-import { addApolloState } from "@lib/addApolloState";
-import { initializeClient } from "@lib/apollo";
+import { addApolloState } from "@lib/apollo/addApolloState";
+import { initializeClient } from "@lib/apollo/apollo";
 import { IGetTags } from "@queries-types/tags";
 import { GET_TAGS } from "@queries/tag/getTags.queries";
 

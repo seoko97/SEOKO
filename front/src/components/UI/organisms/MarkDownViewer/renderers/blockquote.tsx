@@ -6,6 +6,7 @@ const BlockQuote = styled.blockquote`
   border-left: 4px solid #495057;
   padding: 18px 24px;
   background-color: ${({ theme }) => theme.BACKGROUND_COLOR.SECONDARY_COLOR};
+  transition: background-color 0.3s !important;
 
   & > p {
     margin: 0;

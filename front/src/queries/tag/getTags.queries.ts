@@ -4,7 +4,7 @@ export const GET_TAGS = gql`
   query GetTags {
     getTags {
       ok
-      error
+
       tags {
         _id
         name

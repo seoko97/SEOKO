@@ -1,6 +1,7 @@
-import { CoreRes } from '@decorators/coreRes.decorator';
-import { Experience } from '@experiences/experiences.model';
 import { Field, InputType, ObjectType, PickType } from '@nestjs/graphql';
+
+import { CoreRes } from '@common/decorators/coreRes.decorator';
+import { Experience } from '@experiences/experiences.model';
 
 @InputType()
 export class AddExperienceInput extends PickType(Experience, [

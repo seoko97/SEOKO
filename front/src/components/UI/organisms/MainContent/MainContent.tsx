@@ -1,18 +1,15 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef } from "react";
 
 import styled from "@emotion/styled";
 import debounce from "lodash/debounce";
-import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 
 import useInput from "@hooks/useInput";
 
-import { GET_POSTS } from "@queries/post";
-import { IGetPosts, IGetPostsVariables, IPost } from "@queries-types/posts";
-
 import PostList from "@organisms/PostList";
 import { checkParams } from "@lib/checkParamsType";
 
+import { useGetPosts } from "@hooks/apollo/post/useGetPosts";
 import ContentHeader from "./ContentHeader";
 
 const MainContent = () => {
@@ -22,33 +19,12 @@ const MainContent = () => {
 
   const { category } = router.query;
 
-  const { data, fetchMore } = useQuery<IGetPosts, IGetPostsVariables>(GET_POSTS, {
-    variables: {
-      input: { category: checkParams(category), text },
-    },
+  const [posts, fetchMorePosts] = useGetPosts({
+    category: checkParams(category),
+    text,
   });
 
-  const [mainPosts, setMainPosts] = useState<IPost[]>(data?.getPosts.posts ?? []);
-
-  useEffect(() => {
-    const fetchedPosts = data?.getPosts.posts;
-
-    if (fetchedPosts) setMainPosts(fetchedPosts);
-  }, [data]);
-
   const debouncedChangeHandler = useCallback(debounce(textHandler, 300), []);
-
-  const fetchMorePosts = useCallback(() => {
-    if (mainPosts.length % 10 !== 0) return;
-
-    const input = {
-      lastId: mainPosts[mainPosts.length - 1]._id,
-      category,
-      text,
-    };
-
-    fetchMore({ variables: { input } });
-  }, [ref, category, text, mainPosts]);
 
   const onChangeCategory = useCallback(
     (category: string) => {
@@ -68,8 +44,8 @@ const MainContent = () => {
   return (
     <Container>
       <ContentHeader changeCategory={onChangeCategory} changeText={debouncedChangeHandler} />
-      {mainPosts.length > 0 && <PostList ref={ref} posts={mainPosts} func={fetchMorePosts} />}
-      {mainPosts.length === 0 && <NoneContent>포스트를 찾을 수 없습니다 🙄</NoneContent>}
+      {posts.length > 0 && <PostList ref={ref} posts={posts} func={fetchMorePosts} />}
+      {posts.length === 0 && <NoneContent>포스트를 찾을 수 없습니다 🙄</NoneContent>}
     </Container>
   );
 };

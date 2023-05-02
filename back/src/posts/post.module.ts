@@ -1,7 +1,10 @@
-import { forwardRef, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+
 import { TagModule } from '@tags/tag.module';
+
 import { Post, PostSchema } from './post.model';
+import { PostRepository } from './post.repository';
 import { PostResolver } from './post.resolver';
 import { PostService } from './post.service';
 
@@ -13,9 +16,9 @@ import { PostService } from './post.service';
         schema: PostSchema,
       },
     ]),
-    forwardRef(() => TagModule),
+    TagModule,
   ],
   exports: [PostService],
-  providers: [PostResolver, PostService],
+  providers: [PostResolver, PostService, PostRepository],
 })
 export class PostModule {}

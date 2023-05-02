@@ -1,6 +1,8 @@
-import { JwtAuthGuard } from '@auth/guards/jwt-auth.guard';
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
+
+import { JwtAuthGuard } from '@common/guards/jwt-auth.guard';
+
 import { AddImageInput } from './dto/AddImageInput.dto';
 import { AddImageRes } from './dto/ImageResponse.dto';
 import { ImageService } from './image.service';
@@ -11,9 +13,9 @@ export class ImageResolver {
 
   @UseGuards(JwtAuthGuard)
   @Mutation(() => AddImageRes)
-  async addImage(@Args('input') input: AddImageInput): Promise<AddImageRes> {
+  async addImage(@Args('input') input: AddImageInput) {
     const image = await this.imageService.addImage(input);
 
-    return { ok: true, image };
+    return { image };
   }
 }

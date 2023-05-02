@@ -4,21 +4,20 @@ export const GET_ABOUT = gql`
   query getAboutData($input: GetProjectsInput) {
     getSkills {
       ok
-      error
       skills {
-        front {
+        FRONT_END {
           _id
           name
           type
           icon
         }
-        back {
+        BACK_END {
           _id
           name
           type
           icon
         }
-        devops {
+        DEV_OPS {
           _id
           name
           type
@@ -28,7 +27,6 @@ export const GET_ABOUT = gql`
     }
     getProjects(input: $input) {
       ok
-      error
       projects {
         _id
         title
@@ -41,7 +39,6 @@ export const GET_ABOUT = gql`
     }
     getExperiences {
       ok
-      error
       experiences {
         _id
         title

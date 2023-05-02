@@ -1,6 +1,8 @@
-import { JwtAuthGuard } from '@auth/guards/jwt-auth.guard';
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+
+import { JwtAuthGuard } from '@common/guards/jwt-auth.guard';
+
 import { DeleteExperienceInput } from './dto/deleteExperience.dto';
 import { EditExperienceInput } from './dto/editExperience.dto';
 import { AddExperienceInput, ExperienceDto } from './dto/experience.dto';

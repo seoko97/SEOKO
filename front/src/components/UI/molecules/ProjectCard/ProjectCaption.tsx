@@ -21,6 +21,9 @@ const Container = styled.div`
 
   transition: opacity 0.3s;
 
+  white-space: pre-wrap;
+  word-break: break-all;
+
   & .ath,
   & .date {
     width: 100%;

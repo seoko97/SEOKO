@@ -5,7 +5,6 @@ export const SIGN_IN = gql`
     signin(input: $input) {
       ok
       username
-      error
     }
   }
 `;

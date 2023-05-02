@@ -1,6 +1,9 @@
 import { ObjectType, Field, InputType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { IsString } from 'class-validator';
 import { Document, Model, Types } from 'mongoose';
+
+import { BaseSchema } from '@common/schema/base.schema';
 import { Post } from '@posts/post.model';
 
 export type TagDocument = Tag & Document;
@@ -11,10 +14,8 @@ export interface TagModel extends Model<TagDocument> {
 @Schema({ timestamps: true })
 @InputType('TagModel', { isAbstract: true })
 @ObjectType()
-export class Tag {
-  @Field(() => String)
-  _id: Types.ObjectId;
-
+export class Tag extends BaseSchema {
+  @IsString()
   @Prop({ required: true, index: true, unique: true })
   @Field(() => String)
   name!: string;
@@ -29,11 +30,3 @@ export class Tag {
 }
 
 export const TagSchema = SchemaFactory.createForClass(Tag);
-
-TagSchema.statics.findOrCreate = async function (name: string) {
-  const tag = await this.findOne({ name });
-
-  if (tag) return tag;
-
-  return await this.create({ name });
-};

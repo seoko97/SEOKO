@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { ISkill } from "@queries-types/skill";
-import Image from "next/image";
+import Image from "next/future/image";
 import React, { useMemo } from "react";
 
 interface IProps {
@@ -11,9 +11,13 @@ interface IProps {
 const Container = styled.div<{ isAdmin: boolean }>`
   display: flex;
   flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
   gap: 0.5em;
 
   & img {
+    object-fit: scale-down;
     cursor: ${({ isAdmin }) => (isAdmin ? "pointer" : "default")};
   }
 
@@ -21,6 +25,8 @@ const Container = styled.div<{ isAdmin: boolean }>`
     color: ${({ theme }) => theme.FONT_COLOR.SECONDARY_COLOR};
     text-align: center;
     font-weight: bold;
+    white-space: pre-wrap;
+    word-break: break-word;
   }
 
   @media (max-width: ${({ theme }) => theme.BP.PC}) {
@@ -39,7 +45,6 @@ const SkillItem = ({ data, onClick }: IProps) => {
         width={76}
         height={76}
         alt={data.name}
-        objectFit="scale-down"
         onClick={onClick ? () => onClick(data) : () => undefined}
       />
       <h3>{data.name}</h3>

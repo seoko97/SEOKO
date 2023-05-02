@@ -1,11 +1,13 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { ITokenUser } from '@decorators/user.decorator';
-import { UserService } from '@users/user.service';
-import { User } from '@users/user.model';
-import { verify } from 'jsonwebtoken';
 import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 import { AES, enc } from 'crypto-js';
+import { verify } from 'jsonwebtoken';
+
+import { ITokenUser } from '@common/decorators/user.decorator';
+import { User } from '@users/user.model';
+import { UserService } from '@users/user.service';
 
 @Injectable()
 export class AuthService {
@@ -24,7 +26,7 @@ export class AuthService {
   async validateUser(userId: string, password: string): Promise<User | null> {
     const user = await this.userService.getByUserId(userId);
 
-    const isCompare = await user?.comparePassword(password);
+    const isCompare = await this.comparePassword(password, user.password);
 
     if (!user || (user && !isCompare)) return null;
 
@@ -47,11 +49,21 @@ export class AuthService {
 
     if (!user || !user.refreshToken) throw new UnauthorizedException();
 
-    const result = verify(user.refreshToken, this.JWT_SECRET_KEY);
+    try {
+      const result = verify(user.refreshToken, this.JWT_SECRET_KEY, {});
 
-    if (!Boolean(result)) throw new UnauthorizedException();
+      if (!Boolean(result)) throw new UnauthorizedException();
 
-    return Boolean(result);
+      return Boolean(result);
+    } catch (err) {
+      throw new UnauthorizedException();
+    }
+  }
+
+  async comparePassword(password: string, hashedPassword: string) {
+    const isCompare = await bcrypt.compare(password, hashedPassword);
+
+    return isCompare;
   }
 
   encryptValue(value: string) {

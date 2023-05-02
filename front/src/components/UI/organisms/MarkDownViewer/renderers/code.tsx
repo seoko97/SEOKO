@@ -7,13 +7,19 @@ import InlineCode from "./inlineCode";
 
 const SyntaxWrapper = styled(SyntaxHighlighter)`
   width: 100%;
-  background-color: ${({ theme }) => theme.BACKGROUND_COLOR.SECONDARY_COLOR} !important;
+  background-color: ${({ theme }) => theme.MARK_DOWN.BACK_COLOR} !important;
+  transition: background-color 0.3s !important;
 
-  font-size: 0.9em;
+  box-shadow: rgb(0 0 0 / 15%) 0px 5px 16px 0px;
+
+  border-radius: 4px;
 
   & code {
+    transition: color 0.3s !important;
+
     color: ${({ theme }) => theme.MARK_DOWN.CODE_COLOR} !important;
     text-shadow: none !important;
+    font-size: 0.9em !important;
   }
 
   & .token {
@@ -24,7 +30,7 @@ const SyntaxWrapper = styled(SyntaxHighlighter)`
 const code: CodeComponent = ({ node, inline, className, children, ...props }) => {
   const match = /language-(\w+)/.exec(className || "");
   return !inline && match ? (
-    <SyntaxWrapper language={match[1]} PreTag="div" {...props}>
+    <SyntaxWrapper language={match[1]} PreTag="div" className={className && className} {...props}>
       {String(children).replace(/\n$/, "")}
     </SyntaxWrapper>
   ) : (

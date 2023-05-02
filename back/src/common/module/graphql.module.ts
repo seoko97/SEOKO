@@ -1,9 +1,9 @@
+import { join } from 'path';
+
 import { ApolloDriver } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
-
-import { join } from 'path';
 
 @Module({
   imports: [
@@ -18,12 +18,12 @@ import { join } from 'path';
           debug: !isProd,
           autoSchemaFile: join(process.cwd(), 'schema.graphql'),
           sortSchema: true,
+          uploads: false,
           cors: {
             origin: config.get('HOST'),
             credentials: true,
           },
           context: (ctx) => ({ ...ctx }),
-          uploads: false,
         };
       },
       inject: [ConfigService],

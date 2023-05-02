@@ -15,7 +15,6 @@ input AddImageInput {
 }
 
 type AddImageRes {
-  error: String
   image: String!
   ok: Boolean!
 }
@@ -32,7 +31,6 @@ input AddProjectInput {
 }
 
 type AddSkillDto {
-  error: String
   ok: Boolean!
   skill: Skill!
 }
@@ -44,13 +42,11 @@ input AddSkillInput {
 }
 
 type BasePostDTO {
-  error: String
   ok: Boolean!
   post: Post!
 }
 
 type CoreRes {
-  error: String
   ok: Boolean!
 }
 
@@ -58,15 +54,9 @@ input CreatePostInput {
   category: String!
   content: String!
   coverImg: String!
-  isTemporary: Boolean!
+  isTemporary: Boolean = false
   tags: [String!]!
   title: String!
-}
-
-type CreateTagDTO {
-  error: String
-  ok: Boolean!
-  tag: Tag!
 }
 
 """
@@ -93,7 +83,7 @@ input EditPostInput {
   content: String!
   coverImg: String!
   deleteTags: [String!]!
-  isTemporary: Boolean!
+  isTemporary: Boolean = false
   title: String!
 }
 
@@ -118,26 +108,25 @@ input EditSkillInput {
 
 type Experience {
   _id: String!
+  createdAt: DateTime!
   description: String!
   endDate: String
   startDate: String!
   title: String!
+  updatedAt: DateTime!
 }
 
 type ExperienceDto {
-  error: String
   experience: Experience!
   ok: Boolean!
 }
 
 type GetExperiencesDto {
-  error: String
   experiences: [Experience!]!
   ok: Boolean!
 }
 
 type GetPostDTO {
-  error: String
   ok: Boolean!
   post: Post!
   siblingPost: SiblingPost!
@@ -148,7 +137,6 @@ input GetPostInput {
 }
 
 type GetPostsDTO {
-  error: String
   ok: Boolean!
   posts: [Post!]!
 }
@@ -163,60 +151,43 @@ input GetPostsInput {
 }
 
 type GetProjectDto {
-  error: String
   ok: Boolean!
   project: Project!
 }
 
 type GetProjectsDto {
-  error: String
   ok: Boolean!
   projects: [Project!]!
 }
 
 input GetProjectsInput {
-  isTemporary: Boolean!
+  isTemporary: Boolean = false
 }
 
 type GetSkillsDto {
-  error: String
   ok: Boolean!
   skills: GroupedSkills!
 }
 
 type GetTagRes {
-  error: String
   ok: Boolean!
   tag: Tag!
 }
 
 type GetTagsRes {
-  error: String
   ok: Boolean!
   tags: [Tag!]!
 }
 
 type GetUserInfoDTO {
-  error: String
   ok: Boolean!
   username: String!
 }
 
 type GroupedSkills {
-  back: [Skill!]!
-  devops: [Skill!]!
-  front: [Skill!]!
-}
-
-input InputUser {
-  """User Password"""
-  password: String!
-
-  """User ID"""
-  userId: String!
-
-  """User Name"""
-  username: String!
+  BACK_END: [Skill!]!
+  DEV_OPS: [Skill!]!
+  FRONT_END: [Skill!]!
 }
 
 type Mutation {
@@ -225,13 +196,10 @@ type Mutation {
   addPost(input: CreatePostInput!): BasePostDTO!
   addProject(input: AddProjectInput!): GetProjectDto!
   addSkill(input: AddSkillInput!): AddSkillDto!
-  create(input: InputUser!): CoreRes!
-  createTag(input: String!): CreateTagDTO!
   deleteExperience(input: DeleteExperienceInput!): ExperienceDto!
   deletePost(input: GetPostInput!): CoreRes!
   deleteProject(input: ProjectInput!): CoreRes!
   deleteSkill(input: SkillInput!): AddSkillDto!
-  deleteTag(_id: String!): CoreRes!
   editExperience(input: EditExperienceInput!): ExperienceDto!
   editPost(input: EditPostInput!): BasePostDTO!
   editProject(input: EditProjectInput!): GetProjectDto!
@@ -247,7 +215,7 @@ type Post {
   content: String!
   coverImg: String!
   createdAt: DateTime!
-  isTemporary: Boolean!
+  isTemporary: Boolean
   tags: [Tag!]!
   title: String!
   updatedAt: DateTime!
@@ -261,7 +229,7 @@ type Project {
   description: String!
   endDate: String
   githubUrl: String!
-  isTemporary: Boolean!
+  isTemporary: Boolean
   startDate: String!
   title: String!
   updatedAt: DateTime!
@@ -297,16 +265,17 @@ input SigninInput {
 }
 
 type SigninRes {
-  error: String
   ok: Boolean!
   username: String!
 }
 
 type Skill {
   _id: String!
+  createdAt: DateTime!
   icon: String!
   name: String!
   type: SkillType!
+  updatedAt: DateTime!
 }
 
 input SkillInput {
@@ -321,8 +290,10 @@ enum SkillType {
 
 type Tag {
   _id: String!
+  createdAt: DateTime!
   name: String!
   posts: [Post!]!
+  updatedAt: DateTime!
 }
 
 """The `Upload` scalar type represents a file upload."""
