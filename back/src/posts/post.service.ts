@@ -6,7 +6,7 @@ import { TagService } from '@tags/tag.service';
 import { getQueryOptionsByPost } from '@utils/getQueryOptionsByPost';
 
 import { CreatePostInput } from './dto/createPostInput.dto';
-import { EditPostInput } from './dto/editPostInput.dto';
+import { EditPostArgs, EditPostInput } from './dto/editPostInput.dto';
 import { GetPostsInput } from './dto/getPosts.dto';
 import { Post, PostModel } from './post.model';
 import { PostRepository } from './post.repository';
@@ -49,12 +49,17 @@ export class PostService {
       this.tagService.pushAndReturnTagsByPostId(addTags, post._id),
     ]);
 
-    await this.postRepository.updatePost({
+    const updatePostArgs: EditPostArgs = {
       ...input,
       addTags: aTags,
       deleteTags: dTags,
-    });
+    };
 
+    if (post.isTemporary && input.isTemporary === false) {
+      updatePostArgs.createdAt = Date.now();
+    }
+
+    await this.postRepository.updatePost(updatePostArgs);
     await this.postRepository.updateManyByEmptyPosts();
   }
 
