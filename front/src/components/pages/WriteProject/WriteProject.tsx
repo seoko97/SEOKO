@@ -50,7 +50,7 @@ const WriteProject = ({ _id }: IProps) => {
 
       mutation(input);
     },
-    [projectDataRef, project],
+    [projectDataRef, project, coverImg],
   );
 
   const coverImageHandler = useCallback(
