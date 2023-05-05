@@ -1,14 +1,5 @@
 import { PipelineStage } from 'mongoose';
 
-const enum EMiddlewareTypes {
-  document = 'document',
-  query = 'query',
-  aggregate = 'aggregate',
-  model = 'model',
-}
-
-type TMiddlewareType = keyof typeof EMiddlewareTypes;
-
 const GET_TAGS_OPTIONS: PipelineStage[] = [
   {
     $lookup: {
@@ -76,22 +67,35 @@ const GET_TAG_OPTIONS: PipelineStage[] = [
   },
 ];
 
+const enum EMiddlewareTypes {
+  document = 'document',
+  query = 'query',
+  aggregate = 'aggregate',
+  model = 'model',
+}
+
+type TMiddlewareType = keyof typeof EMiddlewareTypes;
+
 const TRANSACTION_KEY = 'transaction';
 const TRANSACTION_SESSION = Symbol('transaction_session');
 
-const documentAndQueryMiddleware = ['updateOne', 'deleteOne'];
+const documentAndQueryMiddleware = ['updateOne', 'deleteOne'] as const;
 
 const middlewareGroups = {
   [EMiddlewareTypes.document]: ['save', ...documentAndQueryMiddleware],
   [EMiddlewareTypes.query]: [
+    'deleteOne',
     'deleteMany',
     'updateMany',
+    'find',
+    'findOne',
     'findOneAndDelete',
     'findOneAndUpdate',
+    'updateOne',
   ],
   [EMiddlewareTypes.aggregate]: ['aggregate'],
   [EMiddlewareTypes.model]: ['insertMany'],
-};
+} as const;
 
 export {
   GET_TAGS_OPTIONS,

@@ -46,23 +46,21 @@ function preCb(this: any, next: any) {
 }
 
 function overwriteMethod(schema: Schema, method: string) {
-  if (middlewareGroups.model.includes(method)) {
-    const als = new ALS();
+  const als = new ALS();
 
-    schema.statics[method] = function (...args: any) {
-      const session = als.get<ClientSession>(TRANSACTION_SESSION);
+  schema.statics[method] = function (...args: any) {
+    const session = als.get<ClientSession>(TRANSACTION_SESSION);
 
-      if (session) {
-        const options = args[1] || {};
+    if (session) {
+      const options = args[1] || {};
 
-        if (!options?.session) {
-          args[1] = Object.assign(options, { session });
-        }
+      if (!options?.session) {
+        args[1] = Object.assign(options, { session });
       }
+    }
 
-      return Model[method].apply(this, args);
-    };
-  }
+    return Model[method].apply(this, args);
+  };
 }
 
 export { transactionPlugin };

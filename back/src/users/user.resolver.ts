@@ -1,8 +1,8 @@
 import { UseGuards } from '@nestjs/common';
 import { Query, Resolver } from '@nestjs/graphql';
 
-import { JwtAuthGuard } from '@common/guards/jwt-auth.guard';
 import { ITokenUser, User } from '@common/decorators/user.decorator';
+import { JwtAuthGuard } from '@common/guards/jwt-auth.guard';
 
 import { GetUserInfoDTO } from './dto/getUserInfo.dto';
 import { UserService } from './user.service';

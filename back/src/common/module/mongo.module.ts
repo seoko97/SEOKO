@@ -15,6 +15,7 @@ import { transactionPlugin } from '@utils/mongoosePluginCb';
         dbName: configService.get('DB_NAME'),
         user: configService.get('DB_USERNAME'),
         pass: configService.get('DB_PASSWORD'),
+        replicaSet: configService.get('DB_REPLICA_SET'),
 
         connectionFactory: (connection: Connection) => {
           connection.plugin(transactionPlugin);
