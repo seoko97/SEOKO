@@ -59,7 +59,7 @@ const WritePost = ({ _id }: IProps) => {
 
       mutation(input);
     },
-    [postDataRef.current, tags, addedTags, deletedTags],
+    [postDataRef.current, tags, addedTags, coverImg, deletedTags],
   );
 
   const coverImageHandler = useCallback(
