@@ -12,6 +12,7 @@ export const GET_POSTS = gql`
         coverImg
         category
         isTemporary
+        numId
         tags {
           _id
           name

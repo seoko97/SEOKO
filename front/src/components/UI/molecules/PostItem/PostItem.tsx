@@ -12,7 +12,7 @@ interface Props {
 
 const PostItem = ({ post, idx }: Props) => {
   return (
-    <Link href={`/post/${post._id}`}>
+    <Link href={`/post/${post.numId}`}>
       <Container>
         <PostImg src={post.coverImg} idx={idx} />
         <PostContent

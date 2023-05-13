@@ -1,19 +1,18 @@
-import { removeTypename } from "@lib/removeTypename";
 import { IProject, IProjectInput } from "@queries-types/project";
 import { useCallback, useRef } from "react";
 
-const PROJECT: IProjectInput = {
-  title: "",
-  description: "",
-  githubUrl: "",
-  content: "",
-  coverImg: "",
-  startDate: "",
-  endDate: "",
-};
-
 const useWriteProject = (project?: IProject) => {
-  const data = removeTypename(project) ?? PROJECT;
+  const data: IProjectInput = {
+    _id: project?._id,
+    title: project?.title ?? "",
+    description: project?.description ?? "",
+    githubUrl: project?.githubUrl ?? "",
+    content: project?.content ?? "",
+    coverImg: project?.coverImg ?? "",
+    isTemporary: project?.isTemporary ?? false,
+    startDate: project?.startDate ?? "",
+    endDate: project?.endDate ?? "",
+  };
 
   const projectDataRef = useRef<IProjectInput>(data);
 

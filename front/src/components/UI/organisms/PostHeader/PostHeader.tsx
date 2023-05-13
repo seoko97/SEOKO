@@ -17,11 +17,11 @@ interface IProps {
 }
 
 const PostHeader = ({ post }: IProps) => {
-  const { _id, title, coverImg, createdAt, tags, category } = post;
+  const { _id, title, coverImg, createdAt, tags, category, numId } = post;
   const { username } = useReactiveVar(userInfoVar);
   const router = useRouter();
 
-  const [deletePostMutation] = useDeletePost(post._id);
+  const [deletePostMutation] = useDeletePost(_id);
 
   const deletePost = useCallback(() => {
     if (!username) return;
@@ -34,7 +34,7 @@ const PostHeader = ({ post }: IProps) => {
   }, [username, _id]);
 
   const editPost = useCallback(() => {
-    router.push(`/write/post/${_id}`);
+    router.push(`/write/post/${numId}`);
   }, []);
 
   const onClickTag = useCallback((e) => {

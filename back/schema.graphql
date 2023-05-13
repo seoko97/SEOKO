@@ -46,6 +46,10 @@ type BasePostDTO {
   post: Post!
 }
 
+input BasePostInput {
+  _id: String!
+}
+
 type CoreRes {
   ok: Boolean!
 }
@@ -133,7 +137,7 @@ type GetPostDTO {
 }
 
 input GetPostInput {
-  _id: String!
+  numId: Float!
 }
 
 type GetPostsDTO {
@@ -197,7 +201,7 @@ type Mutation {
   addProject(input: AddProjectInput!): GetProjectDto!
   addSkill(input: AddSkillInput!): AddSkillDto!
   deleteExperience(input: DeleteExperienceInput!): ExperienceDto!
-  deletePost(input: GetPostInput!): CoreRes!
+  deletePost(input: BasePostInput!): CoreRes!
   deleteProject(input: ProjectInput!): CoreRes!
   deleteSkill(input: SkillInput!): AddSkillDto!
   editExperience(input: EditExperienceInput!): ExperienceDto!
@@ -216,6 +220,7 @@ type Post {
   coverImg: String!
   createdAt: DateTime!
   isTemporary: Boolean
+  numId: Float!
   tags: [Tag!]!
   title: String!
   updatedAt: DateTime!
@@ -230,6 +235,7 @@ type Project {
   endDate: String
   githubUrl: String!
   isTemporary: Boolean
+  numId: Float!
   startDate: String!
   title: String!
   updatedAt: DateTime!
@@ -243,7 +249,7 @@ type Query {
   getExperiences: GetExperiencesDto!
   getPost(input: GetPostInput!): GetPostDTO!
   getPosts(input: GetPostsInput): GetPostsDTO!
-  getProject(input: String!): GetProjectDto!
+  getProject(input: Float!): GetProjectDto!
   getProjects(input: GetProjectsInput): GetProjectsDto!
   getSkills: GetSkillsDto!
   getTag(input: String!): GetTagRes!

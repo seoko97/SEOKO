@@ -15,6 +15,7 @@ export const ADD_PROJECT = gql`
         isTemporary
         startDate
         endDate
+        numId
       }
     }
   }

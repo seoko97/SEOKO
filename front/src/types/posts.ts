@@ -10,10 +10,11 @@ interface IPost {
   title: string;
   createdAt: string;
   isTemporary: boolean;
+  numId: number;
   __typename?: string;
 }
 
-type ISiblingItem = Pick<IPost, "_id" | "title">;
+type ISiblingItem = Pick<IPost, "_id" | "title" | "numId">;
 
 type IBasePosts = {
   posts: IPost[];

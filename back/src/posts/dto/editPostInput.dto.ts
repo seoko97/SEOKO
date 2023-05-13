@@ -32,5 +32,5 @@ export class EditPostArgs extends OmitType(EditPostInput, [
 ] as const) {
   addTags!: TagDocument[];
   deleteTags!: TagDocument[];
-  createdAt?: number;
+  createdAt?: Date;
 }

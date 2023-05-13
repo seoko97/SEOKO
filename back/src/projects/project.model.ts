@@ -1,6 +1,6 @@
 import { ObjectType, Field, InputType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { IsBoolean, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 import { Document, Model } from 'mongoose';
 
 import { BaseSchema } from '@common/schema/base.schema';
@@ -11,6 +11,11 @@ export type ProjectModel = Model<ProjectDocument>;
 @InputType('ProjectModel', { isAbstract: true })
 @ObjectType()
 export class Project extends BaseSchema {
+  @IsNumber()
+  @Field(() => Number)
+  @Prop({ require: true })
+  numId!: number;
+
   @IsString()
   @Prop({ required: true })
   @Field(() => String)

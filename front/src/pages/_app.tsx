@@ -32,13 +32,12 @@ const SEOKO = ({ Component, pageProps, mode: modeInCookie }: IPageProps) => {
   }, [mode]);
 
   useEffect(() => {
-    if (!cookies.mode) setCookies("mode", "light");
     initializeSigninCheck();
   }, []);
 
   useGtagHandler();
 
-  const checkMode = useMemo(() => (mode === "light" ? lightTheme : darkTheme), [mode]);
+  const checkMode = useMemo(() => (mode === "dark" ? darkTheme : lightTheme), [mode]);
 
   return (
     <>

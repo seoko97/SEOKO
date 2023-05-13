@@ -15,13 +15,13 @@ import { usePostMutation } from "@hooks/apollo/post/usePostMutation";
 import WritePostHeader from "./WritePostHeader";
 
 interface IProps {
-  _id?: string;
+  numId?: number;
 }
 
-const WritePost = ({ _id }: IProps) => {
+const WritePost = ({ numId }: IProps) => {
   const { data } = useQuery<IGetPost>(GET_POST, {
-    variables: { input: { _id } },
-    skip: !_id,
+    variables: { input: { numId } },
+    skip: numId === undefined,
   });
 
   const post = data?.getPost.post;

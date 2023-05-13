@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery } from 'mongoose';
 
-import { CreatePostInput } from './dto/createPostInput.dto';
+import { CreatePostArgs } from './dto/createPostInput.dto';
 import { EditPostArgs } from './dto/editPostInput.dto';
 import { Post, PostDocument, PostModel } from './post.model';
 
@@ -10,7 +10,7 @@ import { Post, PostDocument, PostModel } from './post.model';
 export class PostRepository {
   constructor(@InjectModel(Post.name) private readonly postModel: PostModel) {}
 
-  async createPost(post: Omit<CreatePostInput, 'tags'>) {
+  async createPost(post: CreatePostArgs) {
     return await this.postModel.create(post);
   }
 
@@ -23,7 +23,10 @@ export class PostRepository {
 
     await this.postModel.updateOne(
       { _id },
-      { ...info, $pull: { tags: { $in: deleteTags } } },
+      {
+        $set: info,
+        $pull: { tags: { $in: deleteTags } },
+      },
     );
 
     await this.postModel.updateOne(
@@ -39,24 +42,28 @@ export class PostRepository {
     );
   }
 
-  async getPostById(_id: string) {
-    return this.postModel.findById(_id).populate('tags');
+  async getPostByNumId(numId: number) {
+    return this.postModel.findOne({ numId }).populate('tags');
   }
 
-  async getSiblingPost(_id: string) {
+  async getPostById(_id: string) {
+    return this.postModel.findOne({ _id }).populate('tags');
+  }
+
+  async getSiblingPost(numId: number) {
     return await Promise.all([
       this.postModel
         .findOne({
-          _id: { $lt: _id },
+          numId: { $lt: numId },
           isTemporary: false,
         })
-        .sort({ _id: -1 }),
+        .sort({ numId: -1 }),
       this.postModel
         .findOne({
-          _id: { $gt: _id },
+          numId: { $gt: numId },
           isTemporary: false,
         })
-        .sort({ _id: 1 }),
+        .sort({ numId: 1 }),
     ]);
   }
 

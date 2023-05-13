@@ -14,7 +14,7 @@ import { useQuery } from "@apollo/client";
 import { GET_POST } from "@queries/post";
 
 interface Props {
-  _id: string;
+  numId: number;
 }
 
 const Container = styled(RowFrame)`
@@ -35,9 +35,9 @@ const PostContent = styled.div`
   }
 `;
 
-const Post = ({ _id }: Props) => {
+const Post = ({ numId }: Props) => {
   const { data } = useQuery<IGetPost>(GET_POST, {
-    variables: { input: { _id } },
+    variables: { input: { numId } },
   });
 
   if (!data) return <></>;

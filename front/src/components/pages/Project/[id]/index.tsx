@@ -13,12 +13,12 @@ import { useQuery } from "@apollo/client";
 import { GET_PROJECT } from "@queries/project";
 
 interface IProps {
-  _id: string;
+  numId: number;
 }
 
-const Project = ({ _id }: IProps) => {
+const Project = ({ numId }: IProps) => {
   const { data } = useQuery<IGetProject>(GET_PROJECT, {
-    variables: { input: _id },
+    variables: { input: numId },
   });
 
   if (!data) return <></>;

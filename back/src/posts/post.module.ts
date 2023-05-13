@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
+import { SequenceModule } from '@src/sequence/sequence.module';
 import { TagModule } from '@tags/tag.module';
 
 import { Post, PostSchema } from './post.model';
@@ -17,6 +18,7 @@ import { PostService } from './post.service';
       },
     ]),
     TagModule,
+    SequenceModule,
   ],
   exports: [PostService],
   providers: [PostResolver, PostService, PostRepository],

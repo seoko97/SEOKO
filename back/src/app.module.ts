@@ -11,11 +11,13 @@ import { TagModule } from '@tags/tag.module';
 import { UserModule } from '@users/user.module';
 
 import { ImageModule } from './images/image.module';
+import { SequenceModule } from './sequence/sequence.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     CommonModule,
+    SequenceModule,
     UserModule,
     AuthModule,
     TagModule,

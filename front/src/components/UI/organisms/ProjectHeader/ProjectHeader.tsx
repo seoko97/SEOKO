@@ -16,14 +16,15 @@ interface IProps {
 }
 
 const ProjectHeader = ({ project }: IProps) => {
-  const { _id, title, coverImg, description, endDate, githubUrl, startDate, isTemporary } = project;
+  const { _id, title, coverImg, description, endDate, githubUrl, startDate, isTemporary, numId } =
+    project;
   const router = useRouter();
   const { username } = useReactiveVar(userInfoVar);
 
   const [deleteProjectMutation] = useDeleteProject(project._id);
 
   const editProject = useCallback(() => {
-    router.push(`/write/project/${_id}`);
+    router.push(`/write/project/${numId}`);
   }, [project]);
 
   const deleteProject = useCallback(() => {

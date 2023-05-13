@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import NavItem from "@atoms/NavItem";
 import styled from "@emotion/styled";
 import { useMutation, useReactiveVar } from "@apollo/client";
-import { setUserInfo, userInfoVar } from "@store/userInfo";
+import { userInfoVar } from "@store/userInfo";
 import { SIGN_OUT } from "@queries/users";
 import { ISignOut } from "@queries-types/users";
 import { useRouter } from "next/router";
