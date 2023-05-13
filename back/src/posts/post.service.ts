@@ -2,6 +2,7 @@ import { NotFoundException, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
 import { Transactional } from '@common/decorators/transaction.decorator';
+import { SequenceRepository } from '@src/sequence/sequence.repository';
 import { TagService } from '@tags/tag.service';
 import { getQueryOptionsByPost } from '@utils/getQueryOptionsByPost';
 
@@ -17,11 +18,15 @@ export class PostService {
     @InjectModel(Post.name) private postModel: PostModel,
     @Inject(TagService) private tagService: TagService,
     private readonly postRepository: PostRepository,
+    private readonly sequenceRepository: SequenceRepository,
   ) {}
 
   @Transactional()
   async createPost({ tags, ...info }: CreatePostInput) {
-    const post = await this.postRepository.createPost({ ...info });
+    const post = await this.postRepository.createPost({
+      ...info,
+      numId: await this.sequenceRepository.getNextSequence('post'),
+    });
 
     const createdTag = await this.tagService.pushAndReturnTagsByPostId(
       tags,
@@ -37,7 +42,7 @@ export class PostService {
   }
 
   @Transactional()
-  async editPost(input: EditPostInput) {
+  async editPost(input: Omit<EditPostInput, 'numId'>) {
     const { _id, addTags, deleteTags } = input;
 
     const post = await this.postModel.findOne({ _id });
@@ -55,12 +60,10 @@ export class PostService {
       deleteTags: dTags,
     };
 
-    if (post.isTemporary && input.isTemporary === false) {
-      updatePostArgs.createdAt = Date.now();
-    }
-
     await this.postRepository.updatePost(updatePostArgs);
     await this.postRepository.updateManyByEmptyPosts();
+
+    return await this.postModel.findOne({ _id });
   }
 
   @Transactional()
@@ -69,20 +72,23 @@ export class PostService {
     await this.tagService.deleteManyByPostId(_id);
   }
 
-  async getPost(_id: string) {
-    const post = await this.postRepository.getPostById(_id);
+  async getPost(id: number | string) {
+    const post =
+      typeof id === 'number'
+        ? await this.postRepository.getPostByNumId(id)
+        : await this.postRepository.getPostById(id);
 
     if (!post) throw new NotFoundException('포스트가 존재하지 않습니다.');
 
     return post;
   }
 
-  async getSiblingPost(_id: string) {
-    const post = await this.postModel.findOne({ _id });
+  async getSiblingPost(numId: number) {
+    const post = await this.postModel.findOne({ numId });
 
     if (!post) throw new NotFoundException('포스트가 존재하지 않습니다.');
 
-    const [prev, next] = await this.postRepository.getSiblingPost(_id);
+    const [prev, next] = await this.postRepository.getSiblingPost(numId);
 
     return { prev, next };
   }

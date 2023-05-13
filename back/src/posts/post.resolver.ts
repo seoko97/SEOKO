@@ -7,7 +7,12 @@ import { ObjectIdGuard } from '@common/guards/ObjectId.guard';
 
 import { CreatePostInput } from './dto/createPostInput.dto';
 import { EditPostInput } from './dto/editPostInput.dto';
-import { BasePostDTO, GetPostDTO, GetPostInput } from './dto/getPost.dto';
+import {
+  BasePostDTO,
+  BasePostInput,
+  GetPostDTO,
+  GetPostInput,
+} from './dto/getPost.dto';
 import { GetPostsDTO, GetPostsInput } from './dto/getPosts.dto';
 import { PostService } from './post.service';
 
@@ -25,16 +30,14 @@ export class PostResolver {
 
   @UseGuards(JwtAuthGuard)
   @Mutation(() => CoreRes)
-  async deletePost(@Args('input') input: GetPostInput) {
+  async deletePost(@Args('input') input: BasePostInput) {
     await this.postService.deletePost(input._id);
   }
 
   @UseGuards(JwtAuthGuard)
   @Mutation(() => BasePostDTO)
   async editPost(@Args('input') input: EditPostInput) {
-    await this.postService.editPost(input);
-
-    const post = await this.postService.getPost(input._id);
+    const post = await this.postService.editPost(input);
 
     return { post };
   }
@@ -43,8 +46,8 @@ export class PostResolver {
   @Query(() => GetPostDTO)
   async getPost(@Args('input') input: GetPostInput) {
     const [post, siblingPost] = await Promise.all([
-      this.postService.getPost(input._id),
-      this.postService.getSiblingPost(input._id),
+      this.postService.getPost(input.numId),
+      this.postService.getSiblingPost(input.numId),
     ]);
 
     return { post, siblingPost };

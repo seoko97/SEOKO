@@ -1,6 +1,6 @@
 import { ObjectType, Field, InputType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { IsDate, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 import { Document, Model } from 'mongoose';
 
 import { BaseSchema } from '@common/schema/base.schema';

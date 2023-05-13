@@ -38,7 +38,7 @@ export class ProjectResolver {
   }
 
   @Query(() => GetProjectDto)
-  async getProject(@Args('input') input: string) {
+  async getProject(@Args('input') input: number) {
     const project = await this.projectService.getProject(input);
 
     return { project };

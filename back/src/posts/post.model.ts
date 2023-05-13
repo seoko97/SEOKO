@@ -1,6 +1,12 @@
 import { ObjectType, Field, InputType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { Document, Model, Types } from 'mongoose';
 
 import { BaseSchema } from '@common/schema/base.schema';
@@ -17,6 +23,11 @@ export type PostModel = Model<PostDocument>;
 @InputType('PostModel', { isAbstract: true })
 @ObjectType()
 export class Post extends BaseSchema {
+  @IsNumber()
+  @Field(() => Number)
+  @Prop({ require: true, unique: true })
+  numId!: number;
+
   @IsString()
   @Prop({ required: true })
   @Field(() => String)
