@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_PROJECT = gql`
-  query GetProject($input: String!) {
+  query GetProject($input: Float!) {
     getProject(input: $input) {
       ok
 
@@ -15,6 +15,7 @@ export const GET_PROJECT = gql`
         isTemporary
         startDate
         endDate
+        numId
       }
     }
   }

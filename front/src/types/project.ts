@@ -10,12 +10,13 @@ interface IProjectInput {
   startDate: string;
   endDate: string | null;
   isTemporary?: boolean;
+  __typename?: string;
 }
 
 interface IProject extends IProjectInput {
   _id: string;
   createdAt: string;
-  __typename?: string;
+  numId: number;
 }
 
 interface IBaseProjectResponse extends CoreResponse {

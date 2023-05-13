@@ -19,7 +19,7 @@ const SiblingItem = ({ post, type }: IProps) => {
   return (
     <Container type={type}>
       {post && (
-        <Link href={`/post/${post._id}`}>
+        <Link href={`/post/${post.numId}`}>
           <a>
             <div>
               {type === "prev" && <ReftIcon />}

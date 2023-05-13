@@ -15,13 +15,13 @@ import WriteProjectHeader from "./WriteProjectHeader";
 
 interface IProps {
   project: IProject | undefined;
-  _id: string;
+  numId?: number;
 }
 
-const WriteProject = ({ _id }: IProps) => {
+const WriteProject = ({ numId }: IProps) => {
   const { data } = useQuery<IGetProject>(GET_PROJECT, {
-    variables: { input: _id ?? "" },
-    skip: !_id,
+    variables: { input: numId },
+    skip: numId === undefined,
   });
 
   const project = data?.getProject.project;

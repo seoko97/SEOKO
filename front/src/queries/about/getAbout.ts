@@ -35,6 +35,7 @@ export const GET_ABOUT = gql`
         startDate
         endDate
         isTemporary
+        numId
       }
     }
     getExperiences {

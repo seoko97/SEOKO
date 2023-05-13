@@ -32,7 +32,7 @@ const Container = styled.div`
 
 const ProjectCard = ({ project }: IProps) => {
   return (
-    <Link href={`/project/${project._id}`}>
+    <Link href={`/project/${project.numId}`}>
       <Container>
         <ProjectImg src={project.coverImg} />
         <ProjectCaption

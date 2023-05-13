@@ -13,6 +13,7 @@ export const GET_PROJECTS = gql`
         startDate
         endDate
         isTemporary
+        numId
       }
     }
   }

@@ -4,7 +4,6 @@ import {
   IAddProjectVariables,
   IDeleteProject,
   IEditProject,
-  IProject,
   IProjectInput,
 } from "@queries-types/project";
 import { ADD_PROJECT, DELETE_PROJECT, EDIT_PROJECT } from "@queries/project";
@@ -22,7 +21,7 @@ const PROJECT_FRAGMENT = gql`
   }
 `;
 
-const useProjectMutation = (project?: IProject) => {
+const useProjectMutation = (project?: IProjectInput) => {
   const router = useRouter();
 
   const onCompleted = () => {

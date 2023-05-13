@@ -15,6 +15,7 @@ export const EDIT_PROJECT = gql`
         isTemporary
         startDate
         endDate
+        numId
       }
     }
   }

@@ -14,7 +14,7 @@ export const getServerSideProps = withErrorHandling(async (ctx) => {
 
   const { data, errors } = await apolloClient.query<IGetProject>({
     query: GET_PROJECT,
-    variables: { input: id },
+    variables: { input: Number(id) },
   });
 
   if (!data || errors?.[0]) {
@@ -36,7 +36,7 @@ export const getServerSideProps = withErrorHandling(async (ctx) => {
 
   return addApolloState(apolloClient, {
     props: {
-      _id: id,
+      numId: Number(id),
     },
   });
 });

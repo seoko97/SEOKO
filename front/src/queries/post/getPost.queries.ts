@@ -12,6 +12,7 @@ export const GET_POST = gql`
         coverImg
         category
         isTemporary
+        numId
         tags {
           _id
           name
@@ -23,10 +24,12 @@ export const GET_POST = gql`
         next {
           _id
           title
+          numId
         }
         prev {
           _id
           title
+          numId
         }
       }
     }
