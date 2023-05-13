@@ -4,7 +4,7 @@ import { Document, Model } from 'mongoose';
 export type SequenceDocument = Sequence & Document;
 export type SequenceModel = Model<SequenceDocument>;
 
-@Schema({ timestamps: true })
+@Schema()
 export class Sequence {
   @Prop({ required: true })
   _id: string;
