@@ -17,7 +17,7 @@ const Img = styled(NextImage)`
   margin: 0 auto;
 `;
 
-const img: NormalComponents["img"] = (props, a) => {
+const img: NormalComponents["img"] = (props) => {
   const { alt, src, node, children, placeholder, ...option } = props;
 
   const isInclude = src?.includes(IMAGE_BASE_URL);
@@ -25,7 +25,15 @@ const img: NormalComponents["img"] = (props, a) => {
   const altText = alt ?? "post_image";
 
   return isInclude ? (
-    <Img src={src!} alt={altText} loading="lazy" {...option} width={1000} height={1000} />
+    <Img
+      src={src!}
+      alt={altText}
+      loading="lazy"
+      quality={100}
+      {...option}
+      width={1000}
+      height={1000}
+    />
   ) : (
     <img src={src!} alt={altText} {...option} />
   );
