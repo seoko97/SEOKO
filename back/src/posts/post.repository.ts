@@ -46,10 +46,6 @@ export class PostRepository {
     return this.postModel.findOne({ numId }).populate('tags');
   }
 
-  async getPostById(_id: string) {
-    return this.postModel.findOne({ _id }).populate('tags');
-  }
-
   async getSiblingPost(numId: number) {
     return await Promise.all([
       this.postModel
