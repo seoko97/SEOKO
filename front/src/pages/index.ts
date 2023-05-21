@@ -14,21 +14,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     query: { category },
   } = ctx;
 
-  const variables: IGetPostsVariables = {
-    input: {
-      text: "",
-    },
-  };
+  const variables: IGetPostsVariables = { input: { text: "" } };
 
   if (category) variables.input.category = checkParams(category);
 
   await apolloClient.query<IGetPosts, IGetPostsVariables>({
     query: GET_POSTS,
     variables,
-    fetchPolicy: "network-only",
-    context: {
-      headers: ctx.req.headers,
-    },
+    context: { headers: ctx.req.headers },
   });
 
   return addApolloState(apolloClient, {
