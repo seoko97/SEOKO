@@ -31,10 +31,12 @@ jobs:
               echo "HOST=$HOST" >> .env
               echo "API_URL=$API_URL" >> .env
               echo "NEXT_PUBLIC_GA_ID=$NEXT_PUBLIC_GA_ID" >> .env
+              echo "GOOGLE_SITE_VERIFICATION=$GOOGLE_SITE_VERIFICATION" >> .env
            env:
               HOST: ${{secrets.HOST}}
               API_URL: ${{secrets.API_URL}}
               NEXT_PUBLIC_GA_ID: ${{secrets.NEXT_PUBLIC_GA_ID}}
+              GOOGLE_SITE_VERIFICATION: ${{secrets.GOOGLE_SITE_VERIFICATION}}
            working-directory: ${{ env.working-directory }}
 
          - name: Login to Docker Registry

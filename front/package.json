@@ -6,6 +6,7 @@
     "dev": "next dev -p 3000",
     "dev:debug": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
+    "postbuild": "next-sitemap --config sitemap.config.js",
     "build:analyze": "ANALYZE=true next build",
     "start": "next start -p 3000",
     "lint": "next lint",
@@ -67,6 +68,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "next-sitemap": "^4.1.3",
     "prettier": "^2.4.1",
     "typescript": "^4.4.4",
     "webpack": "^4.46.0"

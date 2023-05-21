@@ -72,11 +72,8 @@ export class PostService {
     await this.tagService.deleteManyByPostId(_id);
   }
 
-  async getPost(id: number | string) {
-    const post =
-      typeof id === 'number'
-        ? await this.postRepository.getPostByNumId(id)
-        : await this.postRepository.getPostById(id);
+  async getPost(id: number) {
+    const post = await this.postRepository.getPostByNumId(id);
 
     if (!post) throw new NotFoundException('포스트가 존재하지 않습니다.');
 

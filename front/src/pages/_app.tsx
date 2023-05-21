@@ -17,6 +17,7 @@ import Analytics from "@components/Analytics";
 
 import { darkTheme, lightTheme } from "@theme/.";
 import GlobalStyle from "@theme/GlobalStyle";
+import { GOOGLE_SITE_VERIFICATION } from "@config/constance";
 
 interface IPageProps extends AppProps {
   mode: string;
@@ -45,6 +46,7 @@ const SEOKO = ({ Component, pageProps, mode: modeInCookie }: IPageProps) => {
         <title>SEOKO</title>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta property="og:type" content="website" />
         <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />

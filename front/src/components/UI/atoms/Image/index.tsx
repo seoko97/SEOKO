@@ -20,6 +20,7 @@ const Image = ({ width, height, ...props }: ImageProps) => {
   return (
     <Img
       {...props}
+      quality={100}
       width={props.fill ? undefined : width ?? 1000}
       height={props.fill ? undefined : height ?? 1000}
     />
