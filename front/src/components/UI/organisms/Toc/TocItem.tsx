@@ -1,34 +1,30 @@
-import React, { useCallback } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 
 import { IToc } from "@store/toc";
-import { getClassNameByToc } from "@lib/getClassNameByToc";
 
 interface IProps {
   heading: IToc;
   className: string;
+  onClickToc: React.MouseEventHandler;
 }
 
-const TocItem = ({ heading, className }: IProps) => {
-  const onClickToc = useCallback((id: string) => {
-    const targetToc = document.getElementById(id);
-
-    if (!targetToc) return;
-
-    document.documentElement.scroll({
-      top: window.pageYOffset + targetToc.getBoundingClientRect().top - 80,
-      behavior: "smooth",
-      left: 0,
-    });
-  }, []);
-
+const TocItem = ({ heading, className, onClickToc }: IProps) => {
   return (
     <Container
+      data-line={heading.line}
+      data-level={heading.level}
       level={heading.level}
-      onClick={() => onClickToc(getClassNameByToc(heading.line, heading.level))}
       className={className}
     >
-      {heading.text}
+      <a
+        href={`#${heading.text}`}
+        onClick={onClickToc}
+        data-line={heading.line}
+        data-level={heading.level}
+      >
+        {heading.text}
+      </a>
     </Container>
   );
 };
