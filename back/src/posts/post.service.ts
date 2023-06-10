@@ -63,7 +63,7 @@ export class PostService {
     await this.postRepository.updatePost(updatePostArgs);
     await this.postRepository.updateManyByEmptyPosts();
 
-    return await this.postModel.findOne({ _id });
+    return this.postRepository.getPostById(_id);
   }
 
   @Transactional()

@@ -42,6 +42,10 @@ export class PostRepository {
     );
   }
 
+  async getPostById(_id: string) {
+    return this.postModel.findOne({ _id }).populate('tags');
+  }
+
   async getPostByNumId(numId: number) {
     return this.postModel.findOne({ numId }).populate('tags');
   }
