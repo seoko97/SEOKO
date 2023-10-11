@@ -1,3 +1,8 @@
+레포지토리 이전되었습니다.
+
+- [SEOKO-client](https://github.com/seoko97/SEOKO-client)
+- [SEOKO-server](https://github.com/seoko97/SEOKO-client)
+
 # SEOKO
 
 ## 프로젝트 소개
