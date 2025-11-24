@@ -1,0 +1,9 @@
+{
+  "extends": "@seoko/tsconfig/nest.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
